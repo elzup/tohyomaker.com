@@ -1,6 +1,10 @@
 <?php
 
-class Survey {
-	function __construct() {
+class Survey extends CI_Model
+{
+	function __construct()
+	{
+		parent::__construct();
+
 	}
 }

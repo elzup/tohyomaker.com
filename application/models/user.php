@@ -8,8 +8,13 @@
  * @author
  * @link
  */
-class User {
+class User extends CI_Model
+{
+	function __construct()
+	{
+		parent::__construct();
 
+	}
 }
 
 ?>

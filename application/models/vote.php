@@ -1,6 +1,11 @@
 <?php
 
-class Vote {
+class Vote extends CI_Model
+{
+	function __construct()
+	{
+		parent::__construct();
 
+	}
 }
 ?>
