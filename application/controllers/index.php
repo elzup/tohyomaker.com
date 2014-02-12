@@ -8,6 +8,7 @@ class Index extends CI_Controller
     }
 
     function Index() {
+	    g
     }
 }
 ?>
