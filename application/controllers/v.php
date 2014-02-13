@@ -1,5 +1,6 @@
 <?php
 
+//投票ページ
 class V extends CI_Controller
 {
 	/* @var $_survey Survey */
