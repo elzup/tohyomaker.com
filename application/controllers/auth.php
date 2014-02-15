@@ -17,15 +17,16 @@ class Auth extends CI_Controller
 
 	function start()
 	{
-		$twitterConfig = $this->config->item('TWITTER_CONSUMER');
-		$_SESSION['consumer_key'] = $twitterConfig['key'];
-		$_SESSION['consumer_secret'] = $twitterConfig['secret'];
+		$twitter_config = $this->config->item('TWITTER_CONSUMER');
+		$_SESSION['consumer_key'] = $twitter_config['key'];
+		$_SESSION['consumer_secret'] = $twitter_config['secret'];
 		$callbackUri = FCPATH.'auth/end';
 
 		$connection = new TwitterOAuth($_SESSION['consumer_key'], $_SESSION['consumer_secret']);
 		$requestToken = $connection->getRequestToken($callbackUri);
 		$_SESSION['oauth_token'] = $token = $requestToken['oauth_token'];
 		$_SESSION['oauth_token_secret'] = $requestToken['oauth_token_secret'];
+
 
 		$authUrl = $connection->getAuthorizeURL($token);
 
