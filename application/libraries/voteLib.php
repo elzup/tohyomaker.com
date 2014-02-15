@@ -1,5 +1,5 @@
 <?php
-class Vote
+class VoteObj
 {
 	/*
 	 * id_vote

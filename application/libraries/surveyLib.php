@@ -1,6 +1,6 @@
 <?php
 
-class Survey
+class SurveyObj
 {
 	/*
 	 * 単票オブジェクトの配列

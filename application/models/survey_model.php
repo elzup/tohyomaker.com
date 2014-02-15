@@ -1,6 +1,6 @@
 <?php
 
-class Survey_Model extends CI_Model
+class Survey_model extends CI_Model
 {
 	/*
 	 * 単票オブジェクトの配列
@@ -8,10 +8,13 @@ class Survey_Model extends CI_Model
 	 */
 	public $votes;
 
-	function __construct($id_survey)
+	function __construct()
 	{
 		parent::__construct();
-		$this->load->database();
+	}
+
+	function getSurvey($id_survey) 
+	{
 		$where = array (
 			'id_survey' => $id_survey,
 		);

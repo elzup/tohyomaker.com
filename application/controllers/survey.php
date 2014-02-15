@@ -1,7 +1,7 @@
 <?php
 
 //投票ページ
-class Poll extends CI_Controller
+class Survey extends CI_Controller
 {
 	/* @var $_survey Survey */
 	private $_survey;
@@ -12,8 +12,10 @@ class Poll extends CI_Controller
 
     public function Index($id_survey = 0)
     {
-		$this->load->model('survey');
+		$this->load->model('Survey_model', 'survey', TRUE);
+		$this->_survey = $this->survey->getSurvey($id_survey);
+		echo "<pre>";
+		print_r($this->_survey);
 //		$this->_survey = new Survey($id_survey);
-//		print_r($this->_survey);
     }
 }
