@@ -1,6 +1,6 @@
 <?php
 
-class Survey extends CI_Model
+class Survey_Model extends CI_Model
 {
 	/*
 	 * 単票オブジェクトの配列
