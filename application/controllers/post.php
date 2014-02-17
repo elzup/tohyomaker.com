@@ -12,6 +12,7 @@ class Post extends CI_Controller
 	{
 		echo "start post page\n";
 		$this->load->model('Survey_model', 'survey', TRUE);
+		$this->survey->
 	}
 }
 
