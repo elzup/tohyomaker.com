@@ -1,8 +1,21 @@
 <?php
 
-class Make extends CI_Controller {
+class Make extends CI_Controller
+{
 
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
+		$this->load->helper('url');
+	}
+
+	public function index() {
+		$head_info = array (
+				'title' => '投票作成',
+				'less_name' => 'main',
+		);
+		$this->load->view('head', $head_info);
+		$this->load->view('nav');
+		$this->load->view('foot');
 	}
 }
