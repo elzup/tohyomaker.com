@@ -15,7 +15,8 @@ class Make extends CI_Controller
 				'less_name' => 'main',
 		);
 		$this->load->view('head', $head_info);
-		$this->load->view('nav');
+		$this->load->view('navbar');
+
 		$this->load->view('foot');
 	}
 }
