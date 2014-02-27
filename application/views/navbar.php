@@ -1,4 +1,11 @@
-      <nav class="navbar navbar-default navbar-fixed-top">
+<?php
+/* @var $user UserObj */
+$user;
+if ($user == null) {
+	$user = false;
+}
+?>
+			<nav class="navbar navbar-default navbar-fixed-top" id="navbar">
         <div class="navbar-header">
           <button class="navbar-toggle" data-toggle="collapse" data-target=".target">
             <span class="icon-bar"></span>
@@ -17,12 +24,25 @@
             </li>
           </ul-->
           <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a href="my.html">えるざっぷ</a>
+						<li>
+							<a onClick="$('#navbar').hide()">hide</a>
+						</li>
+						<li class="dropdown">
+						<?php if ($user) {?>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="login-info"><?=$user->id_twitter?> <span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="login-info">
+								<li><a href="my.html">マイページ</a></li>
+                <!--li class="divider"></li-->
+								<li><a href="<?=base_url('auth/logout')?>">ログアウト</a></li>
+              </ul>
+						<?php } else { ?>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="login-info">ログイン<span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="login-info">
+								<li><a href="<?=base_url('auth')?>">Twitter</a></li>
+              </ul>
             </li>
-            <li>
-              <a href="logout.html">ログアウト</a>
-            </li>
+						<?php } ?>
+
           </ul>
         </div>
       </nav>
