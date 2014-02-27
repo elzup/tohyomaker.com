@@ -1,14 +1,30 @@
 <?php
 
-class User extends CI_Model
+class User_model extends CI_Model
 {
 
-	public $isLogin;
+	private $twitter_connection;
+	/*
+	 * var $info UserObj
+	 */
+	private $info;
 
 	function __construct()
 	{
 		parent::__construct();
+		$this->checkLogin();
 	}
+
+	public function getUser()
+	{
+		return $this->user;
+	}
+
+	public function isLogin()
+	{
+		return !empty($this->twitter_connection);
+	}
+
 
 	function checkLogin()
 	{
@@ -19,13 +35,18 @@ class User extends CI_Model
 
 		if (!empty($access_token))
 		{
-			$connection = new TwitterOAuth($twitter_config['key'], $twitter_config['secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
-			$this->isLogin = true;
+			$this->twitter_connection = new TwitterOAuth($twitter_config['key'], $twitter_config['secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
+			print_r($this->twitter_connection);
 		} else
 		{
 			$this->isLogin = false;
 			return false;
 		}
+	}
+
+	function checkRegister()
+	{
+		
 	}
 
 }

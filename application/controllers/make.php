@@ -10,6 +10,13 @@ class Make extends CI_Controller
 	}
 
 	public function index() {
+		$this->load->model('Survey_model', 'survey', TRUE);
+		$this->load->model('User_model', 'user', TRUE);
+
+
+		/*
+		 * view
+		 */
 		$head_info = array (
 				'title' => '投票作成',
 				'less_name' => 'main',

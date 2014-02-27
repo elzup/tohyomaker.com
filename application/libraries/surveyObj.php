@@ -4,17 +4,31 @@ class SurveyObj
 {
 	/*
 	 * 単票オブジェクトの配列
-	 * _votes Array of Vote
+	 * _votes Array of VoteObj
 	 */
+
 	private $_votes;
 
-	function __construct(array $votes)
+	function __construct(array $votes = null)
 	{
-		parent::__construct();
+		if ($votes)
+		{
+			$this->addVoteAll($votes);
+		}
 	}
 
-	public function addVote(Vote $vote)
+	public function addVoteAll(array $votes)
+	{
+		foreach ($votes as $vote)
+		{
+			/* var $vote VoteObj */
+			$this->_vote[] = $vote;
+		}
+	}
+
+	public function addVote(VoteObj $vote)
 	{
 		$this->_vote[] = $vote;
 	}
+
 }
