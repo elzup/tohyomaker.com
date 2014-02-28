@@ -6,6 +6,7 @@ class Make extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		session_start();
 		$this->load->helper('url');
 	}
 
@@ -22,7 +23,7 @@ class Make extends CI_Controller
 				'less_name' => 'main',
 		);
 		$this->load->view('head', $head_info);
-		$this->load->view('navbar');
+		$this->load->view('navbar', $vars = array('user' => null));
 
 		$this->load->view('foot');
 	}

@@ -12,6 +12,8 @@ class User_model extends CI_Model
 	function __construct()
 	{
 		parent::__construct();
+		define('TBL_USER', 'user_tbl');
+
 		$this->checkLogin();
 	}
 
@@ -25,7 +27,9 @@ class User_model extends CI_Model
 		return !empty($this->twitter_connection);
 	}
 
-
+	/**
+	 * @return bool login successed or failed
+	 */
 	function checkLogin()
 	{
 		$this->config->load('my_twitter');
@@ -37,6 +41,7 @@ class User_model extends CI_Model
 		{
 			$this->twitter_connection = new TwitterOAuth($twitter_config['key'], $twitter_config['secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
 			print_r($this->twitter_connection);
+			$this->checkRegister();
 		} else
 		{
 			$this->isLogin = false;
@@ -46,7 +51,12 @@ class User_model extends CI_Model
 
 	function checkRegister()
 	{
-		
+
+//		$result = $this->db->get(TBL_SURVEY, $where)->result('object');
+	}
+
+	function register() {
+
 	}
 
 }
