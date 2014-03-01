@@ -29,9 +29,9 @@ if ($user == null) {
 						</li>
 						<li class="dropdown">
 						<?php if ($user) {?>
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="login-info"><?=$user->id_twitter?> <span class="caret"></span></a>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="login-info"><?=$user->screen_name?> <span class="caret"></span></a>
               <ul class="dropdown-menu" aria-labelledby="login-info">
-								<li><a href="my.html">マイページ</a></li>
+								<li><a href="my">マイページ</a></li>
                 <!--li class="divider"></li-->
 								<li><a href="<?=base_url('auth/logout')?>">ログアウト</a></li>
               </ul>

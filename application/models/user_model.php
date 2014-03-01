@@ -7,12 +7,13 @@ class User_model extends CI_Model
 	/*
 	 * var $info UserObj
 	 */
-	private $info;
+	private $user;
 
 	function __construct()
 	{
 		parent::__construct();
-		define('TBL_USER', 'user_tbl');
+
+		$this->load->library('userObj');
 
 		$this->checkLogin();
 	}
@@ -37,26 +38,48 @@ class User_model extends CI_Model
 
 		$access_token = $_SESSION['access_token'];
 
-		if (!empty($access_token))
+		if (!empty($access_token['oauth_token']))
 		{
 			$this->twitter_connection = new TwitterOAuth($twitter_config['key'], $twitter_config['secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
-			print_r($this->twitter_connection);
-			$this->checkRegister();
-		} else
-		{
-			$this->isLogin = false;
-			return false;
+			$id_twitter = $access_token['user_id'];
+			$id_user = $this->checkRegister($id_twitter);
+			if ($id_user === FALSE)
+			{
+				$id_user = $this->register($id_twitter);
+				echo $id_user;
+				exit;
+			}
+			$this->user = new UserObj($id_user, $access_token['screen_name'], $id_twitter);
+			return true;
 		}
+		return false;
 	}
 
-	function checkRegister()
+	/**
+	 * 
+	 * @param type $id_twitter
+	 * @return boolean|string id_user
+	 */
+	function checkRegister($id_twitter)
 	{
-
-//		$result = $this->db->get(TBL_SURVEY, $where)->result('object');
+		$where = array('id_twitter' => $id_twitter);
+		$query = $this->db->get_where('user_tbl', $where);
+		$result = $query->result('array');
+		// if not exists return false
+		if (!isset($result[0]['id_user'])) 
+		{
+			return FALSE;
+		}
+		return $result[0]['id_user'];
 	}
 
-	function register() {
-
+	function register($id_twitter)
+	{
+		$data = array(
+				'id_twitter' => $id_twitter,
+		);
+		$this->db->insert('user_tbl', $data);
+		
+		return $this->db->insert_id();
 	}
-
 }

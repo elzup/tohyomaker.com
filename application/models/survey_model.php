@@ -13,8 +13,6 @@ class Survey_model extends CI_Model
 		parent::__construct();
 		$this->load->library('voteObj');
 		$this->load->library('surveyObj');
-		define('TBL_VOTE'  , 'vote_tbl'  );
-		define('TBL_SURVEY', 'survey_tbl');
 	}
 
 	public function getSurvey($id_survey) 

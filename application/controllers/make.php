@@ -7,7 +7,10 @@ class Make extends CI_Controller
 	{
 		parent::__construct();
 		session_start();
+		$this->config->load('my_twitter');
 		$this->load->helper('url');
+		$this->load->helper('func');
+		$this->load->helper('token');
 	}
 
 	public function index() {
@@ -23,8 +26,19 @@ class Make extends CI_Controller
 				'less_name' => 'main',
 		);
 		$this->load->view('head', $head_info);
-		$this->load->view('navbar', $vars = array('user' => null));
+		$this->load->view('navbar', array('user' => $this->user->getUser()));
+
+		$makeform_info = array(
+				'user' => $this->user->getUser(),
+				'token' => set_token(),
+		);
+		$this->load->view('makeform', $makeform_info);
 
 		$this->load->view('foot');
+	}
+
+	public function check()
+	{
+		
 	}
 }

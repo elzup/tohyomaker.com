@@ -1,26 +1,12 @@
 <?php
 
-/*
- * application/helpers/functions.php
- */
-
-if (!function_exists('jump'))
-{
-
-	function jump($path, $parameters = null)
-	{
-		$url = $path . "?" . (empty($parameters) ? "" : http_build_query($parameters));
-		header('Location: ' . $url);
-		exit;
-	}
-
-}
-
-
-
 if (!function_exists('set_token'))
 {
 
+	/**
+	 * 
+	 * @return string|bool
+	 */
 	function set_token()
 	{
 		$token = sha1(uniqid(mt_rand(), true));
