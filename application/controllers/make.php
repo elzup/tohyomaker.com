@@ -11,21 +11,24 @@ class Make extends CI_Controller
 		$this->load->helper('url');
 		$this->load->helper('func');
 		$this->load->helper('token');
-	}
 
-	public function index() {
 		$this->load->model('Survey_model', 'survey', TRUE);
 		$this->load->model('User_model', 'user', TRUE);
+	}
 
+	public function index()
+	{
 
 		/*
 		 * view
 		 */
-		$head_info = array (
-				'title' => '投票作成',
+		$title = '投票作成';
+		$head_info = array(
+				'title' => $title,
 				'less_name' => 'main',
 		);
 		$this->load->view('head', $head_info);
+		$this->load->view('title', array('title' => $title));
 		$this->load->view('navbar', array('user' => $this->user->getUser()));
 
 		$makeform_info = array(
@@ -39,6 +42,28 @@ class Make extends CI_Controller
 
 	public function check()
 	{
-		
+		if ($_SERVER['REQUEST_METHOD'] != 'POST')
+		{
+			// TODO: jump to source page
+			echo "jump";
+		}
+		echo "<pre>";
+		var_dump($_POST);
+		$result = check_token();
+		var_dump($result);
+
+		$title = '投票作成確認';
+		$head_info = array(
+				'title' => $title,
+				'less_name' => 'main',
+		);
+		$this->load->view('head', $head_info);
+		$this->load->view('title', array('title' => $title));
+		$this->load->view('navbar', array('user' => $this->user->getUser()));
+
+		$this->load->view('makeform', $makeform_info);
+
+		$this->load->view('foot');
 	}
+
 }
