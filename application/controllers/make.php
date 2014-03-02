@@ -51,6 +51,7 @@ class Make extends CI_Controller
 		var_dump($_POST);
 		$result = check_token();
 		var_dump($result);
+		exit;
 
 		$title = '投票作成確認';
 		$head_info = array(
@@ -61,6 +62,10 @@ class Make extends CI_Controller
 		$this->load->view('title', array('title' => $title));
 		$this->load->view('navbar', array('user' => $this->user->getUser()));
 
+		$makeform_info = array(
+				'user' => $this->user->getUser(),
+				'data' => $_POST,
+		);
 		$this->load->view('makeform', $makeform_info);
 
 		$this->load->view('foot');

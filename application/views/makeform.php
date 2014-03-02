@@ -70,7 +70,7 @@
 							<div class="col-lg-10">
 								<input type="text" class="form-control" name="tag" id="tag">
 								<span class="help-block">ex.)お菓子,定番,二択 カンマ区切りで指定</span>
-						</div>
+							</div>
 						</div>
 
 						<input type="hidden" name="id_user" value="<?= $user->id ?>">
