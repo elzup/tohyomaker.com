@@ -3,7 +3,7 @@
 	<div class="row">
 		<div class="col-sm-8" id="tagbox-div">
 			<div class="well">
-				<form class="form-horizontal" action="make/check" method="POST">
+				<form class="form-horizontal" action="check" method="POST">
 					<fieldset>
 						<legend>作成フォーム</legend>
 						<div class="form-group">

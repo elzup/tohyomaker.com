@@ -47,11 +47,14 @@ class Make extends CI_Controller
 			// TODO: jump to source page
 			echo "jump";
 		}
-		echo "<pre>";
-		var_dump($_POST);
-		$result = check_token();
-		var_dump($result);
-		exit;
+		if (check_token() === FALSE)
+		{
+			// TODO: token error
+			echo "token error";
+		}
+//		echo "<pre>";
+//		var_dump($_POST);
+//		exit;
 
 		$title = '投票作成確認';
 		$head_info = array(
@@ -62,11 +65,12 @@ class Make extends CI_Controller
 		$this->load->view('title', array('title' => $title));
 		$this->load->view('navbar', array('user' => $this->user->getUser()));
 
-		$makeform_info = array(
+		$makecheck_info = array(
 				'user' => $this->user->getUser(),
 				'data' => $_POST,
+				'token' => set_token(),
 		);
-		$this->load->view('makeform', $makeform_info);
+		$this->load->view('makecheck', $makecheck_info);
 
 		$this->load->view('foot');
 	}

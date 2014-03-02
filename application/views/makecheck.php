@@ -4,23 +4,17 @@
 		<div class="col-sm-8" id="tagbox-div">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<form class="form-horizontal" action="make/regist" method="POST">
+					<form class="form-horizontal" action="../regist" method="POST">
 						<fieldset>
 							<legend>投票作成確認</legend>
 							<div class="form-group">
 								<label for="owner" class="col-lg-2 control-label">作成者</label>
 								<div class="col-lg-10">
 									<div
-										<input type="hidden" class="form-control" id="owner-issecret" value="<?= $user->screen_name ?>" disabled="">
 										<div class="panel panel-default panel-check">
 											<div class="panel-body">
-												<?= $user->screen_name ?>
+												<?= $user->screen_name . (isset($data['is?anonymous']) ? '非公開' : "") ?>
 											</div>
-										</div>
-										<div class="checkbox">
-											<label>
-												<input type="checkbox" name="is_anonymous">匿名(作者非公開)
-											</label>
 										</div>
 									</div>
 								</div>
@@ -33,14 +27,17 @@
 												<?= $data['title'] ?>
 											</div>
 										</div>
-										<input type="hidden" class="form-control" name="title" id="title" placeholder="必須">
 									</div>
 								</div>
 
 								<div class="form-group">
 									<label for="description" class="col-lg-2 control-label">説明</label>
 									<div class="col-lg-10">
-										<textarea class="form-control" name="description" rows="2" id="description"></textarea>
+										<div class="panel panel-default panel-check">
+											<div class="panel-body">
+												<?= $data['description'] ?>
+											</div>
+										</div>
 									</div>
 								</div>
 
@@ -50,7 +47,7 @@
 										<?php
 										for ($i = 1; $i <= 5; $i++)
 										{
-											if (!isset($data["item{$i}"]))
+											if (empty($data["item{$i}"]))
 												continue;
 											?>
 											<div class="panel panel-default panel-check">
@@ -77,7 +74,6 @@
 												?>
 											</div>
 										</div>
-										<input type="hidden" name="timing" id="timing" class="form-control" value="<?= $data['timing'] ?>" />
 									</div>
 								</div>
 							</div>
@@ -91,11 +87,13 @@
 												<?php
 												if (isset($data['tag']))
 												{
-													$tags = explode(',', $data['tags']);
-													foreach ($tas as $tag)
+													$tags = explode(',', $data['tag']);
+													foreach ($tags as $tag)
 													{
+														if (empty($tag))
+															continue;
 														?>
-														<button type="button" class="btn btn-primary btn-xs disabled"><?= $tag ?></button>
+																						<button type="button" class="btn btn-primary btn-xs disabled"><?= $tag ?></button>
 														<?php
 													}
 												} else
@@ -104,15 +102,20 @@
 												}
 												?>
 											</p>
-											<?= $data['title'] ?>
 										</div>
 									</div>
-									<input type="hidden" class="form-control" name="tag" id="tag" value="<?= $data['tag'] ?>">
 								</div>
 							</div>
 
+							<input type="hidden" name="is_anonymous" value="<?= isset($data['is_anonymous']) ? 't' : 'f' ?>">
+							<input type="hidden" name="title" value="<?= $data['title'] ?>">
+							<input type="hidden" name="description" value="<?= $data['description'] ?>"></textarea>
+							<input type="hidden" name="timing" value="<?= $data['timing'] ?>" />
+							<input type="hidden" name="tag" value="<?= $data['tag'] ?>">
+
 							<input type="hidden" name="id_user" value="<?= $user->id ?>">
 							<input type="hidden" name="token" value="<?= $token ?>">
+
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-2">
 									<button class="btn btn-default">Cancel</button>
@@ -126,70 +129,3 @@
 		</div>
  	</div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
