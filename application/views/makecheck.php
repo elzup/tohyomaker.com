@@ -4,7 +4,7 @@
 		<div class="col-lg-offset-2 col-sm-8" id="tagbox-div">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<form class="form-horizontal" action="../regist" method="POST">
+					<form class="form-horizontal" action="<?=base_url('make/regist')?>" method="POST">
 						<fieldset>
 							<legend>投票作成確認</legend>
 							<div class="form-group">
@@ -45,7 +45,7 @@
 									<label for="item1" class="col-lg-2 control-label">項目</label>
 									<div class="col-lg-10">
 										<?php
-										for ($i = 1; $i <= 5; $i++)
+										for ($i = 1; $i <= 10; $i++)
 										{
 											if (empty($data["item{$i}"]))
 												continue;
@@ -89,8 +89,10 @@
 														$tags = explode(',', $data['tag']);
 														foreach ($tags as $tag)
 														{
-															if (empty($tag))
+															if (empty($tag)
+															{
 																continue;
+															}
 															?>
 																								<button type="button" class="btn btn-primary btn-xs disabled"><?= $tag ?></button>
 															<?php
@@ -117,8 +119,9 @@
 
 								<div class="form-group">
 									<div class="col-lg-10 col-lg-offset-2">
-										<button class="btn btn-default">Cancel</button>
-										<button type="submit" class="btn btn-primary">Submit</button>
+										<a href="javascript:window.history.back();" class="btn btn-default">変更</a>
+
+										<button type="submit" class="btn btn-primary">作成</button>
 									</div>
 								</div>
 						</fieldset>

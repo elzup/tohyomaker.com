@@ -40,22 +40,35 @@ class Make extends CI_Controller
 		$this->load->view('foot', array('jss' => array('makeform')));
 	}
 
+	private function check_post(array $data)
+	{
+		$n = 0;
+		for ($i = 1; $i <= 10; $i++)
+		{
+			if (!empty($data["item{$i}"]))
+			{
+				$n++;
+			}
+		}
+		if (empty($data['title']) || $n < 2)
+		{
+			return FALSE;
+		}
+		return TRUE;
+	}
+
 	public function check()
 	{
-		if ($_SERVER['REQUEST_METHOD'] != 'POST')
+		if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') != 'POST' || check_token() === FALSE)
 		{
 			// TODO: jump to source page
-			echo "jump";
+			echo "jump or token error";
 		}
-		if (check_token() === FALSE)
+		if (!$this->check_post(filter_input_array(INPUT_POST)))
 		{
-			// TODO: token error
-			echo "token error";
+			//TODO: error action
+			echo "valiable error";
 		}
-//		echo "<pre>";
-//		var_dump($_POST);
-//		exit;
-
 		$title = '投票作成確認';
 		$head_info = array(
 				'title' => $title,
@@ -67,7 +80,7 @@ class Make extends CI_Controller
 
 		$makecheck_info = array(
 				'user' => $this->user->getUser(),
-				'data' => $_POST,
+				'data' => filter_input_array(INPUT_POST),
 				'token' => set_token(),
 		);
 		$this->load->view('makecheck', $makecheck_info);
@@ -75,4 +88,14 @@ class Make extends CI_Controller
 		$this->load->view('foot');
 	}
 
+	public function regist()
+	{
+		if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') != 'POST' || check_token() === FALSE)
+		{
+			// TODO: jump to source page
+			echo "jump or token error";
+		}
+
+		var_dump(filter_input_array(INPUT_POST));
+	}
 }
