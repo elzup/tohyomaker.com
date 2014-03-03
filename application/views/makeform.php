@@ -1,14 +1,14 @@
 <div class="container">
 	<!-- TODO: include check js file-->
 	<div class="row">
-		<div class="col-sm-8" id="tagbox-div">
+		<div class="col-lg-offset-2 col-sm-8" id="tagbox-div">
 			<div class="well">
 				<form class="form-horizontal" action="check" method="POST">
 					<fieldset>
 						<legend>作成フォーム</legend>
 						<div class="form-group">
 							<label for="owner" class="col-lg-2 control-label">作成者</label>
-							<div class="col-lg-10">
+							<div class="col-lg-8">
 								<input type="text" class="form-control" id="owner-issecret" value="<?= $user->screen_name ?>" disabled="">
 								<div class="checkbox">
 									<label>
@@ -37,12 +37,17 @@
 						<div class="form-group">
 							<label for="item1" class="col-lg-2 control-label">項目</label>
 							<div class="col-lg-10">
-								<input type="text" name="item1" id="item1" class="form-control" />
-								<input type="text" name="item2" id="item2" class="form-control" />
-								<input type="text" name="item3" id="item3" class="form-control" />
-								<input type="text" name="item4" id="item4" class="form-control" />
-								<input type="text" name="item5" id="item5" class="form-control" />
-								<span class="help-block">ex.)きのこ</span>
+								<?php for ($i = 1; $i <= 10; $i++) {?>
+								<div class="input-group">
+									<input type="text" name="item<?=$i?>" id="item<?=$i?>" class="form-control" />
+									<span class="input-group-btn">
+										<button class="btn btn-danger btn-diswitch-off" type="button"><i class="glyphicon glyphicon-remove"></i></button>
+									</span>
+								</div>
+								<button class="btn btn-success btn-diswitch-on" type="button" style="display: none;"><i class="glyphicon glyphicon-plus"></i></button>
+								<?php }?>
+								<span class="help-block">ex.)きのこの山</span>
+								<span class="help-block">ex.)たけのこの里</span>
 							</div>
 						</div>
 

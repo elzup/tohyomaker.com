@@ -1,7 +1,7 @@
 <div class="container">
 	<!-- TODO: include check js file-->
 	<div class="row">
-		<div class="col-sm-8" id="tagbox-div">
+		<div class="col-lg-offset-2 col-sm-8" id="tagbox-div">
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<form class="form-horizontal" action="../regist" method="POST">
@@ -76,52 +76,51 @@
 										</div>
 									</div>
 								</div>
-							</div>
 
-							<div class="form-group">
-								<label for="tag" class="col-lg-2 control-label">タグ</label>
-								<div class="col-lg-10">
-									<div class="panel panel-default panel-check">
-										<div class="panel-body">
-											<p>
-												<?php
-												if (isset($data['tag']))
-												{
-													$tags = explode(',', $data['tag']);
-													foreach ($tags as $tag)
+								<div class="form-group">
+									<label for="tag" class="col-lg-2 control-label">タグ</label>
+									<div class="col-lg-10">
+										<div class="panel panel-default panel-check">
+											<div class="panel-body">
+												<p>
+													<?php
+													if (isset($data['tag']))
 													{
-														if (empty($tag))
-															continue;
-														?>
-																						<button type="button" class="btn btn-primary btn-xs disabled"><?= $tag ?></button>
-														<?php
+														$tags = explode(',', $data['tag']);
+														foreach ($tags as $tag)
+														{
+															if (empty($tag))
+																continue;
+															?>
+																								<button type="button" class="btn btn-primary btn-xs disabled"><?= $tag ?></button>
+															<?php
+														}
+													} else
+													{
+														echo 'no tag';
 													}
-												} else
-												{
-													echo 'no tag';
-												}
-												?>
-											</p>
+													?>
+												</p>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
 
-							<input type="hidden" name="is_anonymous" value="<?= isset($data['is_anonymous']) ? 't' : 'f' ?>">
-							<input type="hidden" name="title" value="<?= $data['title'] ?>">
-							<input type="hidden" name="description" value="<?= $data['description'] ?>"></textarea>
-							<input type="hidden" name="timing" value="<?= $data['timing'] ?>" />
-							<input type="hidden" name="tag" value="<?= $data['tag'] ?>">
+								<input type="hidden" name="is_anonymous" value="<?= isset($data['is_anonymous']) ? 't' : 'f' ?>">
+								<input type="hidden" name="title" value="<?= $data['title'] ?>">
+								<input type="hidden" name="description" value="<?= $data['description'] ?>"></textarea>
+								<input type="hidden" name="timing" value="<?= $data['timing'] ?>" />
+								<input type="hidden" name="tag" value="<?= $data['tag'] ?>">
 
-							<input type="hidden" name="id_user" value="<?= $user->id ?>">
-							<input type="hidden" name="token" value="<?= $token ?>">
+								<input type="hidden" name="id_user" value="<?= $user->id ?>">
+								<input type="hidden" name="token" value="<?= $token ?>">
 
-							<div class="form-group">
-								<div class="col-lg-10 col-lg-offset-2">
-									<button class="btn btn-default">Cancel</button>
-									<button type="submit" class="btn btn-primary">Submit</button>
+								<div class="form-group">
+									<div class="col-lg-10 col-lg-offset-2">
+										<button class="btn btn-default">Cancel</button>
+										<button type="submit" class="btn btn-primary">Submit</button>
+									</div>
 								</div>
-							</div>
 						</fieldset>
 					</form>
 				</div>

@@ -37,7 +37,7 @@ class Make extends CI_Controller
 		);
 		$this->load->view('makeform', $makeform_info);
 
-		$this->load->view('foot');
+		$this->load->view('foot', array('jss' => array('form')));
 	}
 
 	public function check()
