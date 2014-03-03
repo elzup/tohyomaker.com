@@ -91,9 +91,15 @@ class Make extends CI_Controller
 			// TODO: jump to source page
 			echo "jump or token error";
 		}
-		$id = $this->survey->regist(filter_input_array(INPUT_POST));
-		jump(base_url("survey/view/{$id}"));
+		$id = $this->survey->regist(filter_input_array(INPUT_POST), $this->user->get_user()->id);
+		$token = set_token();
+		jump(base_url("make/end/{$id}/{$token}"));
 
 		// TODO: jump to survey page (use id
+	}
+
+	public function end($id_survey, $token)
+	{
+
 	}
 }

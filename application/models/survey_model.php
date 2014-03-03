@@ -39,13 +39,14 @@ class Survey_model extends CI_Model
 		return $result;
 	}
 
-	public function regist(array $data)
+	public function regist(array $data, UserObj $user)
 	{
 		$items = $this->_format_items($data);
 		$record = array(
 				'title' => $data['title'],
 				'discription' => $data['discription'],
 				'num_item' => count($items),
+				'id_user' => $user->id,
 		);
 		$this->db->insert('survey_tbl', $record);
 		$id = $this->db->insert_id();

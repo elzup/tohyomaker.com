@@ -18,7 +18,6 @@ if (!function_exists('jump'))
 		header('Location: ' . $url);
 		exit;
 	}
-
 }
 
 
