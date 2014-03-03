@@ -14,8 +14,19 @@ if (typeof jQuery != "undefined"){
             $(this).parent().prev().val('');
             $(this).parent().parent().next().show();
         });
-        for (var i = bdo.length - 1; i > 3; i--) {
-            $('.btn-diswitch-off:eq(' + i + ')').click();
+        if (!$('#sur-title').val()) {
+            for (var i = bdo.length - 1; i > 3; i--) {
+                $('.btn-diswitch-off:eq(' + i + ')').click();
+            }
+        }
+        else
+        {
+            for (var i = 0; i < bdo.length; i++) {
+                var item = $('.btn-diswitch-off:eq(' + i + ')');
+                if (!item.parent().prev().val()) {
+                    item.click();
+                }
+            }
         }
 
         $("form").change( function () {
@@ -47,7 +58,6 @@ if (typeof jQuery != "undefined"){
                 };
             }
         }
-
     });
 }
 
