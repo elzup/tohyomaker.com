@@ -15,15 +15,15 @@ class User_model extends CI_Model
 
 		$this->load->library('userObj');
 
-		$this->checkLogin();
+		$this->check_login();
 	}
 
-	public function getUser()
+	public function get_user()
 	{
 		return $this->user;
 	}
 
-	public function isLogin()
+	public function is_login()
 	{
 		return !empty($this->twitter_connection);
 	}
@@ -31,7 +31,7 @@ class User_model extends CI_Model
 	/**
 	 * @return bool login successed or failed
 	 */
-	function checkLogin()
+	function check_login()
 	{
 		$this->config->load('my_twitter');
 		$twitter_config = $this->config->item('TWITTER_CONSUMER');
@@ -42,7 +42,7 @@ class User_model extends CI_Model
 		{
 			$this->twitter_connection = new TwitterOAuth($twitter_config['key'], $twitter_config['secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
 			$id_twitter = $access_token['user_id'];
-			$id_user = $this->checkRegister($id_twitter);
+			$id_user = $this->check_register($id_twitter);
 			if ($id_user === FALSE)
 			{
 				$id_user = $this->register($id_twitter);
@@ -60,7 +60,7 @@ class User_model extends CI_Model
 	 * @param type $id_twitter
 	 * @return boolean|string id_user
 	 */
-	function checkRegister($id_twitter)
+	function check_register($id_twitter)
 	{
 		$where = array('id_twitter' => $id_twitter);
 		$query = $this->db->get_where('user_tbl', $where);

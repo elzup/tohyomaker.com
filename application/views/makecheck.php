@@ -4,7 +4,7 @@
 		<div class="col-lg-offset-2 col-sm-8" id="tagbox-div">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<form class="form-horizontal" action="<?=base_url('make/regist')?>" method="POST">
+					<form class="form-horizontal" action="<?= base_url('make/regist') ?>" method="POST">
 						<fieldset>
 							<legend>投票作成確認</legend>
 							<div class="form-group">
@@ -48,14 +48,16 @@
 										for ($i = 1; $i <= 10; $i++)
 										{
 											if (empty($data["item{$i}"]))
+											{
 												continue;
+											}
 											?>
 											<div class="panel panel-default panel-check">
 												<div class="panel-body">
 													<?= $data["item{$i}"] ?>
 												</div>
 											</div>
-											<input type="hidden" name="item<?= $i ?>" id="item1" class="form-control" />
+											<input type="hidden" name="item<?= $i ?>" class="form-control" value="<?= $data["item{$i}"] ?>">
 										<?php } ?>
 									</div>
 								</div>
@@ -89,12 +91,12 @@
 														$tags = explode(',', $data['tag']);
 														foreach ($tags as $tag)
 														{
-															if (empty($tag)
+															if (empty($tag))
 															{
 																continue;
 															}
 															?>
-																								<button type="button" class="btn btn-primary btn-xs disabled"><?= $tag ?></button>
+																										<button type="button" class="btn btn-primary btn-xs disabled"><?= $tag ?></button>
 															<?php
 														}
 													} else
@@ -121,7 +123,7 @@
 									<div class="col-lg-10 col-lg-offset-2">
 										<a href="javascript:window.history.back();" class="btn btn-default">変更</a>
 
-										<button type="submit" class="btn btn-primary">作成</button>
+										<button type="submit-main" class="btn btn-primary">作成</button>
 									</div>
 								</div>
 						</fieldset>

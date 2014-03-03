@@ -29,10 +29,10 @@ class Make extends CI_Controller
 		);
 		$this->load->view('head', $head_info);
 		$this->load->view('title', array('title' => $title));
-		$this->load->view('navbar', array('user' => $this->user->getUser()));
+		$this->load->view('navbar', array('user' => $this->user->get_user()));
 
 		$makeform_info = array(
-				'user' => $this->user->getUser(),
+				'user' => $this->user->get_user(),
 				'token' => set_token(),
 		);
 		$this->load->view('makeform', $makeform_info);
@@ -59,16 +59,12 @@ class Make extends CI_Controller
 
 	public function check()
 	{
-		if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') != 'POST' || check_token() === FALSE)
+		if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->check_post(filter_input_array(INPUT_POST)))
 		{
 			// TODO: jump to source page
-			echo "jump or token error";
+			echo "jump or token error or valieable";
 		}
-		if (!$this->check_post(filter_input_array(INPUT_POST)))
-		{
-			//TODO: error action
-			echo "valiable error";
-		}
+
 		$title = '投票作成確認';
 		$head_info = array(
 				'title' => $title,
@@ -76,10 +72,10 @@ class Make extends CI_Controller
 		);
 		$this->load->view('head', $head_info);
 		$this->load->view('title', array('title' => $title));
-		$this->load->view('navbar', array('user' => $this->user->getUser()));
+		$this->load->view('navbar', array('user' => $this->user->get_user()));
 
 		$makecheck_info = array(
-				'user' => $this->user->getUser(),
+				'user' => $this->user->get_user(),
 				'data' => filter_input_array(INPUT_POST),
 				'token' => set_token(),
 		);
@@ -90,12 +86,14 @@ class Make extends CI_Controller
 
 	public function regist()
 	{
-		if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') != 'POST' || check_token() === FALSE)
+		if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->check_post(filter_input_array(INPUT_POST)))
 		{
 			// TODO: jump to source page
 			echo "jump or token error";
 		}
+		$id = $this->survey->regist(filter_input_array(INPUT_POST));
+		jump(base_url("survey/view/{$id}"));
 
-		var_dump(filter_input_array(INPUT_POST));
+		// TODO: jump to survey page (use id
 	}
 }

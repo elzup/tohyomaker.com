@@ -14,10 +14,26 @@ if (!function_exists('jump'))
 	 */
 	function jump($path, $parameters = null)
 	{
-		$url = $path . "?" . (empty($parameters) ? "" : http_build_query($parameters));
+		$url = $path . (empty($parameters) ? "" : ('?'. http_build_query($parameters)));
 		header('Location: ' . $url);
 		exit;
 	}
+
 }
 
 
+
+if (!function_exists('array_filter_values'))
+{
+
+	/**
+	 * trim empty value and renumber keys
+	 * @param array $array
+	 * @return array result array
+	 */
+	function array_filter_values(array $array)
+	{
+		return array_values(array_filter($array, 'strlen'));
+	}
+
+}
