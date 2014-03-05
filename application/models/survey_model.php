@@ -21,9 +21,38 @@ class Survey_model extends CI_Model
 		$where = array(
 				'id_survey' => $id_survey,
 		);
-		$result = $this->db->get('survey_tbl', $where)->result('object');
-		print_r($result);
+		$result = $this->db->get_where('survey_tbl', $where)->result('object');
+		if (empty($result))
+		{
+			return FALSE;
+		}
+
+		$data = $result[0];
+		$items = $this->select_item($id_survey);
+		$tags = $this->select_tag($id_survey);
+		$survey = new SurveyObj($data, $items, $tags);
+		print_r($survey);
 	}
+
+	public function select_item($id_survey)
+	{
+		return $this->_select_survey_subject($id_survey, 'item_tbl');
+	}
+
+	public function select_tag($id_survey)
+	{
+		return $this->_select_survey_subject($id_survey, 'tag_tbl');
+	}
+
+	private function _select_survey_subject($id_survey, $tblname)
+	{
+		$where = array(
+				'id_survey' => $id_survey,
+		);
+		$result = $this->db->get_where($tblname, $where)->result('object');
+		return $result;
+	}
+
 
 	public function insert_vote(UserObj $user, SurveyObj $survey, VoteObj $vote)
 	{
@@ -35,7 +64,7 @@ class Survey_model extends CI_Model
 		$where = array(
 				'id_survey' => $id_survey,
 		);
-		$result = $this->db->get(TBL_VOTE, $where)->result('VoteObj');
+		$result = $this->db->get_where(TBL_VOTE, $where)->result('VoteObj');
 		return $result;
 	}
 

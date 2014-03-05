@@ -4,7 +4,7 @@ class SurveyObj
 {
 
 	public $id;
-	public $id_user;
+	public $id_owner;
 	public $title;
 	public $discription;
 	public $timestamp;
@@ -15,15 +15,21 @@ class SurveyObj
 	public $tags;
 	public $result;
 
-	function __construct(array $data, array $items = null, $tags = null)
+	function __construct($data = null, array $items = null, $tags = null)
 	{
-		$this->id = $data['id_survey'];
-		$this->user = $data['user'];
-		$this->title = $data['title'];
-		$this->discription = $data['discription'];
-		$this->num_item = $data['num_item'];
-		$this->timestamp = $data['timestamp'];
-		$this->state = $data['state'];
+		if (!isset($data)) return;
+		$this->set($data, $items, $tags);
+	}
+
+	function set($data, array $items = null, $tags = null)
+	{
+		$this->id = $data->id_survey;
+		$this->id_owner = $data->id_user;
+		$this->title = $data->title;
+		$this->discription = $data->discription;
+		$this->num_item = $data->num_item;
+		$this->timestamp = $data->timestamp;
+		$this->state = $data->state;
 		$this->result = array();
 		$this->items = array();
 		$this->tags = array();
