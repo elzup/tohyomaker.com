@@ -11,6 +11,7 @@ class Make extends CI_Controller
 		$this->load->helper('url');
 		$this->load->helper('func');
 		$this->load->helper('token');
+		$this->load->helper('parts');
 
 		$this->load->model('Survey_model', 'survey', TRUE);
 		$this->load->model('User_model', 'user', TRUE);
@@ -80,7 +81,6 @@ class Make extends CI_Controller
 				'token' => set_token(),
 		);
 		$this->load->view('makecheck', $makecheck_info);
-
 		$this->load->view('foot');
 	}
 
@@ -100,6 +100,7 @@ class Make extends CI_Controller
 
 	public function end($id_survey, $token)
 	{
-
+		// TODO: token check
+		// TODO: create views
 	}
 }

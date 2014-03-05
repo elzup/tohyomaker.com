@@ -14,6 +14,7 @@ class Survey extends CI_Controller
 		$this->load->helper('url');
 		$this->load->helper('func');
 		$this->load->helper('token');
+		$this->load->helper('parts');
 
 		$this->load->model('Survey_model', 'survey', TRUE);
 		$this->load->model('User_model', 'user', TRUE);
@@ -27,13 +28,27 @@ class Survey extends CI_Controller
 
 	function vote($id_survey)
 	{
-		echo "<pre>";
+		/* @var $survey SurveyObj */
 		if (($survey = $this->survey->get_survey($id_survey)) === FALSE)
 		{
 			die("no found id : {$id_survey}");
 			// TODO: jump no found page
 		}
-		print_r($survey);
+
+		$title = $survey->title;
+		$head_info = array(
+				'title' => $title,
+				'less_name' => 'main',
+		);
+		$this->load->view('head', $head_info);
+		$this->load->view('title', array('title' => $title));
+		$this->load->view('navbar', array('user' => $this->user->get_user()));
+
+		$vote_info = array(
+				'survey' => $survey,
+		);
+		$this->load->view('vote', $vote_info);
+		$this->load->view('foot');
 	}
 
 	function view($id_survey)

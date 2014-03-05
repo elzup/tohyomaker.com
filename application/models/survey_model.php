@@ -16,6 +16,11 @@ class Survey_model extends CI_Model
 		$this->load->library('surveyObj');
 	}
 
+	/**
+	 * 
+	 * @param type $id_survey
+	 * @return SurveyObj|boolean
+	 */
 	public function get_survey($id_survey)
 	{
 		$where = array(
@@ -30,8 +35,7 @@ class Survey_model extends CI_Model
 		$data = $result[0];
 		$items = $this->select_item($id_survey);
 		$tags = $this->select_tag($id_survey);
-		$survey = new SurveyObj($data, $items, $tags);
-		print_r($survey);
+		return new SurveyObj($data, $items, $tags);
 	}
 
 	public function select_item($id_survey)
@@ -52,7 +56,6 @@ class Survey_model extends CI_Model
 		$result = $this->db->get_where($tblname, $where)->result('object');
 		return $result;
 	}
-
 
 	public function insert_vote(UserObj $user, SurveyObj $survey, VoteObj $vote)
 	{
