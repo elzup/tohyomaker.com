@@ -2,33 +2,59 @@
 
 class SurveyObj
 {
-	/*
-	 * 単票オブジェクトの配列
-	 * _votes Array of VoteObj
-	 */
 
-	private $_votes;
+	public $id;
+	public $id_user;
+	public $title;
+	public $discription;
+	public $timestamp;
+	public $state;
+	public $num_item;
 
-	function __construct(array $votes = null)
+	public $items;
+	public $tags;
+	public $result;
+
+	function __construct(array $data, array $items = null, $tags = null)
 	{
-		if ($votes)
+		$this->id = $data['id_survey'];
+		$this->user = $data['user'];
+		$this->title = $data['title'];
+		$this->discription = $data['discription'];
+		$this->num_item = $data['num_item'];
+		$this->timestamp = $data['timestamp'];
+		$this->state = $data['state'];
+		$this->result = array();
+		$this->items = array();
+		$this->tags = array();
+		for ($i = 0; $i < $this->num_item; $i++)
 		{
-			$this->addVoteAll($votes);
+			$this->result[$i] = 0;
+		}
+		if (isset($items))
+		{
+			$this->set_item($items);
+		}
+		if (isset($tags))
+		{
+			$this->set_tag($tags);
 		}
 	}
 
-	public function addVoteAll(array $votes)
+	public function set_item($items)
 	{
-		foreach ($votes as $vote)
+		foreach ($items as $item)
 		{
-			/* var $vote VoteObj */
-			$this->_vote[] = $vote;
+			$this->items[$item->index] = $item->value;
+			$this->result[$item->index]    = $item->num;
 		}
 	}
 
-	public function addVote(VoteObj $vote)
+	public function set_tag($tags)
 	{
-		$this->_vote[] = $vote;
+		foreach ($tags as $tag)
+		{
+			$this->tags[] = $tag->value;
+		}
 	}
-
 }
