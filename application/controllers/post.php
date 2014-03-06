@@ -3,7 +3,7 @@
 class Post extends CI_Controller
 {
 
-	public function __construct(
+	public function __construct()
 	{
 		parent::__construct();
 	}
@@ -12,7 +12,6 @@ class Post extends CI_Controller
 	{
 		echo "start post page\n";
 		$this->load->model('Survey_model', 'survey', TRUE);
-		$this->survey->
 	}
 }
 

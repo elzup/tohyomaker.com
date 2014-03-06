@@ -76,7 +76,7 @@ class Survey_model extends CI_Model
 		$items = $this->_format_items($data);
 		$record = array(
 				'title' => $data['title'],
-				'discription' => $data['discription'],
+				'description' => $data['description'],
 				'num_item' => count($items),
 				'id_user' => $user->id,
 		);

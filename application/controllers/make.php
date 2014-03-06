@@ -91,16 +91,41 @@ class Make extends CI_Controller
 			// TODO: jump to source page
 			echo "jump or token error";
 		}
-		$id = $this->survey->regist(filter_input_array(INPUT_POST), $this->user->get_user()->id);
+		$id_survey = $this->survey->regist(filter_input_array(INPUT_POST), $this->user->get_user());
 		$token = set_token();
-		jump(base_url("make/end/{$id}/{$token}"));
+		jump(base_url("make/end/{$id_survey}/{$token}"));
 
 		// TODO: jump to survey page (use id
 	}
 
-	public function end($id_survey, $token)
+	public function end($id_survey = NULL, $token = NULL)
 	{
-		// TODO: token check
+		// TODO: reset
+//		if (!isset($id_survey) || !isset($token) || check_token($token) === FALSE)
+		if (!isset($id_survey))
+		{
+			//TODL: jump to error action
+			die('error');
+		}
+
+		/* @var $survey SurveyObj */
+		if (($survey = $this->survey->get_survey($id_survey)) === FALSE)
+		{
+			die("no found id : {$id_survey}");
+			// TODO: jump no found page
+		}
+
 		// TODO: create views
+		$title = '投票作成完了';
+		$head_info = array(
+				'title' => $title,
+				'less_name' => 'main',
+		);
+		$this->load->view('head', $head_info);
+		$this->load->view('title', array('title' => $title));
+		$this->load->view('navbar', array('user' => $this->user->get_user()));
+
+		$this->load->view('makeend', array('survey' => $survey));
+		$this->load->view('foot');
 	}
 }

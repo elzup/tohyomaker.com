@@ -26,8 +26,13 @@ class Survey extends CI_Controller
 		echo 'index on survey';
 	}
 
-	function vote($id_survey)
+	function vote ($id_survey = NULL)
 	{
+		if (!isset($id_survey))
+		{
+			die('no id_survey');
+			// TODO: error action
+		}
 		/* @var $survey SurveyObj */
 		if (($survey = $this->survey->get_survey($id_survey)) === FALSE)
 		{

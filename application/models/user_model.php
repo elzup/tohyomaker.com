@@ -18,6 +18,10 @@ class User_model extends CI_Model
 		$this->check_login();
 	}
 
+	/**
+	 * 
+	 * @return UserObj
+	 */
 	public function get_user()
 	{
 		return $this->user;

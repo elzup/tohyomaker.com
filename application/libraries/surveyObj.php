@@ -6,7 +6,7 @@ class SurveyObj
 	public $id;
 	public $id_owner;
 	public $title;
-	public $discription;
+	public $description;
 	public $timestamp;
 	public $state;
 	public $num_item;
@@ -26,7 +26,7 @@ class SurveyObj
 		$this->id = $data->id_survey;
 		$this->id_owner = $data->id_user;
 		$this->title = $data->title;
-		$this->discription = $data->discription;
+		$this->description = (empty($data->description) ? '' : $data->description);
 		$this->num_item = $data->num_item;
 		$this->timestamp = $data->timestamp;
 		$this->state = $data->state;
