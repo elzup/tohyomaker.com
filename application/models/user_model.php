@@ -4,8 +4,9 @@ class User_model extends CI_Model
 {
 
 	private $twitter_connection;
-	/*
-	 * var $info UserObj
+
+	/**
+	 * @var $user UesrObj
 	 */
 	private $user;
 
@@ -54,6 +55,7 @@ class User_model extends CI_Model
 				exit;
 			}
 			$this->user = new UserObj($id_user, $access_token['screen_name'], $id_twitter);
+			$this->update_last_sn_main();
 			return true;
 		}
 		return false;
@@ -70,7 +72,7 @@ class User_model extends CI_Model
 		$query = $this->db->get_where('user_tbl', $where);
 		$result = $query->result('array');
 		// if not exists return false
-		if (!isset($result[0]['id_user'])) 
+		if (!isset($result[0]['id_user']))
 		{
 			return FALSE;
 		}
@@ -83,7 +85,26 @@ class User_model extends CI_Model
 				'id_twitter' => $id_twitter,
 		);
 		$this->db->insert('user_tbl', $data);
-		
+
 		return $this->db->insert_id();
+	}
+
+	function update_last_sn_main()
+	{
+		if (!$this->is_login())
+		{
+			return FALSE;
+		}
+		$this->update_last_sn($this->user->id, $this->user->screen_name);
+		return TRUE;
+	}
+
+	function update_last_sn($id_user, $sn)
+	{
+		$data = array(
+				'sn_last' => $sn,
+		);
+		$this->db->where('id_user', $id_user);
+		$this->db->update('user_tbl', $data);
 	}
 }

@@ -35,7 +35,15 @@ class Survey_model extends CI_Model
 		$data = $result[0];
 		$items = $this->select_item($id_survey);
 		$tags = $this->select_tag($id_survey);
-		return new SurveyObj($data, $items, $tags);
+		$owner = $this->select_user_simple($data->id_user);
+		return new SurveyObj($data, $items, $tags, $owner);
+	}
+
+	public function select_user_simple ($id_user)
+	{
+		$this->db->where('id_user', $id_user);
+		$result = $this->db->get('user_tbl')->result();
+		return new UserObj($id_user, $result[0]->sn_last, $result[0]->id_twitter);
 	}
 
 	public function select_item($id_survey)

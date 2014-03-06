@@ -39,6 +39,9 @@ class Survey extends CI_Controller
 			die("no found id : {$id_survey}");
 			// TODO: jump no found page
 		}
+//		echo '<pre>';
+//		var_dump($survey);
+//		exit;
 
 		$title = $survey->title;
 		$head_info = array(
@@ -51,8 +54,9 @@ class Survey extends CI_Controller
 
 		$vote_info = array(
 				'survey' => $survey,
+				'type' => 0,
 		);
-		$this->load->view('vote', $vote_info);
+		$this->load->view('surveyhead', $vote_info);
 		$this->load->view('foot');
 	}
 

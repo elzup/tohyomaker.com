@@ -4,27 +4,31 @@ class SurveyObj
 {
 
 	public $id;
-	public $id_owner;
 	public $title;
 	public $description;
 	public $timestamp;
 	public $state;
 	public $num_item;
 
+	/**
+	 *
+	 * @var owner UserObj
+	 */
+	public $owner;
 	public $items;
 	public $tags;
 	public $result;
 
-	function __construct($data = null, array $items = null, $tags = null)
+	function __construct($data = NULL, array $items = NULL, $tags = NULL, $owner = NULL)
 	{
-		if (!isset($data)) return;
-		$this->set($data, $items, $tags);
+		if (!isset($data))
+			return;
+		$this->set($data, $items, $tags, $owner);
 	}
 
-	function set($data, array $items = null, $tags = null)
+	function set($data, array $items = NULL, $tags = NULL, $owner = NULL)
 	{
 		$this->id = $data->id_survey;
-		$this->id_owner = $data->id_user;
 		$this->title = $data->title;
 		$this->description = (empty($data->description) ? '' : $data->description);
 		$this->num_item = $data->num_item;
@@ -33,6 +37,12 @@ class SurveyObj
 		$this->result = array();
 		$this->items = array();
 		$this->tags = array();
+
+		for ($i = 0; $i < $this->num_item; $i++)
+		{
+			$this->owner = $owner;
+		}
+
 		for ($i = 0; $i < $this->num_item; $i++)
 		{
 			$this->result[$i] = 0;
@@ -52,7 +62,7 @@ class SurveyObj
 		foreach ($items as $item)
 		{
 			$this->items[$item->index] = $item->value;
-			$this->result[$item->index]    = $item->num;
+			$this->result[$item->index] = $item->num;
 		}
 	}
 
@@ -63,4 +73,10 @@ class SurveyObj
 			$this->tags[] = $tag->value;
 		}
 	}
+
+	public function get_time()
+	{
+		return $this->timestamp;
+	}
+
 }
