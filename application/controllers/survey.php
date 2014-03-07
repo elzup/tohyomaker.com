@@ -26,7 +26,7 @@ class Survey extends CI_Controller
 		echo 'index on survey';
 	}
 
-	function vote ($id_survey = NULL)
+	function vote ($id_survey = NULL, $select = NULL)
 	{
 		if (!isset($id_survey))
 		{
@@ -51,12 +51,17 @@ class Survey extends CI_Controller
 		$this->load->view('head', $head_info);
 		$this->load->view('title', array('title' => $title));
 		$this->load->view('navbar', array('user' => $this->user->get_user()));
-
-		$vote_info = array(
+		$surveyhead_info = array(
 				'survey' => $survey,
 				'type' => 0,
 		);
-		$this->load->view('surveyhead', $vote_info);
+		$this->load->view('surveyhead', $surveyhead_info);
+		$surveyselectform_info = array(
+				'survey' => $survey,
+				'token' => set_token(),
+				'select' => $select,
+		);
+		$this->load->view('surveyselectform', $surveyselectform_info);
 		$this->load->view('foot');
 	}
 
