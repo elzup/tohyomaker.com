@@ -49,7 +49,7 @@ class Survey extends CI_Controller
 				'less_name' => 'main',
 		);
 		$this->load->view('head', $head_info);
-		$this->load->view('title', array('title' => $title));
+		$this->load->view('title', array('title' => $title, 'offset' => 0));
 		$this->load->view('navbar', array('user' => $this->user->get_user()));
 		$surveyhead_info = array(
 				'survey' => $survey,
@@ -62,7 +62,7 @@ class Survey extends CI_Controller
 				'select' => $select,
 		);
 		$this->load->view('surveyselectform', $surveyselectform_info);
-		$this->load->view('foot');
+		$this->load->view('foot', array('jss' => array('selectform')));
 	}
 
 	function view($id_survey)

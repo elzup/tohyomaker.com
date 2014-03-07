@@ -9,6 +9,7 @@ class SurveyObj
 	public $timestamp;
 	public $state;
 	public $num_item;
+	// TODO: add target Column
 
 	/**
 	 *
