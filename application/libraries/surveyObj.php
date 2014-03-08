@@ -13,7 +13,7 @@ class SurveyObj
 
 	/**
 	 *
-	 * @var owner UserObj
+	 * @var UserObj
 	 */
 	public $owner;
 	public $items;

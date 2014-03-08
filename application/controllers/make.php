@@ -41,7 +41,7 @@ class Make extends CI_Controller
 		$this->load->view('foot', array('jss' => array('makeform')));
 	}
 
-	private function check_post(array $data)
+	private function _check_post(array $data)
 	{
 		$n = 0;
 		for ($i = 1; $i <= 10; $i++)
@@ -60,7 +60,7 @@ class Make extends CI_Controller
 
 	public function check()
 	{
-		if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->check_post(filter_input_array(INPUT_POST)))
+		if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->_check_post(filter_input_array(INPUT_POST)))
 		{
 			// TODO: jump to source page
 			echo "jump or token error or valieable";
@@ -86,7 +86,7 @@ class Make extends CI_Controller
 
 	public function regist()
 	{
-		if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->check_post(filter_input_array(INPUT_POST)))
+		if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->_check_post(filter_input_array(INPUT_POST)))
 		{
 			// TODO: jump to source page
 			echo "jump or token error";

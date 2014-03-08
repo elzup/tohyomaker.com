@@ -65,9 +65,19 @@ class Survey_model extends CI_Model
 		return $result;
 	}
 
-	public function insert_vote(UserObj $user, SurveyObj $survey, VoteObj $vote)
+	public function insert_vote(SurveyObj $survey, UserObj $user, $value)
 	{
-		$this->db->insert(vote_tbl, $vote->toArray());
+		$data = array(
+				'id_survey' => $survey->id,
+				'id_user' => $user->id,
+		);
+		$result = $this->db->get_where($data)->result();
+		if (!empty($result))
+		{
+			return FALSE;
+		}
+		$this->db->insert(vote_tbl, $data);
+		return TRUE;
 	}
 
 	private function _get_votes($id_survey)

@@ -3,8 +3,15 @@
 //投票ページ
 class Survey extends CI_Controller
 {
-	/* @var $survey Survey_model */
-	/* @var $user Survey_model */
+	/**
+	 *
+	 * @var Survey_model
+	 */
+	public $survey;
+	/**
+	 * @var User_model
+	 */
+	public $user;
 
 	public function __construct()
 	{
@@ -24,6 +31,23 @@ class Survey extends CI_Controller
 	{
 		// TODO: jump vote page
 		echo 'index on survey';
+	}
+
+	private function _check_post(array $data)
+	{
+		$n = 0;
+		for ($i = 1; $i <= 10; $i++)
+		{
+			if (!empty($data["item{$i}"]))
+			{
+				$n++;
+			}
+		}
+		if (empty($data['title']) || $n < 2)
+		{
+			return FALSE;
+		}
+		return TRUE;
 	}
 
 	function vote ($id_survey = NULL, $select = NULL)
@@ -68,6 +92,26 @@ class Survey extends CI_Controller
 	function view($id_survey)
 	{
 		
+	}
+
+	function regist($id_survey = NULL)
+	{
+		if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->check_post(filter_input_array(INPUT_POST)) || !isset($id_survey))
+		{
+			// TODO: error action
+			die('error: not post request, wrong token, wrong postdata');
+		}
+		
+		/* @var $survey SurveyObj */
+		if (($survey = $this->survey->get_survey($id_survey)) === FALSE)
+		{
+			// TODO: jump no found page
+			die("no found id : {$id_survey}");
+		}
+		$user = $this->user->get_user();
+		$value = filter_input(INPUT_POST, 'vote_value');
+		$this->survey->insert_vote($survey, $user, $value);
+		echo 'vote registed';
 	}
 
 	public function info($id_survey)
