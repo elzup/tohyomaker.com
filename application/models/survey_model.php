@@ -65,19 +65,40 @@ class Survey_model extends CI_Model
 		return $result;
 	}
 
+	/**
+	 * 
+	 * @param SurveyObj $survey
+	 * @param UserObj $user
+	 * @param type $value
+	 * @return boolean
+	 */
 	public function insert_vote(SurveyObj $survey, UserObj $user, $value)
 	{
-		$data = array(
-				'id_survey' => $survey->id,
-				'id_user' => $user->id,
-		);
-		$result = $this->db->get_where($data)->result();
-		if (!empty($result))
+		if (($result = $this->check_voted($survey, $user)) === FALSE)
 		{
 			return FALSE;
 		}
+		$data = array(
+				'id_survey' => $survey->id,
+				'id_user' => $user->id,
+				'value' => $value,
+		);
 		$this->db->insert(vote_tbl, $data);
 		return TRUE;
+	}
+
+	/**
+	 * check user already voted or never
+	 * @param SurveyObj $survey
+	 * @param UserObj $user
+	 * @return boolean
+	 */
+	public function check_voted(SurveyObj $survey, UserObj $user)
+	{
+		$this->db->where('id_survey', $survey->id);
+		$this->db->where('id_user', $user->id);
+		$result = $this->db->get('vote_tbl')->result();
+		return isset($result);
 	}
 
 	private function _get_votes($id_survey)

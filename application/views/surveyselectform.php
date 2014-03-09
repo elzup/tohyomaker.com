@@ -3,6 +3,7 @@
  * @var $survey SurveyObj
  * @var $token string
  * @var $select int
+ * @var $is_voted
  */
 ?>
 

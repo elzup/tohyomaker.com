@@ -66,6 +66,8 @@ class Survey extends CI_Controller
 //		echo '<pre>';
 //		var_dump($survey);
 //		exit;
+		$is_voted = $this->survey->check_voted($survey, $this->user->get_user());
+
 
 		$title = $survey->title;
 		$head_info = array(
@@ -84,6 +86,7 @@ class Survey extends CI_Controller
 				'survey' => $survey,
 				'token' => set_token(),
 				'select' => $select,
+				'is_voted' => $is_voted,
 		);
 		$this->load->view('surveyselectform', $surveyselectform_info);
 		$this->load->view('foot', array('jss' => array('selectform')));
