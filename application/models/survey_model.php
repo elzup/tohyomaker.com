@@ -83,7 +83,7 @@ class Survey_model extends CI_Model
 				'id_user' => $user->id,
 				'value' => $value,
 		);
-		$this->db->insert(vote_tbl, $data);
+		$this->db->insert('vote_tbl', $data);
 		return TRUE;
 	}
 
@@ -91,14 +91,18 @@ class Survey_model extends CI_Model
 	 * check user already voted or never
 	 * @param SurveyObj $survey
 	 * @param UserObj $user
-	 * @return boolean
+	 * @return boolean|int false or vote_value
 	 */
 	public function check_voted(SurveyObj $survey, UserObj $user)
 	{
 		$this->db->where('id_survey', $survey->id);
 		$this->db->where('id_user', $user->id);
 		$result = $this->db->get('vote_tbl')->result();
-		return isset($result);
+		if (!isset($result[0]))
+		{
+			return FALSE;
+		}
+		return $result[0]->value;
 	}
 
 	private function _get_votes($id_survey)

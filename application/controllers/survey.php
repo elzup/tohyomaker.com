@@ -3,11 +3,13 @@
 //投票ページ
 class Survey extends CI_Controller
 {
+
 	/**
 	 *
 	 * @var Survey_model
 	 */
 	public $survey;
+
 	/**
 	 * @var User_model
 	 */
@@ -22,6 +24,7 @@ class Survey extends CI_Controller
 		$this->load->helper('func');
 		$this->load->helper('token');
 		$this->load->helper('parts');
+		$this->load->helper('text');
 
 		$this->load->model('Survey_model', 'survey', TRUE);
 		$this->load->model('User_model', 'user', TRUE);
@@ -35,22 +38,14 @@ class Survey extends CI_Controller
 
 	private function _check_post(array $data)
 	{
-		$n = 0;
-		for ($i = 1; $i <= 10; $i++)
-		{
-			if (!empty($data["item{$i}"]))
-			{
-				$n++;
-			}
-		}
-		if (empty($data['title']) || $n < 2)
+		if (empty($data['vote-value']))
 		{
 			return FALSE;
 		}
 		return TRUE;
 	}
 
-	function vote ($id_survey = NULL, $select = NULL)
+	function vote($id_survey = NULL, $select = NULL)
 	{
 		if (!isset($id_survey))
 		{
@@ -66,9 +61,12 @@ class Survey extends CI_Controller
 //		echo '<pre>';
 //		var_dump($survey);
 //		exit;
-		$is_voted = $this->survey->check_voted($survey, $this->user->get_user());
-
-
+		$voted_value = $this->survey->check_voted($survey, $this->user->get_user());
+		$is_voted = !!$voted_value;
+		if ($is_voted) 
+		{
+			$select = $voted_value;
+		}
 		$title = $survey->title;
 		$head_info = array(
 				'title' => $title,
@@ -99,12 +97,12 @@ class Survey extends CI_Controller
 
 	function regist($id_survey = NULL)
 	{
-		if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->check_post(filter_input_array(INPUT_POST)) || !isset($id_survey))
+		if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->_check_post(filter_input_array(INPUT_POST)) || !isset($id_survey))
 		{
 			// TODO: error action
 			die('error: not post request, wrong token, wrong postdata');
 		}
-		
+
 		/* @var $survey SurveyObj */
 		if (($survey = $this->survey->get_survey($id_survey)) === FALSE)
 		{
@@ -112,7 +110,7 @@ class Survey extends CI_Controller
 			die("no found id : {$id_survey}");
 		}
 		$user = $this->user->get_user();
-		$value = filter_input(INPUT_POST, 'vote_value');
+		$value = filter_input(INPUT_POST, 'vote-value');
 		$this->survey->insert_vote($survey, $user, $value);
 		echo 'vote registed';
 	}
