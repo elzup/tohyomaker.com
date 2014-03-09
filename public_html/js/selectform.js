@@ -6,7 +6,8 @@ if (typeof jQuery != "undefined"){
         $(".btn-item").click(function() {
             $("#vote-value").val($(this).attr('name'));
             $(".btn-item").removeClass('active');
-            $('#' + $(this).id).addClass("active");
+            $(".btn-item").removeClass('btn-info');
+            $(this).addClass('btn-info');
             $("#submit-main").removeClass('disabled');
         }); 
         $(".active.btn-item").click();

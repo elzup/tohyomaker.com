@@ -111,8 +111,13 @@ class Survey extends CI_Controller
 		}
 		$user = $this->user->get_user();
 		$value = filter_input(INPUT_POST, 'vote-value');
-		$this->survey->insert_vote($survey, $user, $value);
-		echo 'vote registed';
+		if ($this->survey->insert_vote($survey, $user, $value) === FALSE)
+		{
+			var_dump($this->db->message());
+			die('failed query');
+		}
+		// TODO: set cookie
+		jump(base_url($id_survey));
 	}
 
 	public function info($id_survey)

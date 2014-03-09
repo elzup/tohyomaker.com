@@ -74,7 +74,7 @@ class Survey_model extends CI_Model
 	 */
 	public function insert_vote(SurveyObj $survey, UserObj $user, $value)
 	{
-		if (($result = $this->check_voted($survey, $user)) === FALSE)
+		if (($result = $this->check_voted($survey, $user)) !== FALSE)
 		{
 			return FALSE;
 		}

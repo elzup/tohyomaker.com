@@ -12,10 +12,11 @@
 					<?php
 					foreach ($survey->items as $i => $item)
 					{
-						$selected = (isset($select) && $i == $select) ? ' active' : '';
-						$selected .= (($is_voted) ? ' disabled' : '');
+						// btn state define page loaded start view
+						$add_class = ($is_voted ? ' disabled' : '');
+						$add_class .= (isset($select) && $i == $select) ? ' btn-info'. ($is_voted ? '' : ' active' ) : '';
 						?>
-						<li><button type="button" id="item<?= $i ?>" name="<?= $i ?>" class="btn btn-item btn-lg btn-block btn-default<?= $selected ?>"><?= $item ?></button></li>
+						<li><button type="button" id="item<?= $i ?>" name="<?= $i ?>" class="btn btn-item btn-lg btn-block btn-default<?= $add_class ?>"><?= $item ?></button></li>
 					<?php } ?>
 				</ul>
 			</div>
@@ -23,10 +24,8 @@
 	</div>
 
 	<div class="row">
-		<?php
-		$hide = (!$is_voted ? '' : ' style="display: none"');
-		?>
-		<form target="hide-frame" action="<?= base_url("survey/regist/{$survey->id}") ?>" method="POST"<?= $hide ?>>
+		<?php if (!$is_voted) { ?>
+		<form action="<?= base_url("survey/regist/{$survey->id}") ?>" method="POST">
 			<!--div class="col-sm-offset-2 col-sm-6" id="text-div">
 				<textarea name="vote-text" id="vote-textarea" rows="3"></textarea>
 			</div-->
@@ -37,26 +36,37 @@
 			</div>
 		</form>
 		<?php
-		$hide2 = ($is_voted ? '' : ' style="display: none"');
+		} else {
+		if ($is_voted)
+		{
+			$share_uri = base_url($survey->id);
+			$share_text = totext_share($survey->items[$select], $survey->title, $share_uri);
+		}
 		?>
-		<div class="col-sm-offset-2 col-sm-8" id="voteend-div"<?= $hide2 ?>>
+		<div class="col-sm-offset-2 col-sm-8" id="voteend-div">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title"><?= totext_voted($survey->items[$select])?></h3>
+					<h3 class="panel-title"><?= totext_voted($survey->items[$select]) ?></h3>
 				</div>
 				<div class="panel-body">
 					<div class="input-group">
 						<!--span class="input-group-addon">#</span-->
-						<input type="text" class="form-control" value="<?= totext_share($survey->items[$select], $survey->title, base_url($survey->id))?>">
+						<input type="text" class="form-control" value="<?= $share_text ?>">
 						<span class="input-group-btn">
 							<button class="btn btn-default" type="button" title="" data-original-title="クリップボードにコピー"><i class="glyphicon glyphicon-file"></i></button>
 						</span>
+					</div>
+					<div class="sharebtns-div">
+						<p>
+							<?php sharebtn_twitter($share_text, $share_uri) ?>
+						</p>
 					</div>
 				</div>
 				<div class="panel-footer">
 				</div>
 			</div>
 		</div>
-		<iframe name="hide-frame" class=""></iframe>
+		<?php }?>
+		<iframe name="hide-frame" class="no-display"></iframe>
 	</div>
 </div>

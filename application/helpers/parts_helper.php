@@ -31,3 +31,16 @@ if (!function_exists('surveypane'))
 <?php
 	}
 }
+
+if (!function_exists('sharebtn_twitter'))
+{
+	function sharebtn_twitter($text, $uri) {
+		?>
+<a href="http://twitter.com/share" class="twitter-share-button"
+   data-url="<?=$uri?>"
+   data-text="<?=$text?>"
+   data-count="horizontal"
+   data-lang="ja">Tweet</a>
+<?php
+	}
+}
