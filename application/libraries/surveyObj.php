@@ -9,7 +9,8 @@ class SurveyObj
 	public $timestamp;
 	public $state;
 	public $num_item;
-	// TODO: add target Column
+	public $is_anonymous;
+	public $target;
 
 	/**
 	 *
@@ -29,15 +30,18 @@ class SurveyObj
 
 	function set($data, array $items = NULL, $tags = NULL, $owner = NULL)
 	{
-		$this->id = $data->id_survey;
-		$this->title = $data->title;
-		$this->description = (empty($data->description) ? '' : $data->description);
-		$this->num_item = $data->num_item;
-		$this->timestamp = $data->timestamp;
-		$this->state = $data->state;
+		$this->id           = $data->id_survey;
+		$this->title        = $data->title;
+		$this->target       = (empty($data->target) ? '' : $data->target);
+		$this->description  = (empty($data->description) ? '' : $data->description);
+		$this->num_item     = $data->num_item;
+		$this->timestamp    = $data->timestamp;
+		$this->state        = $data->state;
+		$this->is_anonymous = empty($data->is_anonymous);
+
 		$this->result = array();
-		$this->items = array();
-		$this->tags = array();
+		$this->items  = array();
+		$this->tags   = array();
 
 		for ($i = 0; $i < $this->num_item; $i++)
 		{
@@ -75,9 +79,18 @@ class SurveyObj
 		}
 	}
 
+	public function get_total()
+	{
+		return array_sum($this->result);
+	}
+
+	public function get_text_items($glue = ' / ')
+	{
+		return implode($glue, $this->items);
+	}
+
 	public function get_time()
 	{
 		return $this->timestamp;
 	}
-
 }
