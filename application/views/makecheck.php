@@ -13,7 +13,7 @@
 									<div
 										<div class="panel panel-default panel-check">
 											<div class="panel-body">
-												<?= $user->screen_name . (isset($data['is?anonymous']) ? '非公開' : "") ?>
+												<?= $user->screen_name . (isset($data['is_anonymous']) ? '(非公開)' : "") ?>
 											</div>
 										</div>
 									</div>
@@ -25,6 +25,17 @@
 										<div class="panel panel-default panel-check">
 											<div class="panel-body">
 												<?= $data['title'] ?>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="target" class="col-lg-2 control-label">対象</label>
+									<div class="col-lg-10">
+										<div class="panel panel-default panel-check">
+											<div class="panel-body">
+												<?= (isset($data['target']) ? '全員': $data['target']) ?>
 											</div>
 										</div>
 									</div>
@@ -62,22 +73,22 @@
 									</div>
 								</div>
 
-								<div class="form-group">
-									<label class="col-lg-2 control-label">集計ポイント</label>
+								<!--div class="form-group">
+									<label class="col-lg-2 control-label">集計期間</label>
 									<div class="col-lg-10">
 										<div class="panel panel-default panel-check">
 											<div class="panel-body">
-												<?php
-												$text = array(
-														'a' => '1時間後に集計結果を記録して残します',
-														'b' => '24時間後に集計結果を記録して残します',
-												);
-												echo $text[$data['timing']];
-												?>
+								<?php
+								$text = array(
+										'a' => ' 1時間で締め切ります',
+										'b' => '24時間で締め切ります',
+								);
+								echo $text[$data['timing']];
+								?>
 											</div>
 										</div>
 									</div>
-								</div>
+								</div-->
 
 								<div class="form-group">
 									<label for="tag" class="col-lg-2 control-label">タグ</label>
@@ -96,7 +107,7 @@
 																continue;
 															}
 															?>
-																										<button type="button" class="btn btn-primary btn-xs disabled"><?= $tag ?></button>
+																<button type="button" class="btn btn-primary btn-xs disabled"><?= $tag ?></button>
 															<?php
 														}
 													} else
@@ -110,14 +121,15 @@
 									</div>
 								</div>
 
-								<input type="hidden" name="is_anonymous" value="<?= isset($data['is_anonymous']) ? 't' : 'f' ?>">
-								<input type="hidden" name="title" value="<?= $data['title'] ?>">
-								<input type="hidden" name="description" value="<?= $data['description'] ?>"></textarea>
-								<input type="hidden" name="timing" value="<?= $data['timing'] ?>" />
-								<input type="hidden" name="tag" value="<?= $data['tag'] ?>">
+								<input type="hidden" name="is_anonymous" value="<?= isset($data['is_anonymous']) ? '1' : '0' ?>">
+								<input type="hidden" name="title"        value="<?= $data['title'] ?>">
+								<input type="hidden" name="target"       value="<?= $data['target'] ?>">
+								<input type="hidden" name="description"  value="<?= $data['description'] ?>">
+								<!--input type="hidden" name="timing"    value=""-->
+								<input type="hidden" name="tag"          value="<?= $data['tag'] ?>">
 
 								<input type="hidden" name="id_user" value="<?= $user->id ?>">
-								<input type="hidden" name="token" value="<?= $token ?>">
+								<input type="hidden" name="token"   value="<?= $token ?>">
 
 								<div class="form-group">
 									<div class="col-lg-10 col-lg-offset-2">

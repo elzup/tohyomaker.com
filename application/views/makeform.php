@@ -27,9 +27,17 @@
 						</div>
 
 						<div class="form-group">
+							<label for="target" class="col-lg-2 control-label">対象</label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" name="target" id="sur-target">
+								<span class="help-block">ex.)お菓子好きな人</span>
+							</div>
+						</div>
+
+						<div class="form-group">
 							<label for="description" class="col-lg-2 control-label">説明</label>
 							<div class="col-lg-10">
-								<textarea class="form-control" name="description" rows="2" id="sur-description"></textarea>
+								<input type="text" class="form-control" name="description" id="sur-description">
 								<span class="help-block">ex.)きのこの山とたけのこの里好きな方に投票してください。</span>
 							</div>
 						</div>
@@ -51,7 +59,7 @@
 							</div>
 						</div>
 
-						<div class="form-group">
+						<!--div class="form-group">
 							<label class="col-lg-2 control-label">集計ポイント</label>
 							<div class="col-lg-10">
 								<div class="radio">
@@ -68,7 +76,7 @@
 								</div>
 								<span class="help-block">集計をするタイミングを選んで下さい</span>
 							</div>
-						</div>
+						</div-->
 
 						<div class="form-group">
 							<label for="tag" class="col-lg-2 control-label">タグ</label>
@@ -82,8 +90,8 @@
 						<input type="hidden" name="token" value="<?= $token ?>">
 						<div class="form-group">
 							<div class="col-lg-10 col-lg-offset-2">
-								<button class="btn btn-default" id="">チェック</button>
-								<button type="submit" id="submit-main" class="btn btn-primary">作成</button>
+								<!--button class="btn btn-default" id="">チェック</button-->
+								<button type="submit" id="submit-main" class="btn btn-block btn-primary">作成</button>
 							</div>
 						</div>
 					</fieldset>

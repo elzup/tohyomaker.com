@@ -122,6 +122,7 @@ class Survey_model extends CI_Model
 				'description' => $data['description'],
 				'num_item' => count($items),
 				'id_user' => $user->id,
+				'public' => $data['is_anonymous'],
 		);
 		$this->db->insert('survey_tbl', $record);
 		$id = $this->db->insert_id();

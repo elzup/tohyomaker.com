@@ -11,7 +11,9 @@ class Make extends CI_Controller
 		$this->load->helper('url');
 		$this->load->helper('func');
 		$this->load->helper('token');
+		$this->load->helper('alert');
 		$this->load->helper('parts');
+		$this->load->helper('text');
 
 		$this->load->model('Survey_model', 'survey', TRUE);
 		$this->load->model('User_model', 'user', TRUE);
@@ -19,6 +21,9 @@ class Make extends CI_Controller
 
 	public function index()
 	{
+
+		// TODO: make no login user action
+		// TODO: add 'target' param in survey_table
 
 		/*
 		 * view
@@ -94,15 +99,12 @@ class Make extends CI_Controller
 		$id_survey = $this->survey->regist(filter_input_array(INPUT_POST), $this->user->get_user());
 		$token = set_token();
 		jump(base_url("make/end/{$id_survey}/{$token}"));
-
 		// TODO: jump to survey page (use id
 	}
 
 	public function end($id_survey = NULL, $token = NULL)
 	{
-		// TODO: reset
-//		if (!isset($id_survey) || !isset($token) || check_token($token) === FALSE)
-		if (!isset($id_survey))
+		if (!isset($id_survey) || !isset($token) || check_token($token) === FALSE)
 		{
 			//TODL: jump to error action
 			die('error');

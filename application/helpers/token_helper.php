@@ -22,10 +22,13 @@ if (!function_exists('check_token'))
 	 * 
 	 * @return string|bool token or fauld
 	 */
-	function check_token()
+	function check_token($token = NULL)
 	{
-		$token = $_POST['token'];
-		if (empty($_SESSION['token']) || ($_SESSION['token'] != $_POST['token']))
+		if (is_null($token))
+		{
+			$token = filter_input(INPUT_POST, 'token');
+		}
+		if (empty($_SESSION['token']) || ($_SESSION['token'] != $token))
 		{
 			return FALSE;
 		}
