@@ -23,6 +23,7 @@ class Survey extends CI_Controller
 		$this->load->helper('url');
 		$this->load->helper('func');
 		$this->load->helper('token');
+		$this->load->helper('alert');
 		$this->load->helper('parts');
 		$this->load->helper('text');
 
@@ -117,6 +118,7 @@ class Survey extends CI_Controller
 			die('failed query');
 		}
 		// TODO: set cookie
+		setcookie("tm_alert_", $value, time()+60);
 		jump(base_url($id_survey));
 	}
 

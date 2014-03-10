@@ -14,8 +14,9 @@
 			<!-- Incliude Twitter share button widgets -->
 			<script src="http://platform.twitter.com/widgets.js" type="text/javascript" charset="utf-8"></script>
 
-			<!-- myhelper act on all page-->
+			<!-- js of act on all page-->
 			<script src="<?= base_url("js/helper.js")?>" type="text/javascript"></script>
+			<script src="<?= base_url("js/alert.js")?>" type="text/javascript"></script>
 			<?php if (!empty($jss)) {foreach ($jss as $js) {?>
 			<script src="<?= base_url("js/{$js}.js")?>" type="text/javascript"></script>
 			<?php }}?>
