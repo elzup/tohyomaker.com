@@ -3,6 +3,7 @@
 /* @var $owner UserObj */
 /* @var $type int */
 ?>
+<!--TODO: add tooltips, created_time_stamp owner_name-->
 
 <div class="container" id="survey-head-div">
 	<div class="well">
@@ -64,25 +65,36 @@
 			</div>
 		</div>
 
-		<?php if ($survey->state === SURVEY_STATE_PROGRESS) {?>
-		<div class="row">
+		<!--div class="row">
 			<div class="col-sm-2">
-				あと<?=$survey->get_time_remain_str()?>
+				<i class="glyphicon glyphicon-ok"></i>
+		<?= $survey->get_total() ?>票
 			</div>
-			<div class="col-sm-4">
-				<div class="progress">
-					<div class="progress-bar" style="width: <?=$survey->get_time_progress_par()?>%;"></div>
-				</div>
-			</div>
-		</div>
-		<?php } ?>
+		</div-->
 	</div>
 
 	<div class="row" id="survey-pager-div">
+
+		<?php if ($survey->state === SURVEY_STATE_PROGRESS)
+		{ ?>
+			<div class="col-sm-2">
+				あと<?= $survey->get_time_remain_str() ?>
+			</div>
+			<div class="col-sm-4">
+				<div class="progress">
+					<div class="progress-bar" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
+				</div>
+			</div>
+<?php } ?>
 		<div class="col-sm-4 col-sm-offset-8">
 			<div class="btn-group btn-group-justified">
-				<a href="./vote.html" class="btn btn-default disabled"><i class="glyphicon glyphicon-import"></i>投票</a>
-				<a href="./view.html" class="btn btn-default"><i class="glyphicon glyphicon-stats"></i>結果</a>
+				<?php
+				// TODO: move define timing
+			 define('SURVEY_PAGETYPE_VOTE', 0);
+			 define('SURVEY_PAGETYPE_VIEW', 1);
+				?>
+				<a href="<?= base_url($survey->id)?>" class="btn btn-default<?= (($type === SURVEY_PAGETYPE_VOTE) ? ' disable':'')?>"><i class="glyphicon glyphicon-import"></i>投票</a>
+				<a href="<?= base_url('view/'.$survey->id)?>" class="btn btn-default<?= (($type === SURVEY_PAGETYPE_VIEW) ? ' disable':'')?>"><i class="glyphicon glyphicon-stats"></i>結果</a>
 			</div>
 		</div>
 	</div>
