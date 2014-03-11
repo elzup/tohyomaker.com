@@ -122,6 +122,7 @@ class Survey_model extends CI_Model
 		$record = array(
 				'title' => $data['title'],
 				'description' => $data['description'],
+				'target' => $data['target'],
 				'num_item' => count($items),
 				'id_user' => $user->id,
 				'is_anonymous' => $data['is_anonymous'],

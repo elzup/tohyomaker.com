@@ -16,6 +16,13 @@ define('SURVEY_STATE_RESULT', '1');
  */
 define('SURVEY_STATE_END', '2');
 
+/**
+ * timestamp string format
+ * @see $state
+ */
+define('DATE_FORMAT', 'Y年m月d日 H:i');
+
+
 class SurveyObj
 {
 
@@ -135,7 +142,7 @@ class SurveyObj
 
 	public function get_time()
 	{
-		return $this->timestamp;
+		return date(DATE_FORMAT, strtotime($this->timestamp));
 	}
 
 }

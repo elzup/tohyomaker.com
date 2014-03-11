@@ -35,7 +35,7 @@
 									<div class="col-lg-10">
 										<div class="panel panel-default panel-check">
 											<div class="panel-body">
-												<?= (isset($data['target']) ? '全員': $data['target']) ?>
+												<?= (!isset($data['target']) ? '全員': $data['target']) ?>
 											</div>
 										</div>
 									</div>
