@@ -76,10 +76,21 @@ class Survey_model extends CI_Model
 	 */
 	public function insert_vote(SurveyObj $survey, UserObj $user, $value)
 	{
-		if (($result = $this->check_voted($survey, $user)) !== FALSE)
+		if (($result = $this->check_voted($survey, $user)) !== FALSE || $survey->num_item <= $value)
 		{
 			return FALSE;
 		}
+		$where = array (
+				'id_survey' => $survey->id,
+				'index' => $value,
+		);
+		$result = $this->db->get_where('item_tbl', $where)->result();
+		$num = $result->num;
+
+		$this->db->where($where);
+		$this->db->set('num', $num + 1);
+		$this->db->update('item_tbl');
+
 		$data = array(
 				'id_survey' => $survey->id,
 				'id_user' => $user->id,

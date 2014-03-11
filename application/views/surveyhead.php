@@ -88,11 +88,6 @@
 <?php } ?>
 		<div class="col-sm-4 col-sm-offset-8">
 			<div class="btn-group btn-group-justified">
-				<?php
-				// TODO: move define timing
-			 define('SURVEY_PAGETYPE_VOTE', 0);
-			 define('SURVEY_PAGETYPE_VIEW', 1);
-				?>
 				<a href="<?= base_url($survey->id)?>" class="btn btn-default<?= (($type === SURVEY_PAGETYPE_VOTE) ? ' disable':'')?>"><i class="glyphicon glyphicon-import"></i>投票</a>
 				<a href="<?= base_url('view/'.$survey->id)?>" class="btn btn-default<?= (($type === SURVEY_PAGETYPE_VIEW) ? ' disable':'')?>"><i class="glyphicon glyphicon-stats"></i>結果</a>
 			</div>

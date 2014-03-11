@@ -1,5 +1,9 @@
 <?php
 
+// TODO: move define timing
+define('SURVEY_PAGETYPE_VOTE', 0);
+define('SURVEY_PAGETYPE_VIEW', 1);
+
 //投票ページ
 class Survey extends CI_Controller
 {
@@ -61,7 +65,7 @@ class Survey extends CI_Controller
 		}
 		$voted_value = $this->survey->check_voted($survey, $this->user->get_user());
 		$is_voted = !!$voted_value;
-		if ($is_voted) 
+		if ($is_voted)
 		{
 			$select = $voted_value;
 		}
@@ -100,10 +104,10 @@ class Survey extends CI_Controller
 		{
 			die("no found id : {$id_survey}");
 			// TODO: same as vote method todo
+		}
 		$voted_value = $this->survey->check_voted($survey, $this->user->get_user());
 		$is_voted = !!$voted_value;
-		}
-		
+
 		$title = $survey->title;
 		$head_info = array(
 				'title' => $title,
@@ -116,15 +120,13 @@ class Survey extends CI_Controller
 				'type' => SURVEY_PAGETYPE_VIEW,
 		);
 		$this->load->view('surveyhead', $surveyhead_info);
-		$surveyselectform_info = array(
+		$surveyresult_info = array(
 				'survey' => $survey,
-				'token' => set_token(),
-				'select' => $select,
+				'select' => $voted_value,
 				'is_voted' => $is_voted,
 		);
-		$this->load->view('surveyselectform', $surveyselectform_info);
-		$this->load->view('foot', array('jss' => array('selectform')));
-		
+		$this->load->view('surveyresult', $surveyresult_info);
+		$this->load->view('foot');
 	}
 
 	function regist($id_survey = NULL)
@@ -149,7 +151,7 @@ class Survey extends CI_Controller
 			die('failed query');
 		}
 		// TODO: set cookie
-		setcookie("tm_alert_", $value, time()+60);
+		setcookie("tm_alert_", $value, time() + 60);
 		jump(base_url($id_survey));
 	}
 
