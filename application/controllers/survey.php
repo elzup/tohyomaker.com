@@ -59,26 +59,23 @@ class Survey extends CI_Controller
 			die("no found id : {$id_survey}");
 			// TODO: jump no found page
 		}
-//		echo '<pre>';
-//		var_dump($survey);
-//		exit;
 		$voted_value = $this->survey->check_voted($survey, $this->user->get_user());
 		$is_voted = !!$voted_value;
 		if ($is_voted) 
 		{
 			$select = $voted_value;
 		}
+
 		$title = $survey->title;
 		$head_info = array(
 				'title' => $title,
-				'less_name' => 'main',
 		);
 		$this->load->view('head', $head_info);
 		$this->load->view('title', array('title' => $title, 'offset' => 0));
 		$this->load->view('navbar', array('user' => $this->user->get_user()));
 		$surveyhead_info = array(
 				'survey' => $survey,
-				'type' => 0,
+				'type' => SURVEY_PAGETYPE_VOTE,
 		);
 		$this->load->view('surveyhead', $surveyhead_info);
 		$surveyselectform_info = array(
@@ -91,8 +88,42 @@ class Survey extends CI_Controller
 		$this->load->view('foot', array('jss' => array('selectform')));
 	}
 
-	function view($id_survey)
+	function view($id_survey = NULL)
 	{
+		if (!isset($id_survey))
+		{
+			die('no id_survey');
+			// TODO: same as vote method todo
+		}
+		/* @var $survey SurveyObj */
+		if (($survey = $this->survey->get_survey($id_survey)) === FALSE)
+		{
+			die("no found id : {$id_survey}");
+			// TODO: same as vote method todo
+		$voted_value = $this->survey->check_voted($survey, $this->user->get_user());
+		$is_voted = !!$voted_value;
+		}
+		
+		$title = $survey->title;
+		$head_info = array(
+				'title' => $title,
+		);
+		$this->load->view('head', $head_info);
+		$this->load->view('title', array('title' => $title, 'offset' => 0));
+		$this->load->view('navbar', array('user' => $this->user->get_user()));
+		$surveyhead_info = array(
+				'survey' => $survey,
+				'type' => SURVEY_PAGETYPE_VIEW,
+		);
+		$this->load->view('surveyhead', $surveyhead_info);
+		$surveyselectform_info = array(
+				'survey' => $survey,
+				'token' => set_token(),
+				'select' => $select,
+				'is_voted' => $is_voted,
+		);
+		$this->load->view('surveyselectform', $surveyselectform_info);
+		$this->load->view('foot', array('jss' => array('selectform')));
 		
 	}
 
