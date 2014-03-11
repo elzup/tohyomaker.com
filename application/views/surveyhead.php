@@ -14,7 +14,7 @@
 		</div-->
 
 		<div class="row">
-			<div class="col-sm-8">
+			<div class="col-sm-7">
 				<?php
 				if (isset($survey->description))
 				{
@@ -36,7 +36,7 @@
 					</div>
 				<?php } ?>
 			</div>
-			<div class="col-sm-4">
+			<div class="col-sm-5">
 				<div class="row">
 					<div class="col-sm-6 survey-cont timestamp"><i class="glyphicon glyphicon-time"></i><?= $survey->get_time() ?></div>
 					<div class="col-sm-6 owner-name">
@@ -49,8 +49,6 @@
 				</div>
 			</div>
 		</div>
-
-
 
 		<div class="row">
 			<div class="col-sm-8 survey-cont tagbox">
@@ -65,6 +63,19 @@
 				</p>
 			</div>
 		</div>
+
+		<?php if ($survey->state === SURVEY_STATE_PROGRESS) {?>
+		<div class="row">
+			<div class="col-sm-2">
+				あと<?=$survey->get_time_remain_str()?>
+			</div>
+			<div class="col-sm-4">
+				<div class="progress">
+					<div class="progress-bar" style="width: <?=$survey->get_time_progress_par()?>%;"></div>
+				</div>
+			</div>
+		</div>
+		<?php } ?>
 	</div>
 
 	<div class="row" id="survey-pager-div">

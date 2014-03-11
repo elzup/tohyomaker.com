@@ -131,6 +131,35 @@ class SurveyObj
 		return FALSE;
 	}
 
+	public function get_time_progress_par()
+	{
+		$progress_time = $this->get_time_progress();
+		$day3_time = strtotime('+3 day', 0);
+		$v = $progress_time * 100 / $day3_time;
+		return round($v);
+	}
+
+	public function get_time_progress()
+	{
+		$start_time = strtotime($this->timestamp);
+		$now = time();
+		return $now - $start_time;
+	}
+
+	public function get_time_remain_str()
+	{
+		$remain = $this->get_time_remain() - strtotime('+4 day', 0);
+		if ($remain < 3600)
+		{
+			return floor($remain / 60) . '分';
+		}
+		elseif ($remain < 86400)
+		{
+			return floor($remain / 3600) . '時間';
+		}
+			return floor($remain / 86400) . '日';
+	}
+
 	public function get_time_remain()
 	{
 		// TODO: create another type case 
