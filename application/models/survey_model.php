@@ -36,10 +36,12 @@ class Survey_model extends CI_Model
 		$items = $this->select_item($id_survey);
 		$tags = $this->select_tag($id_survey);
 		$owner = $this->select_user_simple($data->id_user);
-		return new SurveyObj($data, $items, $tags, $owner);
+		$survey = new SurveyObj($data, $items, $tags, $owner);
+		$this->_check_state($survey);
+		return $survey;
 	}
 
-	public function select_user_simple ($id_user)
+	public function select_user_simple($id_user)
 	{
 		$this->db->where('id_user', $id_user);
 		$result = $this->db->get('user_tbl')->result();
@@ -157,6 +159,44 @@ class Survey_model extends CI_Model
 		return array_filter_values(explode(',', $data['tag']));
 	}
 
+	private function _check_state(SurveyObj &$survey)
+	{
+		$su = $survey->get_state_update();
+		if ($su === SURVEY_STATE_RESULT || ($su === SURVEY_STATE_END && $survey->state == SURVEY_STATE_PROGRESS))
+		{
+			$this->_update_state_result($survey);
+		}
+		if ($su === SURVEY_STATE_END)
+		{
+			$this->_update_end($survey);
+		}
+	}
+
+	private function _update_state_result(SurveyObj &$survey)
+	{
+		$this->_update_state($survey, SURVEY_STATE_RESULT);
+	}
+
+	private function _update_state_end(SurveyObj &$survey)
+	{
+		$this->_update_state($survey, SURVEY_STATE_END);
+		$this->_delete_votes($survey);
+	}
+
+	private function _update_state(SurveyObj &$survey, $state)
+	{
+		$this->db->where('id_survey', $survey->id);
+		$this->db->set('state', $state);
+		$this->db->update('survey_tbl');
+		$survey->state = $state;
+	}
+
+	private function _delete_votes(SurveyObj $survey)
+	{
+		$this->db->where('id_survey', $survey->id);
+		$this->db->delete('vote_tbl');
+	}
+
 	/**
 	 * same survey items insert batch 
 	 * @param type $id_survey survey's id
@@ -167,9 +207,9 @@ class Survey_model extends CI_Model
 		foreach ($items as $i => $item)
 		{
 			$record = array(
-			'id_survey' => $id_survey,
-			'value'      => $item,
-			'index'     => $i,
+					'id_survey' => $id_survey,
+					'value' => $item,
+					'index' => $i,
 			);
 			$this->db->insert('item_tbl', $record);
 		}
@@ -180,10 +220,11 @@ class Survey_model extends CI_Model
 		foreach ($tags as $tag)
 		{
 			$record = array(
-			'id_survey' => $id_survey,
-			'value'      => $tag,
+					'id_survey' => $id_survey,
+					'value' => $tag,
 			);
 			$this->db->insert('tag_tbl', $record);
 		}
 	}
+
 }

@@ -1,5 +1,21 @@
 <?php
 
+/**
+ * anable vote working
+ * @see $state
+ */
+define('SURVEY_STATE_PROGRESS', '0');
+/**
+ * vote is finish, saveing vote record
+ * @see $state
+ */
+define('SURVEY_STATE_RESULT', '1');
+/**
+ * saving only result
+ * @see $state
+ */
+define('SURVEY_STATE_END', '2');
+
 class SurveyObj
 {
 
@@ -30,18 +46,18 @@ class SurveyObj
 
 	function set($data, array $items = NULL, $tags = NULL, $owner = NULL)
 	{
-		$this->id           = $data->id_survey;
-		$this->title        = $data->title;
-		$this->target       = (empty($data->target) ? '' : $data->target);
-		$this->description  = (empty($data->description) ? '' : $data->description);
-		$this->num_item     = $data->num_item;
-		$this->timestamp    = $data->timestamp;
-		$this->state        = $data->state;
+		$this->id = $data->id_survey;
+		$this->title = $data->title;
+		$this->target = (empty($data->target) ? '' : $data->target);
+		$this->description = (empty($data->description) ? '' : $data->description);
+		$this->num_item = $data->num_item;
+		$this->timestamp = $data->timestamp;
+		$this->state = $data->state;
 		$this->is_anonymous = empty($data->is_anonymous);
 
 		$this->result = array();
-		$this->items  = array();
-		$this->tags   = array();
+		$this->items = array();
+		$this->tags = array();
 
 		for ($i = 0; $i < $this->num_item; $i++)
 		{
@@ -60,6 +76,7 @@ class SurveyObj
 		{
 			$this->set_tag($tags);
 		}
+		$this->get_time_remain();
 	}
 
 	public function set_item($items)
@@ -89,8 +106,36 @@ class SurveyObj
 		return implode($glue, $this->items);
 	}
 
+	public function get_state_update ()
+	{
+		if ($this->state == SURVEY_STATE_END)
+		{
+			return FALSE;
+		}
+		$remain = $this->get_time_remain();
+		if ($remain <= 0)
+		{
+			return SURVEY_STATE_END;
+		}
+		if ($remain <= 345600)
+		{
+			return SURVEY_STATE_RESULT;
+		}
+		return FALSE;
+	}
+
+	public function get_time_remain()
+	{
+		// TODO: create another type case 
+		$start_time = strtotime($this->timestamp);
+		$end_time = strtotime('+1 week', $start_time);
+		$now = time();
+		return $end_time - $now;
+	}
+
 	public function get_time()
 	{
 		return $this->timestamp;
 	}
+
 }
