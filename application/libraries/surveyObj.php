@@ -22,7 +22,6 @@ define('SURVEY_STATE_END', '2');
  */
 define('DATE_FORMAT', 'Y年m月d日 H:i');
 
-
 class SurveyObj
 {
 
@@ -46,9 +45,10 @@ class SurveyObj
 
 	function __construct($data = NULL, array $items = NULL, $tags = NULL, $owner = NULL)
 	{
-		if (!isset($data))
-			return;
-		$this->set($data, $items, $tags, $owner);
+		if (isset($data))
+		{
+			$this->set($data, $items, $tags, $owner);
+		}
 	}
 
 	function set($data, array $items = NULL, $tags = NULL, $owner = NULL)
@@ -68,11 +68,6 @@ class SurveyObj
 
 		for ($i = 0; $i < $this->num_item; $i++)
 		{
-			$this->owner = $owner;
-		}
-
-		for ($i = 0; $i < $this->num_item; $i++)
-		{
 			$this->result[$i] = 0;
 		}
 		if (isset($items))
@@ -83,6 +78,11 @@ class SurveyObj
 		{
 			$this->set_tag($tags);
 		}
+		if (isset($owner))
+		{
+			$this->owner = $owner;
+		}
+
 		$this->get_time_remain();
 	}
 
@@ -113,7 +113,7 @@ class SurveyObj
 		return implode($glue, $this->items);
 	}
 
-	public function get_state_update ()
+	public function get_state_update()
 	{
 		if ($this->state == SURVEY_STATE_END)
 		{
@@ -152,12 +152,11 @@ class SurveyObj
 		if ($remain < 3600)
 		{
 			return floor($remain / 60) . '分';
-		}
-		elseif ($remain < 86400)
+		} elseif ($remain < 86400)
 		{
 			return floor($remain / 3600) . '時間';
 		}
-			return floor($remain / 86400) . '日';
+		return floor($remain / 86400) . '日';
 	}
 
 	public function get_time_remain()
@@ -174,4 +173,21 @@ class SurveyObj
 		return date(DATE_FORMAT, strtotime($this->timestamp));
 	}
 
+	public function get_sorted()
+	{
+		$sort_result = arsort($this->result);
+		$items = array();
+		$rank = 1;
+		$pre_v = 0;
+		$n = 0;
+		foreach ($sort_result as $i => $num)
+		{
+			$item = array();
+			$item['num'] = $num;
+			$item['value'] = $this->items[$i];
+			$items[] = $item;
+			$n++;
+		}
+		return $items;
+	}
 }
