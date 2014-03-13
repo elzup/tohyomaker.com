@@ -34,24 +34,21 @@ class SurveyObj
 	public $is_anonymous;
 	public $target;
 
-	/**
-	 *
-	 * @var UserObj
-	 */
+	/** @var UserObj */
 	public $owner;
 	public $items;
+	private $items_sorted;
 	public $tags;
-	public $result;
 
-	function __construct($data = NULL, array $items = NULL, $tags = NULL, $owner = NULL)
+	function __construct($data = NULL, array $items = NULL, array $tags = NULL, UserObj $owner = NULL)
 	{
-		if (isset($data))
+		if (!empty($data))
 		{
 			$this->set($data, $items, $tags, $owner);
 		}
 	}
 
-	function set($data, array $items = NULL, $tags = NULL, $owner = NULL)
+	function set(stdClass $data, array $items = NULL, array $tags = NULL, UserObj $owner = NULL)
 	{
 		$this->id = $data->id_survey;
 		$this->title = $data->title;
@@ -62,21 +59,16 @@ class SurveyObj
 		$this->state = $data->state;
 		$this->is_anonymous = empty($data->is_anonymous);
 
-		$this->result = array();
 		$this->items = array();
 		$this->tags = array();
 
-		for ($i = 0; $i < $this->num_item; $i++)
-		{
-			$this->result[$i] = 0;
-		}
 		if (isset($items))
 		{
-			$this->set_item($items);
+			$this->set_items($items);
 		}
 		if (isset($tags))
 		{
-			$this->set_tag($tags);
+			$this->set_tags($tags);
 		}
 		if (isset($owner))
 		{
@@ -86,26 +78,33 @@ class SurveyObj
 		$this->get_time_remain();
 	}
 
-	public function set_item($items)
+	public function set_items($data)
 	{
-		foreach ($items as $item)
+		foreach ($data as $datum)
 		{
-			$this->items[$item->index] = $item->value;
-			$this->result[$item->index] = $item->num;
+			$item = new ItemObj($datum);
+			$this->items[$item->index] = $item;
 		}
+		ksort($this->items);
 	}
 
-	public function set_tag($tags)
+	public function set_tags($data)
 	{
-		foreach ($tags as $tag)
+		foreach ($data as $datum)
 		{
-			$this->tags[] = $tag->value;
+			$this->tags[] = $datum->value;
 		}
 	}
 
 	public function get_total()
 	{
-		return array_sum($this->result);
+		$sum = 0;
+		/** @var $item ItemObj */
+		foreach ($this->items as $item)
+		{
+			$sum += $item->num;
+		}
+		return $sum;
 	}
 
 	public function get_text_items($glue = ' / ')
@@ -175,19 +174,47 @@ class SurveyObj
 
 	public function get_sorted()
 	{
-		$sort_result = arsort($this->result);
-		$items = array();
-		$rank = 1;
-		$pre_v = 0;
-		$n = 0;
-		foreach ($sort_result as $i => $num)
+		if (!isset($this->item_sorted))
 		{
-			$item = array();
-			$item['num'] = $num;
-			$item['value'] = $this->items[$i];
-			$items[] = $item;
-			$n++;
+			$this->_set_sort();
 		}
-		return $items;
+		return $this->items_sorted;
 	}
+
+	private function _set_sort()
+	{
+			function cmp(ItemObj $a, ItemObj $b)
+			{
+				if ($a->num == $b->num)
+				{
+					return 0;
+				}
+				return ($a->num < $b->num) ? 1 : -1;
+			}
+			$sorted = $this->items;
+			uasort($sorted, 'cmp');
+			$this->items_sorted = $sorted;
+			$this->_rank_item();
+	}
+
+	private function _rank_item()
+	{
+		if (!isset($this->items_sorted))
+		{
+			return false;
+		}
+		$pre_n = -1;
+		$rank = 0;
+		for ($i = 0; $i < $this->num_item; $i++)
+		{
+			$n = $this->items_sorted[$i]->num;
+			if ($pre_n != $n)
+			{
+				$rank = $i + 1;
+			}
+			$this->items_sorted[$i]->set_rank($rank);
+			$pre_n = $n;
+		}
+	}
+
 }

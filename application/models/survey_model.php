@@ -14,6 +14,7 @@ class Survey_model extends CI_Model
 		parent::__construct();
 		$this->load->library('voteObj');
 		$this->load->library('surveyObj');
+		$this->load->library('itemObj');
 	}
 
 	/**

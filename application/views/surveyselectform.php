@@ -16,7 +16,7 @@
 						$add_class = ($is_voted ? ' disabled' : '');
 						$add_class .= (isset($select) && $i == $select) ? ' btn-info' . ($is_voted ? '' : ' active' ) : '';
 						?>
-						<li><button type="button" id="item<?= $i ?>" name="<?= $i ?>" class="btn btn-item btn-lg btn-block btn-default<?= $add_class ?>"><?= $item ?></button></li>
+						<li><button type="button" id="item<?= $i ?>" name="<?= $i ?>" class="btn btn-item btn-lg btn-block btn-default<?= $add_class ?>"><?= $item->value ?></button></li>
 					<?php } ?>
 				</ul>
 			</div>
