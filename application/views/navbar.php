@@ -12,7 +12,9 @@ if ($user == null) {
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a href="" class="navbar-brand">投票メーカー</a>
+
+					<div class="navbar-brand">brand</div>
+          <!--<a href="" class="navbar-brand">投票メーカー</a>-->
         </div>
         <div class="collapse navbar-collapse target">
           <!-- ul class="nav navbar-nav">

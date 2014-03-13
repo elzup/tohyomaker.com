@@ -1,5 +1,9 @@
 <?php
 /** @var $survey SurveyObj */
+if (!isset($select))
+{
+	$select = -1;
+}
 ?>
 <div class="container">
 	<div class="row">
@@ -11,18 +15,19 @@
 				{
 					?>
 					<li>
-						<div class="panel panel-default rank<?=$item->rank?>">
+						<div class="panel panel-default rank-<?= $item->rank ?>">
 							<div class="panel-body">
 								<div class="row">
-									<div class="col-sm-9">
-										<h3>
+									<div class="col-sm-8">
+										<h4>
 											<?= $item->value ?>
-										</h3>
+											<?php echo (($item->index == $select) ? '<i class="glyphicon glyphicon-ok"></i>' : '') ?>
+										</h4>
 									</div>
-									<div class="col-sm-3">
-										<h3 class="num">
-											<?= $item->num ?>票
-										</h3>
+									<div class="col-sm-4">
+										<h4 class="num">
+											<?= $item->num ?>
+										</h4>
 									</div>
 								</div>
 							</div>
@@ -43,14 +48,14 @@
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-sm-9">
-										<h3>
+										<h4>
 											<?= $item->value ?>
-										</h3>
+										</h4>
 									</div>
 									<div class="col-sm-3">
-										<h3 class="num">
+										<h4 class="num">
 											<?= $item->num ?>票
-										</h3>
+										</h4>
 									</div>
 								</div>
 							</div>

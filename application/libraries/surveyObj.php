@@ -192,7 +192,7 @@ class SurveyObj
 				return ($a->num < $b->num) ? 1 : -1;
 			}
 			$sorted = $this->items;
-			uasort($sorted, 'cmp');
+			usort($sorted, 'cmp');
 			$this->items_sorted = $sorted;
 			$this->_rank_item();
 	}

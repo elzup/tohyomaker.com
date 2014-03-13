@@ -123,7 +123,6 @@ class Survey extends CI_Controller
 		$surveyresult_info = array(
 				'survey' => $survey,
 				'select' => $voted_value,
-				'is_voted' => $is_voted,
 		);
 		$this->load->view('surveyresult', $surveyresult_info);
 		$this->load->view('foot');

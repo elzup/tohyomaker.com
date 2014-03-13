@@ -4,6 +4,40 @@
 
 html,body {
 	height: 100%;
+    background: #FAFFFC;
+}
+
+.navbar-default {
+    .navbar-nav>li>a {
+        color: white;
+    }
+    .navbar-brand {
+        .clear-font();
+        background: url(http://localhost/tohyomaker/public_html/style/../images/logo-white.png);
+        background-size: cover;
+        width: 190px;
+    }
+    background-color: rgb(0, 190, 0);
+    border-color: #008105;
+    color: white;
+}
+
+.btn-default:hover, .btn-default:focus, .btn-group.open .dropdown-toggle.btn-default {
+    color: #000000;
+    background-color: #A6FF9E;
+    border-color: #79EE54;
+}
+.btn-default {
+    color: #000000;
+    background-color: #A6FF9E;
+    border-color: #79EE54;
+}
+
+.clear-font {
+    color: rgba(0,0,0,0);
+    &:hover,&:active {
+        color: rgba(0,0,0,0);
+    }
 }
 
 #wrapper {
@@ -44,20 +78,58 @@ html,body {
 #itemresultbox-div,#itemresultbox-soted-div {
     margin-top: 10px;
     .panel {
+        margin-bottom: 7px;
         div>div {
-            >div:first-child {
-                vertical-align: middle;
-                    line-height: 100%;
-                h3 {
-                    line-height: 100%;
+            h2, h3, h4 {
                     margin: 0;
+            }
+            .num {
+                &:after {
+                    content: "票";
                 }
+
             }
             >div:last-child {
                 text-align: right;
             }
         }
     }
+    .glyphicon-ok {
+        color: rgb(0, 187, 0);
+        text-shadow: 1px 1px 0px #A4FF93;
+    }
+
+    .rank-1 {
+        margin-left: -27px;
+    }
+    .rank-2 {
+        margin-left: -24px;
+    }
+    .rank-3 {
+        margin-left: -21px;
+    }
+    .rank-4 {
+        margin-left: -18px;
+    }
+    .rank-5 {
+        margin-left: -15px;
+    }
+    .rank-6 {
+        margin-left: -12px;
+    }
+    .rank-7 {
+        margin-left: -9px;
+    }
+    .rank-8 {
+        margin-left: -6px;
+    }
+    .rank-9 {
+        margin-left: -3px;
+    }
+    .rank-10 {
+        margin-left: 0px;
+    }
+    
 }
 
 #vote-textarea {
@@ -77,10 +149,16 @@ html,body {
     }
 }
 
+
 i {
     margin-left  : 5px;
     margin-right : 5px;
+    &.icon-orange {
+        color: orange;
+        text-shadow: 2px 2px 0px #F6FF93;
+    }
 }
+
 
 #pager-div {
 }

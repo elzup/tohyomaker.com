@@ -10,11 +10,12 @@
 			<div class="itembox-div" data-toggle="buttons-radio">
 				<ul>
 					<?php
-					foreach ($survey->items as $i => $item)
+					foreach ($survey->items as $item)
 					{
+						$i = $item->index;
 						// btn state define page loaded start view
 						$add_class = ($is_voted ? ' disabled' : '');
-						$add_class .= (isset($select) && $i == $select) ? ' btn-info' . ($is_voted ? '' : ' active' ) : '';
+						$add_class .= (isset($select) && $i == $select) ? ' btn-warning' . ($is_voted ? '' : ' active' ) : '';
 						?>
 						<li><button type="button" id="item<?= $i ?>" name="<?= $i ?>" class="btn btn-item btn-lg btn-block btn-default<?= $add_class ?>"><?= $item->value ?></button></li>
 					<?php } ?>
@@ -33,7 +34,7 @@
 				<div class="col-sm-offset-2 col-sm-8" id="submit-div">
 					<input type="hidden" id="vote-value" name="vote-value" />
 					<input type="hidden" name="token" value="<?= $token ?>" />
-					<button type="submit" id="submit-main" class="btn btn-primary btn-lg btn-block btn-default disabled">投票</button>
+					<button type="submit" id="submit-main" class="btn btn-primary btn-lg btn-block btn-success disabled">投票</button>
 				</div>
 			</form>
 			<?php
@@ -42,13 +43,13 @@
 			if ($is_voted)
 			{
 				$share_uri = base_url($survey->id);
-				$share_text = totext_share($survey->items[$select], $survey->title, $share_uri);
+				$share_text = totext_share($survey->items[$select]->value, $survey->title, $share_uri);
 			}
 			?>
 			<div class="col-sm-offset-2 col-sm-8" id="voteend-div">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title"><?= totext_voted($survey->items[$select]) ?></h3>
+						<h3 class="panel-title"><?= totext_voted($survey->items[$select]->value) ?></h3>
 					</div>
 					<div class="panel-body">
 						<div class="input-group">
