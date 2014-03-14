@@ -39,6 +39,7 @@ class SurveyObj
 	public $items;
 	private $items_sorted;
 	public $tags;
+	public $results;
 
 	function __construct($data = NULL, array $items = NULL, array $tags = NULL, UserObj $owner = NULL, $results = NULL)
 	{
@@ -59,8 +60,6 @@ class SurveyObj
 		$this->state = $data->state;
 		$this->is_anonymous = empty($data->is_anonymous);
 
-		$this->items = array();
-		$this->tags = array();
 
 		if (isset($items))
 		{
@@ -74,6 +73,7 @@ class SurveyObj
 		{
 			$this->owner = $owner;
 		}
+		// after set items
 		if (isset($results))
 		{
 			$this->set_results($results);
@@ -84,16 +84,25 @@ class SurveyObj
 
 	public function set_items(array $data)
 	{
+		$this->items = array();
+		$this->items = $this->create_items($data);
+	}
+
+	public function create_items($data)
+	{
+		$items = array();
 		foreach ($data as $datum)
 		{
 			$item = new ItemObj($datum);
-			$this->items[$item->index] = $item;
+			$items[$item->index] = $item;
 		}
-		ksort($this->items);
+		ksort($items);
+		return $items;
 	}
 
 	public function set_tags(array $data)
 	{
+		$this->tags = array();
 		foreach ($data as $datum)
 		{
 			$this->tags[] = $datum->value;
@@ -102,12 +111,41 @@ class SurveyObj
 
 	public function set_results(array $data)
 	{
-		foreach ($data as $datum)
+		if (($results = $this->cureate_results($data)))
 		{
-			$this->tags[] = $datum->value;
+			$this->results = $results;
 		}
 	}
 
+	public function create_results($data)
+	{
+		if (!isset($this->items))
+		{
+			return FALSE;
+		}
+		$results = array();
+		foreach ($data as $datum)
+		{
+			$results[] = $this->_create_result($datum);
+		}
+	}
+
+	private function _create_result($data)
+	{
+		$values = explode(',', $data->result);
+		$items = $this->_create_map_item($values);
+		return new ResultObj($data, $items);
+	}
+
+	private function _create_map_item($values)
+	{
+		$items = $this->items;
+		foreach ($values as $i => $value)
+		{
+			$items[$i]->value = $value;
+		}
+		return $items;
+	}
 
 	public function get_total()
 	{
@@ -187,45 +225,47 @@ class SurveyObj
 
 	public function get_sorted()
 	{
-		if (!isset($this->item_sorted))
+		if (!isset($this->items_sorted))
 		{
-			$this->_set_sort();
+			$this->items_sorted = $this->create_sorted_items($this->items);
 		}
 		return $this->items_sorted;
 	}
 
-	private function _set_sort()
+	public function create_sorted_items($items)
 	{
-			function cmp(ItemObj $a, ItemObj $b)
+
+		//sort to base ItemObj's field num
+		function cmp(ItemObj $a, ItemObj $b)
+		{
+			if ($a->num == $b->num)
 			{
-				if ($a->num == $b->num)
-				{
-					return 0;
-				}
-				return ($a->num < $b->num) ? 1 : -1;
+				return 0;
 			}
-			$sorted = $this->items;
-			usort($sorted, 'cmp');
-			$this->items_sorted = $sorted;
-			$this->_rank_item();
+			return ($a->num < $b->num) ? 1 : -1;
+		}
+
+		usort($items, 'cmp');
+		$this->urveyObj->_rank_item($items);
+		return $items;
 	}
 
-	private function _rank_item()
+	private function _rank_item(&$items_sorted)
 	{
-		if (!isset($this->items_sorted))
+		if (!isset($items_sorted))
 		{
 			return false;
 		}
 		$pre_n = -1;
 		$rank = 0;
-		for ($i = 0; $i < $this->num_item; $i++)
+		for ($i = 0; $i < count($items_sorted); $i++)
 		{
-			$n = $this->items_sorted[$i]->num;
+			$n = $items_sorted[$i]->num;
 			if ($pre_n != $n)
 			{
 				$rank = $i + 1;
 			}
-			$this->items_sorted[$i]->set_rank($rank);
+			$items_sorted[$i]->set_rank($rank);
 			$pre_n = $n;
 		}
 	}

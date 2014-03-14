@@ -22,7 +22,7 @@ class Survey_model extends CI_Model
 	 * @param type $id_survey
 	 * @return SurveyObj|boolean
 	 */
-	public function get_survey($id_survey)
+	public function get_survey($id_survey, $set_result = FALSE)
 	{
 		$where = array(
 				'id_survey' => $id_survey,
@@ -34,11 +34,15 @@ class Survey_model extends CI_Model
 		}
 
 		$data = $result[0];
-		$items = $this->select_item($id_survey);
-		$tags = $this->select_tag($id_survey);
+		$items = $this->select_items($id_survey);
+		$tags = $this->select_tags($id_survey);
 		$owner = $this->select_user_simple($data->id_user);
 		$survey = new SurveyObj($data, $items, $tags, $owner);
 		$this->_check_state($survey);
+		if ($set_result)
+		{
+			$this->install_result($survey);
+		}
 		return $survey;
 	}
 
@@ -49,12 +53,17 @@ class Survey_model extends CI_Model
 		return new UserObj($id_user, $result[0]->sn_last, $result[0]->id_twitter);
 	}
 
-	public function select_item($id_survey)
+	public function select_items($id_survey)
 	{
 		return $this->_select_survey_subject($id_survey, 'item_tbl');
 	}
 
-	public function select_tag($id_survey)
+	public function select_results($id_survey)
+	{
+		return $this->_select_survey_subject($id_survey, 'result_tbl');
+	}
+
+	public function select_tags($id_survey)
 	{
 		return $this->_select_survey_subject($id_survey, 'tag_tbl');
 	}
@@ -240,4 +249,9 @@ class Survey_model extends CI_Model
 		}
 	}
 
+	public function install_result(SurveyObj $survey)
+	{
+		$data = $this->select_results($survey->id);
+		$survey->set_results($data);
+	}
 }

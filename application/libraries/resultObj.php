@@ -18,24 +18,28 @@ define('RESULT_TYPE_V10000' , '14');
  * small structure object 
  * 
  */
-class resultObj 
+class ResultObj 
 {
 	public $items;
 	public $type;
 	public $timestamp;
 
-	function __construct($data = NULL)
+	function __construct($data = NULL, $items = NULL)
 	{
 		if (isset($data))
 		{
-			$this->set($data);
+			$this->set($data, $items);
 		}
 	}
 
-	public function set(stdClass $data)
+	public function set(stdClass $data, $items = NULL)
 	{
 		$this->type = $data->type;
 		$this->timestamp = $data->timestamp;
+		if (isset($items))
+		{
+			$this->set_items($items);
+		}
 	}
 
 	public function set_items($items)

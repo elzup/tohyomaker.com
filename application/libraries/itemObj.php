@@ -31,4 +31,5 @@ class ItemObj
 	{
 		$this->rank = $n;
 	}
+
 }
