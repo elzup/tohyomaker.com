@@ -40,15 +40,15 @@ class SurveyObj
 	private $items_sorted;
 	public $tags;
 
-	function __construct($data = NULL, array $items = NULL, array $tags = NULL, UserObj $owner = NULL)
+	function __construct($data = NULL, array $items = NULL, array $tags = NULL, UserObj $owner = NULL, $results = NULL)
 	{
 		if (!empty($data))
 		{
-			$this->set($data, $items, $tags, $owner);
+			$this->set($data, $items, $tags, $owner, $results);
 		}
 	}
 
-	function set(stdClass $data, array $items = NULL, array $tags = NULL, UserObj $owner = NULL)
+	function set(stdClass $data, array $items = NULL, array $tags = NULL, UserObj $owner = NULL, $results = NULL)
 	{
 		$this->id = $data->id_survey;
 		$this->title = $data->title;
@@ -74,11 +74,15 @@ class SurveyObj
 		{
 			$this->owner = $owner;
 		}
+		if (isset($results))
+		{
+			$this->set_results($results);
+		}
 
 		$this->get_time_remain();
 	}
 
-	public function set_items($data)
+	public function set_items(array $data)
 	{
 		foreach ($data as $datum)
 		{
@@ -88,13 +92,22 @@ class SurveyObj
 		ksort($this->items);
 	}
 
-	public function set_tags($data)
+	public function set_tags(array $data)
 	{
 		foreach ($data as $datum)
 		{
 			$this->tags[] = $datum->value;
 		}
 	}
+
+	public function set_results(array $data)
+	{
+		foreach ($data as $datum)
+		{
+			$this->tags[] = $datum->value;
+		}
+	}
+
 
 	public function get_total()
 	{
