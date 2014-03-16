@@ -87,7 +87,7 @@ class Survey_model extends CI_Model
 		{
 			return FALSE;
 		}
-		$where = array (
+		$where = array(
 				'id_survey' => $survey->id,
 				'index' => $value,
 		);
@@ -153,6 +153,7 @@ class Survey_model extends CI_Model
 		{
 			$this->_insert_tags($id, $tags);
 		}
+		$this->_create_book_result($id);
 		return $id;
 	}
 
@@ -261,14 +262,15 @@ class Survey_model extends CI_Model
 			{
 				continue;
 			}
-			if (strtotime($datum->timesatmp > time))
+			if ($datum->result > time)
 			{
-				$data[] = $this->_insert_result($survey, $datum->type - 100);
+				$data[] = $this->_update_result($survey, $datum->type - 100);
 			}
 			$datum = NULL;
 		}
 		// data prepare
 		array_filter($data);
+
 		function cmp(stdClass $a, stdClass $b)
 		{
 			if ($a->timestamp == $b->timestamp)
@@ -277,10 +279,11 @@ class Survey_model extends CI_Model
 			}
 			return ($a->timestamp < $b->timestamp) ? -1 : 1;
 		}
+
 		usort($data, 'cmp');
 	}
 
-	private function _insert_result(SurveyObj $survey, $type)
+	private function _update_result(SurveyObj $survey, $type)
 	{
 		$where = array(
 				'id_survey' => $survey->id,
@@ -288,11 +291,41 @@ class Survey_model extends CI_Model
 		);
 		$this->db->where($where);
 		$this->db->delete('result_tbl');
+		$this->_insert_result($survey, $type);
 		$where['type'] -= 100;
-		$where['result'] = $survey->get_result_text();
 		$this->db->insert('insert', $where);
 		$this->db->where($where);
 		$data = $this->db->get('result_tbl')->result();
 		return $data[0];
 	}
+
+	private function _create_book_result($id_survey)
+	{
+		for ($i = 0; $i < 5; $i++)
+		{
+			$this->_insert_result_book($id_survey, $i, TRUE);
+		}
+	}
+
+	private function _insert_result(SurveyObj $survey, $type)
+	{
+		$data = array(
+		'id_survey' => $survey->id,
+		'type' => $type,
+		'result' => $survey->get_result_text(),
+		);
+		$this->db->insert('result_tbl', $data);
+	}
+
+	private function _insert_result_book($id_survey, $type)
+	{
+		$timestrlib = "+1hour,+6hour,+12hour,+1day,+2day" . split(',');
+		$data = array(
+				'id_survey' => $id_survey,
+				'type' => $type + 100,
+				'result' => strtotime($timestrlib[$type], time()),
+		);
+		$this->db->insert('result_tbl', $data);
+	}
+
 }
