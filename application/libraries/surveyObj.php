@@ -128,6 +128,7 @@ class SurveyObj
 		{
 			$results[] = $this->_create_result($datum);
 		}
+		return $results;
 	}
 
 	private function _create_result($data)
@@ -139,7 +140,11 @@ class SurveyObj
 
 	private function _create_map_item($values)
 	{
-		$items = $this->items;
+		$items = array();
+		foreach ($this->items as $item)
+		{
+			$items[] = clone $item;
+		}
 		foreach ($values as $i => $value)
 		{
 			$items[$i]->value = $value;
@@ -234,8 +239,9 @@ class SurveyObj
 
 	public function create_sorted_items($items)
 	{
+
 		//sort to base ItemObj's field num
-		function cmp(ItemObj $a, ItemObj $b)
+		function cmp_item(ItemObj $a, ItemObj $b)
 		{
 			if ($a->num == $b->num)
 			{
@@ -244,7 +250,7 @@ class SurveyObj
 			return ($a->num < $b->num) ? 1 : -1;
 		}
 
-		usort($items, 'cmp');
+		usort($items, 'cmp_item');
 		$this->_rank_item($items);
 		return $items;
 	}
@@ -278,4 +284,5 @@ class SurveyObj
 		}
 		return implode(',', $results);
 	}
+
 }

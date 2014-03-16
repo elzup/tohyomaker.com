@@ -6,7 +6,6 @@ if (!function_exists('surveypane'))
 	{
 		?>
 		<div class="panel panel-default panel-sp">
-			<!--div class="panel-heading"></div-->
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-sm-1"><?= $prefix ?></div>
@@ -105,9 +104,17 @@ if (!function_exists('logpane'))
 
 	function logpane(ResultObj $result)
 	{
-		echo print_r($result);
 		?>
-
+		<div class="panel panel-default panel-result">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-sm-5"></div>
+					<div class="col-sm-5"></div>
+				</div>
+			</div>
+			<div class="panel-body">
+			</div>
+		</div>
 <?php
 
 

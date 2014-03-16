@@ -15,6 +15,7 @@ class Survey_model extends CI_Model
 		$this->load->library('voteObj');
 		$this->load->library('surveyObj');
 		$this->load->library('itemObj');
+		$this->load->library('resultObj');
 	}
 
 	/**
@@ -250,8 +251,11 @@ class Survey_model extends CI_Model
 	private function _install_result(SurveyObj $survey)
 	{
 		$data = $this->select_results($survey->id);
-		$this->check_result_update($survey, $data);
-		$survey->set_results($survey, $data);
+		if (!empty($data))
+		{
+			$this->check_result_update($survey, $data);
+			$survey->set_results($data);
+		}
 	}
 
 	private function check_result_update(SurveyObj $survey, array &$data)
@@ -310,9 +314,9 @@ class Survey_model extends CI_Model
 	private function _insert_result(SurveyObj $survey, $type)
 	{
 		$data = array(
-		'id_survey' => $survey->id,
-		'type' => $type,
-		'result' => $survey->get_result_text(),
+				'id_survey' => $survey->id,
+				'type' => $type,
+				'result' => $survey->get_result_text(),
 		);
 		$this->db->insert('result_tbl', $data);
 	}
