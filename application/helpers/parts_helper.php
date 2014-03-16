@@ -105,7 +105,34 @@ if (!function_exists('logpane'))
 
 	function logpane(ResultObj $result)
 	{
+		echo print_r($result);
+		?>
 
+<?php
+
+
+	}
+}
+if (!function_exists('calc_item_col'))
+{
+
+	function calc_item_col($index, $num)
+	{
+		$lib = array(
+				FALSE, FALSE,
+				array (6, 6),
+				array (4, 4, 4),
+				array (6, 6, /**/ 6, 6),
+				array (6, 6, /**/ 4, 4, 4),
+				array (4, 4, 4, /**/ 4, 4, 4),
+				array (4, 4, 4, /**/ 3, 3, 3, 3),
+				array (3, 3, 3, 3, /**/ 3, 3, 3, 3),
+				array (4, 4, 4, /**/ 4, 4, 4, /**/ 4, 4, 4),
+				array (4, 4, 4, /**/ 4, 4, 4, /**/ 3, 3, 3, 3),
+		);
+
+		return $lib[$num][$index] ?: FALSE;
 	}
 
 }
+

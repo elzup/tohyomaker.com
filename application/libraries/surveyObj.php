@@ -246,7 +246,7 @@ class SurveyObj
 		}
 
 		usort($items, 'cmp');
-		$this->urveyObj->_rank_item($items);
+		$this->_rank_item($items);
 		return $items;
 	}
 

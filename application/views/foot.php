@@ -1,5 +1,9 @@
 
 				</div>
+				<div id="footer">
+					<!--TODO: create footer-->
+
+				</div>
 			<!-- jQuery include -->
       <script src="https://code.jquery.com/jquery.js"></script>
       <!-- zClip jQuery plugins -->
