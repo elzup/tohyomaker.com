@@ -187,7 +187,7 @@ class Survey_model extends CI_Model
 		}
 		if ($su === SURVEY_STATE_END)
 		{
-			$this->_update_end($survey);
+			$this->_update_state_end($survey);
 		}
 	}
 
@@ -249,11 +249,50 @@ class Survey_model extends CI_Model
 	private function _install_result(SurveyObj $survey)
 	{
 		$data = $this->select_results($survey->id);
-		$survey->set_results($data);
+		$this->check_result_update($survey, $data);
+		$survey->set_results($survey, $data);
 	}
 
-	private function insert_result(ResultObj $result)
+	private function check_result_update(SurveyObj $survey, array &$data)
 	{
-		
+		foreach ($data as &$datum)
+		{
+			if ($datum->type < 100)
+			{
+				continue;
+			}
+			if (strtotime($datum->timesatmp > time))
+			{
+				$data[] = $this->_insert_result($survey, $datum->type - 100);
+			}
+			$datum = NULL;
+		}
+		// data prepare
+		array_filter($data);
+		function cmp(stdClass $a, stdClass $b)
+		{
+			if ($a->timestamp == $b->timestamp)
+			{
+				return 0;
+			}
+			return ($a->timestamp < $b->timestamp) ? -1 : 1;
+		}
+		usort($data, 'cmp');
+	}
+
+	private function _insert_result(SurveyObj $survey, $type)
+	{
+		$where = array(
+				'id_survey' => $survey->id,
+				'type' => $type + 100,
+		);
+		$this->db->where($where);
+		$this->db->delete('result_tbl');
+		$where['type'] -= 100;
+		$where['result'] = $survey->get_result_text();
+		$this->db->insert('insert', $where);
+		$this->db->where($where);
+		$data = $this->db->get('result_tbl')->result();
+		return $data[0];
 	}
 }

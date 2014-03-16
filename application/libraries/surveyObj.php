@@ -234,7 +234,6 @@ class SurveyObj
 
 	public function create_sorted_items($items)
 	{
-
 		//sort to base ItemObj's field num
 		function cmp(ItemObj $a, ItemObj $b)
 		{
@@ -270,4 +269,13 @@ class SurveyObj
 		}
 	}
 
+	public function get_result_text()
+	{
+		$results = array();
+		foreach ($this->items as $item)
+		{
+			$results[] = $item->value;
+		}
+		return implode(',', $results);
+	}
 }
