@@ -10,7 +10,7 @@ if (!function_exists('surveypane'))
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-sm-1"><?= $prefix ?></div>
-					<div class="col-sm-9">
+				<div class="col-sm-9">
 
 						<h3><p><a href="<?= base_url($survey->id) ?>"><?= $survey->title ?></a></p></h3>
 					</div>
@@ -96,6 +96,16 @@ if (!function_exists('sharebtn_twitter'))
 			<p><?= $text ?></p>
 		</div>
 		<?php
+	}
+
+}
+
+if (!function_exists('logpane'))
+{
+
+	function logpane(ResultObj $result)
+	{
+
 	}
 
 }

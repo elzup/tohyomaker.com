@@ -111,7 +111,7 @@ class SurveyObj
 
 	public function set_results(array $data)
 	{
-		if (($results = $this->cureate_results($data)))
+		if (($results = $this->create_results($data)))
 		{
 			$this->results = $results;
 		}

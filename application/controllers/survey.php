@@ -8,15 +8,10 @@ define('SURVEY_PAGETYPE_VIEW', 1);
 class Survey extends CI_Controller
 {
 
-	/**
-	 *
-	 * @var Survey_model
-	 */
+	/** @var Survey_model */
 	public $survey;
 
-	/**
-	 * @var User_model
-	 */
+	/** @var User_model */
 	public $user;
 
 	public function __construct()
@@ -100,13 +95,13 @@ class Survey extends CI_Controller
 			// TODO: same as vote method todo
 		}
 		/* @var $survey SurveyObj */
-		if (($survey = $this->survey->get_survey($id_survey)) === FALSE)
+		if (($survey = $this->survey->get_survey($id_survey, TRUE)) === FALSE)
 		{
 			die("no found id : {$id_survey}");
 			// TODO: same as vote method todo
 		}
 		$voted_value = $this->survey->check_voted($survey, $this->user->get_user());
-		$is_voted = !!$voted_value;
+//		$is_voted = !!$voted_value;
 
 		$title = $survey->title;
 		$head_info = array(
@@ -125,6 +120,7 @@ class Survey extends CI_Controller
 				'select' => $voted_value,
 		);
 		$this->load->view('surveyresult', $surveyresult_info);
+		$this->load->view('resultlogs', array('survey', $survey));
 		$this->load->view('foot');
 	}
 
