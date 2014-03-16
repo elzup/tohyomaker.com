@@ -22,7 +22,7 @@ class Survey_model extends CI_Model
 	 * @param type $id_survey
 	 * @return SurveyObj|boolean
 	 */
-	public function get_survey($id_survey, $set_result = FALSE)
+	public function get_survey($id_survey)
 	{
 		$where = array(
 				'id_survey' => $id_survey,
@@ -38,11 +38,8 @@ class Survey_model extends CI_Model
 		$tags = $this->select_tags($id_survey);
 		$owner = $this->select_user_simple($data->id_user);
 		$survey = new SurveyObj($data, $items, $tags, $owner);
+		$this->_install_result($survey);
 		$this->_check_state($survey);
-		if ($set_result)
-		{
-			$this->install_result($survey);
-		}
 		return $survey;
 	}
 
@@ -249,9 +246,14 @@ class Survey_model extends CI_Model
 		}
 	}
 
-	public function install_result(SurveyObj $survey)
+	private function _install_result(SurveyObj $survey)
 	{
 		$data = $this->select_results($survey->id);
 		$survey->set_results($data);
+	}
+
+	private function insert_result(ResultObj $result)
+	{
+		
 	}
 }

@@ -23,6 +23,7 @@ class ResultObj
 	public $items;
 	public $type;
 	public $timestamp;
+	public $is_book;
 
 	function __construct($data = NULL, $items = NULL)
 	{
@@ -35,6 +36,11 @@ class ResultObj
 	public function set(stdClass $data, $items = NULL)
 	{
 		$this->type = $data->type;
+		// type (in db ) more than 100, it's booked result. sfhit down 100
+		if (($this->is_book = ($this->type >= 100)))
+		{
+			$this->type -= 100;
+		}
 		$this->timestamp = $data->timestamp;
 		if (isset($items))
 		{
