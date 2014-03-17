@@ -92,7 +92,7 @@
 						<div class="form-group">
 							<div class="col-lg-10 col-lg-offset-2">
 								<!--button class="btn btn-default" id="">チェック</button-->
-								<button type="submit" id="submit-main" class="btn btn-block btn-primary">作成</button>
+								<button type="submit" id="submit-main" class="btn btn-block btn-success">作成</button>
 							</div>
 						</div>
 					</fieldset>

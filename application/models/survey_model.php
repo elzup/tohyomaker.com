@@ -266,19 +266,21 @@ class Survey_model extends CI_Model
 			{
 				continue;
 			}
-			if ($datum->result > time)
+			if ($datum->result < time())
 			{
+				echo $datum->result .':' . time();
+				exit;
 				$data[] = $this->_update_result($survey, $datum->type - 100);
 			}
-			$datum = NULL;
+			$datum = FALSE;
 		}
 		// data prepare
-		array_filter($data);
+		$data = array_filter($data);
 
-		if (!function_exists('cmp'))
+		if (!function_exists('cmptimestamp'))
 		{
 
-			function cmp(stdClass $a, stdClass $b)
+			function cmptimestamp(stdClass $a, stdClass $b)
 			{
 				if ($a->timestamp == $b->timestamp)
 				{
@@ -287,7 +289,7 @@ class Survey_model extends CI_Model
 				return ($a->timestamp < $b->timestamp) ? -1 : 1;
 			}
 		}
-		usort($data, 'cmp');
+		usort($data, 'cmptimestamp');
 	}
 
 	private function _update_result(SurveyObj $survey, $type)
@@ -330,7 +332,7 @@ class Survey_model extends CI_Model
 		$data = array(
 				'id_survey' => $id_survey,
 				'type' => $type + 100,
-				'result' => strtotime($timestrlib[$type], time()),
+				'result' => strtotime($timestrlib[$type]),
 		);
 		$this->db->insert('result_tbl', $data);
 	}

@@ -7,7 +7,9 @@ if (typeof jQuery != "undefined"){
             $("#vote-value").val($(this).attr('name'));
             $(".btn-item").removeClass('active');
             $(".btn-item").removeClass('btn-warning');
+            $(".btn-item").addClass('btn-default');
             $(this).addClass('btn-warning');
+            $(this).removeClass('btn-default');
             $("#submit-main").removeClass('disabled');
         }); 
         $(".active.btn-item").click();

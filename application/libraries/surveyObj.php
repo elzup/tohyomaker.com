@@ -283,7 +283,7 @@ class SurveyObj
 		$results = array();
 		foreach ($this->items as $item)
 		{
-			$results[] = $item->value;
+			$results[] = $item->num;
 		}
 		return implode(',', $results);
 	}

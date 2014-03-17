@@ -11,10 +11,8 @@
 								<label for="owner" class="col-lg-2 control-label">作成者</label>
 								<div class="col-lg-10">
 									<div
-										<div class="panel panel-default panel-check">
-											<div class="panel-body">
+										<div class="well well-check">
 												<?= $user->screen_name . (isset($data['is_anonymous']) ? '(非公開)' : "") ?>
-											</div>
 										</div>
 									</div>
 								</div>
@@ -22,10 +20,8 @@
 								<div class="form-group">
 									<label for="title" class="col-lg-2 control-label">タイトル</label>
 									<div class="col-lg-10">
-										<div class="panel panel-default panel-check">
-											<div class="panel-body">
-												<?= $data['title'] ?>
-											</div>
+										<div class="well well-check">
+											<?= $data['title'] ?>
 										</div>
 									</div>
 								</div>
@@ -33,10 +29,8 @@
 								<div class="form-group">
 									<label for="target" class="col-lg-2 control-label">対象</label>
 									<div class="col-lg-10">
-										<div class="panel panel-default panel-check">
-											<div class="panel-body">
-												<?= (!isset($data['target']) ? '全員': $data['target']) ?>
-											</div>
+										<div class="well well-check">
+											<?= (!isset($data['target']) ? '全員' : $data['target']) ?>
 										</div>
 									</div>
 								</div>
@@ -44,10 +38,8 @@
 								<div class="form-group">
 									<label for="description" class="col-lg-2 control-label">説明</label>
 									<div class="col-lg-10">
-										<div class="panel panel-default panel-check">
-											<div class="panel-body">
-												<?= $data['description'] ?>
-											</div>
+										<div class="well well-check">
+											<?= $data['description'] ?>
 										</div>
 									</div>
 								</div>
@@ -63,10 +55,8 @@
 												continue;
 											}
 											?>
-											<div class="panel panel-default panel-check">
-												<div class="panel-body">
-													<?= $data["item{$i}"] ?>
-												</div>
+											<div class="well well-check">
+												<?= $data["item{$i}"] ?>
 											</div>
 											<input type="hidden" name="item<?= $i ?>" class="form-control" value="<?= $data["item{$i}"] ?>">
 										<?php } ?>
@@ -93,30 +83,28 @@
 								<div class="form-group">
 									<label for="tag" class="col-lg-2 control-label">タグ</label>
 									<div class="col-lg-10">
-										<div class="panel panel-default panel-check">
-											<div class="panel-body">
-												<p>
-													<?php
-													if (isset($data['tag']))
+										<div class="well well-check">
+											<p>
+												<?php
+												if (isset($data['tag']))
+												{
+													$tags = explode(',', $data['tag']);
+													foreach ($tags as $tag)
 													{
-														$tags = explode(',', $data['tag']);
-														foreach ($tags as $tag)
+														if (empty($tag))
 														{
-															if (empty($tag))
-															{
-																continue;
-															}
-															?>
-																<button type="button" class="btn btn-primary btn-xs disabled"><?= $tag ?></button>
-															<?php
+															continue;
 														}
-													} else
-													{
-														echo 'no tag';
+														?>
+														<button type="button" class="btn btn-success btn-xs disabled"><?= $tag ?></button>
+														<?php
 													}
-													?>
-												</p>
-											</div>
+												} else
+												{
+													echo 'no tag';
+												}
+												?>
+											</p>
 										</div>
 									</div>
 								</div>
@@ -133,9 +121,9 @@
 
 								<div class="form-group">
 									<div class="col-lg-10 col-lg-offset-2">
-										<a href="javascript:window.history.back();" class="btn btn-default">変更</a>
+										<a href="javascript:window.history.back();" class="btn btn-block btn-default">変更</a>
 
-										<button type="submit-main" class="btn btn-primary">作成</button>
+										<button type="submit-main" class="btn btn-block btn-success">作成</button>
 									</div>
 								</div>
 						</fieldset>
