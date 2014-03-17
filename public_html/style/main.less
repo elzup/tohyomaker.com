@@ -12,10 +12,13 @@ html,body {
         color: white;
     }
     .navbar-brand {
-        .clear-font();
         background: url(http://localhost/tohyomaker/public_html/style/../images/logo-white.png);
         background-size: cover;
         width: 190px;
+        >a {
+            .clear-font();
+            display: block;
+        }
     }
     background-color: rgb(0, 190, 0);
     border-color: #008105;
@@ -197,9 +200,22 @@ i {
 
 #survey-log-div {
     .panel-log {
+        >.panel-heading {
+            >.reuslt-type-time {
+                >:first-child {
+                    color: gold;
+                }
+            }
+            >.reuslt-type-total {
+                >last-child {
+                    color: gold;
+                }
+            }
+        }
         >.panel-body {
             table {
                 .rank {
+                    width: 10%;
                     text-align: right;
                     &:after {
                         content: '位';
@@ -218,11 +234,12 @@ i {
                     }
                 }
                 .itemname {
-//                    width: 80%;
+                    width: 60%;
                     overflow: hidden;
                     .ellipsis();
                 }
                 .num {
+                    width: 30%;
                     text-align: right;
                 }
             }

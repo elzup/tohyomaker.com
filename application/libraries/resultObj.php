@@ -60,7 +60,7 @@ class ResultObj
 	{
 		if ($this->is_booked())
 		{
-			$libtimestr = explode(',', '1時間,6時間,12時間,1日,2日,3日');
+			$libtimestr = explode(',', '1 時間,6 時間,12 時間,1 日,2 日,3 日');
 			$this->_elapsed_time_str = $libtimestr[$this->type];
 			return;
 		}

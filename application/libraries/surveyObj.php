@@ -111,10 +111,11 @@ class SurveyObj
 
 	public function set_results(array $data)
 	{
-		if (($results = $this->create_results($data)))
+		if (!isset($data))
 		{
-			$this->results = $results;
+			return FALSE;
 		}
+		$this->results = $this->create_results($data);
 	}
 
 	public function create_results($data)
@@ -136,7 +137,9 @@ class SurveyObj
 		$nums = explode(',', $data->result);
 		$items = $this->_create_map_item($nums);
 		$items_sorted = $this->create_sorted_items($items);
-		return new ResultObj($data, $items_sorted);
+		$result = new ResultObj($data, $items_sorted);
+		$result->set_elapsed_time(strtotime($this->timestamp));
+		return $result;
 	}
 
 	private function _create_map_item($nums)
@@ -228,6 +231,10 @@ class SurveyObj
 		return date(DATE_FORMAT, strtotime($this->timestamp));
 	}
 
+	/**
+	 * 
+	 * @return ItemObj[]
+	 */
 	public function get_sorted()
 	{
 		if (!isset($this->items_sorted))

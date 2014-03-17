@@ -74,8 +74,10 @@
 
 	<div class="row" id="survey-pager-div">
 
-		<?php if ($survey->state === SURVEY_STATE_PROGRESS)
-		{ ?>
+		<?php
+		if ($survey->state === SURVEY_STATE_PROGRESS)
+		{
+			?>
 			<div class="col-sm-2">
 				あと<?= $survey->get_time_remain_str() ?>
 			</div>
@@ -84,11 +86,23 @@
 					<div class="progress-bar" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
 				</div>
 			</div>
-<?php } ?>
+		<?php } ?>
 		<div class="col-sm-4 col-sm-offset-8">
 			<div class="btn-group btn-group-justified">
-				<a href="<?= base_url($survey->id)?>" class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VOTE) ? ' disabled':'')?>"><i class="glyphicon glyphicon-import"></i>投票</a>
-				<a href="<?= base_url('view/'.$survey->id)?>" class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VIEW) ? ' disabled':'')?>"><i class="glyphicon glyphicon-stats"></i>結果</a>
+				<a href="<?= base_url($survey->id) ?>" class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VOTE) ? ' disabled' : '') ?>">
+					<i class="glyphicon glyphicon-import"></i>
+					投票
+				</a>
+				<a href="<?= base_url('view/' . $survey->id) ?>" class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VIEW) ? ' disabled' : '') ?>">
+					<i class="glyphicon glyphicon-stats"></i>
+					結果
+					<?php
+					if (($c = count($survey->results)))
+					{
+						?>
+						<span class="badge"><?= $c ?></span>
+					<?php } ?>
+				</a>
 			</div>
 		</div>
 	</div>

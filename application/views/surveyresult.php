@@ -8,13 +8,13 @@ if (!isset($select))
 <div class="container">
 	<div class="row">
 		<div class="col-sm-offset-2 col-sm-8" id="itemresultbox-soted-div">
-			<ul>
+			<div class="row">
 				<?php
 				// TODO: item sort after view 
 				foreach ($survey->get_sorted() as $i => $item)
 				{
 					?>
-					<li>
+					<div class="col-sm-<?= calc_item_col($item->rank, count($survey->items)) ?>">
 						<div class="panel panel-default rank-<?= $item->rank ?>">
 							<div class="panel-body">
 								<div class="row">
@@ -32,9 +32,9 @@ if (!isset($select))
 								</div>
 							</div>
 						</div>
-					</li>
+					</div>
 				<?php } ?>
-			</ul>
+			</div>
 		</div>
 		<div class="col-sm-offset-2 col-sm-8" id="itemresultbox-div" style="display: none;">
 			<ul>

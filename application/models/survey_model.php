@@ -268,8 +268,6 @@ class Survey_model extends CI_Model
 			}
 			if ($datum->result < time())
 			{
-				echo $datum->result .':' . time();
-				exit;
 				$data[] = $this->_update_result($survey, $datum->type - 100);
 			}
 			$datum = FALSE;
@@ -302,7 +300,6 @@ class Survey_model extends CI_Model
 		$this->db->delete('result_tbl');
 		$this->_insert_result($survey, $type);
 		$where['type'] -= 100;
-		$this->db->insert('insert', $where);
 		$this->db->where($where);
 		$data = $this->db->get('result_tbl')->result();
 		return $data[0];

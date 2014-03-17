@@ -37,7 +37,7 @@ if (!function_exists('surveypane'))
 				foreach ($survey->items as $i => $item)
 				{
 					?>
-													<a href="<?= base_url($survey->id . '/' . $i) ?>" class="btn btn-primary btn-item btn-sm"><?= $item ?></a>
+														<a href="<?= base_url($survey->id . '/' . $i) ?>" class="btn btn-primary btn-item btn-sm"><?= $item ?></a>
 				<?php } ?>
 				</div-->
 			</div>
@@ -105,11 +105,17 @@ if (!function_exists('logpane'))
 	function logpane(ResultObj $result)
 	{
 		?>
-		<div class="panel panel-default panel-log">
+		<div class="panel panel-success panel-log">
 			<div class="panel-heading">
 				<div class="row <?= $result->is_booked() ? 'reuslt-type-time' : 'reuslt-type-total' ?>">
-					<div class="col-sm-5">経過時間 <?= $result->get_elapsed_time_str() ?></div>
-					<div class="col-sm-5"><?= $result->get_total() ?>票</div>
+					<div class="col-sm-5">
+						<i class="glyphicon glyphicon-time"></i>
+						経過時間 <?= $result->get_elapsed_time_str() ?>
+					</div>
+					<div class="col-sm-5">
+						<i class="glyphicon glyphicon-ok"></i>
+						<?= $result->get_total() ?> 票
+					</div>
 				</div>
 			</div>
 			<div class="panel-body">
@@ -124,15 +130,15 @@ if (!function_exists('logpane'))
 							{
 								$collib = explode(',', 'gold,silver,bronds');
 								$col = $collib[$rank - 1];
-								$crown = '<i class="glyphicon glyphicon-star col-'.$col.'"></i>';
+								$crown = '<i class="glyphicon glyphicon-star col-' . $col . '"></i>';
 							}
 							?>
 							<tr>
-								<td class="rank rank-<?= $rank ?>"><?=$crown?><?= $rank ?></td>
+								<td class="rank rank-<?= $rank ?>"><?= $crown ?><?= $rank ?></td>
 								<td class="itemanme"><?= $item->value ?></td>
 								<td class="num"><?= $item->num ?></td>
 							</tr>
-		<?php } ?>
+						<?php } ?>
 
 					</tbody>
 				</table> 
