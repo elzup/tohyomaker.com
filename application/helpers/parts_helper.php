@@ -9,7 +9,7 @@ if (!function_exists('surveypane'))
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-sm-1"><?= $prefix ?></div>
-				<div class="col-sm-9">
+					<div class="col-sm-9">
 
 						<h3><p><a href="<?= base_url($survey->id) ?>"><?= $survey->title ?></a></p></h3>
 					</div>
@@ -37,8 +37,8 @@ if (!function_exists('surveypane'))
 				foreach ($survey->items as $i => $item)
 				{
 					?>
-							<a href="<?= base_url($survey->id . '/' . $i) ?>" class="btn btn-primary btn-item btn-sm"><?= $item ?></a>
-		<?php } ?>
+													<a href="<?= base_url($survey->id . '/' . $i) ?>" class="btn btn-primary btn-item btn-sm"><?= $item ?></a>
+				<?php } ?>
 				</div-->
 			</div>
 			<div class="panel-footer">
@@ -49,7 +49,7 @@ if (!function_exists('surveypane'))
 					{
 						?>
 						<a href="<?= base_url("tag/" . $tag) ?>" class="btn btn-primary btn-tag btn-xs"><?= $tag ?></a>
-		<?php } ?>
+					<?php } ?>
 				</p>
 			</div>
 		</div>
@@ -105,20 +105,42 @@ if (!function_exists('logpane'))
 	function logpane(ResultObj $result)
 	{
 		?>
-		<div class="panel panel-default panel-result">
+		<div class="panel panel-default panel-log">
 			<div class="panel-heading">
-				<div class="row">
-					<div class="col-sm-5"></div>
-					<div class="col-sm-5"></div>
+				<div class="row <?= $result->is_booked() ? 'reuslt-type-time' : 'reuslt-type-total' ?>">
+					<div class="col-sm-5">経過時間 <?= $result->get_elapsed_time_str() ?></div>
+					<div class="col-sm-5"><?= $result->get_total() ?>票</div>
 				</div>
 			</div>
 			<div class="panel-body">
+
+				<table class="table table-striped table-hover">
+					<tbody>
+						<?php
+						foreach ($result->items as $i => $item)
+						{
+							$crown = '';
+							if (($rank = $item->rank) < 4)
+							{
+								$collib = explode(',', 'gold,silver,bronds');
+								$col = $collib[$rank - 1];
+								$crown = '<i class="glyphicon glyphicon-star col-'.$col.'"></i>';
+							}
+							?>
+							<tr>
+								<td class="rank rank-<?= $rank ?>"><?=$crown?><?= $rank ?></td>
+								<td class="itemanme"><?= $item->value ?></td>
+								<td class="num"><?= $item->num ?></td>
+							</tr>
+		<?php } ?>
+
+					</tbody>
+				</table> 
 			</div>
 		</div>
-<?php
-
-
+		<?php
 	}
+
 }
 if (!function_exists('calc_item_col'))
 {
@@ -127,18 +149,18 @@ if (!function_exists('calc_item_col'))
 	{
 		$lib = array(
 				FALSE, FALSE,
-				array (6, 6),
-				array (4, 4, 4),
-				array (6, 6, /**/ 6, 6),
-				array (6, 6, /**/ 4, 4, 4),
-				array (4, 4, 4, /**/ 4, 4, 4),
-				array (4, 4, 4, /**/ 3, 3, 3, 3),
-				array (3, 3, 3, 3, /**/ 3, 3, 3, 3),
-				array (4, 4, 4, /**/ 4, 4, 4, /**/ 4, 4, 4),
-				array (4, 4, 4, /**/ 4, 4, 4, /**/ 3, 3, 3, 3),
+				array(6, 6),
+				array(4, 4, 4),
+				array(6, 6, /**/ 6, 6),
+				array(6, 6, /**/ 4, 4, 4),
+				array(4, 4, 4, /**/ 4, 4, 4),
+				array(4, 4, 4, /**/ 3, 3, 3, 3),
+				array(3, 3, 3, 3, /**/ 3, 3, 3, 3),
+				array(4, 4, 4, /**/ 4, 4, 4, /**/ 4, 4, 4),
+				array(4, 4, 4, /**/ 4, 4, 4, /**/ 3, 3, 3, 3),
 		);
 
-		return $lib[$num][$index] ?: FALSE;
+		return $lib[$num][$index] ? : FALSE;
 	}
 
 }

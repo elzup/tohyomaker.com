@@ -104,6 +104,7 @@ html,body {
         text-shadow: 1px 1px 0px #A4FF93;
     }
 
+    /*
     .rank-1 {
         margin-left: -27px;
     }
@@ -134,7 +135,7 @@ html,body {
     .rank-10 {
         margin-left: 0px;
     }
-    
+    */
 }
 
 #vote-textarea {
@@ -194,11 +195,68 @@ i {
     }
 }
 
-.no-display {
-    display: none;
+#survey-log-div {
+    .panel-log {
+        >.panel-body {
+            table {
+                .rank {
+                    text-align: right;
+                    &:after {
+                        content: '位';
+                    }
+                    &.rank-1, &.rank-2, &.rank-3 {
+                        .text-shadow();
+                    }
+                    &.rank-1 {
+                        .col-gold();
+                    }
+                    &.rank-2 {
+                        .col-silver();
+                    }
+                    &.rank-3 {
+                        .col-bronds();
+                    }
+                }
+                .itemname {
+//                    width: 80%;
+                    overflow: hidden;
+                    .ellipsis();
+                }
+                .num {
+                    text-align: right;
+                }
+            }
+        }
+    }
+}
+
+.col-gold() {
+    color: gold;
+}
+.col-silver() {
+    color: silver;
+}
+.col-bronds() {
+    color: #c47222;
+}
+
+.text-shadow() {
+    text-shadow: 1px 1px 2px;
 }
 
 .sharebtns-div {
     margin-top: 5px !important;
 }
 
+.ellipsis() {
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}
+
+.no-display {
+    display: none;
+}

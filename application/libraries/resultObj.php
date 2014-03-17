@@ -20,9 +20,12 @@ define('RESULT_TYPE_V10000' , '14');
  */
 class ResultObj 
 {
+	/** @var ItemObj[] */
 	public $items;
 	public $type;
 	public $timestamp;
+	private $_elapsed_time_str;
+
 //	public $is_book;
 
 	function __construct($data = NULL, $items = NULL)
@@ -52,4 +55,52 @@ class ResultObj
 	{
 		$this->items = $items;
 	}
+
+	public function set_elapsed_time($time_start)
+	{
+		if ($this->is_booked())
+		{
+			$libtimestr = explode(',', '1時間,6時間,12時間,1日,2日,3日');
+			$this->_elapsed_time_str = $libtimestr[$this->type];
+			return;
+		}
+		$time_loged = strtotime($this->timestamp);
+		$this->_elapsed_time_str = $this->_get_time_str($time_loged - $time_start);
+	}
+
+	private function _get_time_str($sec)
+	{
+		$str = '';
+		if ($sec > 86400)
+		{
+			$str .= floor($sec / 86400).'日';
+		}
+		if ($sec > 3600)
+		{
+			$str .= floor($sec / 3600) . '時間';
+		}
+		$str .= floor($sec / 60) . '分';
+		return $str;
+	}
+
+	public function get_total()
+	{
+		$sum = 0;
+		foreach ($this->items as $item)
+		{
+			$sum += $item->num;
+		}
+		return $sum;
+	}
+
+	public function get_elapsed_time_str()
+	{
+		return $this->_elapsed_time_str;
+	}
+
+	public function is_booked()
+	{
+		return $this->type <= 5;
+	}
+
 }

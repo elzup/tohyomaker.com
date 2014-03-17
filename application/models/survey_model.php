@@ -275,15 +275,18 @@ class Survey_model extends CI_Model
 		// data prepare
 		array_filter($data);
 
-		function cmp(stdClass $a, stdClass $b)
+		if (!function_exists('cmp'))
 		{
-			if ($a->timestamp == $b->timestamp)
-			{
-				return 0;
-			}
-			return ($a->timestamp < $b->timestamp) ? -1 : 1;
-		}
 
+			function cmp(stdClass $a, stdClass $b)
+			{
+				if ($a->timestamp == $b->timestamp)
+				{
+					return 0;
+				}
+				return ($a->timestamp < $b->timestamp) ? -1 : 1;
+			}
+		}
 		usort($data, 'cmp');
 	}
 
@@ -323,7 +326,7 @@ class Survey_model extends CI_Model
 
 	private function _insert_result_book($id_survey, $type)
 	{
-		$timestrlib = "+1hour,+6hour,+12hour,+1day,+2day" . split(',');
+		$timestrlib = explode(',', '+1hour,+6hour,+12hour,+1day,+2day');
 		$data = array(
 				'id_survey' => $id_survey,
 				'type' => $type + 100,

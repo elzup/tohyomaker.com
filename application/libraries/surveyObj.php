@@ -133,21 +133,22 @@ class SurveyObj
 
 	private function _create_result($data)
 	{
-		$values = explode(',', $data->result);
-		$items = $this->_create_map_item($values);
-		return new ResultObj($data, $items);
+		$nums = explode(',', $data->result);
+		$items = $this->_create_map_item($nums);
+		$items_sorted = $this->create_sorted_items($items);
+		return new ResultObj($data, $items_sorted);
 	}
 
-	private function _create_map_item($values)
+	private function _create_map_item($nums)
 	{
 		$items = array();
 		foreach ($this->items as $item)
 		{
 			$items[] = clone $item;
 		}
-		foreach ($values as $i => $value)
+		foreach ($nums as $i => $num)
 		{
-			$items[$i]->value = $value;
+			$items[$i]->num = $num;
 		}
 		return $items;
 	}
@@ -155,7 +156,6 @@ class SurveyObj
 	public function get_total()
 	{
 		$sum = 0;
-		/** @var $item ItemObj */
 		foreach ($this->items as $item)
 		{
 			$sum += $item->num;
@@ -241,13 +241,16 @@ class SurveyObj
 	{
 
 		//sort to base ItemObj's field num
-		function cmp_item(ItemObj $a, ItemObj $b)
+		if (!function_exists('cmp_item'))
 		{
-			if ($a->num == $b->num)
+			function cmp_item(ItemObj $a, ItemObj $b)
 			{
-				return 0;
+				if ($a->num == $b->num)
+				{
+					return 0;
+				}
+				return ($a->num < $b->num) ? 1 : -1;
 			}
-			return ($a->num < $b->num) ? 1 : -1;
 		}
 
 		usort($items, 'cmp_item');
