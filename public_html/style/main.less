@@ -87,12 +87,51 @@ html,body {
     margin-top: 10px;
     .panel {
         margin-bottom: 7px;
-        div>div {
+        .panel-heading {
+            padding: 1px 15px;
+            .rank {
+                font-size: 20px;
+                &:after {
+                    content: "位";
+                    font-size: 15px;
+                }
+            }
+            .voted {
+                float: right;
+                color: gold;
+                font-size: 20px;
+                margin-top: 5px;
+            }
+        }
+        &.rank-1, &.rank-2, &.rank-3 {
+            .rank {
+                font-size: 30px;
+            }
+        }
+        &.rank-1 {
+            .rank {
+                .col-gold();
+            }
+        }
+        &.rank-2 {
+            .rank {
+                .col-silver();
+            }
+        }
+        &.rank-3 {
+            .rank {
+                .col-bronds();
+            }
+        }
+        .panel-body {
             h2, h3, h4 {
                     margin: 0;
             }
             .num {
+                text-align: right;
+                font-size: 30px;
                 &:after {
+                    font-size: 15px;
                     content: "票";
                 }
 
