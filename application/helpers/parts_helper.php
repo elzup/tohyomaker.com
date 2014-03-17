@@ -37,7 +37,7 @@ if (!function_exists('surveypane'))
 				foreach ($survey->items as $i => $item)
 				{
 					?>
-														<a href="<?= base_url($survey->id . '/' . $i) ?>" class="btn btn-primary btn-item btn-sm"><?= $item ?></a>
+															<a href="<?= base_url($survey->id . '/' . $i) ?>" class="btn btn-primary btn-item btn-sm"><?= $item ?></a>
 				<?php } ?>
 				</div-->
 			</div>
@@ -148,6 +148,19 @@ if (!function_exists('logpane'))
 	}
 
 }
+
+
+if (!function_exists('votelogpane'))
+{
+
+	function votelogpane(SurveyObj $survey, $select)
+	{
+		
+		// TODO: make function view of voted history pane
+	}
+
+}
+
 if (!function_exists('calc_item_col'))
 {
 

@@ -36,7 +36,7 @@ if ($user == null)
 					?>
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="login-info"><?= $user->screen_name ?> <span class="caret"></span></a>
 					<ul class="dropdown-menu" aria-labelledby="login-info">
-						<li><a href="my">マイページ</a></li>
+						<li><a href="<?=  base_url('mypage')?>">マイページ</a></li>
 						<!--li class="divider"></li-->
 						<li><a href="<?= base_url('auth/logout') ?>">ログアウト</a></li>
 					</ul>
