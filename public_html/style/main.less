@@ -219,11 +219,6 @@ i {
         >div>div {
             height: @h;
         }
-        .prefix {
-            line-height: @h;
-            font-size: 20px;
-
-        }
         a {
             color: white;
             font-weight: bold;
@@ -231,7 +226,12 @@ i {
                 color: white;
             }
         }
-        h4 {
+        .title {
+            padding-right: 0;
+            h4 {
+            }
+        }
+        .state {
         }
         .total-num {
             text-align: right;
@@ -278,7 +278,12 @@ i {
         }
     }
     .panel-footer {
+        padding-top: 2px;
         padding-bottom: 1px;
+
+        > p {
+            margin: 0px;
+        }
     }
     i {
         top: 3px;

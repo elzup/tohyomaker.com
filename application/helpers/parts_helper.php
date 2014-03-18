@@ -2,52 +2,81 @@
 if (!function_exists('surveypane'))
 {
 
-	function surveypane(SurveyObj $survey, $prefix = '1')
+	function surveypane(SurveyObj $survey, $is_log = FALSE)
 	{
 		?>
 		<div class="panel panel-success panel-survey">
 			<div class="panel-heading">
 				<div class="row">
-					<div class="col-sm-1 prefix"><?= $prefix ?></div>
-					<div class="col-sm-9">
-						<h4><p><a href="<?= base_url($survey->id) ?>"><?= $survey->title ?></a></p></h4>
+					<div class="col-sm-10 title">
+						<p><h4><a href="<?= base_url($survey->id) ?>"><?= $survey->title ?></a></h4></p>
 					</div>
+					<!--div class="col-sm-1 state"></div-->
 					<div class="col-sm-2 total-num">
 						<span class="total-num"><?= $survey->get_total() ?></span>
 					</div>
 				</div>
 			</div>
 			<div class="panel-body">
-				<div class="row">
-					<div class="col-sm-8 col-sm-8-s">
-						<p><i class="glyphicon glyphicon-comment icon-orange"></i><?= $survey->description ?></p>
+[<?=$survey->get_time_remain_str()?>]
+				<?php
+				if ($is_log && ($selected = $survey->selected) !== NO_VOTED)
+				{
+//					$share_uri = base_url($survey->id);
+//					$share_text = totext_share($survey->items[$selected]->value, $survey->title, $share_uri);
+
+					$item = $survey->items[$selected];
+					// not voted yet
+					?>
+					<div>
+						<a href="<?= base_url($survey->id) ?>" class="btn btn-success btn-item btn-xs"><?= $item->value ?></a>
+						に投票しました。
 					</div>
-					<div class="col-sm-4 col-sm-4-s">
-						<p><i class="glyphicon glyphicon-flag icon-orange"></i><?= $survey->target ?></p>
-					</div>
-					<!--div class="col-sm-12">
-						<p><?= $survey->get_text_items() ?></p>
-					</div-->
-					<!--div class="col-sm-10">time bar</div>
-					<div class="col-sm-2 atleast">残り </div-->
-				</div>
-				<div class="btn-group-itmes">
+					<?php
+				} else
+				//already voted
+				{
+					?>
 					<div class="row">
-						<?php
-						$cn = calc_item_col_equality(count($survey->items));
-						$sum_cn = 0;
-						foreach ($survey->items as $i => $item)
-						{
-							?>
-							<div class="col-sm-<?= $cn ?>">
-								<a href="<?= base_url($survey->id . '/' . $i) ?>" class="btn btn-block btn-success btn-item btn-sm"><?= $item->value ?></a>
-							</div>
-							<?php
-							$sum_cn += $cn;
-						}
-						?>
+						<div class="col-sm-8 col-sm-8-s">
+							<p><i class="glyphicon glyphicon-comment icon-orange"></i><?= $survey->description ?></p>
+						</div>
+						<div class="col-sm-4 col-sm-4-s">
+							<p><i class="glyphicon glyphicon-flag icon-orange"></i><?= $survey->target ?></p>
+						</div>
+						<!--div class="col-sm-12">
+							<p><?= $survey->get_text_items() ?></p>
+						</div-->
+						<!--div class="col-sm-10">time bar</div>
+						<div class="col-sm-2 atleast">残り </div-->
 					</div>
-				</div>
+					<div class="btn-group-itmes">
+						<div class="row">
+							<?php
+							$cn = calc_item_col_equality(count($survey->items));
+							$sum_cn = 0;
+							foreach ($survey->items as $i => $item)
+							{
+								$class = '';
+								if ($selected !== NO_VOTED) 
+								{
+									$class .= ' disabled';
+									if ($selected === $i)
+									{
+										$class .= ' btn-warning';
+									}
+								}
+								?>
+								<div class="col-sm-<?= $cn ?>">
+									<a href="<?= base_url($survey->id . '/' . $i) ?>" class="btn btn-block btn-success btn-item btn-sm<?=$class?>"><?= $item->value ?></a>
+								</div>
+								<?php
+								$sum_cn += $cn;
+							}
+							?>
+						</div>
+					</div>
+				<?php } ?>
 			</div>
 			<div class="panel-footer">
 				<p class="btn-group-tags">
@@ -81,6 +110,8 @@ if (!function_exists('sharebtn_twitter'))
 		 }
 
 	 }
+
+
 
 	 if (!function_exists('alert_box'))
 	 {
