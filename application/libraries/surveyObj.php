@@ -22,6 +22,12 @@ define('SURVEY_STATE_END', '2');
  */
 define('DATE_FORMAT', 'Y年m月d日 H:i');
 
+/**
+ * 
+ * @see $selected
+ */
+define('NO_VOTED', -1);
+
 class SurveyObj
 {
 
@@ -36,6 +42,7 @@ class SurveyObj
 
 	/** @var UserObj */
 	public $owner;
+
 	/** @var ItemObj[] */
 	public $items;
 	private $items_sorted;
@@ -45,15 +52,15 @@ class SurveyObj
 	/* super optional */
 	public $selected;
 
-	function __construct($data = NULL, array $items = NULL, array $tags = NULL, UserObj $owner = NULL, $results = NULL)
+	function __construct($data = NULL, array $items = NULL, array $tags = NULL, UserObj $owner = NULL, $selected = NULL, $results = NULL)
 	{
 		if (!empty($data))
 		{
-			$this->set($data, $items, $tags, $owner, $results);
+			$this->set($data, $items, $tags, $owner, $selected, $results);
 		}
 	}
 
-	function set(stdClass $data, array $items = NULL, array $tags = NULL, UserObj $owner = NULL, $results = NULL)
+	function set(stdClass $data, array $items = NULL, array $tags = NULL, UserObj $owner = NULL, $selected = NULL, $results = NULL)
 	{
 		$this->id = $data->id_survey;
 		$this->title = $data->title;
@@ -81,6 +88,13 @@ class SurveyObj
 		if (isset($results))
 		{
 			$this->set_results($results);
+		}
+		if (isset($selected))
+		{
+			$this->selected = $selected;
+		} else
+		{
+			$this->selected = NO_VOTED;
 		}
 
 		$this->get_time_remain();
@@ -259,6 +273,7 @@ class SurveyObj
 		//sort to base ItemObj's field num
 		if (!function_exists('cmp_item'))
 		{
+
 			function cmp_item(ItemObj $a, ItemObj $b)
 			{
 				if ($a->num == $b->num)
@@ -267,6 +282,7 @@ class SurveyObj
 				}
 				return ($a->num < $b->num) ? 1 : -1;
 			}
+
 		}
 
 		usort($items, 'cmp_item');
@@ -304,8 +320,4 @@ class SurveyObj
 		return implode(',', $results);
 	}
 
-	public function set_selected($index)
-	{
-		$this->selected = $index;
-	}
 }

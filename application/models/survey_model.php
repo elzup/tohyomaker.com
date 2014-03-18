@@ -20,10 +20,11 @@ class Survey_model extends CI_Model
 
 	/**
 	 * 
-	 * @param type $id_survey
+	 * @param int $id_survey
+	 * @param int $id_user optional set selected survey
 	 * @return SurveyObj|boolean
 	 */
-	public function get_survey($id_survey)
+	public function get_survey($id_survey, $id_user = NULL)
 	{
 		$where = array(
 				'id_survey' => $id_survey,
@@ -41,6 +42,7 @@ class Survey_model extends CI_Model
 		$survey = new SurveyObj($data, $items, $tags, $owner);
 		$this->_install_result($survey);
 		$this->_check_state($survey);
+		$this->install_select($survey, $id_user);
 		return $survey;
 	}
 
@@ -121,8 +123,12 @@ class Survey_model extends CI_Model
 
 	public function install_select(SurveyObj &$survey, $id_user)
 	{
+		if (empty($id_user))
+		{
+			return;
+		}
 		$select = $this->check_voted($survey->id, $id_user);
-		$survey->set_selected($select);
+		$survey->selected = $select;
 	}
 
 	/**
@@ -365,9 +371,7 @@ class Survey_model extends CI_Model
 		$surveys = array();
 		foreach ($data as $datum)
 		{
-			$survey = $this->get_survey($datum->id_survey);
-			$this->install_select($survey, $user->id);
-			$surveys[] = $survey;
+			$surveys[] = $this->get_survey($datum->id_survey, $user->id);
 		}
 		return $surveys;
 	}

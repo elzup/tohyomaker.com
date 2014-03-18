@@ -250,11 +250,13 @@ i {
         .col-sm-8-s {
             width: 60%;
             padding-right: 0;
+            .ellipsis();
         }
         .col-sm-4-s {
             width: 40%;
             padding-left: 5px;
             padding-right: 2px;
+            .ellipsis();
         }
     }
     .btn-group-itmes {
@@ -333,6 +335,10 @@ i {
     }
 }
 
+.nav-tab {
+
+}
+
 .col-gold() {
     color: gold;
 }
@@ -352,7 +358,6 @@ i {
 }
 
 .ellipsis() {
-    width: 150px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
