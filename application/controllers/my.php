@@ -39,7 +39,7 @@ class My extends CI_Controller
 
 		$this->load->view('mypage', array('surveys' => $surveys, 'user' => $this->user->get_user()));
 
-		$this->load->view('foot', array('jss' => array('selectform')));
+		$this->load->view('foot');
 	}
 
 }

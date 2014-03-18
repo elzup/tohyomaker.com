@@ -49,11 +49,14 @@ class SurveyObj
 	public $tags;
 	public $results;
 
+	public $point_hot;
+
 	/* super optional */
 	public $selected;
 
 	function __construct($data = NULL, array $items = NULL, array $tags = NULL, UserObj $owner = NULL, $selected = NULL, $results = NULL)
 	{
+		$this->selected = NO_VOTED;
 		if (!empty($data))
 		{
 			$this->set($data, $items, $tags, $owner, $selected, $results);
@@ -92,11 +95,7 @@ class SurveyObj
 		if (isset($selected))
 		{
 			$this->selected = $selected;
-		} else
-		{
-			$this->selected = NO_VOTED;
-		}
-
+		} 
 		$this->get_time_remain();
 	}
 

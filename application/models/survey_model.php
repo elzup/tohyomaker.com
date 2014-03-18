@@ -88,6 +88,22 @@ class Survey_model extends CI_Model
 		return $result;
 	}
 
+	public function select_surveys_new($num = 10)
+	{
+		$this->db->order_by("timestamp", "asc");
+		$this->db->limit($num);
+		$result = $this->db->get('survey_tbl')->result();
+		return $result;
+	}
+
+	public function select_votes_new($num)
+	{
+		$this->db->order_by("timestamp", "asc");
+		$this->db->limit($num);
+		$result = $this->db->get('vote_tbl')->result();
+		return $result;
+	}
+
 	/**
 	 * 
 	 * @param SurveyObj $survey
@@ -129,6 +145,10 @@ class Survey_model extends CI_Model
 		}
 		$select = $this->check_voted($survey->id, $id_user);
 		$survey->selected = $select;
+		if (!isset($select))
+		{
+			$survey->selected = NO_VOTED;
+		}
 	}
 
 	/**
@@ -364,16 +384,69 @@ class Survey_model extends CI_Model
 	public function get_surveys_user_voted(UserObj $user)
 	{
 		$data = $this->select_votes_user($user->id);
+		return $this->datas_to_survey($data, $user->id);
+	}
+
+	public function get_surveys_new($id_user = NULL)
+	{
+		$data = $this->select_surveys_new(10);
+		return $this->datas_to_survey($data, $id_user);
+	}
+
+	public function get_surveys_hot($id_user = NULL)
+	{
+		$data = $this->select_votes_hot(200);
+		$data2 = $this->calc_surveyids_hot($data);
+		return $this->datas_to_survey($data2, $id_user);
+	}
+
+	public function calc_surveyids_hot($data)
+	{
+		$count = array();
+		foreach ($data as $datum)
+		{
+			if (!isset($count[$datum->id_survey]))
+			{
+				$count[$datum->id_survey] = 0;
+			}
+			$count[$datum->id_survey] += 1;
+		}
+		return arsort($count);
+	}
+
+	public function datas_to_survey_hot($data, $id_user)
+	{
 		if (empty($data))
 		{
 			return NULL;
 		}
 		$surveys = array();
-		foreach ($data as $datum)
+		if (isset($data))
 		{
-			$surveys[] = $this->get_survey($datum->id_survey, $user->id);
+			foreach ($data as $id_survey => $value)
+			{
+				$survey = $this->get_survey($id_survey, $id_user);
+				$survey->point_hot = $value;
+				$surveys[] = $survey;
+			}
 		}
 		return $surveys;
 	}
 
+	public function datas_to_survey($data, $id_user)
+	{
+		if (empty($data))
+		{
+			return NULL;
+		}
+		$surveys = array();
+		if (isset($data))
+		{
+			foreach ($data as $datum)
+			{
+				$surveys[] = $this->get_survey($datum->id_survey, $id_user);
+			}
+		}
+		return $surveys;
+	}
 }
