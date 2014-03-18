@@ -75,6 +75,17 @@ class Survey_model extends CI_Model
 		return $result;
 	}
 
+	public function select_votes_user($id_user)
+	{
+		$where = array(
+				'id_user' => $id_user,
+		);
+		$this->db->order_by("timestamp", "asc");
+		$this->db->where($where);
+		$result = $this->db->get('vote_tbl')->result();
+		return $result;
+	}
+
 	/**
 	 * 
 	 * @param SurveyObj $survey
@@ -84,7 +95,7 @@ class Survey_model extends CI_Model
 	 */
 	public function insert_vote(SurveyObj $survey, UserObj $user, $value)
 	{
-		if (($result = $this->check_voted($survey, $user)) !== FALSE || $survey->num_item <= $value)
+		if (($result = $this->check_voted($survey->id, $user->id)) !== FALSE || $survey->num_item <= $value)
 		{
 			return FALSE;
 		}
@@ -108,16 +119,20 @@ class Survey_model extends CI_Model
 		return TRUE;
 	}
 
+	public function install_select(SurveyObj &$survey, $id_user)
+	{
+		$select = $this->check_voted($survey->id, $id_user);
+		$survey->set_selected($select);
+	}
+
 	/**
 	 * check user already voted or never
-	 * @param SurveyObj $survey
-	 * @param UserObj $user
 	 * @return boolean|int false or vote_value
 	 */
-	public function check_voted(SurveyObj $survey, UserObj $user)
+	public function check_voted($id_survey, $id_user)
 	{
-		$this->db->where('id_survey', $survey->id);
-		$this->db->where('id_user', $user->id);
+		$this->db->where('id_survey', $id_survey);
+		$this->db->where('id_user', $id_user);
 		$result = $this->db->get('vote_tbl')->result();
 		if (!isset($result[0]))
 		{
@@ -272,7 +287,7 @@ class Survey_model extends CI_Model
 			}
 			$datum = FALSE;
 		}
-		// data prepare
+// data prepare
 		$data = array_filter($data);
 
 		if (!function_exists('cmptimestamp'))
@@ -286,6 +301,7 @@ class Survey_model extends CI_Model
 				}
 				return ($a->timestamp < $b->timestamp) ? -1 : 1;
 			}
+
 		}
 		usort($data, 'cmptimestamp');
 	}
@@ -332,6 +348,28 @@ class Survey_model extends CI_Model
 				'result' => strtotime($timestrlib[$type]),
 		);
 		$this->db->insert('result_tbl', $data);
+	}
+
+	/**
+	 * 
+	 * @param UserObj $user
+	 * @return null|SurveyObj[]
+	 */
+	public function get_surveys_user_voted(UserObj $user)
+	{
+		$data = $this->select_votes_user($user->id);
+		if (empty($data))
+		{
+			return NULL;
+		}
+		$surveys = array();
+		foreach ($data as $datum)
+		{
+			$survey = $this->get_survey($datum->id_survey);
+			$this->install_select($survey, $user->id);
+			$surveys[] = $survey;
+		}
+		return $surveys;
 	}
 
 }

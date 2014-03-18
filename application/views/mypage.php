@@ -1,3 +1,7 @@
+<?php
+/* @var $surveys SurveyObj[] */
+/* @var $user UserObj */
+?>
 
 <div class="container">
 	<div class="row">

@@ -1,3 +1,8 @@
+<?php
+/* @var $survey SurveyObj */
+/* @var $user UserObj */
+?>
+
 
 <div class="container" id="survey-log-div">
 	<div class="row">

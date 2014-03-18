@@ -41,6 +41,9 @@ class SurveyObj
 	public $tags;
 	public $results;
 
+	/* super optional */
+	public $selected;
+
 	function __construct($data = NULL, array $items = NULL, array $tags = NULL, UserObj $owner = NULL, $results = NULL)
 	{
 		if (!empty($data))
@@ -295,4 +298,8 @@ class SurveyObj
 		return implode(',', $results);
 	}
 
+	public function set_selected($index)
+	{
+		$this->selected = $index;
+	}
 }
