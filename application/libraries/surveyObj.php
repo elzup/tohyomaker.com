@@ -36,6 +36,7 @@ class SurveyObj
 
 	/** @var UserObj */
 	public $owner;
+	/** @var ItemObj[] */
 	public $items;
 	private $items_sorted;
 	public $tags;
@@ -171,7 +172,12 @@ class SurveyObj
 
 	public function get_text_items($glue = ' / ')
 	{
-		return implode($glue, $this->items);
+		$itemnames = array();
+		foreach ($this->items as $item)
+		{
+			$itemnames[] = $item->value;
+		}
+		return implode($glue, $itemnames);
 	}
 
 	public function get_state_update()

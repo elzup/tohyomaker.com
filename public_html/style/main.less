@@ -211,17 +211,64 @@ i {
 #pager-div {
 }
 
-.panel-sp {
+.panel-survey {
     .panel-heading {
         padding-top: 1px;
         padding-bottom: 0px;
+        @h : 40px;
+        >div>div {
+            height: @h;
+        }
+        .prefix {
+            line-height: @h;
+            font-size: 20px;
+
+        }
+        a {
+            color: white;
+            font-weight: bold;
+            &:hover, &:active {
+                color: white;
+            }
+        }
+        h4 {
+        }
+        .total-num {
+            text-align: right;
+            span {
+                line-height: @h;
+                font-size: 22px;
+
+                &:after {
+                    font-size: 15px;
+                    content: "票";
+                }
+            }
+        }
+    }
+    .panel-body {
+        .col-sm-8-s {
+            width: 60%;
+            padding-right: 0;
+        }
+        .col-sm-4-s {
+            width: 40%;
+            padding-left: 5px;
+            padding-right: 2px;
+        }
     }
     .btn-group-itmes {
         margin-top: 5px;
         margin-bottom: 5px;
-        width: 80%;
+        padding: 0 10px;
+        .row>div {
+            padding: 0;
+            >a {
+                width: 100% !important;
+            }
+        }
         .btn-item {
-            width: 20%;
+            .ellipsis();
         }
     }
     .btn-group-tags {

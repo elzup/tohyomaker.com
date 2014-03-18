@@ -2,44 +2,52 @@
 if (!function_exists('surveypane'))
 {
 
-	function surveypane(SurveyObj $survey, $prefix = '・')
+	function surveypane(SurveyObj $survey, $prefix = '1')
 	{
 		?>
-		<div class="panel panel-default panel-sp">
+		<div class="panel panel-success panel-survey">
 			<div class="panel-heading">
 				<div class="row">
-					<div class="col-sm-1"><?= $prefix ?></div>
+					<div class="col-sm-1 prefix"><?= $prefix ?></div>
 					<div class="col-sm-9">
-
-						<h3><p><a href="<?= base_url($survey->id) ?>"><?= $survey->title ?></a></p></h3>
+						<h4><p><a href="<?= base_url($survey->id) ?>"><?= $survey->title ?></a></p></h4>
 					</div>
-					<div class="col-sm-2">
-						<span class="total-num"><?= $survey->get_total() ?></span>票
+					<div class="col-sm-2 total-num">
+						<span class="total-num"><?= $survey->get_total() ?></span>
 					</div>
 				</div>
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-sm-6">
-						<p><?= $survey->description ?></p>
+					<div class="col-sm-8 col-sm-8-s">
+						<p><i class="glyphicon glyphicon-comment icon-orange"></i><?= $survey->description ?></p>
 					</div>
-					<div class="col-sm-6">
-						<p><?= $survey->target ?></p>
+					<div class="col-sm-4 col-sm-4-s">
+						<p><i class="glyphicon glyphicon-flag icon-orange"></i><?= $survey->target ?></p>
 					</div>
-					<div class="col-sm-12">
+					<!--div class="col-sm-12">
 						<p><?= $survey->get_text_items() ?></p>
-					</div>
-					<div class="col-sm-10">time bar</div>
-					<div class="col-sm-2">残り N 時間</div>
+					</div-->
+					<!--div class="col-sm-10">time bar</div>
+					<div class="col-sm-2 atleast">残り </div-->
 				</div>
-				<!--div class="btn-group btn-group-itmes">
-				<?php
-				foreach ($survey->items as $i => $item)
-				{
-					?>
-															<a href="<?= base_url($survey->id . '/' . $i) ?>" class="btn btn-primary btn-item btn-sm"><?= $item ?></a>
-				<?php } ?>
-				</div-->
+				<div class="btn-group-itmes">
+					<div class="row">
+						<?php
+						$cn = calc_item_col_equality(count($survey->items));
+						$sum_cn = 0;
+						foreach ($survey->items as $i => $item)
+						{
+							?>
+							<div class="col-sm-<?= $cn ?>">
+								<a href="<?= base_url($survey->id . '/' . $i) ?>" class="btn btn-block btn-success btn-item btn-sm"><?= $item->value ?></a>
+							</div>
+							<?php
+							$sum_cn += $cn;
+						}
+						?>
+					</div>
+				</div>
 			</div>
 			<div class="panel-footer">
 				<p class="btn-group-tags">
@@ -48,7 +56,7 @@ if (!function_exists('surveypane'))
 					foreach ($survey->tags as $tag)
 					{
 						?>
-						<a href="<?= base_url("tag/" . $tag) ?>" class="btn btn-primary btn-tag btn-xs"><?= $tag ?></a>
+						<a href="<?= base_url("tag/" . $tag) ?>" class="btn btn-success btn-tag btn-xs"><?= $tag ?></a>
 					<?php } ?>
 				</p>
 			</div>
@@ -155,11 +163,24 @@ if (!function_exists('votelogpane'))
 
 	function votelogpane(SurveyObj $survey, $select)
 	{
-		
+
 		// TODO: make function view of voted history pane
 	}
 
 }
+
+if (!function_exists('calc_item_col_equality'))
+{
+
+	function calc_item_col_equality($index)
+	{
+		$lib = array(FALSE, FALSE, 6, 4, 3, 4, 4, 3, 3, 4, 3);
+
+		return $lib[$index] ? : FALSE;
+	}
+
+}
+
 
 if (!function_exists('calc_item_col'))
 {
@@ -184,3 +205,4 @@ if (!function_exists('calc_item_col'))
 
 }
 
+	

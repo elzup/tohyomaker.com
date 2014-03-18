@@ -1,5 +1,6 @@
 <?php
 /* @var $surveys SurveyObj[] */
+/* @var $survey SurveyObj */
 /* @var $user UserObj */
 ?>
 
@@ -14,7 +15,12 @@
 
 			<div id="myTabContent" class="tab-content">
 				<div class="tab-pane fade active in" id="vote-history-tab">
-					TODO: 投票履歴を表示
+					<?php
+					foreach ($surveys as $survey)
+					{
+						surveypane($survey);
+					}
+					?>
 				</div>
 				<div class="tab-pane fade" id="created-survey-tab">
 					TODO: 投票作成履歴を表示
