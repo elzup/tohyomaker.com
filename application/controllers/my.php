@@ -1,6 +1,6 @@
 <?php
 
-class Mypage extends CI_Controller
+class My extends CI_Controller
 {
 
 	/** @var Survey_model */

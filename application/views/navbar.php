@@ -18,15 +18,13 @@ if ($user == null)
 		<!--<a href="" class="navbar-brand">投票メーカー</a>-->
 	</div>
 	<div class="collapse navbar-collapse target">
-		<ul class="nav navbar-nav">
+		<ul class="nav navbar-nav navbar-right">
 			<li class="active">
-				<a href="<?=  base_url('make')?>"><i class="glyphicon glyphicon-pencil"></i>作成</a>
+				<a href="<?=  base_url('make')?>"><i class="glyphicon glyphicon-pencil"></i>作成する</a>
 			</li>
 			<li>
-				<a href="<?=  base_url('make')?>"><i class="glyphicon glyphicon-pencil"></i>オススメ</a>
+				<a href="<?=  base_url('catalog')?>"><i class="glyphicon glyphicon-fire"></i>人気の投票</a>
 			</li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
 			<li>
 				<a onClick="$('#navbar').hide()">hide</a>
 			</li>
@@ -36,7 +34,7 @@ if ($user == null)
 					?>
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="login-info"><?= $user->screen_name ?> <span class="caret"></span></a>
 					<ul class="dropdown-menu" aria-labelledby="login-info">
-						<li><a href="<?=  base_url('mypage')?>">マイページ</a></li>
+						<li><a href="<?=  base_url('my')?>">マイページ</a></li>
 						<!--li class="divider"></li-->
 						<li><a href="<?= base_url('auth/logout') ?>">ログアウト</a></li>
 					</ul>
