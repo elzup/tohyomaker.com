@@ -329,4 +329,29 @@ class SurveyObj
 		return implode(',', $results);
 	}
 
+	/*
+	 * support voted item 
+	 */
+
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function is_voted()
+	{
+		return $this->selected !== NO_VOTED;
+	}
+
+	/**
+	 * 
+	 * @return ItemObj
+	 */
+	public function get_selected_item()
+	{
+		if (!$this->is_voted())
+		{
+			return NULL;
+		}
+		return $this->items[$this->selected];
+	}
 }

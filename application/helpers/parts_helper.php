@@ -24,7 +24,7 @@ if (!function_exists('surveypane'))
 //					$share_uri = base_url($survey->id);
 //					$share_text = totext_share($survey->items[$selected]->value, $survey->title, $share_uri);
 
-					$item = $survey->items[$selected];
+					$item = $survey->get_selected_item();
 					// not voted yet
 					?>
 					<div>

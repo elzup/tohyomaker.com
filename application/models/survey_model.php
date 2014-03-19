@@ -21,11 +21,15 @@ class Survey_model extends CI_Model
 	/**
 	 * 
 	 * @param int $id_survey
-	 * @param int $id_user optional set selected survey
+	 * @param int|SurveyObj $id_user optional set selected survey
 	 * @return SurveyObj|boolean
 	 */
 	public function get_survey($id_survey, $id_user = NULL)
 	{
+		if ($id_user instanceof UserObj)
+		{
+			$id_user = $id_user->id;
+		}
 		$where = array(
 				'id_survey' => $id_survey,
 		);
@@ -113,7 +117,7 @@ class Survey_model extends CI_Model
 	 */
 	public function insert_vote(SurveyObj $survey, UserObj $user, $value)
 	{
-		if (($result = $this->check_voted($survey->id, $user->id)) !== FALSE || $survey->num_item <= $value)
+		if (($this->check_voted($survey->id, $user->id)) !== NO_VOTED || $survey->num_item <= $value)
 		{
 			return FALSE;
 		}
@@ -162,7 +166,7 @@ class Survey_model extends CI_Model
 		$result = $this->db->get('vote_tbl')->result();
 		if (!isset($result[0]))
 		{
-			return FALSE;
+			return NO_VOTED;
 		}
 		return $result[0]->value;
 	}
@@ -252,6 +256,14 @@ class Survey_model extends CI_Model
 		$this->db->update('survey_tbl');
 		$survey->state = $state;
 	}
+
+	/*
+	public function update_state(SurveyObj &$survey, $state)
+	{
+		$this->_update_state($survey, $state);
+	}
+	 * 
+	 */
 
 	private function _delete_votes(SurveyObj $survey)
 	{
