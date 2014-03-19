@@ -90,9 +90,13 @@ if (!function_exists('surveypane'))
 						<i class="glyphicon glyphicon-time icon-orange"></i>
 						<?= $survey->get_time_remain_str() ?>
 					</div>
+					<?php
+					$stylelib = explode(',', 'success,end,end');
+					$pbstyle = $stylelib[$survey->state];
+					?>
 					<div class="col-sm-10">
 						<div class="progress">
-							<div class="progress-bar" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
+							<div class="progress-bar progress-bar-<?=$pbstyle?>" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
 						</div>
 					</div>
 				</div>
