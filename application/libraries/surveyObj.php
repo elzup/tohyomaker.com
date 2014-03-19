@@ -65,15 +65,14 @@ class SurveyObj
 
 	function set(stdClass $data, array $items = NULL, array $tags = NULL, UserObj $owner = NULL, $selected = NULL, $results = NULL)
 	{
-		$this->id = $data->id_survey;
-		$this->title = $data->title;
-		$this->target = (empty($data->target) ? '' : $data->target);
-		$this->description = (empty($data->description) ? '' : $data->description);
+		$this->id = h($data->id_survey);
+		$this->title = h($data->title);
+		$this->target = (empty($data->target) ? '' : h($data->target));
+		$this->description = (empty($data->description) ? '' : h($data->description));
 		$this->num_item = $data->num_item;
 		$this->timestamp = $data->timestamp;
 		$this->state = $data->state;
 		$this->is_anonymous = empty($data->is_anonymous);
-
 
 		if (isset($items))
 		{
@@ -121,7 +120,7 @@ class SurveyObj
 		$this->tags = array();
 		foreach ($data as $datum)
 		{
-			$this->tags[] = $datum->value;
+			$this->tags[] = h($datum->value);
 		}
 	}
 

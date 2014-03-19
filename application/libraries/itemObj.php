@@ -24,7 +24,7 @@ class ItemObj
 	{
 		$this->index = $data->index;
 		$this->num   = $data->num;
-		$this->value   = $data->value;
+		$this->value = h($data->value);
 	}
 
 	public function set_rank($n)

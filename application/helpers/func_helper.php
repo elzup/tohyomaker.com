@@ -14,10 +14,11 @@ if (!function_exists('jump'))
 	 */
 	function jump($path, $parameters = null)
 	{
-		$url = $path . (empty($parameters) ? "" : ('?'. http_build_query($parameters)));
+		$url = $path . (empty($parameters) ? "" : ('?' . http_build_query($parameters)));
 		header('Location: ' . $url);
 		exit;
 	}
+
 }
 
 
@@ -35,4 +36,19 @@ if (!function_exists('array_filter_values'))
 		return array_values(array_filter($array, 'strlen'));
 	}
 
+}
+
+if (!function_exists('h'))
+{
+
+	/**
+	 * just htmlspecialchars action and return result
+	 * omit function name in coding
+	 * @param string $string
+	 * @return string
+	 */
+	function h($string)
+	{
+		return htmlspecialchars($string);
+	}
 }
