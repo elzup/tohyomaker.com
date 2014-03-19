@@ -58,7 +58,8 @@ class Survey extends CI_Controller
 			die("no found id : {$id_survey}");
 			// TODO: jump no found page
 		}
-		$voted_value = $this->survey->check_voted($survey, $this->user->get_user());
+		$user = $this->user->get_user();
+		$voted_value = $this->survey->check_voted($survey->id, (isset($user)) ? $user->id : NULL);
 		$is_voted = !!$voted_value;
 		if ($is_voted)
 		{
@@ -71,7 +72,7 @@ class Survey extends CI_Controller
 		);
 		$this->load->view('head', $head_info);
 		$this->load->view('title', array('title' => $title, 'offset' => 0));
-		$this->load->view('navbar', array('user' => $this->user->get_user()));
+		$this->load->view('navbar', array('user' => $user));
 		$surveyhead_info = array(
 				'survey' => $survey,
 				'type' => SURVEY_PAGETYPE_VOTE,
@@ -79,7 +80,8 @@ class Survey extends CI_Controller
 		$this->load->view('surveyhead', $surveyhead_info);
 		$surveyselectform_info = array(
 				'survey' => $survey,
-				'token' => set_token(),
+				// is_login so emit token
+				'token' => (isset($user) ? set_token() : NULL),
 				'select' => $select,
 				'is_voted' => $is_voted,
 		);

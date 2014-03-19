@@ -38,10 +38,10 @@ if (!function_exists('surveypane'))
 					?>
 					<div class="row">
 						<div class="col-sm-8 col-sm-8-s">
-							<p><i class="glyphicon glyphicon-comment icon-orange"></i><?= $survey->description ?></p>
+							<p><i class="glyphicon glyphicon-comment<?=(empty($survey->description) ? '':' icon-orange')?>"></i><?= ($survey->description) ?: '----' ?></p>
 						</div>
 						<div class="col-sm-4 col-sm-4-s">
-							<p><i class="glyphicon glyphicon-flag icon-orange"></i><?= $survey->target ?></p>
+							<p><i class="glyphicon glyphicon-flag<?=(empty($survey->target) ? '':' icon-orange')?>"></i><?= ($survey->target) ?: '----' ?></p>
 						</div>
 						<!--div class="col-sm-12">
 							<p><?= $survey->get_text_items() ?></p>

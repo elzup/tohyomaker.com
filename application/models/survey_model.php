@@ -387,17 +387,17 @@ class Survey_model extends CI_Model
 		return $this->datas_to_survey($data, $user->id);
 	}
 
-	public function get_surveys_new($id_user = NULL)
+	public function get_surveys_new($num = 10, $id_user = NULL)
 	{
-		$data = $this->select_surveys_new(10);
+		$data = $this->select_surveys_new($num);
 		return $this->datas_to_survey($data, $id_user);
 	}
 
-	public function get_surveys_hot($id_user = NULL)
+	public function get_surveys_hot($num, $id_user = NULL)
 	{
-		$data = $this->select_votes_hot(200);
+		$data = $this->select_votes_new(200);
 		$data2 = $this->calc_surveyids_hot($data);
-		return $this->datas_to_survey($data2, $id_user);
+		return $this->datas_to_survey_hot($data2, $num, $id_user);
 	}
 
 	public function calc_surveyids_hot($data)
@@ -411,10 +411,11 @@ class Survey_model extends CI_Model
 			}
 			$count[$datum->id_survey] += 1;
 		}
-		return arsort($count);
+		arsort($count);
+		return $count;
 	}
 
-	public function datas_to_survey_hot($data, $id_user)
+	public function datas_to_survey_hot($data, $num, $id_user)
 	{
 		if (empty($data))
 		{
@@ -423,11 +424,16 @@ class Survey_model extends CI_Model
 		$surveys = array();
 		if (isset($data))
 		{
+			$i = 0;
 			foreach ($data as $id_survey => $value)
 			{
 				$survey = $this->get_survey($id_survey, $id_user);
 				$survey->point_hot = $value;
 				$surveys[] = $survey;
+				if (++$i >= $num)
+				{
+					break;
+				}
 			}
 		}
 		return $surveys;

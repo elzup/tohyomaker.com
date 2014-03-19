@@ -20,10 +20,13 @@ if ($user == null)
 	<div class="collapse navbar-collapse target">
 		<ul class="nav navbar-nav navbar-right">
 			<li class="active">
-				<a href="<?=  base_url('make')?>"><i class="glyphicon glyphicon-pencil"></i>作成する</a>
+				<a href="<?=  base_url('make')?>"><i class="glyphicon glyphicon-edit"></i>作成</a>
 			</li>
 			<li>
-				<a href="<?=  base_url('catalog')?>"><i class="glyphicon glyphicon-fire"></i>人気の投票</a>
+				<a href="<?=  base_url('catalog/new')?>"><i class="glyphicon glyphicon-time"></i>新着</a>
+			</li>
+			<li>
+				<a href="<?=  base_url('catalog')?>"><i class="glyphicon glyphicon-fire"></i>人気</a>
 			</li>
 			<li>
 				<a onClick="$('#navbar').hide()">hide</a>

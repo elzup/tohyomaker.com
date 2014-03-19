@@ -63,6 +63,21 @@
 				</p>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-sm-2">
+				<i class="glyphicon glyphicon-time icon-orange"></i>
+				<?= $survey->get_time_remain_str() ?>
+			</div>
+			<?php
+			$stylelib = explode(',', 'success,end,end');
+			$pbstyle = $stylelib[$survey->state];
+			?>
+			<div class="col-sm-10">
+				<div class="progress">
+					<div class="progress-bar progress-bar-<?= $pbstyle ?>" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
+				</div>
+			</div>
+		</div>
 
 		<!--div class="row">
 			<div class="col-sm-2">
@@ -74,19 +89,6 @@
 
 	<div class="row" id="survey-pager-div">
 
-		<?php
-		if ($survey->state === SURVEY_STATE_PROGRESS)
-		{
-			?>
-			<div class="col-sm-2">
-				あと<?= $survey->get_time_remain_str() ?>
-			</div>
-			<div class="col-sm-4">
-				<div class="progress">
-					<div class="progress-bar" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
-				</div>
-			</div>
-		<?php } ?>
 		<div class="col-sm-4 col-sm-offset-8">
 			<div class="btn-group btn-group-justified">
 				<a href="<?= base_url($survey->id) ?>" class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VOTE) ? ' disabled' : '') ?>">

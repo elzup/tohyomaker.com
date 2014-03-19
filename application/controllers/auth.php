@@ -37,7 +37,7 @@ class Auth extends CI_Controller
 		$auth_url = $connection->getAuthorizeURL($token);
 
 		// save referer to return previous page
-		$_SESSION['referer'] = $_SERVER['HTTP_REFERER'];
+		$_SESSION['referer'] = filter_input(INPUT_SERVER, 'HTTP_REFERER');
 		header('Location: ' . $auth_url);
 	}
 

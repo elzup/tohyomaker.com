@@ -26,7 +26,11 @@
 
 	<div class="row">
 		<?php if (!$is_voted)
-		{ ?>
+		{
+			if (!empty($token))
+			{
+			// is_login
+			?>
 			<form action="<?= base_url("survey/regist/{$survey->id}") ?>" method="POST">
 				<!--div class="col-sm-offset-2 col-sm-6" id="text-div">
 					<textarea name="vote-text" id="vote-textarea" rows="3"></textarea>
@@ -38,13 +42,21 @@
 				</div>
 			</form>
 			<?php
+			}
+			else
+			{
+				// no login
+				?>
+				<div class="col-sm-offset-2 col-sm-8" id="submit-div">
+					<button type="submit" id="submit-main-disable" class="btn btn-primary btn-lg btn-block btn-success disabled">投票*</button>
+					<span class="help-block">*Twitterでログインが必要です. <a href="<?=  base_url('auth/login')?>" class="btn btn-info">ログインする</a></span>
+				</div>
+		<?php
+			}
 		} else
 		{
-			if ($is_voted)
-			{
-				$share_uri = base_url($survey->id);
-				$share_text = totext_share($survey->items[$select]->value, $survey->title, $share_uri);
-			}
+			$share_uri = base_url($survey->id);
+			$share_text = totext_share($survey->items[$select]->value, $survey->title, $share_uri);
 			?>
 			<div class="col-sm-offset-2 col-sm-8" id="voteend-div">
 				<div class="panel panel-default">

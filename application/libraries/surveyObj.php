@@ -96,7 +96,6 @@ class SurveyObj
 		{
 			$this->selected = $selected;
 		} 
-		$this->get_time_remain();
 	}
 
 	public function set_items(array $data)
@@ -213,6 +212,10 @@ class SurveyObj
 
 	public function get_time_progress_par()
 	{
+		if ($this->state === SURVEY_STATE_END)
+		{
+			return 100;
+		}
 		$progress_time = $this->get_time_progress();
 		$day3_time = strtotime('+3 day', 0);
 		$v = $progress_time * 100 / $day3_time;
@@ -244,6 +247,10 @@ class SurveyObj
 
 	public function get_time_remain()
 	{
+		if ($this->state === SURVEY_STATE_END)
+		{
+			return 0;
+		}
 		// TODO: create another type case 
 		$start_time = strtotime($this->timestamp);
 		$end_time = strtotime('+1 week', $start_time);

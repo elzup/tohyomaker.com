@@ -29,16 +29,16 @@ html,body {
     }
 }
 
-.btn-default:hover, .btn-default:focus, .btn-group.open .dropdown-toggle.btn-default {
-    color: #000000;
-    background-color: #A6FF9E;
-    border-color: #79EE54;
-}
-.btn-default {
-    color: #000000;
-    background-color: #A6FF9E;
-    border-color: #79EE54;
-}
+//.btn-default:hover, .btn-default:focus, .btn-group.open .dropdown-toggle.btn-default {
+//    color: #000000;
+//    background-color: #A6FF9E;
+//    border-color: #79EE54;
+//}
+//.btn-default {
+//    color: #000000;
+//    background-color: #A6FF9E;
+//    border-color: #79EE54;
+//}
 
 .clear-font {
     color: rgba(0,0,0,0);
@@ -74,11 +74,17 @@ html,body {
     .btn-item {
         margin-top: 4px;
         &:active{
-            margin-top: 5px !important;
+            margin-top: 6px !important;
             margin-bottom: 1px !important;
         }
         &:hover{
             margin-top: 5px;
+        }
+
+        &.active {
+            color: #ffffff;
+            background-color: #219524;
+            border-color: #186f1b;
         }
     }
 }
@@ -283,9 +289,6 @@ i {
         > p {
             margin: 0px;
         }
-        .progress {
-            margin-bottom: 0;
-        }
     }
     i {
         top: 3px;
@@ -340,6 +343,10 @@ i {
             }
         }
     }
+}
+
+.progress {
+    margin-bottom: 0;
 }
 
 .progress-bar-end {
