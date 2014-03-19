@@ -18,7 +18,6 @@ if (!function_exists('surveypane'))
 				</div>
 			</div>
 			<div class="panel-body">
-[<?=$survey->get_time_remain_str()?>]
 				<?php
 				if ($is_log && ($selected = $survey->selected) !== NO_VOTED)
 				{
@@ -58,17 +57,14 @@ if (!function_exists('surveypane'))
 							foreach ($survey->items as $i => $item)
 							{
 								$class = '';
-								if (($selected = $survey->selected) !== NO_VOTED) 
+								if (($selected = $survey->selected) !== NO_VOTED || $survey->state === SURVEY_STATE_END)
 								{
 									$class .= ' disabled';
-									if ($selected === $i)
-									{
-										$class .= ' btn-warning';
-									}
 								}
+								$class .= (($selected === $item->index) ? ' btn-warning' : ' btn-success ');
 								?>
 								<div class="col-sm-<?= $cn ?>">
-									<a href="<?= base_url($survey->id . '/' . $i) ?>" class="btn btn-block btn-success btn-item btn-sm<?=$class?>"><?= $item->value ?></a>
+									<a href="<?= base_url($survey->id . '/' . $i) ?>" class="btn btn-block btn-item btn-sm<?= $class ?>"><?= $item->value ?></a>
 								</div>
 								<?php
 								$sum_cn += $cn;
@@ -80,7 +76,7 @@ if (!function_exists('surveypane'))
 			</div>
 			<div class="panel-footer">
 				<p class="btn-group-tags">
-					<i class="glyphicon glyphicon-tags"></i> : 
+					<i class="glyphicon glyphicon-tags icon-orange"></i>
 					<?php
 					foreach ($survey->tags as $tag)
 					{
@@ -88,6 +84,18 @@ if (!function_exists('surveypane'))
 						<a href="<?= base_url("tag/" . $tag) ?>" class="btn btn-success btn-tag btn-xs"><?= $tag ?></a>
 					<?php } ?>
 				</p>
+
+				<div class="row">
+					<div class="col-sm-2">
+						<i class="glyphicon glyphicon-time icon-orange"></i>
+						<?= $survey->get_time_remain_str() ?>
+					</div>
+					<div class="col-sm-10">
+						<div class="progress">
+							<div class="progress-bar" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<?php
