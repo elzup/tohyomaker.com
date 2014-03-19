@@ -26,6 +26,11 @@ class Survey_model extends CI_Model
 	 */
 	public function get_survey($id_survey, $id_user = NULL)
 	{
+		if (!is_numonly($id_survey))
+		{
+			// incorrect id
+			return FALSE;
+		}
 		if ($id_user instanceof UserObj)
 		{
 			$id_user = $id_user->id;
@@ -258,10 +263,10 @@ class Survey_model extends CI_Model
 	}
 
 	/*
-	public function update_state(SurveyObj &$survey, $state)
-	{
-		$this->_update_state($survey, $state);
-	}
+	  public function update_state(SurveyObj &$survey, $state)
+	  {
+	  $this->_update_state($survey, $state);
+	  }
 	 * 
 	 */
 
@@ -439,7 +444,11 @@ class Survey_model extends CI_Model
 			$i = 0;
 			foreach ($data as $id_survey => $value)
 			{
-				$survey = $this->get_survey($id_survey, $id_user);
+				if (!($survey = $this->get_survey($id_survey, $id_user)))
+				{
+					// TODO: can't create survey error act
+					return FALSE;
+				}
 				$survey->point_hot = $value;
 				$surveys[] = $survey;
 				if (++$i >= $num)
@@ -462,9 +471,18 @@ class Survey_model extends CI_Model
 		{
 			foreach ($data as $datum)
 			{
+				if (!($survey = $this->get_survey($datum->id_survey, $id_user)))
+				{
+					// TODO: can't create survey error act
+					
+					// TODO: delete
+					die('can\'t surcvey '. $datum->id_survey);
+					return FALSE;
+				}
 				$surveys[] = $this->get_survey($datum->id_survey, $id_user);
 			}
 		}
 		return $surveys;
 	}
+
 }

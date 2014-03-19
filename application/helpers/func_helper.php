@@ -1,5 +1,12 @@
 <?php
 
+// TODO: move define timing
+define('SURVEY_PAGETYPE_VOTE', 0);
+define('SURVEY_PAGETYPE_VIEW', 1);
+
+define('SURVEY_BLOCKTYPE_NEW', 0);
+define('SURVEY_BLOCKTYPE_HOT', 1);
+
 /*
  * application/helpers/functions.php
  */
@@ -19,6 +26,14 @@ if (!function_exists('jump'))
 		exit;
 	}
 
+}
+
+if (!function_exists('is_numonly'))
+{
+	function is_numonly($value) 
+	{
+		return preg_match("/^\d+$/", $value);
+	}
 }
 
 

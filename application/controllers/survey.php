@@ -1,8 +1,5 @@
 <?php
 
-// TODO: move define timing
-define('SURVEY_PAGETYPE_VOTE', 0);
-define('SURVEY_PAGETYPE_VIEW', 1);
 
 //投票ページ
 class Survey extends CI_Controller
