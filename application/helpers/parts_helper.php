@@ -38,10 +38,10 @@ if (!function_exists('surveypane'))
 					?>
 					<div class="row">
 						<div class="col-sm-8 col-sm-8-s">
-							<p><i class="glyphicon glyphicon-comment<?=(empty($survey->description) ? '':' icon-orange')?>"></i><?= ($survey->description) ?: '----' ?></p>
+							<p><?php icon(ICON_DESCRIPTION, isset($survey->description)) ?><?= ($survey->description) ? : '----' ?></p>
 						</div>
 						<div class="col-sm-4 col-sm-4-s">
-							<p><i class="glyphicon glyphicon-flag<?=(empty($survey->target) ? '':' icon-orange')?>"></i><?= ($survey->target) ?: '----' ?></p>
+							<p><?php icon(ICON_TARGET, isset($survey->target)) ?><?= ($survey->target) ? : '----' ?></p>
 						</div>
 						<!--div class="col-sm-12">
 							<p><?= $survey->get_text_items() ?></p>
@@ -76,7 +76,7 @@ if (!function_exists('surveypane'))
 			</div>
 			<div class="panel-footer">
 				<p class="btn-group-tags">
-					<i class="glyphicon glyphicon-tags icon-orange"></i>
+					<?php icon(ICON_TAG, TRUE)?>
 					<?php
 					foreach ($survey->tags as $tag)
 					{
@@ -87,7 +87,7 @@ if (!function_exists('surveypane'))
 
 				<div class="row">
 					<div class="col-sm-2">
-						<i class="glyphicon glyphicon-time icon-orange"></i>
+					<?php icon(ICON_TIME, TRUE)?>
 						<?= $survey->get_time_remain_str() ?>
 					</div>
 					<?php
@@ -96,7 +96,7 @@ if (!function_exists('surveypane'))
 					?>
 					<div class="col-sm-10">
 						<div class="progress">
-							<div class="progress-bar progress-bar-<?=$pbstyle?>" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
+							<div class="progress-bar progress-bar-<?= $pbstyle ?>" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
 						</div>
 					</div>
 				</div>
@@ -160,11 +160,11 @@ if (!function_exists('logpane'))
 			<div class="panel-heading">
 				<div class="row <?= $result->is_booked() ? 'reuslt-type-time' : 'reuslt-type-total' ?>">
 					<div class="col-sm-5">
-						<i class="glyphicon glyphicon-time"></i>
+						<i class="<?= ICON_TIME ?>"></i>
 						経過時間 <?= $result->get_elapsed_time_str() ?>
 					</div>
 					<div class="col-sm-5">
-						<i class="glyphicon glyphicon-ok"></i>
+						<i class="<?= ICON_OK ?>"></i>
 						<?= $result->get_total() ?> 票
 					</div>
 				</div>
@@ -181,7 +181,7 @@ if (!function_exists('logpane'))
 							{
 								$collib = explode(',', 'gold,silver,bronds');
 								$col = $collib[$rank - 1];
-								$crown = '<i class="glyphicon glyphicon-star col-' . $col . '"></i>';
+								$crown = '<i class="<?=?> col-' . $col . '"></i>';
 							}
 							?>
 							<tr>
@@ -200,6 +200,21 @@ if (!function_exists('logpane'))
 
 }
 
+if (!function_exists('icon'))
+{
+
+	function icon($class, $is_color = FALSE, $color = 'orange')
+	{
+		if ($is_color)
+		{
+			$class .= ' icon-' . $color;
+		}
+		?>
+		<i class="<?= $class ?>"></i>
+		<?php
+	}
+
+}
 
 if (!function_exists('votelogpane'))
 {

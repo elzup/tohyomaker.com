@@ -52,10 +52,12 @@ if (!function_exists('surveysblock'))
 					<?php
 					foreach ($surveys as $survey)
 					{
-						// TODO: create view
 						?>
-					
-						<li><?= $survey->title ?></li>
+					<li>
+						<span class="title"><?= $survey->title ?></span>
+						<span class="total-num"><?= $survey->get_total()?></span>
+						<span class="remain"><?= $survey->get_time_remain_str()?></span>
+					</li>
 						<?php
 					}
 					?>

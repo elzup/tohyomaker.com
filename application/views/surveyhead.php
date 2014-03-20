@@ -21,7 +21,7 @@
 					?>
 					<div class="row">
 						<div class="col-sm-12 survey-cont description">
-							<i class="glyphicon glyphicon-comment icon-orange"></i><?= $survey->description ?>
+							<p><?php icon(ICON_DESCRIPTION, isset($survey->description)) ?><?= ($survey->description) ? : '----' ?></p>
 						</div>
 					</div>
 				<?php } ?>
@@ -31,18 +31,21 @@
 					?>
 					<div class="row">
 						<div class="col-sm-12 survey-cont target">
-							<i class="glyphicon glyphicon-flag icon-orange"></i><?= $survey->target ?>
+							<p><?php icon(ICON_TARGET, isset($survey->target)) ?><?= ($survey->target) ? : '----' ?></p>
 						</div>
 					</div>
 				<?php } ?>
 			</div>
 			<div class="col-sm-5">
 				<div class="row">
-					<div class="col-sm-6 survey-cont timestamp"><i class="glyphicon glyphicon-time icon-orange"></i><?= $survey->get_time() ?></div>
+					<div class="col-sm-6 survey-cont timestamp">
+				<?php icon(ICON_TIME, TRUE) ?>
+				<?= $survey->get_time() ?>
+					</div>
 					<div class="col-sm-6 owner-name">
 						<p>
 							<a href="<?= base_url("user/{$survey->owner->id}") ?>" class="btn btn-success btn-owner-name" data-toggle="tooltip" data-placement="top" title="作者: <?= $survey->owner->screen_name ?>">
-								<i class="glyphicon glyphicon-user"></i>@<?= $survey->owner->screen_name ?>
+								<i class="<?= ICON_USER ?>"></i>@<?= $survey->owner->screen_name ?>
 							</a>
 						</p>
 					</div>
@@ -53,7 +56,7 @@
 		<div class="row">
 			<div class="col-sm-8 survey-cont tagbox">
 				<p class="btn-group-tags">
-					<i class="glyphicon glyphicon-tags icon-orange"></i>
+					<?php icon(ICON_TAG, TRUE) ?>
 					<?php
 					foreach ($survey->tags as $tag)
 					{
@@ -65,7 +68,7 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-2">
-				<i class="glyphicon glyphicon-time icon-orange"></i>
+				<?php icon(ICON_TIME, TRUE) ?>
 				<?= $survey->get_time_remain_str() ?>
 			</div>
 			<?php
@@ -81,7 +84,7 @@
 
 		<!--div class="row">
 			<div class="col-sm-2">
-				<i class="glyphicon glyphicon-ok"></i>
+				<i class="<?= ICON_OK ?>"></i>
 		<?= $survey->get_total() ?>票
 			</div>
 		</div-->
@@ -92,11 +95,11 @@
 		<div class="col-sm-4 col-sm-offset-8">
 			<div class="btn-group btn-group-justified">
 				<a href="<?= base_url($survey->id) ?>" class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VOTE) ? ' disabled' : '') ?>">
-					<i class="glyphicon glyphicon-import"></i>
+					<i class="<?= ICON_VOTE ?>"></i>
 					投票
 				</a>
 				<a href="<?= base_url('view/' . $survey->id) ?>" class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VIEW) ? ' disabled' : '') ?>">
-					<i class="glyphicon glyphicon-stats"></i>
+					<i class="<?= ICON_RESULT ?>"></i>
 					結果
 					<?php
 					if (($c = count($survey->results)))

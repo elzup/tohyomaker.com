@@ -1,33 +1,5 @@
 <?php
 
-/**
- * anable vote working
- * @see $state
- */
-define('SURVEY_STATE_PROGRESS', '0');
-/**
- * vote is finish, saveing vote record
- * @see $state
- */
-define('SURVEY_STATE_RESULT', '1');
-/**
- * saving only result
- * @see $state
- */
-define('SURVEY_STATE_END', '2');
-
-/**
- * timestamp string format
- * @see $state
- */
-define('DATE_FORMAT', 'Y年m月d日 H:i');
-
-/**
- * 
- * @see $selected
- */
-define('NO_VOTED', -1);
-
 class SurveyObj
 {
 

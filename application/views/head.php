@@ -18,6 +18,7 @@ if (isset($title))
 
     <!-- Bootstrap -->
     <link rel="stylesheet" charset="UTF-8" href="<?= base_url('lib/bootstrap/css/bootstrap.min.css') ?>" media="screen" />
+    <link rel="stylesheet" charset="UTF-8" href="<?= base_url('lib/bootstrap/css/font-awesome.min.css') ?>" media="screen" />
 		<?php $less_filename = 'style/' . (isset($less_name) ? $less_name : 'main') . '.less'; ?>
     <link rel="stylesheet/less" charset="UTF-8" type="text/css" href="<?= base_url($less_filename) ?>" media="screen">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
