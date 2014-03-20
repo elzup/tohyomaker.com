@@ -52,7 +52,9 @@ if (!function_exists('surveysblock'))
 					<?php
 					foreach ($surveys as $survey)
 					{
+						// TODO: create view
 						?>
+					
 						<li><?= $survey->title ?></li>
 						<?php
 					}

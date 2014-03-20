@@ -34,8 +34,8 @@ class Index extends CI_Controller
 		$surveys_new = $this->survey->get_surveys_new(5, $user->id);
 
 		$title = 'トップページ';
-		$this->load->view('head', array('title' => $title));
-		$this->load->view('title', array('title' => $title, 'offset' => 2));
+		$this->load->view('head');
+//		$this->load->view('title', array('title' => $title, 'offset' => 2));
 		$this->load->view('navbar', array('user' => $this->user->get_user()));
 
 		$topmain_info = array(
