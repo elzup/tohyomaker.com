@@ -101,6 +101,8 @@ class Survey_model extends CI_Model
 	{
 		$this->db->order_by("timestamp", "asc");
 		$this->db->limit($num);
+		// limit progress for a totality db surveys are small
+		$this->db->where('state', SURVEY_STATE_PROGRESS);
 		$result = $this->db->get('survey_tbl')->result();
 		return $result;
 	}
@@ -449,6 +451,10 @@ class Survey_model extends CI_Model
 					// TODO: can't create survey error act
 					return FALSE;
 				}
+				if ($survey->state !== SURVEY_STATE_PROGRESS)
+				{
+					continue;
+				}
 				$survey->point_hot = $value;
 				$surveys[] = $survey;
 				if (++$i >= $num)
@@ -478,6 +484,10 @@ class Survey_model extends CI_Model
 					// TODO: delete
 					die('can\'t surcvey '. $datum->id_survey);
 					return FALSE;
+				}
+				if ($survey->state !== SURVEY_STATE_PROGRESS)
+				{
+					continue;
 				}
 				$surveys[] = $this->get_survey($datum->id_survey, $id_user);
 			}
