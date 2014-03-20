@@ -2,12 +2,22 @@
 //@import "../lib/bootstrap/less/variables.less";
 //@import "../lib/bootstrap/less/mixins.less";
 
+@col_font_a : #01C500;
+
 html,body {
 	height: 100%;
     background: #FAFFFC;
 //    font-family:"Times New Roman",Georgia,Serif;
     font-family:'Avenir', 'Arial', 'Helvetica', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
 
+}
+
+a {
+    color: @col_font_a;
+    font-weight: bold;
+    &:hover {
+        color: @col_font_a;
+    }
 }
 
 #title-div {
@@ -225,6 +235,33 @@ i {
     &.icon-orange {
         color: orange;
         text-shadow: 2px 2px 0px #F6FF93;
+    }
+}
+
+.panel-surveys {
+    .panel-head {
+        p {
+            margin: 0;
+        }
+        .title {
+            font-weight: bold;
+        }
+    }
+    .panel-body {
+        ul {
+            >li {
+                .title {
+                }
+                .total-num {
+                    text-align: right;
+                    &:after {
+                        content: '票';
+                    }
+                }
+                .remain {
+                }
+            }
+        }
     }
 }
 

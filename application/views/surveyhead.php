@@ -21,7 +21,8 @@
 					?>
 					<div class="row">
 						<div class="col-sm-12 survey-cont description">
-							<p><?php icon(ICON_DESCRIPTION, isset($survey->description)) ?><?= ($survey->description) ? : '----' ?></p>
+							
+							<p><?= tag_icon(ICON_DESCRIPTION, isset($survey->description)) . (($survey->description) ? : NO_PARAM_STR) ?></p>
 						</div>
 					</div>
 				<?php } ?>
@@ -31,7 +32,7 @@
 					?>
 					<div class="row">
 						<div class="col-sm-12 survey-cont target">
-							<p><?php icon(ICON_TARGET, isset($survey->target)) ?><?= ($survey->target) ? : '----' ?></p>
+							<p><?= tag_icon(ICON_TARGET, isset($survey->target)) . (($survey->target) ? : NO_PARAM_STR) ?></p>
 						</div>
 					</div>
 				<?php } ?>
@@ -39,7 +40,7 @@
 			<div class="col-sm-5">
 				<div class="row">
 					<div class="col-sm-6 survey-cont timestamp">
-				<?php icon(ICON_TIME, TRUE) ?>
+				<?= tag_icon(ICON_TIME, TRUE) ?>
 				<?= $survey->get_time() ?>
 					</div>
 					<div class="col-sm-6 owner-name">
@@ -56,7 +57,7 @@
 		<div class="row">
 			<div class="col-sm-8 survey-cont tagbox">
 				<p class="btn-group-tags">
-					<?php icon(ICON_TAG, TRUE) ?>
+					<?= tag_icon(ICON_TAG, TRUE) ?>
 					<?php
 					foreach ($survey->tags as $tag)
 					{
@@ -68,7 +69,7 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-2">
-				<?php icon(ICON_TIME, TRUE) ?>
+				<?= tag_icon(ICON_TIME, TRUE) ?>
 				<?= $survey->get_time_remain_str() ?>
 			</div>
 			<?php

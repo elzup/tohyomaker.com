@@ -20,13 +20,13 @@ if ($user == null)
 	<div class="collapse navbar-collapse target">
 		<ul class="nav navbar-nav navbar-right">
 			<li class="active">
-				<a href="<?=  base_url('make')?>"><?php icon(ICON_MAKE)?>作成</a>
+				<a href="<?=  base_url('make')?>"><?= tag_icon(ICON_MAKE)?>作成</a>
 			</li>
 			<li>
-				<a href="<?=  base_url('catalog/new')?>"><?php icon(ICON_NEW)?>新着</a>
+				<a href="<?=  base_url('catalog/new')?>"><?= tag_icon(ICON_NEW)?>新着</a>
 			</li>
 			<li>
-				<a href="<?=  base_url('catalog')?>"><?php icon(ICON_HOT)?>人気</a>
+				<a href="<?=  base_url('catalog')?>"><?= tag_icon(ICON_HOT)?>人気</a>
 			</li>
 			<li>
 				<a onClick="$('#navbar').hide()">hide</a>
@@ -37,9 +37,9 @@ if ($user == null)
 					?>
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="login-info"><?= $user->screen_name ?> <span class="caret"></span></a>
 					<ul class="dropdown-menu" aria-labelledby="login-info">
-						<li><?php icon(ICON_HOME)?><a href="<?=  base_url('my')?>">マイページ</a></li>
+						<li><?= tag_icon(ICON_HOME)?><a href="<?=  base_url('my')?>">マイページ</a></li>
 						<!--li class="divider"></li-->
-						<li><?php icon(ICON_LOGOUT)?><a href="<?= base_url('auth/logout') ?>">ログアウト</a></li>
+						<li><?= tag_icon(ICON_LOGOUT)?><a href="<?= base_url('auth/logout') ?>">ログアウト</a></li>
 					</ul>
 				<?php } else
 				{
@@ -47,7 +47,7 @@ if ($user == null)
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="login-info">ログイン<span class="caret"></span></a>
 					<ul class="dropdown-menu" aria-labelledby="login-info">
 						<li>
-							<a href="<?= base_url('auth') ?>"><?php icon(ICON_TWITTER)?>Twitter</a>
+							<a href="<?= base_url('auth') ?>"><?= tag_icon(ICON_TWITTER)?>Twitter</a>
 						</li>
 					</ul>
 				</li>

@@ -38,10 +38,10 @@ if (!function_exists('surveypane'))
 					?>
 					<div class="row">
 						<div class="col-sm-8 col-sm-8-s">
-							<p><?php icon(ICON_DESCRIPTION, isset($survey->description)) ?><?= ($survey->description) ? : '----' ?></p>
+							<p><?= tag_icon(ICON_DESCRIPTION, isset($survey->description)) . (($survey->description) ? : NO_PARAM_STR) ?></p>
 						</div>
 						<div class="col-sm-4 col-sm-4-s">
-							<p><?php icon(ICON_TARGET, isset($survey->target)) ?><?= ($survey->target) ? : '----' ?></p>
+							<p><?= tag_icon(ICON_TARGET, isset($survey->target)) . (($survey->target) ? : NO_PARAM_STR) ?></p>
 						</div>
 						<!--div class="col-sm-12">
 							<p><?= $survey->get_text_items() ?></p>
@@ -76,7 +76,7 @@ if (!function_exists('surveypane'))
 			</div>
 			<div class="panel-footer">
 				<p class="btn-group-tags">
-					<?php icon(ICON_TAG, TRUE)?>
+					<?= tag_icon(ICON_TAG, TRUE)?>
 					<?php
 					foreach ($survey->tags as $tag)
 					{
@@ -87,7 +87,7 @@ if (!function_exists('surveypane'))
 
 				<div class="row">
 					<div class="col-sm-2">
-					<?php icon(ICON_TIME, TRUE)?>
+					<?= tag_icon(ICON_TIME, TRUE)?>
 						<?= $survey->get_time_remain_str() ?>
 					</div>
 					<?php
@@ -200,20 +200,26 @@ if (!function_exists('logpane'))
 
 }
 
-if (!function_exists('icon'))
+if (!function_exists('tag_icon'))
 {
 
-	function icon($class, $is_color = FALSE, $color = 'orange')
+	function tag_icon($class, $is_color = FALSE, $color = 'orange')
 	{
 		if ($is_color)
 		{
 			$class .= ' icon-' . $color;
 		}
-		?>
-		<i class="<?= $class ?>"></i>
-		<?php
+		return '<i class="'.$class.'"></i>';
 	}
 
+}
+
+if (!function_exists('attr_tooltip'))
+{
+	function attr_tooltip($str)
+	{
+		return ' data-toggle="tooltip" data-placement="top" title="'.$str.'"';
+	}
 }
 
 if (!function_exists('votelogpane'))
