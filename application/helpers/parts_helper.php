@@ -1,5 +1,4 @@
 <?php
-
 if (!function_exists('surveypane'))
 {
 
@@ -10,7 +9,17 @@ if (!function_exists('surveypane'))
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-sm-10 title">
-						<p><h4><a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?>><?= $survey->title ?></a></h4></p>
+						<p>
+						<h4><a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?>><?= $survey->title ?></a>
+						<?php
+						if (($result_num = $survey->get_result_num()) !== 0)
+						{
+							?>
+							<a <?= attr_href(HREF_TYPE_VIEW, $survey->id) ?>><span class="badge"><?= $result_num ?></span></a>
+							<?php
+						}
+						?>
+						</h4></p>
 					</div>
 					<!--div class="col-sm-1 state"></div-->
 					<div class="col-sm-2 total-num">
@@ -205,6 +214,7 @@ if (!function_exists('logpane'))
 
 if (!function_exists('searchbox_tag'))
 {
+
 	function searchbox_tag()
 	{
 		$name = 'タグ検索';
@@ -213,6 +223,7 @@ if (!function_exists('searchbox_tag'))
 		$class_str_icon = ICON_SEARCHTAG;
 		searchbox($name, $action, $class_str_icon);
 	}
+
 }
 
 // TODO: add other type search, exteding func searchbox
@@ -227,7 +238,7 @@ if (!function_exists('searchbox'))
 		<div class="align-center">
 			<form class="form-horizontal" action="<?= $action ?>" method="GET">
 				<div class="form-group">
-					<label for="" class="col-sm-2 control-label"><?= tag_icon($class_str_icon). $name ?></label>
+					<label for="" class="col-sm-2 control-label"><?= tag_icon($class_str_icon) . $name ?></label>
 					<div class="col-sm-8">
 						<input type="text" class="form-control" name="s" placeholder="<?= $name ?>" maxlength="20">
 					</div>
@@ -259,6 +270,7 @@ if (!function_exists('tag_icon'))
 
 if (!function_exists('attr_href'))
 {
+
 	function attr_href($type, $values = NULL, $is_wrap_base = TRUE)
 	{
 		$link = $type;
@@ -271,13 +283,14 @@ if (!function_exists('attr_href'))
 			}
 			$link .= '/' . implode('/', urlencode_array($values));
 		}
-			
+
 		if ($is_wrap_base)
 		{
 			$link = base_url($link);
 		}
-		return 'href="'.$link.'"';
+		return 'href="' . $link . '"';
 	}
+
 }
 
 if (!function_exists('attr_tooltip'))
@@ -310,6 +323,7 @@ if (!function_exists('calc_item_col_equality'))
 
 		return $lib[$index] ? : FALSE;
 	}
+
 }
 
 

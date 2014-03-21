@@ -306,6 +306,11 @@ class SurveyObj
 		return FALSE;
 //		return @$lib[$this->total_num] ?: FALSE;
 	}
+
+	public function get_result_num()
+	{
+		return count($this->results);
+	}
 		
 
 	public function get_result_text()
