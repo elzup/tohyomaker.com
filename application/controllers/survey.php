@@ -139,7 +139,7 @@ class Survey extends CI_Controller
 		}
 		// TODO: set cookie
 		setcookie("tm_alert_", $value, time() + 60);
-		jump(base_url($id_survey));
+		jump(base_url(PATH_VOTE .'/'. $id_survey));
 	}
 
 	public function info($id_survey)

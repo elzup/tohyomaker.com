@@ -11,6 +11,7 @@ class SurveyObj
 	public $num_item;
 	public $is_anonymous;
 	public $target;
+	public $total_num;
 
 	/** @var UserObj */
 	public $owner;
@@ -47,6 +48,7 @@ class SurveyObj
 		$this->timestamp = $data->timestamp;
 		$this->state = $data->state;
 		$this->is_anonymous = empty($data->is_anonymous);
+		$this->total = $data->total;
 
 		if (isset($items))
 		{

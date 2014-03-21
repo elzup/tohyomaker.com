@@ -13,7 +13,7 @@ if (!function_exists('surveypane'))
 					</div>
 					<!--div class="col-sm-1 state"></div-->
 					<div class="col-sm-2 total-num">
-						<span class="total-num"><?= $survey->get_total() ?></span>
+						<span class="total-num"><?= $survey->total_num ?></span>
 					</div>
 				</div>
 			</div>
@@ -153,7 +153,7 @@ if (!function_exists('sharebtn_twitter'))
 if (!function_exists('logpane'))
 {
 
-	function logpane(ResultObj $result)
+	function logpane(ResultObj $result, $is_title = FALSE)
 	{
 		?>
 		<div class="panel panel-success panel-log">

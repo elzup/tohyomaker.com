@@ -86,7 +86,7 @@
 		<!--div class="row">
 			<div class="col-sm-2">
 				<i class="<?= ICON_OK ?>"></i>
-		<?= $survey->get_total() ?>票
+		<?= $survey->total_num ?>票
 			</div>
 		</div-->
 	</div>

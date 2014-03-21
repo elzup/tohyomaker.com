@@ -139,15 +139,45 @@ class Survey_model extends CI_Model
 	 * @param type $value
 	 * @return boolean
 	 */
-	public function insert_vote(SurveyObj $survey, UserObj $user, $value)
+	public function regist_vote(SurveyObj $survey, UserObj $user, $value)
 	{
 		if (($this->check_voted($survey->id, $user->id)) !== NO_VOTED || $survey->num_item <= $value)
 		{
 			return FALSE;
 		}
+
+		$this->insert_vote($survey->id, $user->id, $value);
+		$this->inclement_item($survey->id, $value);
+		$this->inclement_survey($survey->id);
+		return TRUE;
+	}
+
+	public function insert_vote($id_survey, $id_user, $value)
+	{
+		$data = array(
+				'id_survey' => $id_survey,
+				'id_user' => $id_user,
+				'value' => $value,
+		);
+		$this->db->insert('vote_tbl', $data);
+	}
+
+	public function inclement_survey ($id_survey)
+	{
+		$where = array('id_survey' => $id_survey);
+		$result = $this->db->get_where('survey_tbl', $where)->result();
+		$num = $result->total_num;
+
+		$this->db->where($where);
+		$this->db->set('total_num', $num + 1);
+		$this->db->update('survey_tbl');
+	}
+
+	public function inclement_item ($id_survey, $index)
+	{
 		$where = array(
-				'id_survey' => $survey->id,
-				'index' => $value,
+				'id_survey' => $id_survey, 
+				'index' => $index,
 		);
 		$result = $this->db->get_where('item_tbl', $where)->result();
 		$num = $result->num;
@@ -155,14 +185,6 @@ class Survey_model extends CI_Model
 		$this->db->where($where);
 		$this->db->set('num', $num + 1);
 		$this->db->update('item_tbl');
-
-		$data = array(
-				'id_survey' => $survey->id,
-				'id_user' => $user->id,
-				'value' => $value,
-		);
-		$this->db->insert('vote_tbl', $data);
-		return TRUE;
 	}
 
 	public function install_select(SurveyObj &$survey, $id_user)
@@ -385,9 +407,9 @@ class Survey_model extends CI_Model
 
 	private function _create_book_result($id_survey)
 	{
-		for ($i = 0; $i < 5; $i++)
+		for ($i = 0; $i < 6; $i++)
 		{
-			$this->_insert_result_book($id_survey, $i, TRUE);
+			$this->_insert_result_book($id_survey, $i);
 		}
 	}
 
@@ -403,7 +425,7 @@ class Survey_model extends CI_Model
 
 	private function _insert_result_book($id_survey, $type)
 	{
-		$timestrlib = explode(',', '+1hour,+6hour,+12hour,+1day,+2day');
+		$timestrlib = explode(',', '+1hour,+6hour,+12hour,+1day,+2day,+3day');
 		$data = array(
 				'id_survey' => $id_survey,
 				'type' => $type + 100,
