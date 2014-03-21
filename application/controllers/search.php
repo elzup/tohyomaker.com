@@ -32,19 +32,20 @@ class Search extends CI_Controller
 
 	function tag()
 	{
+		$user = $this->user->get_user();
 		$word = filter_input(INPUT_GET, 's');
+		$surveys = array();
 		if (isset ($word))
 		{
 			$word = urldecode($word);
+			$surveys = $this->survey->get_surveys_search_tag($word, 10, $user->id);
 		}
 
 		// TODO: prepare surveys in survey_model 
-		$user = $this->user->get_user();
 		$title = 'タグ検索';
-//		$surveys = $this->survey->get_surveys_new(10, $user->id);
 		$this->load->view('head', array('title' => $title));
 		$this->load->view('title', array('title' => $title, 'offset' => 2));
-		$this->load->view('navbar', array('user' => $this->user->get_user()));
+		$this->load->view('navbar', array('user' => $user));
 
 		$this->load->view('searchtag', array('word' => $word, 'surveys' => $surveys));
 

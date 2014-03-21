@@ -91,7 +91,7 @@ class Survey_model extends CI_Model
 		$where = array(
 				'id_user' => $id_user,
 		);
-		$this->db->order_by("timestamp", "asc");
+		$this->db->order_by("timestamp", "desc");
 		$this->db->where($where);
 		$result = $this->db->get('vote_tbl')->result();
 		return $result;
@@ -99,11 +99,28 @@ class Survey_model extends CI_Model
 
 	public function select_surveys_new($num = 10)
 	{
-		$this->db->order_by("timestamp", "asc");
+		$this->db->order_by("timestamp", "desc");
 		$this->db->limit($num);
 		// limit progress for a totality db surveys are small
 		$this->db->where('state', SURVEY_STATE_PROGRESS);
 		$result = $this->db->get('survey_tbl')->result();
+		return $result;
+	}
+
+	public function select_search_tags($tags, $num = 100)
+	{
+		if (!is_array($tags))
+		{
+			$tags = array($tags);
+		}
+		$this->db->order_by("id_survey", "desc");
+		$this->db->limit($num);
+		$this->db->where('value', $tags[0]);
+		for ($i = 1; $i < count($tags); $i++)
+		{
+			$this->db->or_where('value', $tags[$i]);
+		}
+		$result = $this->db->get('tag_tbl')->result();
 		return $result;
 	}
 
@@ -419,6 +436,37 @@ class Survey_model extends CI_Model
 		return $this->datas_to_survey_hot($data2, $num, $id_user);
 	}
 
+	public function get_surveys_search_tag($word, $num = 10, $id_user = NULL)
+	{
+		$data = $this->select_search_tags($word, 200);
+		$ids = $this->calc_surveyids_tag($data);
+		return $this->datas_to_survey_tag($ids, $num, $id_user);
+	}
+
+	public function calc_surveyids_tag($data)
+	{
+		$count = array();
+		foreach ($data as $datum)
+		{
+			if (!isset($count[$datum->id_survey]))
+			{
+				$count[$datum->id_survey] = 0;
+			}
+			$count[$datum->id_survey] += 1;
+		}
+		$ids = array();
+		foreach ($count as $id => $c)
+		{
+			$ids[$c][] = $id;
+		}
+		arsort($ids);
+		foreach ($ids as &$idsum)
+		{
+			arsort($idsum);
+		}
+		return $ids;
+	}
+
 	public function calc_surveyids_hot($data)
 	{
 		$count = array();
@@ -434,28 +482,26 @@ class Survey_model extends CI_Model
 		return $count;
 	}
 
-	public function datas_to_survey_hot($data, $num, $id_user)
+	public function datas_to_survey_tag($ids, $num, $id_user)
 	{
-		if (empty($data))
+		if (empty($ids))
 		{
 			return NULL;
 		}
 		$surveys = array();
-		if (isset($data))
+		$i = 0;
+		foreach ($ids as $count => $idsum)
 		{
-			$i = 0;
-			foreach ($data as $id_survey => $value)
+			foreach ($idsum as $id_survey)
 			{
-				if (!($survey = $this->get_survey($id_survey, $id_user)))
+				/** @var $survey SurveyObj */
+				$survey = $this->get_survey($id_survey, $id_user);
+				if (!$survey)
 				{
 					// TODO: can't create survey error act
 					return FALSE;
 				}
-				if ($survey->state !== SURVEY_STATE_PROGRESS)
-				{
-					continue;
-				}
-				$survey->point_hot = $value;
+				$survey->point_relevant = $count;
 				$surveys[] = $survey;
 				if (++$i >= $num)
 				{
@@ -466,7 +512,37 @@ class Survey_model extends CI_Model
 		return $surveys;
 	}
 
-	public function datas_to_survey($data, $id_user)
+	public function datas_to_survey_hot($data, $num, $id_user)
+	{
+		if (empty($data))
+		{
+			return NULL;
+		}
+		// NOTICE: solved if block `if (isset($data))`
+		$surveys = array();
+		$i = 0;
+		foreach ($data as $id_survey => $value)
+		{
+			if (!($survey = $this->get_survey($id_survey, $id_user)))
+			{
+				// TODO: can't create survey error act
+				return FALSE;
+			}
+			if ($survey->state !== SURVEY_STATE_PROGRESS)
+			{
+				continue;
+			}
+			$survey->point_hot = $value;
+			$surveys[] = $survey;
+			if (++$i >= $num)
+			{
+				break;
+			}
+		}
+		return $surveys;
+	}
+
+	public function datas_to_survey($data, $id_user = NULL)
 	{
 		if (empty($data))
 		{
@@ -480,9 +556,8 @@ class Survey_model extends CI_Model
 				if (!($survey = $this->get_survey($datum->id_survey, $id_user)))
 				{
 					// TODO: can't create survey error act
-					
 					// TODO: delete
-					die('can\'t surcvey '. $datum->id_survey);
+					die('can\'t surcvey ' . $datum->id_survey);
 					return FALSE;
 				}
 				if ($survey->state !== SURVEY_STATE_PROGRESS)

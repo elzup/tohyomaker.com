@@ -22,6 +22,8 @@ class SurveyObj
 	public $results;
 
 	public $point_hot;
+	/** @deprecated */
+	public $point_relevant;
 
 	/* super optional */
 	public $selected;

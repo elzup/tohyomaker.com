@@ -27,7 +27,8 @@ class My extends CI_Controller
 
 	function index()
 	{
-		$surveys = $this->survey->get_surveys_user_voted($this->user->get_user());
+		$user = $this->user->get_user();
+		$surveys = $this->survey->get_surveys_user_voted($user);
 		
 		$title = 'マイページ';
 		$head_info = array(
@@ -35,9 +36,9 @@ class My extends CI_Controller
 		);
 		$this->load->view('head', $head_info);
 		$this->load->view('title', array('title' => $title, 'offset' => 2));
-		$this->load->view('navbar', array('user' => $this->user->get_user()));
+		$this->load->view('navbar', array('user' => $user));
 
-		$this->load->view('mypage', array('surveys' => $surveys, 'user' => $this->user->get_user()));
+		$this->load->view('mypage', array('surveys' => $surveys, 'user' => $user));
 
 		$this->load->view('foot');
 	}
