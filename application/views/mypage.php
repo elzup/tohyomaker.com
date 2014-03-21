@@ -1,6 +1,6 @@
 <?php
-/* @var $surveys SurveyObj[] */
-/* @var $survey SurveyObj */
+/* @var $surveys_voted SurveyObj[] */
+/* @var $surveys_maked SurveyObj[] */
 /* @var $user UserObj */
 ?>
 
@@ -16,14 +16,36 @@
 			<div id="myTabContent" class="tab-content">
 				<div class="tab-pane fade active in" id="vote-history-tab">
 					<?php
-					foreach ($surveys as $survey)
+					if (!empty($surveys_voted))
 					{
-						surveypane($survey);
+						foreach ($surveys_voted as $survey)
+						{
+							surveypane($survey, TRUE);
+						}
+					} else
+					{
+						?>
+						<p>最近の投票履歴はありません</p>
+						<span class="help-block">1週間経つと個人の投票データは消去されます</span>
+						<?php
 					}
 					?>
 				</div>
 				<div class="tab-pane fade" id="created-survey-tab">
-					TODO: 投票作成履歴を表示
+					<?php
+					if (!empty($surveys_maked))
+					{
+						foreach ($surveys_maked as $survey)
+						{
+							surveypane($survey);
+						}
+					} else
+					{
+						?>
+						<p>作成した投票はありません</p>
+						<?php
+					}
+					?>
 				</div>
 			</div>
 		</div>

@@ -1,4 +1,5 @@
 <?php
+
 if (!function_exists('surveypane'))
 {
 
@@ -86,7 +87,7 @@ if (!function_exists('surveypane'))
 				</p>
 
 				<div class="row">
-					<div class="col-sm-2">
+					<div class="col-sm-3">
 						<?= tag_icon(ICON_TIME, TRUE) ?>
 						<?= $survey->get_time_remain_str() ?>
 					</div>
@@ -94,7 +95,7 @@ if (!function_exists('surveypane'))
 					$stylelib = explode(',', 'success,end,end');
 					$pbstyle = $stylelib[$survey->state];
 					?>
-					<div class="col-sm-10">
+					<div class="col-sm-9">
 						<div class="progress">
 							<div class="progress-bar progress-bar-<?= $pbstyle ?>" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
 						</div>

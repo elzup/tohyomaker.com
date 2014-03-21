@@ -30,13 +30,13 @@ class Catalog extends CI_Controller
 		$this->hot();
 	}
 
-	function newp()
+	function newp($page = 0)
 	{
 
 		// TODO: prepare surveys in survey_model 
 		$user = $this->user->get_user();
 		$title = '新着';
-		$surveys = $this->survey->get_surveys_new(10, $user->id);
+		$surveys = $this->survey->get_surveys_new(10, $page * 10, $user->id);
 		$this->load->view('head', array('title' => $title));
 		$this->load->view('title', array('title' => $title, 'offset' => 2));
 		$this->load->view('navbar', array('user' => $this->user->get_user()));

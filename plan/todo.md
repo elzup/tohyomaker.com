@@ -3,9 +3,9 @@
 
 
 # in local
-* result の記録
-    * 切り目票数
-    * 3日目最終
+* ~~result の記録~~
+    * ~~切り目票数~~
+    * ~~3日目最終~~
 * footer の作成
 * 作成した投票
 * surveysblock
@@ -24,6 +24,7 @@
     * Target
 * 検索条件の保存
 * マイページ-おすすめ投票
+* owner, user の統一
 
 # in server task
 * session stress test

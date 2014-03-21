@@ -28,17 +28,24 @@ class My extends CI_Controller
 	function index()
 	{
 		$user = $this->user->get_user();
-		$surveys = $this->survey->get_surveys_user_voted($user);
+		if (empty($user))
+		{
+			jump(base_url());
+		}
+		$surveys_voted = $this->survey->get_surveys_user_voted($user);
+		$surveys_maked = $this->survey->get_surveys_user_maked($user);
 		
 		$title = 'マイページ';
-		$head_info = array(
-				'title' => $title,
-		);
-		$this->load->view('head', $head_info);
+		$this->load->view('head', array('title' => $title));
 		$this->load->view('title', array('title' => $title, 'offset' => 2));
 		$this->load->view('navbar', array('user' => $user));
 
-		$this->load->view('mypage', array('surveys' => $surveys, 'user' => $user));
+		$mypage_info = array(
+				'user' => $user,
+				'surveys_voted' => $surveys_voted,
+				'surveys_maked' => $surveys_maked,
+		);
+		$this->load->view('mypage', $mypage_info);
 
 		$this->load->view('foot');
 	}

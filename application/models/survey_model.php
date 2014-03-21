@@ -28,7 +28,7 @@ class Survey_model extends CI_Model
 	{
 		if (!is_numonly($id_survey))
 		{
-			// incorrect id
+// incorrect id
 			return FALSE;
 		}
 		if ($id_user instanceof UserObj)
@@ -97,11 +97,22 @@ class Survey_model extends CI_Model
 		return $result;
 	}
 
+	public function select_surveys_owner($id_user)
+	{
+		$where = array(
+				'id_user' => $id_user,
+		);
+		$this->db->order_by("timestamp", "desc");
+		$this->db->where($where);
+		$result = $this->db->get('survey_tbl')->result();
+		return $result;
+	}
+
 	public function select_surveys_new($num = 10)
 	{
 		$this->db->order_by("timestamp", "desc");
 		$this->db->limit($num);
-		// limit progress for a totality db surveys are small
+// limit progress for a totality db surveys are small
 		$this->db->where('state', SURVEY_STATE_PROGRESS);
 		$result = $this->db->get('survey_tbl')->result();
 		return $result;
@@ -155,7 +166,7 @@ class Survey_model extends CI_Model
 			$this->_insert_result($survey, $type);
 		}
 		set_alert(ALERT_TYPE_VOTED);
-		// TODO: updated and check just
+// TODO: updated and check just
 		return TRUE;
 	}
 
@@ -452,16 +463,25 @@ class Survey_model extends CI_Model
 	 * @param UserObj $user
 	 * @return null|SurveyObj[]
 	 */
-	public function get_surveys_user_voted(UserObj $user)
+	public function get_surveys_user_voted(UserObj $user, $num = 20, $start = 0)
 	{
 		$data = $this->select_votes_user($user->id);
-		return $this->datas_to_survey($data, $user->id);
+		$ids = $this->datas_to_surveyids($data, SURVEY_STATE_ALL);
+		return $this->get_surveys($ids, $num, $start, $user->id);
 	}
 
-	public function get_surveys_new($num = 10, $id_user = NULL)
+	public function get_surveys_user_maked(UserObj $user, $num = 20, $start = 0)
+	{
+		$data = $this->select_surveys_owner($user->id);
+		$ids = $this->datas_to_surveyids($data);
+		return $this->get_surveys($ids, $num, $start, $user->id);
+	}
+
+	public function get_surveys_new($num = 10, $start = 0, $id_user = NULL)
 	{
 		$data = $this->select_surveys_new($num);
-		return $this->datas_to_survey($data, $id_user);
+		$ids = $this->datas_to_surveyids($data, SURVEY_STATE_PROGRESS);
+		return $this->get_surveys($ids, $num, $start, $id_user);
 	}
 
 	public function get_surveys_hot($num, $id_user = NULL)
@@ -533,7 +553,7 @@ class Survey_model extends CI_Model
 				$survey = $this->get_survey($id_survey, $id_user);
 				if (!$survey)
 				{
-					// TODO: can't create survey error act
+// TODO: can't create survey error act
 					return FALSE;
 				}
 				$survey->point_relevant = $count;
@@ -553,14 +573,14 @@ class Survey_model extends CI_Model
 		{
 			return NULL;
 		}
-		// NOTICE: solved if block `if (isset($data))`
+// NOTICE: solved if block `if (isset($data))`
 		$surveys = array();
 		$i = 0;
 		foreach ($data as $id_survey => $value)
 		{
 			if (!($survey = $this->get_survey($id_survey, $id_user)))
 			{
-				// TODO: can't create survey error act
+// TODO: can't create survey error act
 				return FALSE;
 			}
 			if ($survey->state != SURVEY_STATE_PROGRESS)
@@ -577,30 +597,53 @@ class Survey_model extends CI_Model
 		return $surveys;
 	}
 
-	public function datas_to_survey($data, $id_user = NULL)
+	/**
+	 * 
+	 * @param stdClass[] $data
+	 * @param int $state_limit
+	 * @return array
+	 */
+	public function datas_to_surveyids($data, $state_limit = SURVEY_STATE_ALL)
 	{
 		if (empty($data))
 		{
 			return NULL;
 		}
-		$surveys = array();
-		if (isset($data))
+		$ids = array();
+		foreach ($data as $datum)
 		{
-			foreach ($data as $datum)
+			if ($state_limit !== SURVEY_STATE_ALL && $datum->state != $state_limit)
 			{
-				if (!($survey = $this->get_survey($datum->id_survey, $id_user)))
-				{
-					// TODO: can't create survey error act
-					// TODO: delete
-					die('can\'t surcvey ' . $datum->id_survey);
-					return FALSE;
-				}
-				if ($survey->state != SURVEY_STATE_PROGRESS)
-				{
-					continue;
-				}
-				$surveys[] = $this->get_survey($datum->id_survey, $id_user);
+				continue;
 			}
+			$ids[] = $datum->id_survey;
+		}
+		return $ids;
+	}
+
+	/**
+	 * 
+	 * @param array $ids_survey
+	 * @param int $num
+	 * @param int $start
+	 * @param int $id_user
+	 * @param int $state_limit
+	 * @return SurveyObj[]
+	 */
+	public function get_surveys($ids_survey, $num = 100, $start = 0, $id_user = NULL, $state_limit = SURVEY_STATE_ALL)
+	{
+		$surveys = array();
+		for ($i = $start; $i < $num; $i++)
+		{
+			if (!isset($ids_survey[$i]) || !($survey = $this->get_survey($ids_survey[$i], $id_user)))
+			{
+				break;
+			}
+			if ($state_limit !== SURVEY_STATE_ALL && $survey->state != $state_limit)
+			{
+				continue;
+			}
+			$surveys[] = $survey;
 		}
 		return $surveys;
 	}
