@@ -1,6 +1,6 @@
 <?php
 
-$title_text = '診断メーカー';
+$title_text = '投票メーカー';
 if (isset($title))
 {
 	$title_text = "$title - $title_text";

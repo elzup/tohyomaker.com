@@ -30,12 +30,18 @@ class Search extends CI_Controller
 		$this->tag();
 	}
 
-	function tag()
+	function tag($word = NULL)
 	{
 		$user = $this->user->get_user();
-		$word = filter_input(INPUT_GET, 's');
+		if (!empty($word))
+		{
+			$word = urldecode($word);
+		} else
+		{
+			$word = filter_input(INPUT_GET, 's');
+		}
 		$surveys = array();
-		if (isset ($word))
+		if (isset($word))
 		{
 			$word = urldecode($word);
 			$surveys = $this->survey->get_surveys_search_tag($word, 10, $user->id);
@@ -55,5 +61,3 @@ class Search extends CI_Controller
 	}
 
 }
-
-

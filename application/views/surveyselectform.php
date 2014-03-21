@@ -52,10 +52,11 @@
 			else
 			{
 				// no login
+				// TODO : with use to makeform view structure
 				?>
 				<div class="col-sm-offset-2 col-sm-8" id="submit-div">
 					<button type="submit" id="submit-main-disable" class="btn btn-primary btn-lg btn-block btn-success disabled">投票*</button>
-					<span class="help-block">*Twitterでログインが必要です. <a href="<?=  base_url('auth/login')?>" class="btn btn-info">ログインする</a></span>
+					<span class="help-block">*Twitterでログインが必要です. <a <?= attr_href(HREF_TYPE_LOGIN)?> class="btn btn-info">ログインする</a></span>
 				</div>
 		<?php
 			}

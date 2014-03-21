@@ -14,7 +14,7 @@
 				<div class="col-sm-12 well">
 					投票メーカーは手軽に投票を作成,参加,シェアすることが出来るサービスです。<br />
 					<div class="align-center">
-						<a href="<?= base_url('make') ?>" class="btn btn-success align-center">
+						<a <?= attr_href(HREF_TYPE_MAKE) ?> class="btn btn-success align-center">
 							<i class="glyphicon glyphicon-edit"></i>
 							投票を作成する
 						</a>

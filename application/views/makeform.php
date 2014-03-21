@@ -1,9 +1,9 @@
 <div class="container">
 	<!-- TODO: include check js file-->
 	<div class="row">
-		<div class="col-lg-offset-2 col-sm-8" id="tagbox-div">
+		<div class="col-lg-offset-2 col-sm-8" id="makeform-div">
 			<div class="well">
-				<form class="form-horizontal" action="<?= base_url('make/check') ?>" method="POST">
+				<form class="form-horizontal" action="<?= base_url(HREF_TYPE_MAKECHECK) ?>" method="POST">
 					<fieldset>
 						<legend>作成フォーム</legend>
 						<div class="form-group">

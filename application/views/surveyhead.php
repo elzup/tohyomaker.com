@@ -45,7 +45,7 @@
 					</div>
 					<div class="col-sm-6 owner-name">
 						<p>
-							<a href="<?= base_url("user/{$survey->owner->id}") ?>" class="btn btn-success btn-owner-name" data-toggle="tooltip" data-placement="top" title="作者: <?= $survey->owner->screen_name ?>">
+							<a <?= attr_href(HREF_TYPE_USER, $survey->owner->id) ?> class="btn btn-success btn-owner-name" data-toggle="tooltip" data-placement="top" title="作者: <?= $survey->owner->screen_name ?>">
 								<i class="<?= ICON_USER ?>"></i>@<?= $survey->owner->screen_name ?>
 							</a>
 						</p>
@@ -62,7 +62,7 @@
 					foreach ($survey->tags as $tag)
 					{
 						?>
-						<a href="<?= base_url("tag/" . $tag) ?>" class="btn btn-success btn-tag btn-xs"><?= $tag ?></a>
+					<a <?= attr_href(HREF_TYPE_TAG , $tag) ?> class="btn btn-success btn-tag btn-xs"><?= $tag ?></a>
 					<?php } ?>
 				</p>
 			</div>
@@ -95,11 +95,11 @@
 
 		<div class="col-sm-4 col-sm-offset-8">
 			<div class="btn-group btn-group-justified">
-				<a href="<?= base_url($survey->id) ?>" class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VOTE) ? ' disabled' : '') ?>">
+				<a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?> class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VOTE) ? ' disabled' : '') ?>">
 					<i class="<?= ICON_VOTE ?>"></i>
 					投票
 				</a>
-				<a href="<?= base_url('view/' . $survey->id) ?>" class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VIEW) ? ' disabled' : '') ?>">
+				<a <?= attr_href(HREF_TYPE_VIEW, $survey->id) ?> class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VIEW) ? ' disabled' : '') ?>">
 					<i class="<?= ICON_RESULT ?>"></i>
 					結果
 					<?php

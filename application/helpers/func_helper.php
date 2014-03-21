@@ -29,6 +29,19 @@ if (!function_exists('is_numonly'))
 	}
 }
 
+if (!function_exists('urlencode_array'))
+{
+	function urlencode_array(array $strs) 
+	{
+		$encodeds = array();
+		foreach ($strs as $str)
+		{
+			$encodeds[] = urlencode($str);
+		}
+		return $encodeds;
+	}
+}
+
 
 
 if (!function_exists('array_filter_values'))

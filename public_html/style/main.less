@@ -97,20 +97,23 @@ a {
     }
 
     .btn-item {
-        margin-top: 4px;
-        &:active{
-            margin-top: 6px !important;
-            margin-bottom: 1px !important;
-        }
-        &:hover{
-            margin-top: 5px;
-        }
-
+        .btn-push-margin();
         &.active {
             color: #ffffff;
             background-color: #219524;
             border-color: #186f1b;
         }
+    }
+}
+
+.btn-push-margin (@h :4px){
+    margin-top: @h;
+    &:active{
+        margin-top: @h + 2px !important;
+        margin-bottom: 1px !important;
+    }
+    &:hover{
+        margin-top: @h + 1px;
     }
 }
 
@@ -231,6 +234,10 @@ i {
     &.icon-orange {
         color: orange;
         text-shadow: 2px 2px 0px #F6FF93;
+    }
+    &.fa-twitter
+    {
+        color: blue;
     }
 }
 
@@ -393,6 +400,16 @@ i {
     }
 }
 
+
+#makecheck-div {
+    .submit-btns {
+        .btn {
+            .btn-push-margin();
+        }
+    }
+    
+}
+
 .progress {
     margin-bottom: 0;
 }
@@ -423,6 +440,17 @@ i {
 /* --------------------------------------------------------- *
  *     single classes
  * --------------------------------------------------------- */
+
+
+.dropdown-menu {
+    li i {
+        color: gray;
+        &.fa-twitter
+        {
+            color: limegreen;
+        }
+    }
+}
 
 
 .text-shadow() {

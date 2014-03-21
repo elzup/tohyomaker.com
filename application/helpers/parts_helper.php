@@ -9,7 +9,7 @@ if (!function_exists('surveypane'))
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-sm-10 title">
-						<p><h4><a href="<?= base_url($survey->id) ?>"><?= $survey->title ?></a></h4></p>
+						<p><h4><a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?>><?= $survey->title ?></a></h4></p>
 					</div>
 					<!--div class="col-sm-1 state"></div-->
 					<div class="col-sm-2 total-num">
@@ -28,7 +28,7 @@ if (!function_exists('surveypane'))
 					// not voted yet
 					?>
 					<div>
-						<a href="<?= base_url($survey->id) ?>" class="btn btn-success btn-item btn-xs"><?= $item->value ?></a>
+						<a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?> class="btn btn-success btn-item btn-xs"><?= $item->value ?></a>
 						に投票しました。
 					</div>
 					<?php
@@ -64,7 +64,7 @@ if (!function_exists('surveypane'))
 								$class .= (($selected === $item->index) ? ' btn-warning' : ' btn-success ');
 								?>
 								<div class="col-sm-<?= $cn ?>">
-									<a href="<?= base_url($survey->id . '/' . $i) ?>" class="btn btn-block btn-item btn-sm<?= $class ?>"><?= $item->value ?></a>
+									<a <?= attr_href(HREF_TYPE_VOTE, array($survey->id, $i)) ?> class="btn btn-block btn-item btn-sm<?= $class ?>"><?= $item->value ?></a>
 								</div>
 								<?php
 								$sum_cn += $cn;
@@ -81,7 +81,7 @@ if (!function_exists('surveypane'))
 					foreach ($survey->tags as $tag)
 					{
 						?>
-						<a href="<?= base_url("tag/" . $tag) ?>" class="btn btn-success btn-tag btn-xs"><?= $tag ?></a>
+						<a <?= attr_href(HREF_TYPE_TAG, $tag) ?> class="btn btn-success btn-tag btn-xs"><?= $tag ?></a>
 					<?php } ?>
 				</p>
 
@@ -253,6 +253,30 @@ if (!function_exists('tag_icon'))
 
 }
 
+
+if (!function_exists('attr_href'))
+{
+	function attr_href($type, $values = NULL, $is_wrap_base = TRUE)
+	{
+		$link = $type;
+		// TODO: support array $option_value args
+		if (!empty($values))
+		{
+			if (!is_array($values))
+			{
+				$values = explode('/', $values);
+			}
+			$link .= '/' . implode('/', urlencode_array($values));
+		}
+			
+		if ($is_wrap_base)
+		{
+			$link = base_url($link);
+		}
+		return 'href="'.$link.'"';
+	}
+}
+
 if (!function_exists('attr_tooltip'))
 {
 
@@ -283,7 +307,6 @@ if (!function_exists('calc_item_col_equality'))
 
 		return $lib[$index] ? : FALSE;
 	}
-
 }
 
 

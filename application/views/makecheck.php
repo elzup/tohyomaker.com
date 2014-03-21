@@ -1,10 +1,10 @@
 <div class="container">
 	<!-- TODO: include check js file-->
 	<div class="row">
-		<div class="col-lg-offset-2 col-sm-8" id="tagbox-div">
+		<div class="col-lg-offset-2 col-sm-8" id="makecheck-div">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<form class="form-horizontal" action="<?= base_url('make/regist') ?>" method="POST">
+					<form class="form-horizontal" action="<?= base_url(HREF_TYPE_MAKEREGIST) ?>" method="POST">
 						<fieldset>
 							<legend>投票作成確認</legend>
 							<div class="form-group">
@@ -120,7 +120,7 @@
 								<input type="hidden" name="token"   value="<?= $token ?>">
 
 								<div class="form-group">
-									<div class="col-lg-10 col-lg-offset-2">
+									<div class="col-lg-10 col-lg-offset-2 submit-btns">
 										<a href="javascript:window.history.back();" class="btn btn-block btn-default">変更</a>
 
 										<button type="submit-main" class="btn btn-block btn-success">作成</button>
