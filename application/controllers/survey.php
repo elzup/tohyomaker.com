@@ -99,10 +99,7 @@ class Survey extends CI_Controller
 		}
 
 		$title = $survey->title;
-		$head_info = array(
-				'title' => $title,
-		);
-		$this->load->view('head', $head_info);
+		$this->load->view('head', array('title' => $title));
 		$this->load->view('title', array('title' => $title, 'offset' => 0));
 		$this->load->view('navbar', array('user' => $user));
 		$surveyhead_info = array(
@@ -110,14 +107,12 @@ class Survey extends CI_Controller
 				'type' => SURVEY_PAGETYPE_VIEW,
 		);
 		$this->load->view('surveyhead', $surveyhead_info);
-		$surveyresult_info = array(
-				'survey' => $survey,
-		);
-		$this->load->view('surveyresult', $surveyresult_info);
+		$this->load->view('surveyresult', array ('survey' => $survey));
 		if (isset($survey->results))
 		{
 			$this->load->view('surveylog', array('survey', $survey));
 		}
+		// TODO: insert surveys parts
 		$this->load->view('foot');
 	}
 

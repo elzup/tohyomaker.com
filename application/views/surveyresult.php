@@ -1,9 +1,5 @@
 <?php
-/** @var $survey SurveyObj */
-if (!isset($select))
-{
-	$select = -1;
-}
+/* @var $survey SurveyObj */
 ?>
 <div class="container">
 	<div class="row">
@@ -15,7 +11,10 @@ if (!isset($select))
 				foreach ($survey->get_sorted() as $i => $item)
 				{
 					$cn = calc_item_col($i, count($survey->items));
-					$voted_icon = (($item->index == $select) ? '<span class="voted" data-toggle="tooltip" data-placement="top" title="あなたが投票した項目"><i class="glyphicon glyphicon-flag"></i></span>' : '');
+					$voted_icon = (
+							($item->index === $survey->selected) 
+							?'<span class="voted" '.  attr_tooltip('あなたが投票した項目').'>'. tag_icon(ICON_VOTED, TRUE) .'</span>' 
+							: '');
 					if ($sum_cn % 12 == 0)
 					{
 						?>

@@ -1,6 +1,6 @@
 <?php
 
-class Tag extends CI_Controller
+class Search extends CI_Controller
 {
 
 	/** @var Survey_model */
@@ -27,24 +27,32 @@ class Tag extends CI_Controller
 
 	function index()
 	{
-		$this->search();
+		$this->tag();
 	}
 
-	function search($word = NULL)
+	function tag()
 	{
+		$word = filter_input(INPUT_GET, 's');
+		if (isset ($word))
+		{
+			$word = urldecode($word);
+		}
 
 		// TODO: prepare surveys in survey_model 
 		$user = $this->user->get_user();
 		$title = 'タグ検索';
-		$surveys = $this->survey->get_surveys_new(10, $user->id);
+//		$surveys = $this->survey->get_surveys_new(10, $user->id);
 		$this->load->view('head', array('title' => $title));
 		$this->load->view('title', array('title' => $title, 'offset' => 2));
 		$this->load->view('navbar', array('user' => $this->user->get_user()));
 
-		$this->load->view('catalognew', array ('surveys' => $surveys));
+		$this->load->view('searchtag', array('word' => $word, 'surveys' => $surveys));
+
+//		$this->load->view('catalognew', array ('surveys' => $surveys));
 
 		$this->load->view('foot');
 	}
 
 }
+
 

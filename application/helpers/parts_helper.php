@@ -76,7 +76,7 @@ if (!function_exists('surveypane'))
 			</div>
 			<div class="panel-footer">
 				<p class="btn-group-tags">
-					<?= tag_icon(ICON_TAG, TRUE)?>
+					<?= tag_icon(ICON_TAG, TRUE) ?>
 					<?php
 					foreach ($survey->tags as $tag)
 					{
@@ -87,7 +87,7 @@ if (!function_exists('surveypane'))
 
 				<div class="row">
 					<div class="col-sm-2">
-					<?= tag_icon(ICON_TIME, TRUE)?>
+						<?= tag_icon(ICON_TIME, TRUE) ?>
 						<?= $survey->get_time_remain_str() ?>
 					</div>
 					<?php
@@ -200,6 +200,45 @@ if (!function_exists('logpane'))
 
 }
 
+if (!function_exists('searchbox_tag'))
+{
+	function searchbox_tag()
+	{
+		$name = 'タグ検索';
+		// TODO: fix omis to 'tag'
+		$action = base_url('search/tag');
+		$class_str_icon = ICON_SEARCHTAG;
+		searchbox($name, $action, $class_str_icon);
+	}
+}
+
+// TODO: add other type search, exteding func searchbox
+
+
+if (!function_exists('searchbox'))
+{
+
+	function searchbox($name, $action, $class_str_icon)
+	{
+		?>
+		<div class="align-center">
+			<form class="form-horizontal" action="<?= $action ?>" method="GET">
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label"><?= tag_icon($class_str_icon). $name ?></label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="s" placeholder="<?= $name ?>" maxlength="20">
+					</div>
+					<div class="col-sm-2">
+						<button type="submit" id="submit-main" class="btn btn-block btn-success">検索</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<?php
+	}
+
+}
+
 if (!function_exists('tag_icon'))
 {
 
@@ -209,17 +248,19 @@ if (!function_exists('tag_icon'))
 		{
 			$class .= ' icon-' . $color;
 		}
-		return '<i class="'.$class.'"></i>';
+		return '<i class="' . $class . '"></i>';
 	}
 
 }
 
 if (!function_exists('attr_tooltip'))
 {
+
 	function attr_tooltip($str)
 	{
-		return ' data-toggle="tooltip" data-placement="top" title="'.$str.'"';
+		return ' data-toggle="tooltip" data-placement="top" title="' . $str . '"';
 	}
+
 }
 
 if (!function_exists('votelogpane'))
