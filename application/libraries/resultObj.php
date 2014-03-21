@@ -64,9 +64,9 @@ class ResultObj
 		}
 		if ($sec > 3600)
 		{
-			$str .= floor($sec / 3600) . '時間';
+			$str .= floor(($sec % 86400) / 3600) . '時間';
 		}
-		$str .= floor($sec / 60) . '分';
+		$str .= floor(($sec % 3600) / 60) . '分';
 		return $str;
 	}
 

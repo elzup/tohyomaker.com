@@ -160,7 +160,7 @@ if (!function_exists('logpane'))
 		?>
 		<div class="panel panel-success panel-log">
 			<div class="panel-heading">
-				<div class="row <?= $result->is_booked() ? 'reuslt-type-time' : 'reuslt-type-total' ?>">
+				<div class="row <?= $result->is_booked() ? 'result-type-time' : 'result-type-total' ?>">
 					<div class="col-sm-5">
 						<i class="<?= ICON_TIME ?>"></i>
 						経過時間 <?= $result->get_elapsed_time_str() ?>
