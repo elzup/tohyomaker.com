@@ -125,6 +125,11 @@ class Survey extends CI_Controller
 		}
 
 		$user = $this->user->get_user();
+		if (empty($user))
+		{
+			// TODO: error action
+			die('error: not logined');
+		}
 		/* @var $survey SurveyObj */
 		if (($survey = $this->survey->get_survey($id_survey, $user)) === FALSE)
 		{
@@ -132,7 +137,7 @@ class Survey extends CI_Controller
 			die("no found id : {$id_survey}");
 		}
 		$value = filter_input(INPUT_POST, 'vote-value');
-		if ($this->survey->insert_vote($survey, $user, $value) === FALSE)
+		if ($this->survey->regist_vote($survey, $user, $value) === FALSE)
 		{
 			var_dump($this->survey->db->message());
 			die('failed query');

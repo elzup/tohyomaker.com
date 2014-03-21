@@ -146,9 +146,16 @@ class Survey_model extends CI_Model
 			return FALSE;
 		}
 
+		$survey->update_regist_vote($value);
 		$this->insert_vote($survey->id, $user->id, $value);
-		$this->inclement_item($survey->id, $value);
-		$this->inclement_survey($survey->id);
+		$this->inclement_item($survey->id, $value, $survey->items[$value]->num);
+		$this->inclement_survey($survey->id, $survey->total_num);
+		if (($type = $survey->check_just()) !== FALSE)
+		{
+			$this->_insert_result($survey, $type);
+		}
+		set_alert(ALERT_TYPE_VOTED);
+		// TODO: updated and check just
 		return TRUE;
 	}
 
@@ -162,28 +169,34 @@ class Survey_model extends CI_Model
 		$this->db->insert('vote_tbl', $data);
 	}
 
-	public function inclement_survey ($id_survey)
+	public function inclement_survey($id_survey, $total_num = NULL)
 	{
 		$where = array('id_survey' => $id_survey);
-		$result = $this->db->get_where('survey_tbl', $where)->result();
-		$num = $result->total_num;
+		if (!isset($total_num))
+		{
+			$result = $this->db->get_where('survey_tbl', $where)->result();
+			$total_num = $result->total_num + 1;
+		}
 
 		$this->db->where($where);
-		$this->db->set('total_num', $num + 1);
+		$this->db->set('total_num', $total_num);
 		$this->db->update('survey_tbl');
 	}
 
-	public function inclement_item ($id_survey, $index)
+	public function inclement_item($id_survey, $index, $num = NULL)
 	{
 		$where = array(
-				'id_survey' => $id_survey, 
+				'id_survey' => $id_survey,
 				'index' => $index,
 		);
-		$result = $this->db->get_where('item_tbl', $where)->result();
-		$num = $result->num;
+		if (!isset($num))
+		{
+			$result = $this->db->get_where('item_tbl', $where)->result();
+			$num = $result->num + 1;
+		}
 
 		$this->db->where($where);
-		$this->db->set('num', $num + 1);
+		$this->db->set('num', $num);
 		$this->db->update('item_tbl');
 	}
 
@@ -550,7 +563,7 @@ class Survey_model extends CI_Model
 				// TODO: can't create survey error act
 				return FALSE;
 			}
-			if ($survey->state !== SURVEY_STATE_PROGRESS)
+			if ($survey->state != SURVEY_STATE_PROGRESS)
 			{
 				continue;
 			}
@@ -582,7 +595,7 @@ class Survey_model extends CI_Model
 					die('can\'t surcvey ' . $datum->id_survey);
 					return FALSE;
 				}
-				if ($survey->state !== SURVEY_STATE_PROGRESS)
+				if ($survey->state != SURVEY_STATE_PROGRESS)
 				{
 					continue;
 				}

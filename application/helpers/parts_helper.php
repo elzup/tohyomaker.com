@@ -128,11 +128,13 @@ if (!function_exists('sharebtn_twitter'))
 	 if (!function_exists('alert_box'))
 	 {
 
-		 function alert_box($type)
+		 function alert_box($type, $value = '')
 		 {
+			 // TODO: use value
 			 $lib = array(
-					 "投票が完了しました。",
+					 "ログインしました。",
 					 "ログアウトしました。",
+					 "投票が完了しました。",
 			 );
 			 if (empty($lib[$type]))
 			 {

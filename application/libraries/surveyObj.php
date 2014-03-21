@@ -48,7 +48,7 @@ class SurveyObj
 		$this->timestamp = $data->timestamp;
 		$this->state = $data->state;
 		$this->is_anonymous = empty($data->is_anonymous);
-		$this->total = $data->total;
+		$this->total_num = $data->total_num;
 
 		if (isset($items))
 		{
@@ -145,16 +145,6 @@ class SurveyObj
 			$items[$i]->num = $num;
 		}
 		return $items;
-	}
-
-	public function get_total()
-	{
-		$sum = 0;
-		foreach ($this->items as $item)
-		{
-			$sum += $item->num;
-		}
-		return $sum;
 	}
 
 	public function get_text_items($glue = ' / ')
@@ -293,6 +283,30 @@ class SurveyObj
 			$pre_n = $n;
 		}
 	}
+
+	public function update_regist_vote($value)
+	{
+		$this->items[$value]->num++;
+		$this->total_num++;
+	}
+
+	public function check_just()
+	{
+		$lib = array(
+				100 => RESULT_TYPE_V100,
+				500 => RESULT_TYPE_V500,
+				1000 => RESULT_TYPE_V1000,
+				5000 => RESULT_TYPE_V5000,
+				10000 => RESULT_TYPE_V10000,
+		);
+		if (isset($lib[$this->total_num]))
+		{
+			return $lib[$this->total_num];
+		}
+		return FALSE;
+//		return @$lib[$this->total_num] ?: FALSE;
+	}
+		
 
 	public function get_result_text()
 	{
