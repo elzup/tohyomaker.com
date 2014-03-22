@@ -35,11 +35,7 @@ class Survey extends CI_Controller
 
 	private function _check_post(array $data)
 	{
-		if (empty($data['vote-value']))
-		{
-			return FALSE;
-		}
-		return TRUE;
+		return isset($data['vote-value']);
 	}
 
 	function vote($id_survey = NULL, $select = NULL)

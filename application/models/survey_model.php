@@ -161,17 +161,15 @@ class Survey_model extends CI_Model
 
 	public function insert_vote($id_survey, $id_user, $value)
 	{
-		$data = array(
-				'id_survey' => $id_survey,
-				'id_user' => $id_user,
-				'value' => $value,
-		);
-		$this->db->insert('vote_tbl', $data);
+		$this->db->set('id_survey', $id_survey);
+		$this->db->set('id_user', $id_user);
+		$this->db->set('value', $value);
+		$this->db->insert('vote_tbl');
 	}
 
 	public function inclement_survey($id_survey, $total_num = NULL)
 	{
-		$where = array('id_survey' => $this->db->escape($id_survey));
+		$where = array('id_survey' => $id_survey);
 		if (!isset($total_num))
 		{
 			$result = $this->db->get_where('survey_tbl', $where)->result();
@@ -186,8 +184,8 @@ class Survey_model extends CI_Model
 	public function inclement_item($id_survey, $index, $num = NULL)
 	{
 		$where = array(
-				'id_survey' => $this->db->escape($id_survey),
-				'index' => $this->db->escape($index),
+				'id_survey' => $id_survey,
+				'index' => $index,
 		);
 		if (!isset($num))
 		{

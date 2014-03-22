@@ -31,7 +31,7 @@
 
 # in server task
 * session stress test
-* `mod_rewrite`
+* ~~`mod_rewrite`~~
 
 # end
 
