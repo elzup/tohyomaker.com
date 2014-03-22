@@ -34,10 +34,8 @@ class Survey_model extends CI_Model
 		{
 			$id_user = $id_user->id;
 		}
-		$where = array(
-				'id_survey' => $id_survey,
-		);
-		$result = $this->db->get_where('survey_tbl', $where)->result('object');
+		$this->db->where('id_survey', $id_survey);
+		$result = $this->db->get('survey_tbl')->result('object');
 		if (empty($result))
 		{
 			return FALSE;
@@ -78,31 +76,23 @@ class Survey_model extends CI_Model
 
 	private function _select_survey_subject($id_survey, $tblname)
 	{
-		$where = array(
-				'id_survey' => $id_survey,
-		);
-		$result = $this->db->get_where($tblname, $where)->result('object');
+		$this->db->where('id_survey', $id_survey);
+		$result = $this->db->get($tblname)->result();
 		return $result;
 	}
 
 	public function select_votes_user($id_user)
 	{
-		$where = array(
-				'id_user' => $id_user,
-		);
 		$this->db->order_by("timestamp", "desc");
-		$this->db->where($where);
+		$this->db->where('id_user', $id_user);
 		$result = $this->db->get('vote_tbl')->result();
 		return $result;
 	}
 
 	public function select_surveys_owner($id_user)
 	{
-		$where = array(
-				'id_user' => $id_user,
-		);
 		$this->db->order_by("timestamp", "desc");
-		$this->db->where($where);
+		$this->db->where('id_user', $id_user);
 		$result = $this->db->get('survey_tbl')->result();
 		return $result;
 	}
@@ -181,7 +171,7 @@ class Survey_model extends CI_Model
 
 	public function inclement_survey($id_survey, $total_num = NULL)
 	{
-		$where = array('id_survey' => $id_survey);
+		$where = array('id_survey' => $this->db->escape($id_survey));
 		if (!isset($total_num))
 		{
 			$result = $this->db->get_where('survey_tbl', $where)->result();
@@ -196,8 +186,8 @@ class Survey_model extends CI_Model
 	public function inclement_item($id_survey, $index, $num = NULL)
 	{
 		$where = array(
-				'id_survey' => $id_survey,
-				'index' => $index,
+				'id_survey' => $this->db->escape($id_survey),
+				'index' => $this->db->escape($index),
 		);
 		if (!isset($num))
 		{
@@ -240,27 +230,17 @@ class Survey_model extends CI_Model
 		return $result[0]->value;
 	}
 
-	private function _get_votes($id_survey)
-	{
-		$where = array(
-				'id_survey' => $id_survey,
-		);
-		$result = $this->db->get_where(TBL_VOTE, $where)->result('VoteObj');
-		return $result;
-	}
-
 	public function regist(array $data, Userobj $user)
 	{
+		$this->db->set('title', $data['title']);
+		$this->db->set('description', $data['description']);
+		$this->db->set('target', $data['target']);
 		$items = $this->_format_items($data);
-		$record = array(
-				'title' => $data['title'],
-				'description' => $data['description'],
-				'target' => $data['target'],
-				'num_item' => count($items),
-				'id_user' => $user->id,
-				'is_anonymous' => $data['is_anonymous'],
-		);
-		$this->db->insert('survey_tbl', $record);
+		$this->db->set('num_item', count($items));
+		$this->db->set('id_user', count($user->id));
+		$this->db->set('is_anonymous', $data['is_anonymous']);
+
+		$this->db->insert('survey_tbl');
 		$id = $this->db->insert_id();
 
 		$this->_insert_items($id, $items);

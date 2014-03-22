@@ -14,7 +14,7 @@ class User_model extends CI_Model
 	{
 		parent::__construct();
 
-		$this->load->library('userObj');
+		$this->load->library('userobj');
 
 		$this->check_login();
 	}
@@ -68,8 +68,8 @@ class User_model extends CI_Model
 	 */
 	function check_register($id_twitter)
 	{
-		$where = array('id_twitter' => $id_twitter);
-		$query = $this->db->get_where('user_tbl', $where);
+		$this->db->where('id_twitter', $id_twitter);
+		$query = $this->db->get('user_tbl');
 		$result = $query->result('array');
 		// if not exists return false
 		if (!isset($result[0]['id_user']))
@@ -81,10 +81,8 @@ class User_model extends CI_Model
 
 	function register($id_twitter)
 	{
-		$data = array(
-				'id_twitter' => $id_twitter,
-		);
-		$this->db->insert('user_tbl', $data);
+		$this->db->set('id_twitter', $id_twitter);
+		$this->db->insert('user_tbl');
 
 		return $this->db->insert_id();
 	}
@@ -101,10 +99,8 @@ class User_model extends CI_Model
 
 	function update_last_sn($id_user, $sn)
 	{
-		$data = array(
-				'sn_last' => $sn,
-		);
 		$this->db->where('id_user', $id_user);
+		$this->db->set('sn_last', $sn);
 		$this->db->update('user_tbl', $data);
 	}
 }
