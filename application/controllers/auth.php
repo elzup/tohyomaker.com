@@ -9,6 +9,7 @@ class Auth extends CI_Controller
 		session_start();
 		$this->config->load('my_twitter');
 		$this->load->helper('url');
+		$this->load->helper('func');
 	}
 
 	function Index()
@@ -37,8 +38,8 @@ class Auth extends CI_Controller
 		$auth_url = $connection->getAuthorizeURL($token);
 
 		// save referer to return previous page
-		$_SESSION['referer'] = filter_input(INPUT_SERVER, 'HTTP_REFERER');
-		header('Location: ' . $auth_url);
+		$_SESSION['referer'] = $this->input->server('HTTP_REFERER');
+		jump($auth_url);
 	}
 
 	function end()
@@ -52,8 +53,7 @@ class Auth extends CI_Controller
 		$ref = $_SESSION['referer'];
 		unset($_SESSION['referer']);
 
-		print_r($connection);
-		header('Location: ' . $ref);
+		jump($ref ?: base_url());
 		exit;
 	}
 
@@ -62,7 +62,7 @@ class Auth extends CI_Controller
 		$_SESSION = array();
 		session_destroy();
 
-		header('Location: ' . $_SERVER['HTTP_REFERER']);
-		exit;
+		$ref = filter_input(INPUT_SERVER, 'HTTP_REFERER');
+		jump($ref ?: base_url());
 	}
 }

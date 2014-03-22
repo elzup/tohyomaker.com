@@ -138,7 +138,7 @@ if (!function_exists('sharebtn_twitter'))
 	 if (!function_exists('alert_box'))
 	 {
 
-		 function alert_box($type, $value = '')
+		 function alert_box($type)
 		 {
 			 // TODO: use value
 			 $lib = array(

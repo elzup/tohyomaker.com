@@ -14,7 +14,7 @@ if (!function_exists('jump'))
 	 */
 	function jump($path, $parameters = null)
 	{
-		$url = $path . (empty($parameters) ? "" : ('?' . http_build_query($parameters)));
+		$url = ($path ?: '') . (empty($parameters) ? "" : ('?' . http_build_query($parameters)));
 		header('Location: ' . $url);
 		exit;
 	}

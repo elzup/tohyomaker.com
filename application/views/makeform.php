@@ -92,6 +92,7 @@
 								<div class="col-lg-10">
 									<input type="text" class="form-control" name="tag" id="sur-tag" maxlength="50">
 									<span class="help-block">ex.)お菓子,定番,二択 カンマ区切りで指定</span>
+									<span class="help-block">*一つのタグは最大20文字</span>
 								</div>
 							</div>
 

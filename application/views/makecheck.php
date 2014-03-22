@@ -1,3 +1,9 @@
+<?php
+foreach ($data as &$datum)
+{
+	$datum = h($datum);
+}
+?>
 <div class="container">
 	<!-- TODO: include check js file-->
 	<div class="row">

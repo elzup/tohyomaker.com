@@ -7,7 +7,7 @@ if (!function_exists('surveysblock_type'))
 	 * @param Surveyobj[] $surveys
 	 * @param int $type
 	 */
-	function surveysblock_type(array $surveys, $type)
+	function surveysblock_type($surveys, $type)
 	{
 		$block_title = '新着';
 		$block_help = '開始されたばかりの投票';
@@ -55,6 +55,8 @@ if (!function_exists('surveysblock'))
 			<div class="panel-body">
 				<ul>
 					<?php
+					if (!empty($surveys))
+					{
 					foreach ($surveys as $survey)
 					{
 						$voted_tag = '';
@@ -68,6 +70,13 @@ if (!function_exists('surveysblock'))
 							<span class="total-num col-sm-2"><?= $voted_tag ?><?= $survey->total_num ?></span>
 							<span class="remain col-sm-2"><?= tag_icon(ICON_TIME, TRUE) . $survey->get_time_remain_str() ?></span>
 						</li>
+						<?php
+					}
+					}
+					else 
+					{
+						?>
+						<p><?=$title?>の投票はありません</p>
 						<?php
 					}
 					?>
