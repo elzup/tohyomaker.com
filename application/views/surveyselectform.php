@@ -42,7 +42,7 @@
 					<textarea name="vote-text" id="vote-textarea" rows="3"></textarea>
 				</div-->
 				<div class="col-sm-offset-2 col-sm-8" id="submit-div">
-					<input type="hidden" id="vote-value" name="vote-value" />
+					<input type="hidden" id="vote-value" name="<?= POST_VALUE_NAME?>" />
 					<input type="hidden" name="token" value="<?= $token ?>" />
 					<button type="submit" id="submit-main" class="btn btn-primary btn-lg btn-block btn-success disabled">投票</button>
 				</div>

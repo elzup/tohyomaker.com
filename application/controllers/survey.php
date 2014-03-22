@@ -118,7 +118,7 @@ class Survey extends CI_Controller
 
 	function regist($id_survey = NULL)
 	{
-		if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->_check_post(filter_input_array(INPUT_POST)) || !isset($id_survey))
+		if ($this->input->server('REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->_check_post(($post = $this->input->post())) || !isset($id_survey))
 		{
 			// TODO: error action
 			die('error: not post request, wrong token, wrong postdata');
@@ -136,7 +136,7 @@ class Survey extends CI_Controller
 			// TODO: jump no found page
 			die("no found id : {$id_survey}");
 		}
-		$value = filter_input(INPUT_POST, 'vote-value');
+		$value = $post[POST_VALUE_NAME];
 		if ($this->survey->regist_vote($survey, $user, $value) === FALSE)
 		{
 			var_dump($this->survey->db->message());

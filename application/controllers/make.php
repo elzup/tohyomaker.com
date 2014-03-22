@@ -65,24 +65,20 @@ class Make extends CI_Controller
 
 	public function check()
 	{
-		if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->_check_post(filter_input_array(INPUT_POST)))
+		if ($this->input->server('REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->_check_post(($post = $this->input->post())))
 		{
 			// TODO: jump to source page
 			echo "jump or token error or valieable";
 		}
 
 		$title = '投票作成確認';
-		$head_info = array(
-				'title' => $title,
-				'less_name' => 'main',
-		);
-		$this->load->view('head', $head_info);
+		$this->load->view('head', array('title' => $title));
 		$this->load->view('title', array('title' => $title));
 		$this->load->view('navbar', array('user' => $this->user->get_user()));
 
 		$makecheck_info = array(
 				'user' => $this->user->get_user(),
-				'data' => filter_input_array(INPUT_POST),
+				'data' => $post,
 				'token' => set_token(),
 		);
 		$this->load->view('makecheck', $makecheck_info);
@@ -91,14 +87,14 @@ class Make extends CI_Controller
 
 	public function regist()
 	{
-		if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->_check_post(filter_input_array(INPUT_POST)))
+		if ($this->input->server('REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->_check_post(($post = $this->input->post())))
 		{
 			// TODO: jump to source page
 			echo "jump or token error";
 		}
-		$id_survey = $this->survey->regist(filter_input_array(INPUT_POST), $this->user->get_user());
+		$id_survey = $this->survey->regist($post, $this->user->get_user());
 		$token = set_token();
-		jump(base_url("make/end/{$id_survey}/{$token}"));
+		jump(base_url(HREF_TYPE_MAKEEND."/{$id_survey}/{$token}"));
 		// TODO: jump to survey page (use id
 	}
 

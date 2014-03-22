@@ -101,6 +101,6 @@ class User_model extends CI_Model
 	{
 		$this->db->where('id_user', $id_user);
 		$this->db->set('sn_last', $sn);
-		$this->db->update('user_tbl', $data);
+		$this->db->update('user_tbl');
 	}
 }
