@@ -2,7 +2,7 @@
 if (!function_exists('surveypane'))
 {
 
-	function surveypane(SurveyObj $survey, $is_log = FALSE)
+	function surveypane(Surveyobj $survey, $is_log = FALSE)
 	{
 		?>
 		<div class="panel panel-success panel-survey">
@@ -165,7 +165,7 @@ if (!function_exists('sharebtn_twitter'))
 if (!function_exists('logpane'))
 {
 
-	function logpane(ResultObj $result, $is_title = FALSE)
+	function logpane(Resultobj $result, $is_title = FALSE)
 	{
 		?>
 		<div class="panel panel-success panel-log">
@@ -306,7 +306,7 @@ if (!function_exists('attr_tooltip'))
 if (!function_exists('votelogpane'))
 {
 
-	function votelogpane(SurveyObj $survey, $select)
+	function votelogpane(Surveyobj $survey, $select)
 	{
 
 		// TODO: make function view of voted history pane

@@ -110,7 +110,7 @@ class Make extends CI_Controller
 			die('error');
 		}
 
-		/* @var $survey SurveyObj */
+		/* @var $survey Surveyobj */
 		if (($survey = $this->survey->get_survey($id_survey)) === FALSE)
 		{
 			die("no found id : {$id_survey}");

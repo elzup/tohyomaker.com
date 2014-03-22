@@ -1,5 +1,5 @@
 <?php
-/* @var $survey SurveyObj */
+/* @var $survey Surveyobj */
 ?>
 <div class="container">
 	<div class="row">

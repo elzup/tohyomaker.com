@@ -21,7 +21,7 @@ class User_model extends CI_Model
 
 	/**
 	 * 
-	 * @return UserObj
+	 * @return Userobj
 	 */
 	public function get_user()
 	{
@@ -54,7 +54,7 @@ class User_model extends CI_Model
 				echo $id_user;
 				exit;
 			}
-			$this->user = new UserObj($id_user, $access_token['screen_name'], $id_twitter);
+			$this->user = new Userobj($id_user, $access_token['screen_name'], $id_twitter);
 			$this->update_last_sn_main();
 			return true;
 		}

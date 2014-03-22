@@ -91,7 +91,7 @@ class Survey extends CI_Controller
 			// TODO: same as vote method todo
 		}
 		$user = $this->user->get_user();
-		/* @var $survey SurveyObj */
+		/* @var $survey Surveyobj */
 		if (($survey = $this->survey->get_survey($id_survey, $user)) === FALSE)
 		{
 			die("no found id : {$id_survey}");
@@ -130,7 +130,7 @@ class Survey extends CI_Controller
 			// TODO: error action
 			die('error: not logined');
 		}
-		/* @var $survey SurveyObj */
+		/* @var $survey Surveyobj */
 		if (($survey = $this->survey->get_survey($id_survey, $user)) === FALSE)
 		{
 			// TODO: jump no found page

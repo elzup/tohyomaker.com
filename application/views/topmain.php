@@ -1,6 +1,6 @@
 <?php
-/* @var $survyes_new SurveyObj[] */
-/* @var $survyes_hot SurveyObj[] */
+/* @var $survyes_new Surveyobj[] */
+/* @var $survyes_hot Surveyobj[] */
 ?>
 
 <div class="container">

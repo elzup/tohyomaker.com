@@ -4,7 +4,7 @@ if (!function_exists('surveysblock_type'))
 
 	/**
 	 * 
-	 * @param SurveyObj[] $surveys
+	 * @param Surveyobj[] $surveys
 	 * @param int $type
 	 */
 	function surveysblock_type(array $surveys, $type)
@@ -36,7 +36,7 @@ if (!function_exists('surveysblock'))
 
 	/**
 	 * 
-	 * @param SurveyObj[] $surveys
+	 * @param Surveyobj[] $surveys
 	 * @param string $title
 	 * @param string $help
 	 * @param string $class_str

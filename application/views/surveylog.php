@@ -1,6 +1,6 @@
 <?php
-/* @var $survey SurveyObj */
-/* @var $user UserObj */
+/* @var $survey Surveyobj */
+/* @var $user Userobj */
 ?>
 
 

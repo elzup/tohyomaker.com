@@ -1,5 +1,5 @@
 <?php
-/* @var $user UserObj */
+/* @var $user Userobj */
 $user;
 if ($user == null)
 {

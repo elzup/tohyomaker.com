@@ -1,7 +1,7 @@
 <?php
-/* @var $surveys_voted SurveyObj[] */
-/* @var $surveys_maked SurveyObj[] */
-/* @var $user UserObj */
+/* @var $surveys_voted Surveyobj[] */
+/* @var $surveys_maked Surveyobj[] */
+/* @var $user Userobj */
 ?>
 
 <div class="container">

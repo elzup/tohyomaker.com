@@ -1,6 +1,6 @@
 <?php
-/* @var $surveys SurveyObj[] */
-/* @var $user UserObj */
+/* @var $surveys Surveyobj[] */
+/* @var $user Userobj */
 ?>
 
 <div class="container">

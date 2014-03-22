@@ -12,17 +12,16 @@ class Survey_model extends CI_Model
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->library('voteObj');
-		$this->load->library('surveyObj');
-		$this->load->library('itemObj');
-		$this->load->library('resultObj');
+		$this->load->library('surveyobj');
+		$this->load->library('itemobj');
+		$this->load->library('resultobj');
 	}
 
 	/**
 	 * 
 	 * @param int $id_survey
-	 * @param int|SurveyObj $id_user optional set selected survey
-	 * @return SurveyObj|boolean
+	 * @param int|Surveyobj $id_user optional set selected survey
+	 * @return Surveyobj|boolean
 	 */
 	public function get_survey($id_survey, $id_user = NULL)
 	{
@@ -31,7 +30,7 @@ class Survey_model extends CI_Model
 // incorrect id
 			return FALSE;
 		}
-		if ($id_user instanceof UserObj)
+		if ($id_user instanceof Userobj)
 		{
 			$id_user = $id_user->id;
 		}
@@ -48,7 +47,7 @@ class Survey_model extends CI_Model
 		$items = $this->select_items($id_survey);
 		$tags = $this->select_tags($id_survey);
 		$owner = $this->select_user_simple($data->id_user);
-		$survey = new SurveyObj($data, $items, $tags, $owner);
+		$survey = new Surveyobj($data, $items, $tags, $owner);
 		$this->_install_result($survey);
 		$this->_check_state($survey);
 		$this->install_select($survey, $id_user);
@@ -59,7 +58,7 @@ class Survey_model extends CI_Model
 	{
 		$this->db->where('id_user', $id_user);
 		$result = $this->db->get('user_tbl')->result();
-		return new UserObj($id_user, $result[0]->sn_last, $result[0]->id_twitter);
+		return new Userobj($id_user, $result[0]->sn_last, $result[0]->id_twitter);
 	}
 
 	public function select_items($id_survey)
@@ -145,12 +144,12 @@ class Survey_model extends CI_Model
 
 	/**
 	 * 
-	 * @param SurveyObj $survey
-	 * @param UserObj $user
+	 * @param Surveyobj $survey
+	 * @param Userobj $user
 	 * @param type $value
 	 * @return boolean
 	 */
-	public function regist_vote(SurveyObj $survey, UserObj $user, $value)
+	public function regist_vote(Surveyobj $survey, Userobj $user, $value)
 	{
 		if (($this->check_voted($survey->id, $user->id)) !== NO_VOTED || $survey->num_item <= $value)
 		{
@@ -211,7 +210,7 @@ class Survey_model extends CI_Model
 		$this->db->update('item_tbl');
 	}
 
-	public function install_select(SurveyObj &$survey, $id_user)
+	public function install_select(Surveyobj &$survey, $id_user)
 	{
 		if (empty($id_user))
 		{
@@ -250,7 +249,7 @@ class Survey_model extends CI_Model
 		return $result;
 	}
 
-	public function regist(array $data, UserObj $user)
+	public function regist(array $data, Userobj $user)
 	{
 		$items = $this->_format_items($data);
 		$record = array(
@@ -295,7 +294,7 @@ class Survey_model extends CI_Model
 		return array_filter_values(explode(',', $data['tag']));
 	}
 
-	private function _check_state(SurveyObj &$survey)
+	private function _check_state(Surveyobj &$survey)
 	{
 		$su = $survey->get_state_update();
 		if ($su === SURVEY_STATE_RESULT || ($su === SURVEY_STATE_END && $survey->state == SURVEY_STATE_PROGRESS))
@@ -308,18 +307,18 @@ class Survey_model extends CI_Model
 		}
 	}
 
-	private function _update_state_result(SurveyObj &$survey)
+	private function _update_state_result(Surveyobj &$survey)
 	{
 		$this->_update_state($survey, SURVEY_STATE_RESULT);
 	}
 
-	private function _update_state_end(SurveyObj &$survey)
+	private function _update_state_end(Surveyobj &$survey)
 	{
 		$this->_update_state($survey, SURVEY_STATE_END);
 		$this->_delete_votes($survey);
 	}
 
-	private function _update_state(SurveyObj &$survey, $state)
+	private function _update_state(Surveyobj &$survey, $state)
 	{
 		$this->db->where('id_survey', $survey->id);
 		$this->db->set('state', $state);
@@ -335,7 +334,7 @@ class Survey_model extends CI_Model
 	 * 
 	 */
 
-	private function _delete_votes(SurveyObj $survey)
+	private function _delete_votes(Surveyobj $survey)
 	{
 		$this->db->where('id_survey', $survey->id);
 		$this->db->delete('vote_tbl');
@@ -371,7 +370,7 @@ class Survey_model extends CI_Model
 		}
 	}
 
-	private function _install_result(SurveyObj $survey)
+	private function _install_result(Surveyobj $survey)
 	{
 		$data = $this->select_results($survey->id);
 		if (!empty($data))
@@ -381,7 +380,7 @@ class Survey_model extends CI_Model
 		}
 	}
 
-	private function check_result_update(SurveyObj $survey, array &$data)
+	private function check_result_update(Surveyobj $survey, array &$data)
 	{
 		foreach ($data as &$datum)
 		{
@@ -414,7 +413,7 @@ class Survey_model extends CI_Model
 		usort($data, 'cmptimestamp');
 	}
 
-	private function _update_result(SurveyObj $survey, $type)
+	private function _update_result(Surveyobj $survey, $type)
 	{
 		$where = array(
 				'id_survey' => $survey->id,
@@ -437,7 +436,7 @@ class Survey_model extends CI_Model
 		}
 	}
 
-	private function _insert_result(SurveyObj $survey, $type)
+	private function _insert_result(Surveyobj $survey, $type)
 	{
 		$data = array(
 				'id_survey' => $survey->id,
@@ -460,17 +459,17 @@ class Survey_model extends CI_Model
 
 	/**
 	 * 
-	 * @param UserObj $user
-	 * @return null|SurveyObj[]
+	 * @param Userobj $user
+	 * @return null|Surveyobj[]
 	 */
-	public function get_surveys_user_voted(UserObj $user, $num = 20, $start = 0)
+	public function get_surveys_user_voted(Userobj $user, $num = 20, $start = 0)
 	{
 		$data = $this->select_votes_user($user->id);
 		$ids = $this->datas_to_surveyids($data, SURVEY_STATE_ALL);
 		return $this->get_surveys($ids, $num, $start, $user->id);
 	}
 
-	public function get_surveys_user_maked(UserObj $user, $num = 20, $start = 0)
+	public function get_surveys_user_maked(Userobj $user, $num = 20, $start = 0)
 	{
 		$data = $this->select_surveys_owner($user->id);
 		$ids = $this->datas_to_surveyids($data);
@@ -628,7 +627,7 @@ class Survey_model extends CI_Model
 	 * @param int $start
 	 * @param int $id_user
 	 * @param int $state_limit
-	 * @return SurveyObj[]
+	 * @return Surveyobj[]
 	 */
 	public function get_surveys($ids_survey, $num = 100, $start = 0, $id_user = NULL, $state_limit = SURVEY_STATE_ALL)
 	{

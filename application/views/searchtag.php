@@ -1,5 +1,5 @@
 <?php
-/* @var $surveys SurveyObj[] */
+/* @var $surveys Surveyobj[] */
 /* @var $word string */
 ?>
 
