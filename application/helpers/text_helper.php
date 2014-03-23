@@ -20,6 +20,27 @@ if (!function_exists('totext_share'))
 
 }
 
+if (!function_exists('totext_result_type'))
+{
+	function totext_result_type($type)
+	{
+		$lib = array(
+				RESULT_TYPE_H1 => '経過時間1時間',
+				RESULT_TYPE_H6 => '経過時間6時間',
+				RESULT_TYPE_HC => '経過時間12時間',
+				RESULT_TYPE_D1 => '経過時間1日',
+				RESULT_TYPE_D2 => '経過時間2日',
+				RESULT_TYPE_D3 => '経過時間3日',
+				RESULT_TYPE_V100 => '投票数100票',
+				RESULT_TYPE_V500 => '投票数500票',
+				RESULT_TYPE_V1000 => '投票数1000票',
+				RESULT_TYPE_V5000 => '投票数5000票',
+				RESULT_TYPE_V10000 => '投票数10000票',
+		);
+		return @$lib[$type] ?: '';
+	}
+}
+
 if (!function_exists('totext_share_result'))
 {
 
@@ -31,13 +52,14 @@ if (!function_exists('totext_share_result'))
 	 * @param int $itemrank
 	 * @return string
 	 */
-	function totext_share_result($items, $result_title, $survey_title, $itemrank = 3)
+	function totext_share_result(Resultobj $result, Surveyobj $survey, $itemrank = 3)
 	{
-		$text = "{$survey_title}[{$result_title}]\n";
+		$result_title = totext_result_type($result->type);
+		$text = "投票結果:{$survey->title}/{$result_title}時点\n";
 		$i = 1;
-		foreach ($items as $item)
+		foreach ($result->items as $item)
 		{
-			if ($i > $itemrank)
+			if ($i > $item->rank)
 			{
 				break;
 			}

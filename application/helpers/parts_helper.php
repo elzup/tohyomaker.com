@@ -11,14 +11,14 @@ if (!function_exists('surveypane'))
 					<div class="col-sm-10 title">
 						<p>
 						<h4><a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?>><?= $survey->title ?></a>
-						<?php
-						if (($result_num = $survey->get_result_num()) !== 0)
-						{
-							?>
-							<a <?= attr_href(HREF_TYPE_VIEW, $survey->id) ?>><span class="badge"><?= $result_num ?></span></a>
 							<?php
-						}
-						?>
+							if (($result_num = $survey->get_result_num()) !== 0)
+							{
+								?>
+								<a <?= attr_href(HREF_TYPE_VIEW, $survey->id) ?>><span class="badge"><?= $result_num ?></span></a>
+								<?php
+							}
+							?>
 						</h4></p>
 					</div>
 					<!--div class="col-sm-1 state"></div-->
@@ -165,28 +165,16 @@ if (!function_exists('sharebtn_twitter'))
 if (!function_exists('logpane'))
 {
 
-	function logpane(Resultobj $result, $is_title = FALSE)
+	function logpane(Resultobj $result, Surveyobj $survey = NULL, $is_title = FALSE)
 	{
 		?>
 		<div class="panel panel-success panel-log">
-			<div class="panel-heading">
-				<div class="row <?= $result->is_booked() ? 'result-type-time' : 'result-type-total' ?>">
-					<div class="col-sm-5">
-						<i class="<?= ICON_TIME ?>"></i>
-						経過時間 <?= $result->get_elapsed_time_str() ?>
-					</div>
-					<div class="col-sm-5">
-						<i class="<?= ICON_OK ?>"></i>
-						<?= $result->get_total() ?> 票
-					</div>
-				</div>
-			</div>
 			<div class="panel-body">
 
 				<table class="table table-striped table-hover">
 					<tbody>
 						<?php
-						foreach ($result->items as $i => $item)
+						foreach ($result->items as $item)
 						{
 							$crown = '';
 							if (($rank = $item->rank) < 4)
@@ -205,6 +193,26 @@ if (!function_exists('logpane'))
 
 					</tbody>
 				</table> 
+			</div>
+
+			<div class="panel-footer">
+				<div class="row <?= $result->is_booked() ? 'result-type-time' : 'result-type-total' ?>">
+					<div class="col-sm-5">
+						<i class="<?= ICON_TIME ?>"></i>
+						経過時間 <?= $result->get_elapsed_time_str() ?>
+					</div>
+					<div class="col-sm-5">
+						<i class="<?= ICON_OK ?>"></i>
+						<?= $result->get_total() ?> 票
+					</div>
+					<div class="col-sm-2">
+						<?php
+						$share_uri = base_url(PATH_VIEW . '/' . $survey->id);
+						$share_text = totext_share_result($result, $survey);
+						sharebtn_twitter($share_text, $share_uri)
+						?>
+					</div>
+				</div>
 			</div>
 		</div>
 		<?php

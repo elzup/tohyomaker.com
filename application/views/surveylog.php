@@ -11,7 +11,7 @@
 			// TODO: do folding logpane
 			foreach ($survey->results as $result)
 			{
-				logpane($result);
+				logpane($result, $survey);
 			}
 			?>
 		</div>

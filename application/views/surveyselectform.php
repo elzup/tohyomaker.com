@@ -63,7 +63,7 @@
 		} else
 		{
 			$share_uri = base_url($survey->id);
-			$share_text = totext_share($survey->get_selected_item()->value, $survey->title, $share_uri);
+			$share_text = totext_share($survey->get_selected_item()->value, $survey->title);
 			?>
 			<div class="col-sm-offset-2 col-sm-8" id="voteend-div">
 				<div class="panel panel-default">
@@ -73,7 +73,7 @@
 					<div class="panel-body">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-file"></i>コピペ用</span>
-							<input id="share-text" type="text" class="form-control" value="<?= $share_text ?>">
+							<input id="share-text" type="text" class="form-control" value="<?= $share_text . ' ' . $share_uri ?>">
 							<span class="input-group-btn">
 								<!--button id="copy-btn" class="btn btn-default disabled" data-toggle="tooltip" data-placement="top" title="クリップボードにコピー">
 									<i class="glyphicon glyphicon-file"></i>
