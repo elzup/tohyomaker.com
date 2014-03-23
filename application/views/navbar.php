@@ -20,38 +20,44 @@ if ($user == null)
 	<div class="collapse navbar-collapse target">
 		<ul class="nav navbar-nav navbar-right">
 			<li class="active">
-				<a <?= attr_href(HREF_TYPE_MAKE)?>><?= tag_icon(ICON_MAKE)?>作成</a>
+				<a <?= attr_href(HREF_TYPE_MAKE) ?>><?= tag_icon(ICON_MAKE) ?>作成</a>
 			</li>
 			<li>
-				<a <?= attr_href(HREF_TYPE_NEW)?>><?= tag_icon(ICON_NEW)?>新着</a>
+				<a <?= attr_href(HREF_TYPE_NEW) ?>><?= tag_icon(ICON_NEW) ?>新着</a>
 			</li>
 			<li>
-				<a <?= attr_href(HREF_TYPE_HOT)?>><?= tag_icon(ICON_HOT)?>人気</a>
+				<a <?= attr_href(HREF_TYPE_HOT) ?>><?= tag_icon(ICON_HOT) ?>人気</a>
 			</li>
-			<li>
+			<!--li>
 				<a onClick="$('#navbar').hide()">hide</a>
-			</li>
-			<li class="dropdown">
-				<?php if ($user)
-				{
-					?>
-					<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="login-info"><?= $user->screen_name ?> <span class="caret"></span></a>
-					<ul class="dropdown-menu" aria-labelledby="login-info">
-						<li><a <?= attr_href(HREF_TYPE_MYPAGE)?>><?= tag_icon(ICON_HOME)?>マイページ</a></li>
-						<!--li class="divider"></li-->
-						<li><a <?= attr_href(HREF_TYPE_LOGOUT)?>><?= tag_icon(ICON_LOGOUT)?>ログアウト</a></li>
-					</ul>
-				<?php } else
-				{
-					?>
-					<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="login-info"><?= tag_icon(ICON_LOGIN)?>ログイン<span class="caret"></span></a>
-					<ul class="dropdown-menu" aria-labelledby="login-info">
-						<li>
-							<a <?= attr_href(HREF_TYPE_LOGIN) ?>><?= tag_icon(ICON_TWITTER)?>Twitter</a>
-						</li>
-					</ul>
+			</li-->
+			<!--<li class="dropdown">-->
+			<?php
+			if ($user)
+			{
+				?>
+							<!--<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="login-info"><?= $user->screen_name ?> <span class="caret"></span></a>-->
+				<!--<ul class="dropdown-menu" aria-labelledby="login-info">-->
+				<li>
+					<a <?= attr_href(HREF_TYPE_MYPAGE) ?>><?= tag_icon(ICON_HOME) ?><?= $user->screen_name ?></a>
 				</li>
-<?php } ?>
+				<!--li class="divider"></li-->
+				<li>
+					<a <?= attr_href(HREF_TYPE_LOGOUT). attr_tooltip('ログアウト') ?>><?= tag_icon(ICON_LOGOUT) ?></a>
+				</li>
+				<!--</ul>-->
+				<?php
+			} else
+			{
+				?>
+				<!--<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="login-info"><?= tag_icon(ICON_LOGIN) ?>ログイン<span class="caret"></span></a>-->
+				<!--<ul class="dropdown-menu" aria-labelledby="login-info">-->
+				<li>
+					<a <?= attr_href(HREF_TYPE_LOGIN) ?>><?= tag_icon(ICON_TWITTER) ?>Twitter</a>
+				</li>
+				<!--</ul>-->
+				<!--</li>-->
+			<?php } ?>
 
 		</ul>
 	</div>
