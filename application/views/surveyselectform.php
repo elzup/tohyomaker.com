@@ -91,6 +91,6 @@
 				</div>
 			</div>
 <?php } ?>
-		<iframe name="hide-frame" class="no-display"></iframe>
+		<!--iframe name="hide-frame" class="no-display"></iframe-->
 	</div>
 </div>

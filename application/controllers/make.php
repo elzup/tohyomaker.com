@@ -87,7 +87,8 @@ class Make extends CI_Controller
 
 	public function regist()
 	{
-		if ($this->input->server('REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->_check_post(($post = $this->input->post())))
+		$post = $this->input->post();
+		if ($this->input->server('REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->_check_post($post))
 		{
 			// TODO: jump to source page
 			echo "jump or token error";

@@ -12,7 +12,7 @@
 					<h1 id="title-str" class="top-logo">診断メーカー</h1>
 				</div>
 				<div class="col-sm-12 well">
-					投票メーカーは手軽に投票を作成,参加,シェアすることが出来るサービスです。<br />
+					投票メーカーは手軽に投票やアンケートを作成や,参加,シェアすることが出来るサービスです。<br />
 					<div class="align-center">
 						<a <?= attr_href(HREF_TYPE_MAKE) ?> class="btn btn-success align-center">
 							<i class="glyphicon glyphicon-edit"></i>

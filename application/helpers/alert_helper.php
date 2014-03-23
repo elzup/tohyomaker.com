@@ -3,6 +3,9 @@
 if (!function_exists('set_alert'))
 {
 
+	/**
+	 * @deprecated
+	 */
 	function set_alert($type)
 	{
 		return setcookie(ALERT_PREFIX . $type , '1', time() + 60);
@@ -13,6 +16,9 @@ if (!function_exists('set_alert'))
 if (!function_exists('get_alert'))
 {
 
+	/**
+	 * @deprecated
+	 */
 	function get_alert()
 	{
 		$cookies = filter_input_array(INPUT_COOKIE);

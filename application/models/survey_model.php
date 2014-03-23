@@ -66,7 +66,7 @@ class Survey_model extends CI_Model
 
 	public function select_results($id_survey)
 	{
-		return $this->_select_survey_subject($id_survey, 'result_tbl');
+		return $this->_select_survey_subject($id_survey, 'result_tbl', 'desc');
 	}
 
 	public function select_tags($id_survey)
@@ -74,8 +74,12 @@ class Survey_model extends CI_Model
 		return $this->_select_survey_subject($id_survey, 'tag_tbl');
 	}
 
-	private function _select_survey_subject($id_survey, $tblname)
+	private function _select_survey_subject($id_survey, $tblname, $sort = NULL)
 	{
+		if (isset($sort))
+		{
+			$this->db->order_by("timestamp", $sort);
+		}
 		$this->db->where('id_survey', $id_survey);
 		$result = $this->db->get($tblname)->result();
 		return $result;
@@ -154,8 +158,8 @@ class Survey_model extends CI_Model
 		{
 			$this->_insert_result($survey, $type);
 		}
-		set_alert(ALERT_TYPE_VOTED);
-// TODO: updated and check just
+// TODO: set alert
+//		set_alert(ALERT_TYPE_VOTED);
 		return TRUE;
 	}
 
@@ -384,7 +388,7 @@ class Survey_model extends CI_Model
 				{
 					return 0;
 				}
-				return ($a->timestamp < $b->timestamp) ? -1 : 1;
+				return ($a->timestamp < $b->timestamp) ? 1 : -1;
 			}
 
 		}

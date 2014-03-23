@@ -27,7 +27,8 @@ if (isset($title))
 
   </head>
 	<body>
+		<?php include_once(PATH_GOOGLE."/analyticstracking.php") ?>
     <div id="wrapper">
-			<div id="alert-div">
-				<?php get_alert(); ?>
-			</div>
+			<!--div id="alert-div">
+				<?php /*get_alert();*/ ?>
+			</div-->
