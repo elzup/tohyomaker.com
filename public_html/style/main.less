@@ -33,24 +33,45 @@ a {
 }
 
 #navbar {
-    .navbar-nav>li>a {
-        color: white;
+    .icon-bar {
+        background-color: white;
     }
-    .navbar-brand {
-        background: url(http://localhost/tohyomaker/public_html/style/../images/logo-white.png);
-        background-size: cover;
-        width: 190px;
-        >a {
-            .clear-font();
-            display: block;
+    .navbar-header {
+        .navbar-brand {
+            background: url(http://localhost/tohyomaker/public_html/style/../images/logo-white.png);
+            background-size: cover;
+            width: 190px;
+            >a {
+                .clear-font();
+                display: block;
+            }
         }
     }
     background-color: rgb(0, 190, 0);
     border-color: #008105;
     color: white;
-    > div.collapse.navbar-collapse.target > .navbar-right {
-        margin-right: 10px;
-
+    .navbar-right > li {
+        a {
+            color: white;
+        }
+        li {
+            i {
+                color: green;
+            }
+            a {
+                color: black;
+            }
+        }
+        @media (max-width: 767px) {
+            float:left;
+            width: 10%;
+            a {
+                padding: 2px;
+            }
+            i,a {
+                color: white;
+            }
+        }
     }
 }
 
