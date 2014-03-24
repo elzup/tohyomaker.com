@@ -13,9 +13,6 @@ class User_model extends CI_Model
 	function __construct()
 	{
 		parent::__construct();
-
-		$this->load->library('userobj');
-
 		$this->check_login();
 	}
 

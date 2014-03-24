@@ -7,9 +7,6 @@ class Auth extends CI_Controller
 	{
 		parent::__construct();
 		session_start();
-		$this->config->load('my_twitter');
-		$this->load->helper('url');
-		$this->load->helper('func');
 	}
 
 	function Index()

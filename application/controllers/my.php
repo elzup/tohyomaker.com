@@ -13,14 +13,6 @@ class My extends CI_Controller
 	{
 		parent::__construct();
 		session_start();
-		$this->config->load('my_twitter');
-		$this->load->helper('url');
-		$this->load->helper('func');
-		$this->load->helper('token');
-		$this->load->helper('alert');
-		$this->load->helper('parts');
-		$this->load->helper('text');
-
 		$this->load->model('Survey_model', 'survey', TRUE);
 		$this->load->model('User_model', 'user', TRUE);
 	}
