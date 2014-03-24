@@ -42,6 +42,11 @@ class Survey_model extends CI_Model
 		}
 
 		$data = $result[0];
+		// TODO: make modularize checking incorrect data
+		if (empty($data->title))
+		{
+			return FALSE;
+		}
 		$items = $this->select_items($id_survey);
 		$tags = $this->select_tags($id_survey);
 		$owner = $this->select_user_simple($data->id_user);
@@ -611,15 +616,11 @@ class Survey_model extends CI_Model
 	 * @param int $state_limit
 	 * @return Surveyobj[]
 	 */
-	public function get_surveys($ids_survey, $num = 100, $start = 0, $id_user = NULL, $state_limit = SURVEY_STATE_ALL)
+	public function get_surveys(array $ids_survey, $num = 100, $start = 0, $id_user = NULL, $state_limit = SURVEY_STATE_ALL)
 	{
 		$surveys = array();
-		for ($i = $start; $i < $num; $i++)
+		for ($i = $start; isset($ids_survey[$i]) && !($survey = $this->get_survey($ids_survey[$i], $id_user)); $i++)
 		{
-			if (!isset($ids_survey[$i]) || !($survey = $this->get_survey($ids_survey[$i], $id_user)))
-			{
-				break;
-			}
 			if ($state_limit !== SURVEY_STATE_ALL && $survey->state != $state_limit)
 			{
 				continue;

@@ -1,7 +1,7 @@
 <?php
 
 $title_text = '投票メーカー';
-if (isset($title))
+if (!empty($title))
 {
 	$title_text = "$title - $title_text";
 }
