@@ -127,9 +127,15 @@ foreach ($data as &$datum)
 
 								<div class="form-group">
 									<div class="col-lg-10 col-lg-offset-2 submit-btns">
-										<a href="javascript:window.history.back();" class="btn btn-block btn-default">変更</a>
+										<div class="row">
+											<div class="col-sm-6">
+												<a href="javascript:window.history.back();" class="btn btn-block btn-default">変更</a>
+											</div>
+											<div class="col-sm-6">
+												<button type="submit-main" class="btn btn-block btn-success">作成</button>
+											</div>
+										</div>
 
-										<button type="submit-main" class="btn btn-block btn-success">作成</button>
 									</div>
 								</div>
 						</fieldset>
