@@ -31,7 +31,6 @@ class Make extends CI_Controller
 		$title = '投票作成';
 		$head_info = array(
 				'title' => $title,
-				'less_name' => 'main',
 		);
 		$this->load->view('head', $head_info);
 		$this->load->view('title', array('title' => $title));
@@ -48,6 +47,11 @@ class Make extends CI_Controller
 
 	private function _check_post(array $data)
 	{
+		//
+		if (!($data = array_reflect_func($data, 'trim_bothend_space')))
+		{
+			return FALSE;
+		}
 		$n = 0;
 		for ($i = 1; $i <= 10; $i++)
 		{
@@ -60,21 +64,21 @@ class Make extends CI_Controller
 		{
 			return FALSE;
 		}
-		return TRUE;
+		return $data;
 	}
 
 	public function check()
 	{
-		// TODO: referrer チェック
-
-		if (!$this->_check_post(($post = $this->input->post())))
+		// TODO: check referrer 
+		if ($this->input->server('REQUEST_METHOD') != 'POST' || !check_token())
 		{
-			die('error: incorrect test');
+			jump(base_url(PATH_MAKE));
 		}
-		if ($this->input->server('REQUEST_METHOD') != 'POST' || check_token() === FALSE)
+		// POST REQ format and get in $post
+		if (!($post = $this->_check_post($this->input->post())))
 		{
-			// TODO: jump to source page
-			die('jump or token error or valieable');
+			// TODO: set alert flag
+			jump_back();
 		}
 
 		$title = '投票作成確認';
@@ -94,14 +98,14 @@ class Make extends CI_Controller
 	public function regist()
 	{
 		$post = $this->input->post();
-		if ($this->input->server('REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->_check_post($post))
+		if ($this->input->server('REQUEST_METHOD') != 'POST' || !check_token()
+				|| !($post = $this->_check_post($this->input->post())))
 		{
-			// TODO: jump to source page
-			echo "jump or token error";
+			jump_back(2);
 		}
 		$id_survey = $this->survey->regist($post, $this->user->get_user());
 		$token = set_token();
-		jump(base_url(HREF_TYPE_MAKEEND."/{$id_survey}/{$token}"));
+		jump(base_url(HREF_TYPE_MAKEEND . "/{$id_survey}/{$token}"));
 		// TODO: jump to survey page (use id
 	}
 
@@ -124,7 +128,6 @@ class Make extends CI_Controller
 		$title = '投票作成完了';
 		$head_info = array(
 				'title' => $title,
-				'less_name' => 'main',
 		);
 		$this->load->view('head', $head_info);
 		$this->load->view('title', array('title' => $title));
@@ -133,4 +136,5 @@ class Make extends CI_Controller
 		$this->load->view('makeend', array('survey' => $survey));
 		$this->load->view('foot');
 	}
+
 }

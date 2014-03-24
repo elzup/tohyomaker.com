@@ -1,5 +1,4 @@
 <?php
-
 /*
  * application/helpers/functions.php
  */
@@ -14,7 +13,7 @@ if (!function_exists('jump'))
 	 */
 	function jump($path, $parameters = null)
 	{
-		$url = ($path ?: '') . (empty($parameters) ? "" : ('?' . http_build_query($parameters)));
+		$url = ($path ? : '') . (empty($parameters) ? "" : ('?' . http_build_query($parameters)));
 		header('Location: ' . $url);
 		exit;
 	}
@@ -23,15 +22,18 @@ if (!function_exists('jump'))
 
 if (!function_exists('is_numonly'))
 {
-	function is_numonly($value) 
+
+	function is_numonly($value)
 	{
 		return preg_match("/^\d+$/", $value);
 	}
+
 }
 
 if (!function_exists('urlencode_array'))
 {
-	function urlencode_array(array $strs) 
+
+	function urlencode_array(array $strs)
 	{
 		$encodeds = array();
 		foreach ($strs as $str)
@@ -40,6 +42,7 @@ if (!function_exists('urlencode_array'))
 		}
 		return $encodeds;
 	}
+
 }
 
 
@@ -72,4 +75,51 @@ if (!function_exists('h'))
 	{
 		return htmlspecialchars($string);
 	}
+
+}
+
+if (!function_exists('trim_bothend_space'))
+{
+
+	function trim_bothend_space($str)
+	{
+		return preg_replace('#[\s 　]*(.*?)[\s 　]*#u', '\1', $str);
+	}
+
+}
+
+if (!function_exists('array_reflect_func'))
+{
+
+	function array_reflect_func(array $array, $callback)
+	{
+		if (!is_callable($callback))
+		{
+			return FALSE;
+		}
+
+		foreach ($array as &$value)
+		{
+			if (is_array($value))
+			{
+				$value = array_reflect_func($value, $callback);
+			}
+			else 
+			{
+				$value = call_user_func($callback, $value);
+			}
+		}
+		return $array;
+	}
+}
+
+if (!function_exists('jump_back'))
+{
+
+	function jump_back($num = 1)
+	{
+		?><script type="text/javascript">window.history.go(-<?= $num ?>)</script><?php
+		exit;
+	}
+
 }
