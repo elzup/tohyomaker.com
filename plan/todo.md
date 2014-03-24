@@ -3,6 +3,7 @@
 
 
 # in local
+## level1
 * ~~result の記録~~
     * ~~切り目票数~~
     * ~~3日目最終~~
@@ -21,8 +22,11 @@
 * ~~secure~~
 * secure2 makeform UI
 
+## level2
 * tags block
+* makecheck surveypaneのサンプル表示
 
+## level3
 * original glyphicon 作成
     * Vote
     * Survey

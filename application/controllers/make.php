@@ -65,10 +65,16 @@ class Make extends CI_Controller
 
 	public function check()
 	{
-		if ($this->input->server('REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->_check_post(($post = $this->input->post())))
+		// TODO: referrer チェック
+
+		if (!$this->_check_post(($post = $this->input->post())))
+		{
+			die('error: incorrect test');
+		}
+		if ($this->input->server('REQUEST_METHOD') != 'POST' || check_token() === FALSE)
 		{
 			// TODO: jump to source page
-			echo "jump or token error or valieable";
+			die('jump or token error or valieable');
 		}
 
 		$title = '投票作成確認';
