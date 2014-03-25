@@ -29,7 +29,7 @@ if ($user == null)
 				<li>
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="login-info"><?= tag_icon(ICON_USER) ?><span class="hidden-xs"><?= $user->screen_name ?> </span><span class="caret"></span></a>
 					<ul class="dropdown-menu" aria-labelledby="login-info">
-						<li><a <?= attr_href(HREF_TYPE_MYPAGE) ?>><?= tag_icon(ICON_HOME) ?><?= $user->screen_name ?></a></li>
+						<li><a <?= attr_href(HREF_TYPE_MYPAGE) ?>><?= tag_icon(ICON_HOME) ?>マイページ</a></li>
 						<li><a <?= attr_href(HREF_TYPE_LOGOUT) ?>><?= tag_icon(ICON_LOGOUT) ?>ログアウト</a> </li>
 					</ul>
 				</li>

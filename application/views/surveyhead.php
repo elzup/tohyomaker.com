@@ -21,7 +21,7 @@
 					?>
 					<div class="row">
 						<div class="col-sm-12 survey-cont description">
-							
+
 							<p><?= tag_icon(ICON_DESCRIPTION, isset($survey->description)) . (($survey->description) ? : NO_PARAM_STR) ?></p>
 						</div>
 					</div>
@@ -40,14 +40,26 @@
 			<div class="col-sm-5">
 				<div class="row">
 					<div class="col-sm-6 survey-cont timestamp">
-				<?= tag_icon(ICON_TIME, TRUE) ?>
-				<?= $survey->get_time() ?>
+						<?= tag_icon(ICON_TIME, TRUE) ?>
+						<?= $survey->get_time() ?>
 					</div>
 					<div class="col-sm-6 owner-name">
 						<p>
-							<a <?= attr_href(HREF_TYPE_USER, $survey->owner->id) ?> class="btn btn-success btn-owner-name" data-toggle="tooltip" data-placement="top" title="作者: <?= $survey->owner->screen_name ?>">
-								<i class="<?= ICON_USER ?>"></i>@<?= $survey->owner->screen_name ?>
+							<?php
+							if (!$survey->is_anonymous) {
+								?>
+							<a <?= attr_href(HREF_TYPE_USER, $survey->owner->id) ?> class="btn btn-success btn-owner-name" <?= attr_tooltip("作者: $survey->owner->screen_name")?> >
+								<?= tag_icon(ICON_USER, TRUE)?>@<?= $survey->owner->screen_name ?>
 							</a>
+							<?php
+							} else {
+							?>
+							<a href="#" class="btn btn-default btn-owner-name " <?= attr_tooltip("作者非公開")?>>
+								<?= tag_icon(ICON_USER)?><?= NO_PARAM_STR ?>
+							</a>
+							<?php 
+							}
+							?>
 						</p>
 					</div>
 				</div>
@@ -62,27 +74,32 @@
 					foreach ($survey->tags as $tag)
 					{
 						?>
-					<a <?= attr_href(HREF_TYPE_TAG , $tag) ?> class="btn btn-success btn-tag btn-xs"><?= $tag ?></a>
+						<a <?= attr_href(HREF_TYPE_TAG, $tag) ?> class="btn btn-success btn-tag btn-xs"><?= $tag ?></a>
 					<?php } ?>
 				</p>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-2">
-				<?= tag_icon(ICON_TIME, TRUE) ?>
-				<?= $survey->get_time_remain_str() ?>
-			</div>
-			<?php
-			$stylelib = explode(',', 'success,end,end');
-			$pbstyle = $stylelib[$survey->state];
-			?>
-			<div class="col-sm-10">
-				<div class="progress">
-					<div class="progress-bar progress-bar-<?= $pbstyle ?>" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
+			<div class="col-sm-7 survey-cont">
+				<div class="col-sm-3 no-container">
+					<?= tag_icon(ICON_TIME, TRUE) ?>
+					<?= $survey->get_time_remain_str() ?>
+				</div>
+				<?php
+				$stylelib = explode(',', 'success,end,end');
+				$pbstyle = $stylelib[$survey->state];
+				?>
+				<div class="col-sm-9">
+					<div class="progress">
+						<div class="progress-bar progress-bar-<?= $pbstyle ?>" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
+					</div>
 				</div>
 			</div>
+			<div class="col-sm-5 survey-cont">
+					<?= tag_icon(ICON_VOTE, TRUE) ?>
+				<span class="total-num"><?= $survey->total_num ?></span>
+			</div>
 		</div>
-
 		<!--div class="row">
 			<div class="col-sm-2">
 				<i class="<?= ICON_OK ?>"></i>
@@ -95,11 +112,15 @@
 
 		<div class="col-sm-4 col-sm-offset-8">
 			<div class="btn-group btn-group-justified">
-				<a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?> class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VOTE) ? ' disabled' : '') ?>">
+				<a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?> class="btn btn-success<?= (($type
+		=== SURVEY_PAGETYPE_VOTE) ? ' disabled' : '')
+		?>">
 					<i class="<?= ICON_VOTE ?>"></i>
 					投票
 				</a>
-				<a <?= attr_href(HREF_TYPE_VIEW, $survey->id) ?> class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VIEW) ? ' disabled' : '') ?>">
+				<a <?= attr_href(HREF_TYPE_VIEW, $survey->id) ?> class="btn btn-success<?= (($type
+																												 === SURVEY_PAGETYPE_VIEW) ? ' disabled' : '')
+		?>">
 					<i class="<?= ICON_RESULT ?>"></i>
 					結果
 					<?php
@@ -107,7 +128,7 @@
 					{
 						?>
 						<span class="badge"><?= $c ?></span>
-					<?php } ?>
+<?php } ?>
 				</a>
 			</div>
 		</div>
