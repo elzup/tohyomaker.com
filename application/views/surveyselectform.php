@@ -67,20 +67,24 @@
 			{
 				// is survey ended
 				?>
-				<div class="col-sm-offset-2 col-sm-8 well" id="survey-state-end-div">
-					<p>この投票は終了しました</p>
-					<span class="help-block">*投票先情報は一週間経つと消去されます</span>
+				<div class="col-sm-offset-2 col-sm-8" id="survey-state-end-div">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<p>この投票は終了しました</p>
+							<span class="help-block">*投票先情報は一週間経つと消去されます</span>
+						</div>
+					</div>
 				</div>
 
 				<?php
 			}
 			if ($survey->is_voted())
-		{
+			{
 
 
 				$selected_item = $survey->get_selected_item();
-				$share_uri = base_url($survey->id);
-				$share_text = totext_share($selected_item->value, $survey->title);
+				$share_uri = base_url(PATH_VOTE.$survey->id);
+				$share_text = totext_share_voted($selected_item->value, $survey->title);
 				?>
 				<div class="col-sm-offset-2 col-sm-8" id="selectend-div">
 					<div class="panel panel-default">
@@ -107,7 +111,7 @@
 						</div>
 					</div>
 				</div>
-			<?php
+				<?php
 			}
 		}
 		?>

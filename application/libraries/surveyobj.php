@@ -20,9 +20,14 @@ class Surveyobj
 	public $items;
 	private $items_sorted;
 	public $tags;
+
+	/** @var Resultobj[] */
 	public $results;
 
+	/** @var Resultobj */
+	public $current_result;
 	public $point_hot;
+
 	/** @deprecated */
 	public $point_relevant;
 
@@ -70,7 +75,7 @@ class Surveyobj
 		if (isset($selected))
 		{
 			$this->selected = $selected;
-		} 
+		}
 	}
 
 	public function set_items(array $data)
@@ -131,6 +136,23 @@ class Surveyobj
 		$result = new Resultobj($data, $items_sorted);
 		$result->set_elapsed_time(strtotime($this->timestamp));
 		return $result;
+	}
+
+	public function get_current_result()
+	{
+		if ($this->state != SURVEY_STATE_PROGRESS)
+		{
+			return $this->results[0];
+		}
+		return $this->current_result ? : $this->install_current_result();
+	}
+
+	public function install_current_result()
+	{
+		$data = new stdClass();
+		$data->type = RESULT_TYPE_CURRENT;
+		$data->timestamp = date(MYSQL_TIMESTAMP);
+		return $this->current_result = new Resultobj($data, $this->items);
 	}
 
 	private function _create_map_item($nums)
@@ -194,20 +216,36 @@ class Surveyobj
 		return $now - $start_time;
 	}
 
+	public function get_time_progress_str($is_full = FALSE)
+	{
+		if ($this->state != SURVEY_STATE_PROGRESS)
+		{
+			return '終了[3日]';
+		}
+		$time = $this->get_time_progress();
+		return to_time_resolution_str($time);
+	}
+
 	public function get_time_remain_str()
 	{
 		$remain = $this->get_time_remain() - strtotime('+4 day', 0);
-		if ($remain < 0) {
-			return '終了';
-		}
-		if ($remain < 3600)
-		{
-			return 'あと'.floor($remain / 60) . '分';
-		} elseif ($remain < 86400)
-		{
-			return 'あと'.floor($remain / 3600) . '時間';
-		}
-		return 'あと'.round($remain / 86400, 1) . '日';
+		$times = to_time_resolution($remain, TRUE);
+		// TODO: 
+		return ($times->df ? : $times->h ? : $times->m ? : $remain . '秒');
+		/*
+		  if ($remain < 0) {
+		  return '終了';
+		  }
+		  if ($remain < 3600)
+		  {
+		  return 'あと'.floor($remain / 60) . '分';
+		  } elseif ($remain < 86400)
+		  {
+		  return 'あと'.floor($remain / 3600) . '時間';
+		  }
+		  return 'あと'.round($remain / 86400, 1) . '日';
+		 * 
+		 */
 	}
 
 	public function get_time_remain()
@@ -311,7 +349,6 @@ class Surveyobj
 	{
 		return count($this->results);
 	}
-		
 
 	public function get_result_text()
 	{
@@ -348,4 +385,5 @@ class Surveyobj
 		}
 		return $this->items[$this->selected];
 	}
+
 }

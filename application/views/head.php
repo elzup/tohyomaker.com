@@ -1,5 +1,4 @@
 <?php
-
 $title_text = '投票メーカー';
 if (!empty($title))
 {
@@ -10,7 +9,7 @@ if (!empty($title))
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <title><?=$title_text?></title>
+    <title><?= $title_text ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='http://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet' type='text/css'>
@@ -27,8 +26,13 @@ if (!empty($title))
 
   </head>
 	<body>
-		<?php include_once(PATH_GOOGLE."/analyticstracking.php") ?>
+		<?php
+		if (ENVIRONMENT !== 'development')
+		{
+			include_once(PATH_GOOGLE . "/analyticstracking.php");
+		}
+		?>
     <div id="wrapper">
 			<!--div id="alert-div">
-				<?php /*get_alert();*/ ?>
+			<?php /* get_alert(); */ ?>
 			</div-->

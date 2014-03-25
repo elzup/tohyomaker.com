@@ -26,11 +26,6 @@ class Resultobj
 	public function set(stdClass $data, $items = NULL)
 	{
 		$this->type = $data->type;
-		// type (in db ) more than 100, it's booked result. sfhit down 100
-//		if (($this->is_book = ($this->type >= 100)))
-//		{
-//			$this->type -= 100;
-//		}
 		$this->timestamp = $data->timestamp;
 		if (isset($items))
 		{
@@ -52,7 +47,7 @@ class Resultobj
 			return;
 		}
 		$time_loged = strtotime($this->timestamp);
-		$this->_elapsed_time_str = $this->_get_time_str($time_loged - $time_start);
+		$this->_elapsed_time_str = to_time_resolution_str($time_loged - $time_start);
 	}
 
 	private function _get_time_str($sec)

@@ -4,6 +4,13 @@
 <div class="container">
 	<div class="row">
 		<div class="col-sm-offset-2 col-sm-8" id="itemresultbox-soted-div">
+			<?php if ($survey->state == SURVEY_STATE_PROGRESS)
+			{
+			?>
+			<h2>現在の投票結果</h2>
+			<?php } else { ?>
+				<h2>最終投票結果</h2>
+				<?php } ?>
 			<div class="row">
 				<?php
 				// TODO: item sort after view 
@@ -12,9 +19,7 @@
 				{
 					$cn = calc_item_col($i, count($survey->items));
 					$voted_icon = (
-							($item->index === $survey->selected) 
-							?'<span class="voted" '.  attr_tooltip('あなたが投票した項目').'>'. tag_icon(ICON_VOTED, TRUE) .'</span>' 
-							: '');
+							($item->index === $survey->selected) ? '<span class="voted" ' . attr_tooltip('あなたが投票した項目') . '>' . tag_icon(ICON_VOTED, TRUE) . '</span>' : '');
 					if ($sum_cn % 12 == 0)
 					{
 						?>
@@ -49,33 +54,28 @@
 				?>
 			</div>
 		</div>
-		<div class="col-sm-offset-2 col-sm-8" id="itemresultbox-div" style="display: none;">
-			<ul>
-				<?php
-// TODO: item sort after view 
-				foreach ($survey->items as $i => $item)
-				{
-					?>
-					<li>
-						<div class="panel panel-default">
-							<div class="panel-body">
-								<div class="row">
-									<div class="col-sm-9">
-										<h4>
-											<?= $item->value ?>
-										</h4>
-									</div>
-									<div class="col-sm-3">
-										<h4 class="num">
-											<?= $item->num ?>票
-										</h4>
-									</div>
-								</div>
-							</div>
+		<div class="col-sm-offset-2 col-sm-8" id="itemresultbox-soted-div">
+			<div class="panel panel-success panel-log">
+				<div class="panel-footer">
+					<div class="row">
+						<div class="col-sm-5">
+							<i class="<?= ICON_TIME ?>"></i>
+							経過時間 <?= $survey->get_time_progress_str() ?>
 						</div>
-					</li>
-				<?php } ?>
-			</ul>
+						<div class="col-sm-5">
+							<i class="<?= ICON_OK ?>"></i>
+							<?= $survey->total_num ?> 票
+						</div>
+						<div class="col-sm-2">
+							<?php
+							$share_uri = base_url(PATH_VIEW . '/' . $survey->id);
+							$share_text = totext_share_result($survey);
+							sharebtn_twitter($share_text, $share_uri)
+							?>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

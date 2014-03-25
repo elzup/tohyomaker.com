@@ -153,10 +153,64 @@ if (!function_exists('count_value'))
 		foreach ($data as $datum)
 		{
 			$value = (isset($fieldname) ? $datum->{$fieldname} : $datum);
-			@$result[$value]++;
+			@$result[$value] ++;
 		}
 		return $result;
-		
 	}
 
+}
+
+if (!function_exists('to_time_resolution'))
+{
+
+	/**
+	 * 
+	 * @param int $time
+	 * @return stdClass
+	 */
+	function to_time_resolution($time, $is_unit = FALSE)
+	{
+		$times = new stdClass();
+		$times->d = $times->df = $times->h = $times->m = 0;
+		if ($time < 0)
+		{
+			return $times;
+		}
+
+		$times->df = round($time / 86400, 1);
+		$times->d = floor($times->df);
+		$time = $time % 86400;
+		$times->h = floor($time / 3600);
+		$time = $time % 3600;
+		$times->m = floor($time / 60);
+		if ($is_unit)
+		{
+			$times->df = ($times->df) ? $times->df . '日' : 0;
+			$times->d = ($times->d ) ? $times->d . '日' : 0;
+			$times->h = ($times->h ) ? $times->h . '時間' : 0;
+			$times->m = ($times->m ) ? $times->m . '分' : 0;
+		}
+		return $times;
+	}
+
+}
+
+if (!function_exists('to_time_resolution_str'))
+{
+
+	function to_time_resolution_str($time, $is_full = FALSE)
+	{
+		$times = to_time_resolution($time, TRUE);
+		$str = '';
+		$df = TRUE;
+		if ($times->d)
+		{
+			$str .= $times->d;
+			// not add min (when not $is_full)
+			$df = TRUE && !$is_full;
+		}
+		$str .= $times->h ? : '';
+		$str .= ($times->m && $df) ? $times->m : '';
+		return $str;
+	}
 }

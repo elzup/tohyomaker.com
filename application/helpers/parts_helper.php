@@ -208,7 +208,7 @@ if (!function_exists('logpane'))
 					<div class="col-sm-2">
 						<?php
 						$share_uri = base_url(PATH_VIEW . '/' . $survey->id);
-						$share_text = totext_share_result($result, $survey);
+						$share_text = totext_share_result($survey, $result);
 						sharebtn_twitter($share_text, $share_uri)
 						?>
 					</div>

@@ -15,6 +15,9 @@
     * 投票履歴,状態別フィルター
     * ~~作成した投票履歴~~
 * userpage
+* sessionクラスによる管理
+    * user情報
+    * alert box
 
 * ~~結果のツイート~~
 * TODO: 結果直下にパネル[経過時間、投票総数]
@@ -36,6 +39,8 @@
 * 検索条件の保存
 * マイページ-おすすめ投票
 * owner, user の統一
+* 定型文 constance化
+* 途中結果 スクロールジャンプリンク
 
 # in server task
 * session stress test

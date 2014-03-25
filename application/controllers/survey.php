@@ -1,6 +1,5 @@
 <?php
 
-
 //投票ページ
 class Survey extends CI_Controller
 {
@@ -95,7 +94,7 @@ class Survey extends CI_Controller
 				'type' => SURVEY_PAGETYPE_VIEW,
 		);
 		$this->load->view('surveyhead', $surveyhead_info);
-		$this->load->view('surveyresult', array ('survey' => $survey));
+		$this->load->view('surveyresult', array('survey' => $survey));
 		if (isset($survey->results))
 		{
 			$this->load->view('surveylog', array('survey', $survey));
@@ -106,7 +105,8 @@ class Survey extends CI_Controller
 
 	function regist($id_survey = NULL)
 	{
-		if ($this->input->server('REQUEST_METHOD') != 'POST' || check_token() === FALSE || !$this->_check_post(($post = $this->input->post())) || !isset($id_survey))
+		if ($this->input->server('REQUEST_METHOD') != 'POST' || check_token() === FALSE
+				|| !$this->_check_post(($post = $this->input->post())) || !isset($id_survey))
 		{
 			// TODO: error action
 			die('error: not post request, wrong token, wrong postdata');
@@ -127,17 +127,13 @@ class Survey extends CI_Controller
 		$value = $post[POST_VALUE_NAME];
 		if ($this->survey->regist_vote($survey, $user, $value) === FALSE)
 		{
-//			var_dump($this->survey->db->message());
-			jump(base_url(PATH_VOTE.$id_survey));
+			// TODO: set alert. failed
+		} else
+		{
+			// TODO: set cookie.
+		//	setcookie("tm_alert_", $value, time() + 60);
 		}
-		// TODO: set cookie
-		setcookie("tm_alert_", $value, time() + 60);
-		jump(base_url(PATH_VOTE .'/'. $id_survey));
-	}
-
-	public function info($id_survey)
-	{
-		
+		jump(base_url(PATH_VOTE . '/' . $id_survey));
 	}
 
 }

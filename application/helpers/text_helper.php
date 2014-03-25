@@ -13,9 +13,19 @@ if (!function_exists('totext_voted'))
 if (!function_exists('totext_share'))
 {
 
-	function totext_share($itemname, $survey_title)
+	function totext_share_voted($itemname, $survey_title)
 	{
 		return "「{$itemname} 」に投票しました : {$survey_title}";
+	}
+
+}
+
+if (!function_exists('totext_share_survey'))
+{
+
+	function totext_share_survey(Surveyobj $survey)
+	{
+		return "{$survey->title} [{$survey->get_time_remain_str()}]";
 	}
 
 }
@@ -52,8 +62,12 @@ if (!function_exists('totext_share_result'))
 	 * @param int $itemrank
 	 * @return string
 	 */
-	function totext_share_result(Resultobj $result, Surveyobj $survey, $itemrank = 3)
+	function totext_share_result(Surveyobj $survey, $result = NULL, $itemrank = 3)
 	{
+		if (empty($result))
+		{
+			$result = $survey->get_current_result();
+		}
 		$result_title = totext_result_type($result->type);
 		$text = "投票結果:{$survey->title}/{$result_title}時点\n";
 		$i = 1;
