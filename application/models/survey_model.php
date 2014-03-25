@@ -468,7 +468,7 @@ class Survey_model extends CI_Model
 	public function get_surveys_new($num = 10, $start = 0, $id_user = NULL)
 	{
 		$data = $this->select_surveys_new($num);
-		$ids = $this->datas_to_surveyids($data, SURVEY_STATE_PROGRESS);
+		$ids = $this->datas_to_surveyids($data);
 		return $this->get_surveys($ids, $num, $start, $id_user);
 	}
 

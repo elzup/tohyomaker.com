@@ -49,8 +49,8 @@
 							if (!$survey->is_anonymous)
 							{
 								?>
-								<a <?= attr_href(HREF_TYPE_USER, $survey->owner->id) ?> class="btn btn-success btn-owner-name" <?= attr_tooltip("作者: $survey->owner->screen_name") ?> >
-									<?= tag_icon(ICON_USER, TRUE) ?>@<?= $survey->owner->screen_name ?>
+								<a <?= attr_href(HREF_TYPE_USER, $survey->owner->id) ?> class="btn btn-success btn-owner-name" <?= attr_tooltip("作者: {$survey->owner->screen_name}") ?> >
+									<?= tag_icon(ICON_USER) ?>@<?= $survey->owner->screen_name ?>
 								</a>
 								<?php
 							} else

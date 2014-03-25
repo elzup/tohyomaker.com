@@ -52,7 +52,7 @@ class Surveyobj
 		$this->num_item = $data->num_item;
 		$this->timestamp = $data->timestamp;
 		$this->state = $data->state;
-		$this->is_anonymous = empty($data->is_anonymous);
+		$this->is_anonymous = !empty($data->is_anonymous);
 		$this->total_num = $data->total_num;
 
 		if (isset($items))
@@ -229,9 +229,13 @@ class Surveyobj
 	public function get_time_remain_str()
 	{
 		$remain = $this->get_time_remain() - strtotime('+4 day', 0);
+		if ($remain < 0)
+		{
+			return '終了';
+		}
 		$times = to_time_resolution($remain, TRUE);
 		// TODO: 
-		return ($times->df ? : $times->h ? : $times->m ? : $remain . '秒');
+		return 'あと'.($times->df ? : $times->h ? : $times->m ? : $remain . '秒');
 		/*
 		  if ($remain < 0) {
 		  return '終了';

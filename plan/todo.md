@@ -14,6 +14,7 @@
 * mypage
     * 投票履歴,状態別フィルター
     * ~~作成した投票履歴~~
+    * pager
 * userpage
 * sessionクラスによる管理
     * user情報

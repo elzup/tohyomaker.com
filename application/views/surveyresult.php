@@ -70,7 +70,7 @@
 							<?php
 							$share_uri = base_url(PATH_VIEW . '/' . $survey->id);
 							$share_text = totext_share_result($survey);
-							sharebtn_twitter($share_text, $share_uri)
+							echo sharebtn_twitter($share_text, $share_uri);
 							?>
 						</div>
 					</div>

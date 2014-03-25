@@ -21,8 +21,8 @@ class Index extends CI_Controller
 	{
 
 		$user = $this->user->get_user();
-		$surveys_hot = $this->survey->get_surveys_hot(5, 0, $user->id);
-		$surveys_new = $this->survey->get_surveys_new(5, 0, $user->id);
+		$surveys_hot = $this->survey->get_surveys_hot(5, 0, @$user->id);
+		$surveys_new = $this->survey->get_surveys_new(5, 0, @$user->id);
 
 //		$title = 'トップページ';
 		$this->load->view('head');

@@ -124,7 +124,7 @@ if (!function_exists('sharebtn_twitter'))
 	{
 		?>
 		<a href="http://twitter.com/share" class="twitter-share-button"
-			 data-url="<?= $uri ?>"
+			 data-url="<?= fix_url($uri) ?>"
 			 data-text="<?= $text ?>"
 			 data-count="horizontal"
 			 data-lang="ja">Tweet</a>

@@ -214,3 +214,15 @@ if (!function_exists('to_time_resolution_str'))
 		return $str;
 	}
 }
+
+if (!function_exists('fix_url'))
+{
+	function fix_url($url)
+	{
+		if (!preg_match('#^http#u', $url))
+		{
+			$url = 'http:' . $url;
+		}
+		return $url;
+	}
+}
