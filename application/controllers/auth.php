@@ -22,44 +22,47 @@ class Auth extends CI_Controller
 	function start()
 	{
 		$twitter_config = $this->config->item('TWITTER_CONSUMER');
-		$_SESSION['consumer_key'] = $twitter_config['key'];
-		$_SESSION['consumer_secret'] = $twitter_config['secret'];
-		$callback_uri = base_url('/auth/end');
+		$this->session->set_userdata(array(
+				'consumer_key' => $twitter_config['key'],
+				'consumer_secret' => $twitter_config['secret'],
+		));
+		$callback_uri = base_url(PATH_AUTH_END);
 
-		$connection = new TwitterOAuth($_SESSION['consumer_key'], $_SESSION['consumer_secret']);
+		$connection = new TwitterOAuth($twitter_config['key'], $twitter_config['secret']);
 		$request_token = $connection->getRequestToken($callback_uri);
-		$_SESSION['oauth_token'] = $token = $request_token['oauth_token'];
-		$_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
-
-
+		$token = $request_token['oauth_token'];
+		$this->session->set_userdata(array(
+				'oauth_token' => $token,
+				'oauth_token_secret' => $request_token['oauth_token_secret'],
+		));
 		$auth_url = $connection->getAuthorizeURL($token);
 
 		// save referer to return previous page
-		$_SESSION['referer'] = $this->input->server('HTTP_REFERER');
+		$this->session->set_userdata(array('referer' => $this->input->server('HTTP_REFERER')));
 		jump($auth_url);
 	}
 
 	function end()
 	{
 		// TODO: lookup referer and check is come from api.twitter.com
-		$connection = new TwitterOAuth($_SESSION['consumer_key'], $_SESSION['consumer_secret'], $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
-		$access_token = $connection->getAccessToken($_GET['oauth_verifier']);
-		unset($_SESSION['oauth_token']);
-		unset($_SESSION['oauth_token_secret']);
-		$_SESSION['access_token'] = $access_token;
-		$ref = $_SESSION['referer'];
-		unset($_SESSION['referer']);
-
-		jump($ref ?: base_url());
-		exit;
+		$connection = new TwitterOAuth(
+				$this->session->userdata('consumer_key'), $this->session->userdata('consumer_secret'), $this->session->userdata('oauth_token'), $this->session->userdata('oauth_token_secret')
+		);
+		$access_token = $connection->getAccessToken($this->input->get('oauth_verifier'));
+		$this->session->unset_userdata('oauth_token');
+		$this->session->unset_userdata('oauth_token_secret');
+		$this->session->set_userdata(array ('access_token' => $access_token));
+		$ref = $this->session->userdata('referer');
+		$this->session->unset_userdata('referer');
+		jump($ref ? : base_url());
 	}
 
 	function logout()
 	{
-		$_SESSION = array();
-		session_destroy();
+		$this->session->sess_destroy();
 
 		$ref = filter_input(INPUT_SERVER, 'HTTP_REFERER');
-		jump($ref ?: base_url());
+		jump($ref ? : base_url());
 	}
+
 }

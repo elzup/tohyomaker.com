@@ -2,6 +2,7 @@
 /* @var $survey Surveyobj */
 /* @var $user Userobj */
 ?>
+<?php if (count($survey->results)) {?>
 
 <div class="container" id="survey-log-div">
 	<div class="row">
@@ -18,3 +19,5 @@
 	</div>
 </div>
 
+
+<?php }

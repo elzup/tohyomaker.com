@@ -10,6 +10,10 @@ if (!empty($title))
   <head>
     <meta charset="UTF-8" />
     <title><?= $title_text ?></title>
+
+<meta name="keywords" content="投票,アンケート,Twitter,ツイッター" />
+<meta name="description" content="" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='http://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet' type='text/css'>

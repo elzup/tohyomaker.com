@@ -38,7 +38,7 @@ class User_model extends CI_Model
 		$this->config->load('my_twitter');
 		$twitter_config = $this->config->item('TWITTER_CONSUMER');
 
-		$access_token = @$_SESSION['access_token'];
+		$access_token = @$this->session->userdata('access_token');
 
 		if (!empty($access_token['oauth_token']))
 		{

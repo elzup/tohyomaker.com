@@ -17,8 +17,10 @@
     * pager
 * userpage
 * sessionクラスによる管理
-    * user情報
-    * alert box
+    * +user情報
+    * +alert box
+* seo
+    * meta
 
 * ~~結果のツイート~~
 * TODO: 結果直下にパネル[経過時間、投票総数]
