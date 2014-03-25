@@ -207,7 +207,7 @@ if (!function_exists('to_time_resolution_str'))
 		{
 			$str .= $times->d;
 			// not add min (when not $is_full)
-			$df = TRUE && !$is_full;
+			$df = $is_full;
 		}
 		$str .= $times->h ? : '';
 		$str .= ($times->m && $df) ? $times->m : '';

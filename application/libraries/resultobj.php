@@ -12,18 +12,19 @@ class Resultobj
 	public $type;
 	public $timestamp;
 	private $_elapsed_time_str;
+	private $_progress_time_str;
 
 //	public $is_book;
 
-	function __construct($data = NULL, $items = NULL)
+	function __construct($data = NULL, $items = NULL, $progress_str = NULL)
 	{
 		if (isset($data))
 		{
-			$this->set($data, $items);
+			$this->set($data, $items, $progress_str);
 		}
 	}
 
-	public function set(stdClass $data, $items = NULL)
+	public function set(stdClass $data, $items = NULL, $progress_str = NULL)
 	{
 		$this->type = $data->type;
 		$this->timestamp = $data->timestamp;
@@ -31,6 +32,7 @@ class Resultobj
 		{
 			$this->set_items($items);
 		}
+		$this->set_progress_time_str($progress_str);
 	}
 
 	public function set_items($items)
@@ -80,9 +82,26 @@ class Resultobj
 		return $this->_elapsed_time_str;
 	}
 
+	public function set_progress_time_str($str = NULL)
+	{
+		if (!empty($str))
+		{
+			$this->_progress_time_str = $str;
+		}
+		if (($type = $this->type) != RESULT_TYPE_CURRENT)
+		{
+			$this->_progress_time_str = totext_result_type($type);
+		}
+	}
+
 	public function is_booked()
 	{
 		return $this->type <= 5;
+	}
+
+	public function get_type_text()
+	{
+		return $this->_progress_time_str;
 	}
 
 }

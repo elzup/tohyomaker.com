@@ -152,7 +152,7 @@ class Surveyobj
 		$data = new stdClass();
 		$data->type = RESULT_TYPE_CURRENT;
 		$data->timestamp = date(MYSQL_TIMESTAMP);
-		return $this->current_result = new Resultobj($data, $this->items);
+		return $this->current_result = new Resultobj($data, $this->items, $this->get_time_progress_str());
 	}
 
 	private function _create_map_item($nums)
@@ -223,7 +223,7 @@ class Surveyobj
 			return '終了[3日]';
 		}
 		$time = $this->get_time_progress();
-		return to_time_resolution_str($time);
+		return to_time_resolution_str($time, $is_full);
 	}
 
 	public function get_time_remain_str()
@@ -235,21 +235,7 @@ class Surveyobj
 		}
 		$times = to_time_resolution($remain, TRUE);
 		// TODO: 
-		return 'あと'.($times->df ? : $times->h ? : $times->m ? : $remain . '秒');
-		/*
-		  if ($remain < 0) {
-		  return '終了';
-		  }
-		  if ($remain < 3600)
-		  {
-		  return 'あと'.floor($remain / 60) . '分';
-		  } elseif ($remain < 86400)
-		  {
-		  return 'あと'.floor($remain / 3600) . '時間';
-		  }
-		  return 'あと'.round($remain / 86400, 1) . '日';
-		 * 
-		 */
+		return 'あと'.($times->d ? $times->df : $times->h ? : $times->m ? : $remain . '秒');
 	}
 
 	public function get_time_remain()

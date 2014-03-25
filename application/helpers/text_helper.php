@@ -32,6 +32,7 @@ if (!function_exists('totext_share_survey'))
 
 if (!function_exists('totext_result_type'))
 {
+
 	function totext_result_type($type)
 	{
 		$lib = array(
@@ -47,8 +48,9 @@ if (!function_exists('totext_result_type'))
 				RESULT_TYPE_V5000 => '投票数5000票',
 				RESULT_TYPE_V10000 => '投票数10000票',
 		);
-		return @$lib[$type] ?: '';
+		return @$lib[$type] ? : '';
 	}
+
 }
 
 if (!function_exists('totext_share_result'))
@@ -68,12 +70,11 @@ if (!function_exists('totext_share_result'))
 		{
 			$result = $survey->get_current_result();
 		}
-		$result_title = totext_result_type($result->type);
-		$text = "投票結果:{$survey->title}/{$result_title}時点\n";
+		$text = "投票結果:{$survey->title}[{$result->get_type_text()}時点]\n";
 		$i = 1;
 		foreach ($result->items as $item)
 		{
-			if ($i > $item->rank)
+			if ($item->rank > $itemrank || $i++ > 5)
 			{
 				break;
 			}
