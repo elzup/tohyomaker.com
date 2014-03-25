@@ -67,7 +67,7 @@ if (!function_exists('surveypane'))
 							foreach ($survey->items as $i => $item)
 							{
 								$class = '';
-								if (($selected = $survey->selected) !== NO_VOTED || $survey->state === SURVEY_STATE_END)
+								if (($selected = $survey->selected) !== NO_VOTED || $survey->state != SURVEY_STATE_PROGRESS)
 								{
 									$class .= ' disabled';
 								}

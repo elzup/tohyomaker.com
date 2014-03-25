@@ -6,8 +6,6 @@ class User extends CI_Controller
 	{
 		parent::__construct();
 		session_start();
-		$this->load->model('Survey_model', 'survey', TRUE);
-		$this->load->model('User_model', 'user', TRUE);
 	}
 
 	function index()

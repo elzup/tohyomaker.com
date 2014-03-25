@@ -42,7 +42,7 @@ class Catalog extends CI_Controller
 	{
 		// TODO: get startnum and make multipages 
 		$user = $this->user->get_user();
-		$surveys = $this->survey->get_surveys_hot(10, @$user->id);
+		$surveys = $this->survey->get_surveys_hot(10, $start = 0, @$user->id);
 		$title = '人気';
 		$this->load->view('head', array('title' => $title));
 		$this->load->view('title', array('title' => $title, 'offset' => 2));

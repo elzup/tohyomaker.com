@@ -207,7 +207,7 @@ class Surveyobj
 		{
 			return 'あと'.floor($remain / 3600) . '時間';
 		}
-		return 'あと'.floor($remain / 86400) . '日';
+		return 'あと'.round($remain / 86400, 1) . '日';
 	}
 
 	public function get_time_remain()

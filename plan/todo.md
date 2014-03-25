@@ -20,11 +20,13 @@
 * TODO: 結果直下にパネル[経過時間、投票総数]
 
 * ~~secure~~
-* secure2 makeform UI
+* ~~secure2 makeform UI~~
 
 ## level2
 * tags block
 * makecheck surveypaneのサンプル表示
+* タグ検索ワードしたをフォームに
+* 投票結果を見るボタン
 
 ## level3
 * original glyphicon 作成

@@ -36,7 +36,7 @@ class Search extends CI_Controller
 		if (isset($word))
 		{
 			$word = urldecode($word);
-			$surveys = $this->survey->get_surveys_search_tag($word, 10, $user->id);
+			$surveys = $this->survey->get_surveys_search_tag($word, 10, 0, $user->id);
 		}
 
 		// TODO: prepare surveys in survey_model 

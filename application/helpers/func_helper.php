@@ -20,6 +20,17 @@ if (!function_exists('jump'))
 
 }
 
+if (!function_exists('jump_back'))
+{
+
+	function jump_back($num = 1)
+	{
+		?><script type="text/javascript">window.history.go(-<?= $num ?>)</script><?php
+		exit;
+	}
+
+}
+
 if (!function_exists('is_numonly'))
 {
 
@@ -103,23 +114,49 @@ if (!function_exists('array_reflect_func'))
 			if (is_array($value))
 			{
 				$value = array_reflect_func($value, $callback);
-			}
-			else 
+			} else
 			{
 				$value = call_user_func($callback, $value);
 			}
 		}
 		return $array;
 	}
+
 }
 
-if (!function_exists('jump_back'))
+if (!function_exists('create_std_obj'))
 {
 
-	function jump_back($num = 1)
+	/**
+	 * 
+	 * @param array $fields in array field_name => field_value
+	 * @return stdClass
+	 */
+	function create_std_obj(array $fields)
 	{
-		?><script type="text/javascript">window.history.go(-<?= $num ?>)</script><?php
-		exit;
+		$obj = new stdClass();
+		foreach ($fields as $name => $value)
+		{
+			$obj->{$name} = $value;
+		}
+		return $obj;
+	}
+
+}
+
+if (!function_exists('count_value'))
+{
+
+	function count_value($data, $fieldname = NULL)
+	{
+		$result = array();
+		foreach ($data as $datum)
+		{
+			$value = (isset($fieldname) ? $datum->{$fieldname} : $datum);
+			@$result[$value]++;
+		}
+		return $result;
+		
 	}
 
 }

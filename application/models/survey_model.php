@@ -50,7 +50,10 @@ class Survey_model extends CI_Model
 		$survey = new Surveyobj($data, $items, $tags, $owner);
 		$this->_install_result($survey);
 		$this->_check_state($survey);
-		$this->install_select($survey, $id_user);
+		if ($survey->state != SURVEY_STATE_END)
+		{
+			$this->install_select($survey, $id_user);
+		}
 		return $survey;
 	}
 
@@ -147,7 +150,8 @@ class Survey_model extends CI_Model
 	 */
 	public function regist_vote(Surveyobj $survey, Userobj $user, $value)
 	{
-		if (($this->check_voted($survey->id, $user->id)) !== NO_VOTED || $survey->num_item <= $value)
+		if (($this->check_voted($survey->id, $user->id)) !== NO_VOTED || $survey->num_item
+				<= $value)
 		{
 			return FALSE;
 		}
@@ -281,7 +285,8 @@ class Survey_model extends CI_Model
 	private function _check_state(Surveyobj &$survey)
 	{
 		$su = $survey->get_state_update();
-		if ($su === SURVEY_STATE_RESULT || ($su === SURVEY_STATE_END && $survey->state == SURVEY_STATE_PROGRESS))
+		if ($su === SURVEY_STATE_RESULT || ($su === SURVEY_STATE_END && $survey->state
+				== SURVEY_STATE_PROGRESS))
 		{
 			$this->_update_state_result($survey);
 		}
@@ -444,7 +449,7 @@ class Survey_model extends CI_Model
 	/**
 	 * 
 	 * @param Userobj $user
-	 * @return null|Surveyobj[]
+	 * @return Surveyobj[]
 	 */
 	public function get_surveys_user_voted(Userobj $user, $num = 20, $start = 0)
 	{
@@ -467,126 +472,60 @@ class Survey_model extends CI_Model
 		return $this->get_surveys($ids, $num, $start, $id_user);
 	}
 
-	public function get_surveys_hot($num, $id_user = NULL)
+	public function get_surveys_hot($num, $start, $id_user = NULL)
 	{
 		$data = $this->select_votes_new(200);
-		$data2 = $this->calc_surveyids_hot($data);
-		return $this->datas_to_survey_hot($data2, $num, $id_user);
+		$ids = $this->calc_surveyids_hot($data);
+		return $this->get_surveys($ids, $num, $start, $id_user);
 	}
 
-	public function get_surveys_search_tag($word, $num = 10, $id_user = NULL)
+	public function get_surveys_search_tag($word, $num = 10, $start = 0, $id_user = NULL)
 	{
 		$data = $this->select_search_tags($word, 200);
 		$ids = $this->calc_surveyids_tag($data);
-		return $this->datas_to_survey_tag($ids, $num, $id_user);
+		return $this->get_surveys($ids, $num, $start, $id_user);
 	}
 
 	public function calc_surveyids_tag($data)
 	{
-		$count = array();
-		foreach ($data as $datum)
-		{
-			if (!isset($count[$datum->id_survey]))
-			{
-				$count[$datum->id_survey] = 0;
-			}
-			$count[$datum->id_survey] += 1;
-		}
-		$ids = array();
+		$count = count_value($data, 'id_survey');
+		$lev = array();
 		foreach ($count as $id => $c)
 		{
-			$ids[$c][] = $id;
+			$lev[$c][] = $id;
 		}
-		arsort($ids);
-		foreach ($ids as &$idsum)
+		arsort($lev);
+		$ids = array();
+		foreach ($lev as $point => $levum)
 		{
-			arsort($idsum);
+			arsort($levum);
+			foreach ($levum as $id)
+			{
+				$ids[] = create_std_obj(array('id' => $id, 'point_relevant' => $point));
+			}
 		}
 		return $ids;
 	}
 
 	public function calc_surveyids_hot($data)
 	{
-		$count = array();
-		foreach ($data as $datum)
-		{
-			if (!isset($count[$datum->id_survey]))
-			{
-				$count[$datum->id_survey] = 0;
-			}
-			$count[$datum->id_survey] += 1;
-		}
+		$count = count_value($data, 'id_survey');
 		arsort($count);
-		return $count;
-	}
-
-	public function datas_to_survey_tag($ids, $num, $id_user)
-	{
-		if (empty($ids))
+		$ids = array();
+		foreach ($count as $id => $num)
 		{
-			return NULL;
+			$ids[] = create_std_obj(array('id' => $id, 'point_hot' => $num));
 		}
-		$surveys = array();
-		$i = 0;
-		foreach ($ids as $count => $idsum)
-		{
-			foreach ($idsum as $id_survey)
-			{
-				/** @var $survey SurveyObj */
-				$survey = $this->get_survey($id_survey, $id_user);
-				if (!$survey)
-				{
-// TODO: can't create survey error act
-					return FALSE;
-				}
-				$survey->point_relevant = $count;
-				$surveys[] = $survey;
-				if (++$i >= $num)
-				{
-					break;
-				}
-			}
-		}
-		return $surveys;
-	}
-
-	public function datas_to_survey_hot($data, $num, $id_user)
-	{
-		if (empty($data))
-		{
-			return NULL;
-		}
-// NOTICE: solved if block `if (isset($data))`
-		$surveys = array();
-		$i = 0;
-		foreach ($data as $id_survey => $value)
-		{
-			if (!($survey = $this->get_survey($id_survey, $id_user)))
-			{
-// TODO: can't create survey error act
-				return FALSE;
-			}
-			if ($survey->state != SURVEY_STATE_PROGRESS)
-			{
-				continue;
-			}
-			$survey->point_hot = $value;
-			$surveys[] = $survey;
-			if (++$i >= $num)
-			{
-				break;
-			}
-		}
-		return $surveys;
+		return $ids;
 	}
 
 	/**
 	 * 
-	 * @param stdClass[] $data
+	 * @param array $data
 	 * @param int $state_limit
-	 * @return array
+	 * @return stdClass[]
 	 */
-	public function datas_to_surveyids($data, $state_limit = SURVEY_STATE_ALL)
+	public function datas_to_surveyids(array $data, $state_limit = SURVEY_STATE_ALL)
 	{
 		if (empty($data))
 		{
@@ -599,29 +538,32 @@ class Survey_model extends CI_Model
 			{
 				continue;
 			}
-			$ids[] = $datum->id_survey;
+			$ids[] = create_std_obj(array('id' => $datum->id_survey));
 		}
 		return $ids;
 	}
 
 	/**
 	 * 
-	 * @param array $ids_survey
+	 * @param stdClass[] $id_objs
 	 * @param int $num
 	 * @param int $start
 	 * @param int $id_user
 	 * @param int $state_limit
 	 * @return Surveyobj[]
 	 */
-	public function get_surveys(array $ids_survey, $num = 100, $start = 0, $id_user = NULL, $state_limit = SURVEY_STATE_ALL)
+	public function get_surveys(array $id_objs, $num = 100, $start = 0, $id_user = NULL, $state_limit = SURVEY_STATE_ALL)
 	{
 		$surveys = array();
-		for ($i = $start; isset($ids_survey[$i]) && !($survey = $this->get_survey($ids_survey[$i], $id_user)); $i++)
+		for ($i = $start; ($ido = @$id_objs[$i]) && count($surveys) < $num; $i++)
 		{
-			if ($state_limit !== SURVEY_STATE_ALL && $survey->state != $state_limit)
+			$survey = $this->get_survey($ido->id, $id_user);
+			if (empty($survey) || ($state_limit !== SURVEY_STATE_ALL && $survey->state != $state_limit))
 			{
 				continue;
 			}
+			$survey->point_hot = @$ido->point_hot;
+			$survey->point_relevant = @$ido->point_relevant;
 			$surveys[] = $survey;
 		}
 		return $surveys;

@@ -127,8 +127,8 @@ class Survey extends CI_Controller
 		$value = $post[POST_VALUE_NAME];
 		if ($this->survey->regist_vote($survey, $user, $value) === FALSE)
 		{
-			var_dump($this->survey->db->message());
-			die('failed query');
+//			var_dump($this->survey->db->message());
+			jump(base_url(PATH_VOTE.$id_survey));
 		}
 		// TODO: set cookie
 		setcookie("tm_alert_", $value, time() + 60);
