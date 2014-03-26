@@ -20,7 +20,7 @@ class Index extends CI_Controller
 	function index()
 	{
 
-		$user = $this->user->get_user();
+		$user = $this->user->get_main_user();
 		$surveys_hot = $this->survey->get_surveys_hot(5, 0, @$user->id);
 		$surveys_new = $this->survey->get_surveys_new(5, 0, @$user->id);
 

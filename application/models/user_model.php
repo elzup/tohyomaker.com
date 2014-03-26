@@ -20,7 +20,7 @@ class User_model extends CI_Model
 	 * 
 	 * @return Userobj
 	 */
-	public function get_user()
+	public function get_main_user()
 	{
 		return $this->user;
 	}
@@ -52,13 +52,8 @@ class User_model extends CI_Model
 		}
 		$this->twitter_connection = new TwitterOAuth($twitter_config['key'], $twitter_config['secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
 		$id_twitter = $access_token['user_id'];
-		$id_user = $this->check_register($id_twitter);
-		if ($id_user === FALSE)
-		{
-			$id_user = $this->register($id_twitter);
-			echo $id_user;
-			exit;
-		}
+		$data = $this->check_register($id_twitter);
+		$id_user = @$data->id_user ? : $this->register($id_twitter);
 		$this->user = new Userobj($id_user, $access_token['screen_name'], $id_twitter);
 		$this->update_last_sn_main();
 		$this->session->set_userdata(array ('userserial' => serialize($this->user)));
@@ -66,22 +61,28 @@ class User_model extends CI_Model
 		return TRUE;
 	}
 
-	/**
-	 * 
-	 * @param type $id_twitter
-	 * @return boolean|string id_user
-	 */
-	function check_register($id_twitter)
+	public function get_user($id_user)
 	{
-		$this->db->where('id_twitter', $id_twitter);
-		$query = $this->db->get('user_tbl');
-		$result = $query->result('array');
-		// if not exists return FALSE
-		if (!isset($result[0]['id_user']))
+		if (!($data = $this->check_register($id_user, 'id_user')))
 		{
 			return FALSE;
 		}
-		return $result[0]['id_user'];
+		return new Userobj($id_user, $data->sn_last, $data->id_twitter);
+	}
+
+
+	/**
+	 * 
+	 * @param type $id
+	 * @return boolean|string id_user
+	 */
+	function check_register($id, $type = 'id_twitter')
+	{
+		$this->db->where($type, $id);
+		$query = $this->db->get('user_tbl');
+		$result = $query->result();
+		// if not exists return FALSE
+		return @$result[0] ?: FALSE;
 	}
 
 	function register($id_twitter)

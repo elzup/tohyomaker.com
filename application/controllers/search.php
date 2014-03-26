@@ -24,7 +24,7 @@ class Search extends CI_Controller
 
 	function tag($word = NULL)
 	{
-		$user = $this->user->get_user();
+		$user = $this->user->get_main_user();
 		if (!empty($word))
 		{
 			$word = urldecode($word);

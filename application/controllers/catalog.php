@@ -26,7 +26,7 @@ class Catalog extends CI_Controller
 	{
 
 		// TODO: prepare surveys in survey_model 
-		$user = $this->user->get_user();
+		$user = $this->user->get_main_user();
 		$title = '新着';
 		$surveys = $this->survey->get_surveys_new(10, $page * 10, @$user->id);
 		$this->load->view('head', array('title' => $title));
@@ -41,7 +41,7 @@ class Catalog extends CI_Controller
 	function hot(/* TODO $pagenum*/)
 	{
 		// TODO: get startnum and make multipages 
-		$user = $this->user->get_user();
+		$user = $this->user->get_main_user();
 		$surveys = $this->survey->get_surveys_hot(10, $start = 0, @$user->id);
 		$title = '人気';
 		$this->load->view('head', array('title' => $title));

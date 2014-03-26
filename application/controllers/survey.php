@@ -36,7 +36,7 @@ class Survey extends CI_Controller
 			die('no id_survey');
 			// TODO: error action
 		}
-		$user = $this->user->get_user();
+		$user = $this->user->get_main_user();
 		if (($survey = $this->survey->get_survey($id_survey, $user)) === FALSE)
 		{
 			die("no found id : {$id_survey}");
@@ -77,7 +77,7 @@ class Survey extends CI_Controller
 			die('no id_survey');
 			// TODO: same as vote method todo
 		}
-		$user = $this->user->get_user();
+		$user = $this->user->get_main_user();
 		/* @var $survey Surveyobj */
 		if (($survey = $this->survey->get_survey($id_survey, $user)) === FALSE)
 		{
@@ -113,7 +113,7 @@ class Survey extends CI_Controller
 			jump(base_url());
 		}
 
-		$user = $this->user->get_user();
+		$user = $this->user->get_main_user();
 		if (empty($user))
 		{
 			$this->session->set_userdata(set_alert(ALERT_TYPE_ERROR, CODE_ERROR_ACCESS_NOLOGIN + CODE_PAGE_SURVEY));

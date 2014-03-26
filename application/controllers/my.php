@@ -12,6 +12,7 @@ class My extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		// TODO: delete session in all page
 		session_start();
 		$this->load->model('Survey_model', 'survey', TRUE);
 		$this->load->model('User_model', 'user', TRUE);
@@ -19,7 +20,7 @@ class My extends CI_Controller
 
 	function index()
 	{
-		$user = $this->user->get_user();
+		$user = $this->user->get_main_user();
 		if (empty($user))
 		{
 			jump(base_url());

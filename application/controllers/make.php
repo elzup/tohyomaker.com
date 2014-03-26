@@ -26,10 +26,10 @@ class Make extends CI_Controller
 		);
 		$this->load->view('head', $head_info);
 		$this->load->view('title', array('title' => $title));
-		$this->load->view('navbar', array('user' => $this->user->get_user()));
+		$this->load->view('navbar', array('user' => $this->user->get_main_user()));
 
 		$makeform_info = array(
-				'user' => $this->user->get_user(),
+				'user' => $this->user->get_main_user(),
 				'token' => $this->_set_token(),
 		);
 		$this->load->view('makeform', $makeform_info);
@@ -76,10 +76,10 @@ class Make extends CI_Controller
 		$title = '投票作成確認';
 		$this->load->view('head', array('title' => $title));
 		$this->load->view('title', array('title' => $title));
-		$this->load->view('navbar', array('user' => $this->user->get_user()));
+		$this->load->view('navbar', array('user' => $this->user->get_main_user()));
 
 		$makecheck_info = array(
-				'user' => $this->user->get_user(),
+				'user' => $this->user->get_main_user(),
 				'data' => $post,
 				'token' => $this->_set_token(),
 		);
@@ -95,7 +95,7 @@ class Make extends CI_Controller
 		{
 			jump_back(2);
 		}
-		$id_survey = $this->survey->regist($post, $this->user->get_user());
+		$id_survey = $this->survey->regist($post, $this->user->get_main_user());
 		$token = $this->_set_token();
 		jump(base_url(HREF_TYPE_MAKEEND . "/{$id_survey}/{$token}"));
 		// TODO: jump to survey page (use id
@@ -123,7 +123,7 @@ class Make extends CI_Controller
 		);
 		$this->load->view('head', $head_info);
 		$this->load->view('title', array('title' => $title));
-		$this->load->view('navbar', array('user' => $this->user->get_user()));
+		$this->load->view('navbar', array('user' => $this->user->get_main_user()));
 
 		$this->load->view('makeend', array('survey' => $survey));
 		$this->load->view('foot');
