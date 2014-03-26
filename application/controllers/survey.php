@@ -128,6 +128,8 @@ class Survey extends CI_Controller
 		{
 			// TODO: set alert. failed
 			$this->session->set_userdata(set_alert(ALERT_TYPE_ERROR, CODE_ERROR_DB + CODE_PAGE_SURVEY));
+			$user->count_vote++;
+			$this->user->inclement_user_votecount($user->id, $user->count_vote);
 		} else
 		{
 			// TODO: if just vote, plus1 message 

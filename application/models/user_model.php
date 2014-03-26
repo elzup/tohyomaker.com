@@ -54,10 +54,13 @@ class User_model extends CI_Model
 		$id_twitter = $access_token['user_id'];
 		$data = $this->check_register($id_twitter);
 		$id_user = @$data->id_user ? : $this->register($id_twitter);
-		$this->user = new Userobj($id_user, $access_token['screen_name'], $id_twitter);
-		$this->update_last_sn_main();
+		$this->user = $this->get_user($id_user);
 		$this->session->set_userdata(array ('userserial' => serialize($this->user)));
 
+		if (!isset($this->user->count_vote))
+		{
+			jump(base_url(PATH_LOGOUT));
+		}
 		return TRUE;
 	}
 
@@ -67,7 +70,7 @@ class User_model extends CI_Model
 		{
 			return FALSE;
 		}
-		return new Userobj($id_user, $data->sn_last, $data->id_twitter);
+		return new Userobj($data);
 	}
 
 
@@ -108,6 +111,21 @@ class User_model extends CI_Model
 		$this->db->where('id_user', $id_user);
 		$this->db->set('sn_last', $sn);
 		$this->db->update('user_tbl');
+	}
+
+	public function inclement_user_votecount($id_user, $num = NULL)
+	{
+		$where = array('id_user' => $id_user);
+		if (!isset($num))
+		{
+			$result = $this->db->get_where('user_tbl', $where)->result();
+			$num = $result->num + 1;
+		}
+
+		$this->db->where($where);
+		$this->db->set('count_vote', $num);
+		$this->db->update('user_tbl');
+		$this->user->count_vote++;
 	}
 
 }

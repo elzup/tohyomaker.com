@@ -61,7 +61,7 @@ class Survey_model extends CI_Model
 	{
 		$this->db->where('id_user', $id_user);
 		$result = $this->db->get('user_tbl')->result();
-		return new Userobj($id_user, $result[0]->sn_last, $result[0]->id_twitter);
+		return new Userobj($result[0]);
 	}
 
 	public function select_items($id_survey)
@@ -164,10 +164,9 @@ class Survey_model extends CI_Model
 		{
 			$this->_insert_result($survey, $type);
 		}
-// TODO: set alert
-//		set_alert(ALERT_TYPE_VOTED);
 		return TRUE;
 	}
+
 
 	public function insert_vote($id_survey, $id_user, $value)
 	{

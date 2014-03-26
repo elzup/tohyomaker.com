@@ -8,13 +8,24 @@ class Userobj {
 	public $img_url;
 	public $state;
 
-	public function __construct($id = null, $screen_name = null, $id_twitter = null, $img_url = null, $state = null)
+	public $count_vote;
+
+	public function __construct(stdClass $data = NULL)
 	{
-		$this->id = $id;
-		$this->screen_name = h($screen_name);
-		$this->id_twitter = $id_twitter;
-		$this->img_url = $img_url;
-		$this->state = $state;
+		if (!empty($data))
+		{
+			$this->set($data);
+		}
+	}
+
+	public function set(stdClass $data)
+	{
+		$this->id          = $data->id_user;
+		$this->screen_name = h($data->sn_last);
+		$this->id_twitter  = $data->id_twitter;
+//		$this->img_url     = $data->img_url;
+		$this->state       = $data->state;
+		$this->count_vote  = $data->count_vote;
 	}
 
 	/**
