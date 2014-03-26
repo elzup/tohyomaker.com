@@ -30,7 +30,7 @@ class Make extends CI_Controller
 
 		$makeform_info = array(
 				'user' => $this->user->get_user(),
-				'token' => set_token(),
+				'token' => $this->_set_token(),
 		);
 		$this->load->view('makeform', $makeform_info);
 
@@ -62,7 +62,7 @@ class Make extends CI_Controller
 	public function check()
 	{
 		// TODO: check referrer 
-		if ($this->input->server('REQUEST_METHOD') != 'POST' || !check_token())
+		if ($this->input->server('REQUEST_METHOD') != 'POST' || !$this->_check_token())
 		{
 			jump(base_url(PATH_MAKE));
 		}
@@ -81,7 +81,7 @@ class Make extends CI_Controller
 		$makecheck_info = array(
 				'user' => $this->user->get_user(),
 				'data' => $post,
-				'token' => set_token(),
+				'token' => $this->_set_token(),
 		);
 		$this->load->view('makecheck', $makecheck_info);
 		$this->load->view('foot');
@@ -90,20 +90,20 @@ class Make extends CI_Controller
 	public function regist()
 	{
 		$post = $this->input->post();
-		if ($this->input->server('REQUEST_METHOD') != 'POST' || !check_token()
+		if ($this->input->server('REQUEST_METHOD') != 'POST' || !$this->_check_token()
 				|| !($post = $this->_check_post($this->input->post())))
 		{
 			jump_back(2);
 		}
 		$id_survey = $this->survey->regist($post, $this->user->get_user());
-		$token = set_token();
+		$token = $this->_set_token();
 		jump(base_url(HREF_TYPE_MAKEEND . "/{$id_survey}/{$token}"));
 		// TODO: jump to survey page (use id
 	}
 
 	public function end($id_survey = NULL, $token = NULL)
 	{
-		if (!isset($id_survey) || !isset($token) || check_token($token) === FALSE)
+		if (!isset($id_survey) || !isset($token) || $this->_check_token($token) === FALSE)
 		{
 			//TODL: jump to error action
 			die('error');
@@ -127,6 +127,20 @@ class Make extends CI_Controller
 
 		$this->load->view('makeend', array('survey' => $survey));
 		$this->load->view('foot');
+	}
+
+	private function _set_token()
+	{
+		$token = sha1(uniqid(mt_rand(), TRUE));
+		$this->session->set_userdata(array ('token' => $token));
+		return $token;
+	}
+
+	private function _check_token($token = NULL)
+	{
+		$token = $token ?: filter_input(INPUT_POST, 'token');
+		$token_c = $this->userdata('token');
+		return !empty($token_c) && $token_c != $token;
 	}
 
 }

@@ -17,13 +17,13 @@
     * pager
 * userpage
 * sessionクラスによる管理
-    * +user情報
+    * ~~user情報~~
     * +alert box
 * seo
     * meta
 
 * ~~結果のツイート~~
-* TODO: 結果直下にパネル[経過時間、投票総数]
+* ~~結果直下にパネル[経過時間、投票総数~~
 
 * ~~secure~~
 * ~~secure2 makeform UI~~
@@ -33,6 +33,8 @@
 * makecheck surveypaneのサンプル表示
 * タグ検索ワードしたをフォームに
 * 投票結果を見るボタン
+* errorログ
+* ユーザパラメーター 投票数
 
 ## level3
 * original glyphicon 作成
@@ -47,7 +49,6 @@
 
 # in server task
 * session stress test
-* ~~`mod_rewrite`~~
+* ~~mod-rewrite~~
 
-# end
 

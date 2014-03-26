@@ -11,4 +11,10 @@ class User extends CI_Controller
 	function index()
 	{
 	}
+
+	function main($id_user = NULL)
+	{
+		var_dump($id_user);
+	}
 }
+

@@ -5,6 +5,7 @@ if (!empty($title))
 	$title_text = "$title - $title_text";
 }
 ?>
+
 <!DOCTYPE HTML>
 <html lang="ja">
   <head>
@@ -17,7 +18,7 @@ if (!empty($title))
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='http://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.0.0/build/cssreset/reset-min.css" />
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.0.0/build/cssreset/reset-min.css">
 
     <!-- Bootstrap -->
     <link rel="stylesheet" charset="UTF-8" href="<?= base_url('lib/bootstrap/css/bootstrap.min.css') ?>" media="screen" />
@@ -37,6 +38,7 @@ if (!empty($title))
 		}
 		?>
     <div id="wrapper">
-			<!--div id="alert-div">
-			<?php /* get_alert(); */ ?>
-			</div-->
+			<?php 
+			get_alert($this->session->userdata('alert'));  
+			$this->session->unset_userdata('alert');
+			?>

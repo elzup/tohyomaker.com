@@ -127,7 +127,7 @@ if (!function_exists('sharebtn_twitter'))
 			 data-url="<?= fix_url($uri) ?>"
 			 data-text="<?= $text ?>"
 			 data-count="horizontal"
-			 data-lang="ja">Tweet</a>
+			 data-lang="ja">ツイートする</a>
 			 <?php
 		 }
 
@@ -135,39 +135,13 @@ if (!function_exists('sharebtn_twitter'))
 
 
 
-	 if (!function_exists('alert_box'))
+
+	 if (!function_exists('logpane'))
 	 {
 
-		 function alert_box($type)
+		 function logpane(Resultobj $result, Surveyobj $survey = NULL, $is_title = FALSE)
 		 {
-			 // TODO: use value
-			 $lib = array(
-					 "ログインしました。",
-					 "ログアウトしました。",
-					 "投票が完了しました。",
-			 );
-			 if (empty($lib[$type]))
-			 {
-				 return;
-			 }
-			 $text = $lib[$type];
-			 $alert_type = 'alert-success';
 			 ?>
-		<div class="alert alert-dismissable <?= $alert_type ?>">
-			<button type="button" class="close" data-dismiss="alert">×</button>
-			<p><?= $text ?></p>
-		</div>
-		<?php
-	}
-
-}
-
-if (!function_exists('logpane'))
-{
-
-	function logpane(Resultobj $result, Surveyobj $survey = NULL, $is_title = FALSE)
-	{
-		?>
 		<div class="panel panel-success panel-log">
 			<div class="panel-body">
 

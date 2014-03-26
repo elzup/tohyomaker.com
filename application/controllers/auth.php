@@ -54,14 +54,17 @@ class Auth extends CI_Controller
 		$this->session->set_userdata(array ('access_token' => $access_token));
 		$ref = $this->session->userdata('referer');
 		$this->session->unset_userdata('referer');
+
+		$this->session->set_userdata(set_alert(ALERT_TYPE_LOGIN));
 		jump($ref ? : base_url());
 	}
 
 	function logout()
 	{
 		$this->session->sess_destroy();
-
 		$ref = filter_input(INPUT_SERVER, 'HTTP_REFERER');
+
+		$this->session->set_userdata(set_alert(ALERT_TYPE_LOGOUT));
 		jump($ref ? : base_url());
 	}
 

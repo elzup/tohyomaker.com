@@ -38,24 +38,32 @@ class User_model extends CI_Model
 		$this->config->load('my_twitter');
 		$twitter_config = $this->config->item('TWITTER_CONSUMER');
 
-		$access_token = @$this->session->userdata('access_token');
-
-		if (!empty($access_token['oauth_token']))
+		$serial = @$this->session->userdata('userserial');
+		if (!empty($serial))
 		{
-			$this->twitter_connection = new TwitterOAuth($twitter_config['key'], $twitter_config['secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
-			$id_twitter = $access_token['user_id'];
-			$id_user = $this->check_register($id_twitter);
-			if ($id_user === FALSE)
-			{
-				$id_user = $this->register($id_twitter);
-				echo $id_user;
-				exit;
-			}
-			$this->user = new Userobj($id_user, $access_token['screen_name'], $id_twitter);
-			$this->update_last_sn_main();
-			return true;
+			$this->user = unserialize($serial);
+			return TRUE;
 		}
-		return false;
+
+		$access_token = @$this->session->userdata('access_token');
+		if (empty($access_token['oauth_token']))
+		{
+			return FALSE;
+		}
+		$this->twitter_connection = new TwitterOAuth($twitter_config['key'], $twitter_config['secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
+		$id_twitter = $access_token['user_id'];
+		$id_user = $this->check_register($id_twitter);
+		if ($id_user === FALSE)
+		{
+			$id_user = $this->register($id_twitter);
+			echo $id_user;
+			exit;
+		}
+		$this->user = new Userobj($id_user, $access_token['screen_name'], $id_twitter);
+		$this->update_last_sn_main();
+		$this->session->set_userdata(array ('userserial' => serialize($this->user)));
+
+		return TRUE;
 	}
 
 	/**
@@ -68,7 +76,7 @@ class User_model extends CI_Model
 		$this->db->where('id_twitter', $id_twitter);
 		$query = $this->db->get('user_tbl');
 		$result = $query->result('array');
-		// if not exists return false
+		// if not exists return FALSE
 		if (!isset($result[0]['id_user']))
 		{
 			return FALSE;
@@ -100,4 +108,5 @@ class User_model extends CI_Model
 		$this->db->set('sn_last', $sn);
 		$this->db->update('user_tbl');
 	}
+
 }

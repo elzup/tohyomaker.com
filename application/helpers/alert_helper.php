@@ -1,14 +1,10 @@
 <?php
-
 if (!function_exists('set_alert'))
 {
 
-	/**
-	 * @deprecated
-	 */
-	function set_alert($type)
+	function set_alert($type, $text = '')
 	{
-		return setcookie(ALERT_PREFIX . $type , '1', time() + 60);
+		return array('alert' => $type . ':' . $text);
 	}
 
 }
@@ -16,29 +12,65 @@ if (!function_exists('set_alert'))
 if (!function_exists('get_alert'))
 {
 
-	/**
-	 * @deprecated
-	 */
-	function get_alert()
+	function get_alert($data)
 	{
-		$cookies = filter_input_array(INPUT_COOKIE);
-		?> <div class="col-sm-row"><?php
-		if (!empty($cookies))
+		if (empty($data))
 		{
-			foreach ($cookies as $key => $value)
-			{
-				$pattern = '#^' . ALERT_PREFIX . '(.+)#';
-				if ($value == 1 && preg_match($pattern, $key, $matches))
-				{
-					?> <div class="col-sm-offset-1 col-sm-10"><?php
-							$type = $matches[1];
-							alert_box($type);
-							setcookie($key, "unset", time() - 3600);
-							?> </div><?php
-					}
-				}
-				?> </div><?php
+			return;
 		}
+		$pattern = '#^(.+):(.*)#';
+		$matches = array();
+		if (preg_match($pattern, $data, $matches))
+		{
+			?> 
+			<div id="alert-div">
+				<div class="col-sm-row">
+					<div class="col-sm-offset-1 col-sm-10">
+						<?php
+						$type = $matches[1];
+						$text = $matches[2];
+						alert_box($type, $text);
+						?> 
+					</div>
+				</div>
+			</div>
+			<?php
+		}
+	}
+
+}
+
+if (!function_exists('alert_box'))
+{
+
+	function alert_box($type, $text = '')
+	{
+		$lib = array(
+				'',
+				'ログインしました。',
+				'ログアウトしました。',
+				'投票が完了しました。',
+				'',
+				'なにかのエラーです。',
+		);
+		if (empty($lib[$type]))
+		{
+			return;
+		}
+		$type_text = $lib[$type];
+		$alert_type = 'alert-success';
+		if ($type == ALERT_TYPE_ERROR)
+		{
+			$alert_type = 'alert-warning';
+			// TODO: write error log / $text in error code
+		}
+		?>
+		<div class="alert alert-dismissable <?= $alert_type ?>">
+			<button type="button" class="close" data-dismiss="alert">×</button>
+			<p><?= $type_text ?></p>
+			<span class="help-block"><?= $text ?></span>
+		</div>
+		<?php
 	}
 
 }

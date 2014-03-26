@@ -63,7 +63,7 @@ class Survey extends CI_Controller
 		$surveyselectform_info = array(
 				'survey' => $survey,
 				// is_login so emit token
-				'token' => (isset($user) ? set_token() : NULL),
+				'token' => (isset($user) ? $this->_set_token() : NULL),
 				'select' => $select,
 		);
 		$this->load->view('surveyselectform', $surveyselectform_info);
@@ -105,35 +105,49 @@ class Survey extends CI_Controller
 
 	function regist($id_survey = NULL)
 	{
-		if ($this->input->server('REQUEST_METHOD') != 'POST' || check_token() === FALSE
+		if ($this->input->server('REQUEST_METHOD') != 'POST' || !$this->_check_token()
 				|| !$this->_check_post(($post = $this->input->post())) || !isset($id_survey))
 		{
 			// TODO: error action
-			die('error: not post request, wrong token, wrong postdata');
+			$this->session->set_userdata(set_alert(ALERT_TYPE_ERROR, CODE_ERROR_REQUEST + CODE_PAGE_SURVEY));
+			jump(base_url());
 		}
 
 		$user = $this->user->get_user();
 		if (empty($user))
 		{
-			// TODO: error action
-			die('error: not logined');
+			$this->session->set_userdata(set_alert(ALERT_TYPE_ERROR, CODE_ERROR_ACCESS_NOLOGIN + CODE_PAGE_SURVEY));
+			jump(base_url());
 		}
 		/* @var $survey Surveyobj */
 		if (($survey = $this->survey->get_survey($id_survey, $user)) === FALSE)
 		{
-			// TODO: jump no found page
-			die("no found id : {$id_survey}");
+			jump(base_url());
 		}
 		$value = $post[POST_VALUE_NAME];
 		if ($this->survey->regist_vote($survey, $user, $value) === FALSE)
 		{
 			// TODO: set alert. failed
+			$this->session->set_userdata(set_alert(ALERT_TYPE_ERROR, CODE_ERROR_DB + CODE_PAGE_SURVEY));
 		} else
 		{
-			// TODO: set cookie.
-		//	setcookie("tm_alert_", $value, time() + 60);
+			// TODO: if just vote, plus1 message 
+			$this->session->set_userdata(set_alert(ALERT_TYPE_VOTED));
 		}
 		jump(base_url(PATH_VOTE . '/' . $id_survey));
 	}
 
+	private function _set_token()
+	{
+		$token = sha1(uniqid(mt_rand(), TRUE));
+		$this->session->set_userdata(array ('token' => $token));
+		return $token;
+	}
+
+	private function _check_token($token = NULL)
+	{
+		$token = $token ?: filter_input(INPUT_POST, 'token');
+		$token_c = $this->userdata('token');
+		return !empty($token_c) && $token_c != $token;
+	}
 }
