@@ -16,9 +16,9 @@
     * ~~作成した投票履歴~~
     * pager
 * userpage
-* sessionクラスによる管理
+* ~~sessionクラスによる管理~~
     * ~~user情報~~
-    * +alert box
+    * ~~alert box~~
 * seo
     * meta
 

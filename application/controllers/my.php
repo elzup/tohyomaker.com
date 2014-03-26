@@ -13,7 +13,6 @@ class My extends CI_Controller
 	{
 		parent::__construct();
 		// TODO: delete session in all page
-		session_start();
 		$this->load->model('Survey_model', 'survey', TRUE);
 		$this->load->model('User_model', 'user', TRUE);
 	}
