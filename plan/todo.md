@@ -7,15 +7,15 @@
 * ~~result の記録~~
     * ~~切り目票数~~
     * ~~3日目最終~~
-* footer の作成
+* +footer の作成
 * surveysblock
     * 多い順
     * 結果新着
 * mypage
     * 投票履歴,状態別フィルター
     * ~~作成した投票履歴~~
-    * pager
-* userpage
+    * +pager
+* ~~userpage~~
 * ~~sessionクラスによる管理~~
     * ~~user情報~~
     * ~~alert box~~
