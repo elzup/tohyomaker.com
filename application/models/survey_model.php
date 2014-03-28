@@ -111,7 +111,7 @@ class Survey_model extends CI_Model
 		$this->db->order_by("timestamp", "desc");
 		$this->db->limit($num);
 // limit progress for a totality db surveys are small
-		$this->db->where('state', SURVEY_STATE_PROGRESS);
+//		$this->db->where('state', SURVEY_STATE_PROGRESS);
 		$result = $this->db->get('survey_tbl')->result();
 		return $result;
 	}
@@ -468,7 +468,8 @@ class Survey_model extends CI_Model
 	{
 		$data = $this->select_surveys_new($num);
 		$ids = $this->datas_to_surveyids($data);
-		return $this->get_surveys($ids, $num, $start, $id_user);
+		$surveys = $this->get_surveys($ids, $num, $start, $id_user);
+		return $surveys;
 	}
 
 	public function get_surveys_hot($num, $start, $id_user = NULL)
@@ -551,8 +552,12 @@ class Survey_model extends CI_Model
 	 * @param int $state_limit
 	 * @return Surveyobj[]
 	 */
-	public function get_surveys(array $id_objs, $num = 100, $start = 0, $id_user = NULL, $state_limit = SURVEY_STATE_ALL)
+	public function get_surveys($id_objs, $num = 100, $start = 0, $id_user = NULL, $state_limit = SURVEY_STATE_ALL)
 	{
+		if (!is_array($id_objs) || count($id_objs) == 0)
+		{
+			return NULL;
+		}
 		$surveys = array();
 		for ($i = $start; ($ido = @$id_objs[$i]) && count($surveys) < $num; $i++)
 		{
