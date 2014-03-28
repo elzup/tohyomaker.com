@@ -1,18 +1,23 @@
 
 </div>
 <div id="footer">
-	<!--TODO: create footer-->
-	<div class="col-sm-4">
-		<ul>
-			<li></li>
-		</ul>
-
-	</div>
-	<div class="col-sm-4">
-
-	</div>
-	<div class="col-sm-4">
-
+	<div class="container">
+		<div class="row">
+			<!--TODO: create footer-->
+			<div class="col-sm-4">
+				<strong>メイン</strong>
+				<ul>
+					<li><a <?= attr_href() ?>>トップ</a></li>
+				</ul>
+			</div>
+			<div class="col-sm-4">
+				<strong>カタログ</strong>
+				<ul>
+					<li><a <?= attr_href(HREF_TYPE_NEW) ?>>新着投票</a></li>
+					<li><a <?= attr_href(HREF_TYPE_HOT) ?>>人気投票</a></li>
+				</ul>
+			</div>
+		</div>
 	</div>
 
 </div>
@@ -33,12 +38,16 @@
 <!-- js of act on all page-->
 <script src="<?= base_url("js/helper.js") ?>" type="text/javascript"></script>
 <script src="<?= base_url("js/alert.js") ?>" type="text/javascript"></script>
-<?php if (!empty($jss))
+<?php
+if (!empty($jss))
 {
 	foreach ($jss as $js)
-	{ ?>
+	{
+		?>
 		<script src="<?= base_url("js/{$js}.js") ?>" type="text/javascript"></script>
-	<?php }
-} ?>
+		<?php
+	}
+}
+?>
 </body>
 </html>
