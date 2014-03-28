@@ -24,6 +24,10 @@
 * ~~secure~~
 * ~~secure2 makeform UI~~
 
+* surveyselectボタンview変更
+
+* スマホview
+
 ## level2
 * tags block
 * makecheck surveypaneのサンプル表示
@@ -35,6 +39,9 @@
 * surveysblock
     * 多い順
     * 結果新着
+
+* サイトアイコン
+
 
 ## level3
 * original glyphicon 作成

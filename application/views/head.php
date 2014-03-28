@@ -1,19 +1,13 @@
 <?php
-$title_text = '投票メーカー';
-if (!empty($title))
-{
-	$title_text = "$title - $title_text";
-}
+/* @var $survey Surveyobj */
+/* @var $meta meta */
 ?>
 
 <!DOCTYPE HTML>
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <title><?= $title_text ?></title>
-
-<meta name="keywords" content="投票,アンケート,Twitter,ツイッター" />
-<meta name="description" content="" />
+    <title><?= $meta->title ?></title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,6 +22,8 @@ if (!empty($title))
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]> <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script> <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script> <![endif]-->
+
+	<?php $this->load->view('meta', array('meta' => $meta))?>
 
   </head>
 	<body>

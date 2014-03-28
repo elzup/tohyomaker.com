@@ -50,6 +50,8 @@ class Survey extends CI_Controller
 		$title = $survey->title;
 		$head_info = array(
 				'title' => $title,
+				'url' => $url = '',
+				'survey' => $survey,
 		);
 		$this->load->view('head', $head_info);
 		$this->load->view('title', array('title' => $title, 'offset' => 0));
