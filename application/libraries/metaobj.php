@@ -4,6 +4,7 @@ class Metaobj
 {
 
 	private $title;
+	private $title_meta;
 	public $description;
 	/* @var $keywords array */
 	public $keywords;
@@ -16,6 +17,7 @@ class Metaobj
 	public function __construct()
 	{
 		$this->title = '投票メーカー';
+		$this->title_meta = '投票メーカー';
 		$this->keywords = array();
 		$this->keywords[] = '投票';
 		$this->keywords[] = 'Twitter';
@@ -35,14 +37,15 @@ class Metaobj
 		return $this->type;
 	}
 
-	public function get_title()
+	public function get_title($is_meta = FALSE)
 	{
-		return $this->title;
+		return $is_meta ? $this->title_meta : $this->title;
 	}
 
 	public function set_title($str)
 	{
-		$this->title = $str . ' - '.SITE_NAME;
+		$this->title = $str;
+		$this->title_meta = $str . ' - '.SITE_NAME;
 	}
 
 	public function set_keyword($str)

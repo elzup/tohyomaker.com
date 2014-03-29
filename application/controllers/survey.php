@@ -47,14 +47,14 @@ class Survey extends CI_Controller
 			$select = NULL;
 		}
 
-		$title = $survey->title;
+		$meta = new Metaobj();
+		$meta->setup_survey($survey);
 		$head_info = array(
-				'title' => $title,
-				'url' => $url = '',
+				'meta' => $meta,
 				'survey' => $survey,
 		);
 		$this->load->view('head', $head_info);
-		$this->load->view('title', array('title' => $title, 'offset' => 0));
+		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 0));
 		$this->load->view('navbar', array('user' => $user));
 		$surveyhead_info = array(
 				'survey' => $survey,
@@ -86,9 +86,14 @@ class Survey extends CI_Controller
 			// TODO: same as vote method todo
 		}
 
-		$title = $survey->title;
-		$this->load->view('head', array('title' => $title));
-		$this->load->view('title', array('title' => $title, 'offset' => 0));
+		$meta = new Metaobj();
+		$meta->setup_survey($survey, TRUE);
+		$head_info = array(
+				'meta' => $meta,
+				'survey' => $survey,
+		);
+		$this->load->view('head', array('meta' => $meta));
+		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 0));
 		$this->load->view('navbar', array('user' => $user));
 		$surveyhead_info = array(
 				'survey' => $survey,
@@ -151,6 +156,6 @@ class Survey extends CI_Controller
 	{
 		$token = $token ?: filter_input(INPUT_POST, 'token');
 		$token_c = $this->userdata('token');
-		return !empty($token_c) && $token_c != $token;
+		return !empty($token_c) && $token_c == $token;
 	}
 }

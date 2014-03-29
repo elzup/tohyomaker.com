@@ -12,8 +12,8 @@ if (!$meta->no_meta)
 	if (!$meta->no_og)
 	{
 		?>
-		<meta property="og:title" content="<?= $meta->title ?>">
-		<meta property="og:type" content="<?= $meta->type ?>">
+	<meta property="og:title" content="<?= $meta->get_title(TRUE) ?>">
+		<meta property="og:type" content="<?= $meta->get_type() ?>">
 		<meta property="og:url" content="<?= $meta->url ?>">
 		<!--meta property="og:image" content=""-->
 		<meta property="og:site_name" content="<?= SITE_NAME ?>">

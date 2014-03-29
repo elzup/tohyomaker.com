@@ -19,12 +19,10 @@ class Make extends CI_Controller
 		/*
 		 * view
 		 */
-		$title = '投票作成';
-		$head_info = array(
-				'title' => $title,
-		);
-		$this->load->view('head', $head_info);
-		$this->load->view('title', array('title' => $title));
+		$meta = new Metaobj();
+		$meta->setup_top();
+		$this->load->view('head', array ('meta' => $meta));
+		$this->load->view('title', array('title' => $meta->get_title()));
 		$this->load->view('navbar', array('user' => $this->user->get_main_user()));
 
 		$makeform_info = array(
@@ -72,9 +70,10 @@ class Make extends CI_Controller
 			jump_back();
 		}
 
-		$title = '投票作成確認';
-		$this->load->view('head', array('title' => $title));
-		$this->load->view('title', array('title' => $title));
+		$meta = new Metaobj();
+		$meta->setup_top();
+		$this->load->view('head', array ('meta' => $meta));
+		$this->load->view('title', array('title' => $meta->get_title()));
 		$this->load->view('navbar', array('user' => $this->user->get_main_user()));
 
 		$makecheck_info = array(
@@ -115,13 +114,10 @@ class Make extends CI_Controller
 			// TODO: jump no found page
 		}
 
-		// TODO: create views
-		$title = '投票作成完了';
-		$head_info = array(
-				'title' => $title,
-		);
-		$this->load->view('head', $head_info);
-		$this->load->view('title', array('title' => $title));
+		$meta = new Metaobj();
+		$meta->setup_top();
+		$this->load->view('head', array ('meta' => $meta));
+		$this->load->view('title', array('title' => $meta->get_title()));
 		$this->load->view('navbar', array('user' => $this->user->get_main_user()));
 
 		$this->load->view('makeend', array('survey' => $survey));
@@ -138,8 +134,8 @@ class Make extends CI_Controller
 	private function _check_token($token = NULL)
 	{
 		$token = $token ?: filter_input(INPUT_POST, 'token');
-		$token_c = $this->userdata('token');
-		return !empty($token_c) && $token_c != $token;
+		$token_c = $this->session->userdata('token');
+		return !empty($token_c) && $token_c == $token;
 	}
 
 }

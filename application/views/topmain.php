@@ -12,7 +12,7 @@
 					<h1 id="title-str" class="top-logo">診断メーカー</h1>
 				</div>
 				<div class="col-sm-12 well">
-					<?= site_description?><br />
+					<?= SITE_DESCRIPTION?><br />
 					<div class="align-center">
 						<a <?= attr_href(HREF_TYPE_MAKE) ?> class="btn btn-success align-center">
 							<i class="glyphicon glyphicon-edit"></i>

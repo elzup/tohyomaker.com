@@ -1,13 +1,13 @@
 <?php
 /* @var $survey Surveyobj */
-/* @var $meta meta */
+/* @var $meta Metaobj */
 ?>
 
 <!DOCTYPE HTML>
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <title><?= $meta->title ?></title>
+    <title><?= $meta->get_title(TRUE) ?></title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

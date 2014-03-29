@@ -26,10 +26,11 @@ class My extends CI_Controller
 		}
 		$surveys_voted = $this->survey->get_surveys_user_voted($user);
 		$surveys_maked = $this->survey->get_surveys_user_maked($user);
-		
-		$title = 'マイページ';
-		$this->load->view('head', array('title' => $title));
-		$this->load->view('title', array('title' => $title, 'offset' => 2));
+
+		$meta = new Metaobj();
+		$meta->setup_my();
+		$this->load->view('head', array('meta' => $meta));
+		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 2));
 		$this->load->view('navbar', array('user' => $user));
 
 		$mypage_info = array(
