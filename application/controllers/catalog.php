@@ -27,6 +27,7 @@ class Catalog extends CI_Controller
 		// TODO: prepare surveys in survey_model 
 		$user = $this->user->get_main_user();
 		$title = '新着';
+		$meta = new Metaobj();
 		$surveys = $this->survey->get_surveys_new(10, $page * 10, @$user->id);
 		$this->load->view('head', array('title' => $title));
 		$this->load->view('title', array('title' => $title, 'offset' => 2));
