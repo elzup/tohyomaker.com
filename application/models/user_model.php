@@ -9,6 +9,7 @@ class User_model extends CI_Model
 	 * @var $user UesrObj
 	 */
 	private $user;
+	private $is_guest;
 
 	function __construct()
 	{
@@ -27,7 +28,7 @@ class User_model extends CI_Model
 
 	public function is_login()
 	{
-		return !empty($this->twitter_connection);
+		return !empty($this->user);
 	}
 
 	/**
@@ -35,6 +36,7 @@ class User_model extends CI_Model
 	 */
 	function check_login()
 	{
+
 		$this->config->load('my_twitter');
 		$twitter_config = $this->config->item('TWITTER_CONSUMER');
 
@@ -46,54 +48,67 @@ class User_model extends CI_Model
 		}
 
 		$access_token = @$this->session->userdata('access_token');
-		if (empty($access_token['oauth_token']))
+		if (!empty($access_token['oauth_token']))
 		{
-			return FALSE;
+			$this->twitter_connection = new TwitterOAuth($twitter_config['key'], $twitter_config['secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
+			$id_twitter = $access_token['user_id'];
+			$data = $this->check_register($id_twitter, 'id_twitter');
+			$id_user = @$data->id_user ? : $this->register($id_twitter);
+			$this->user = $this->get_user($id_user);
+			$this->session->set_userdata(array('userserial' => serialize($this->user)));
+			return TRUE;
 		}
-		$this->twitter_connection = new TwitterOAuth($twitter_config['key'], $twitter_config['secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
-		$id_twitter = $access_token['user_id'];
-		$data = $this->check_register($id_twitter);
-		$id_user = @$data->id_user ? : $this->register($id_twitter);
-		$this->user = $this->get_user($id_user);
-		$this->session->set_userdata(array ('userserial' => serialize($this->user)));
-
-		if (!isset($this->user->count_vote))
-		{
-			jump(base_url(PATH_LOGOUT));
-		}
-		return TRUE;
+		$ip = $this->input->ip_address();
+		$data = $this->check_register_guest($ip, 'ip_user');
+		$id_user = @$data->id_user ? : $this->register_guest($ip);
+		$this->user = $this->get_user_guest($id_user);
+		$this->user = $this->get_user($id_user, TRUE);
+		return FALSE;
 	}
 
-	public function get_user($id_user)
+	public function get_user($id_user, $is_guest = FALSE)
 	{
-		if (!($data = $this->check_register($id_user, 'id_user')))
+		if ((!$is_guest && !($data = $this->check_register($id_user))) || ($is_guest && !($data = $this->check_register_guest($id_user))))
 		{
 			return FALSE;
 		}
 		return new Userobj($data);
 	}
-
+	public function get_user_guest($id_user)
+	{
+		return $this->get_user($id_user, TRUE);
+	}
 
 	/**
 	 * 
 	 * @param type $id
 	 * @return boolean|string id_user
 	 */
-	function check_register($id, $type = 'id_twitter')
+	function check_register($id, $type = 'id_user', $is_guest = FALSE)
 	{
 		$this->db->where($type, $id);
-		$query = $this->db->get('user_tbl');
+		$query = $this->db->get($is_guest ? 'user_guest_tbl' : 'user_tbl');
 		$result = $query->result();
 		// if not exists return FALSE
-		return @$result[0] ?: FALSE;
+		return @$result[0] ? : FALSE;
 	}
 
-	function register($id_twitter)
+	function check_register_guest($id, $type = 'id_user')
 	{
-		$this->db->set('id_twitter', $id_twitter);
-		$this->db->insert('user_tbl');
+		return $this->check_register($id, $type, TRUE);
+	}
+
+	function register($id_twitter, $is_guest = FALSE)
+	{
+		$this->db->set($is_guest ? 'ip_user' : 'id_twitter', $id_twitter);
+		$this->db->insert($is_guest ? 'user_guest_tbl' : 'user_tbl');
 
 		return $this->db->insert_id();
+	}
+
+	function register_guest($ip)
+	{
+		return $this->register($ip, TRUE);
 	}
 
 	function update_last_sn_main()
@@ -126,6 +141,11 @@ class User_model extends CI_Model
 		$this->db->set('count_vote', $num);
 		$this->db->update('user_tbl');
 		$this->user->count_vote++;
+	}
+
+	public function guest_login()
+	{
+		
 	}
 
 }

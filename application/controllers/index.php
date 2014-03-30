@@ -20,8 +20,8 @@ class Index extends CI_Controller
 	{
 
 		$user = $this->user->get_main_user();
-		$surveys_hot = $this->survey->get_surveys_hot(5, 0, @$user->id);
-		$surveys_new = $this->survey->get_surveys_new(5, 0, @$user->id);
+		$surveys_hot = $this->survey->get_surveys_hot($user, 5, 0);
+		$surveys_new = $this->survey->get_surveys_new($user, 5, 0);
 
 		$meta = new Metaobj();
 		$meta->setup_top();

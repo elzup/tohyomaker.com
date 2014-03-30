@@ -24,6 +24,8 @@
 * ~~secure~~
 * ~~secure2 makeform UI~~
 
+* ログイン確認ページ
+
 * surveyselectボタンview変更
 
 * スマホview

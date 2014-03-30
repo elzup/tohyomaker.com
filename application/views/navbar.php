@@ -23,7 +23,7 @@ if ($user == null)
 			<li> <a <?= attr_href(HREF_TYPE_NEW) ?>><?= tag_icon(ICON_NEW) ?>新着</a> </li>
 			<li> <a <?= attr_href(HREF_TYPE_HOT) ?>><?= tag_icon(ICON_HOT) ?>人気</a> </li>
 			<?php
-			if ($user)
+			if (!$user->is_guest)
 			{
 				?>
 				<li>

@@ -20,7 +20,7 @@ class My extends CI_Controller
 	function index()
 	{
 		$user = $this->user->get_main_user();
-		if (empty($user))
+		if ($user->is_guest)
 		{
 			jump(base_url());
 		}

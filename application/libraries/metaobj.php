@@ -113,6 +113,7 @@ class Metaobj
 
 	public function setup_survey(Surveyobj $survey, $is_view = FALSE)
 	{
+		$this->set_title($survey->title . ($is_view ? ':結果' : ''));
 		$this->set_keyword($survey->title . ($is_view ? 'の投票結果' : ''));
 		if (isset($survey->tags[0]))
 		{

@@ -1,6 +1,7 @@
 <?php
 
-class Userobj {
+class Userobj
+{
 
 	public $id;
 	public $screen_name;
@@ -10,8 +11,11 @@ class Userobj {
 
 	public $count_vote;
 
+	public $is_guest;
+
 	public function __construct(stdClass $data = NULL)
 	{
+		$this->is_guest = TRUE;
 		if (!empty($data))
 		{
 			$this->set($data);
@@ -20,12 +24,20 @@ class Userobj {
 
 	public function set(stdClass $data)
 	{
-		$this->id          = $data->id_user;
+		$this->id = $data->id_user;
+		if (!isset($data->sn_last))
+		{
+			// guest user
+			$this->screen_name = 'ゲストさん';
+			return;
+		}
+		// logined user
 		$this->screen_name = h($data->sn_last);
-		$this->id_twitter  = $data->id_twitter;
+		$this->id_twitter = $data->id_twitter;
 //		$this->img_url     = $data->img_url;
-		$this->state       = $data->state;
-		$this->count_vote  = $data->count_vote;
+		$this->state = $data->state;
+		$this->count_vote = $data->count_vote;
+		$this->is_guest = FALSE;
 	}
 
 	/**
@@ -33,16 +45,19 @@ class Userobj {
 	 * @param bool $is_table is only mysql table parameter or full
 	 * @return array 
 	 */
-	public function getDataArray($is_table = true) {
+	public function getDataArray($is_table = true)
+	{
 		$array = array(
 				'id_user' => $this->id,
 				'id_twitter' => $this->id_twitter,
 				'state' => $this->state,
 		);
-		if (!$is_table) {
+		if (!$is_table)
+		{
 			$array['img_url'] = $this->img_url;
 			$array['screen_name'] = $this->screen_name;
 		}
 		return $array;
 	}
+
 }

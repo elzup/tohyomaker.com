@@ -155,7 +155,7 @@ class Survey extends CI_Controller
 	private function _check_token($token = NULL)
 	{
 		$token = $token ?: filter_input(INPUT_POST, 'token');
-		$token_c = $this->userdata('token');
+		$token_c = $this->session->userdata('token');
 		return !empty($token_c) && $token_c == $token;
 	}
 }

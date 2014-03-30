@@ -6,6 +6,7 @@ class Auth extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->session->unset_userdata('userserial');
 	}
 
 	function Index()
@@ -20,6 +21,7 @@ class Auth extends CI_Controller
 
 	function start()
 	{
+
 		$twitter_config = $this->config->item('TWITTER_CONSUMER');
 		$this->session->set_userdata(array(
 				'consumer_key' => $twitter_config['key'],

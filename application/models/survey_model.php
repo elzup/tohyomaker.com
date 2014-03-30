@@ -20,7 +20,7 @@ class Survey_model extends CI_Model
 	 * @param int|Surveyobj $id_user optional set selected survey
 	 * @return Surveyobj|boolean
 	 */
-	public function get_survey($id_survey, $id_user = NULL)
+	public function get_survey($id_survey, $id_user = NULL, $is_guest = FALSE)
 	{
 		if (!is_numonly($id_survey))
 		{
@@ -29,6 +29,7 @@ class Survey_model extends CI_Model
 		}
 		if ($id_user instanceof Userobj)
 		{
+			$is_guest = $id_user->is_guest;
 			$id_user = $id_user->id;
 		}
 		$this->db->where('id_survey', $id_survey);
@@ -52,7 +53,7 @@ class Survey_model extends CI_Model
 		$this->_check_state($survey);
 		if ($survey->state != SURVEY_STATE_END)
 		{
-			$this->install_select($survey, $id_user);
+			$this->install_select($survey, $id_user, $is_guest);
 		}
 		return $survey;
 	}
@@ -150,14 +151,14 @@ class Survey_model extends CI_Model
 	 */
 	public function regist_vote(Surveyobj $survey, Userobj $user, $value)
 	{
-		if (($this->check_voted($survey->id, $user->id)) !== NO_VOTED || $survey->num_item
+		if (($this->check_voted($survey->id, $user->id, $user->is_guest)) !== NO_VOTED || $survey->num_item
 				<= $value)
 		{
 			return FALSE;
 		}
 
 		$survey->update_regist_vote($value);
-		$this->insert_vote($survey->id, $user->id, $value);
+		$this->insert_vote($survey->id, $user->id, $value, $user->is_guest);
 		$this->inclement_item($survey->id, $value, $survey->items[$value]->num);
 		$this->inclement_survey($survey->id, $survey->total_num);
 		if (($type = $survey->check_just()) !== FALSE)
@@ -168,10 +169,11 @@ class Survey_model extends CI_Model
 	}
 
 
-	public function insert_vote($id_survey, $id_user, $value)
+	public function insert_vote($id_survey, $id_user, $value, $is_guest = FALSE)
 	{
 		$this->db->set('id_survey', $id_survey);
 		$this->db->set('id_user', $id_user);
+		$this->db->set('is_guest', $is_guest);
 		$this->db->set('value', $value);
 		$this->db->insert('vote_tbl');
 	}
@@ -207,13 +209,13 @@ class Survey_model extends CI_Model
 		$this->db->update('item_tbl');
 	}
 
-	public function install_select(Surveyobj &$survey, $id_user)
+	public function install_select(Surveyobj &$survey, $id_user, $is_guest = FALSE)
 	{
 		if (empty($id_user))
 		{
 			return;
 		}
-		$select = $this->check_voted($survey->id, $id_user);
+		$select = $this->check_voted($survey->id, $id_user, $is_guest);
 		$survey->selected = $select;
 		if (!isset($select))
 		{
@@ -225,10 +227,11 @@ class Survey_model extends CI_Model
 	 * check user already voted or never
 	 * @return boolean|int false or vote_value
 	 */
-	public function check_voted($id_survey, $id_user)
+	public function check_voted($id_survey, $id_user, $is_guest = FALSE)
 	{
 		$this->db->where('id_survey', $id_survey);
 		$this->db->where('id_user', $id_user);
+		$this->db->where('is_guest', $is_guest);
 		$result = $this->db->get('vote_tbl')->result();
 		if (!isset($result[0]))
 		{
@@ -454,36 +457,36 @@ class Survey_model extends CI_Model
 	{
 		$data = $this->select_votes_user($user->id);
 		$ids = $this->datas_to_surveyids($data, SURVEY_STATE_ALL);
-		return $this->get_surveys($ids, $num, $start, $user->id);
+		return $this->get_surveys($ids, $user, $num, $start);
 	}
 
 	public function get_surveys_user_maked(Userobj $user, $num = 20, $start = 0)
 	{
 		$data = $this->select_surveys_owner($user->id);
 		$ids = $this->datas_to_surveyids($data);
-		return $this->get_surveys($ids, $num, $start, $user->id);
+		return $this->get_surveys($ids, $user, $num, $start);
 	}
 
-	public function get_surveys_new($num = 10, $start = 0, $id_user = NULL)
+	public function get_surveys_new(Userobj $user, $num = 10, $start = 0)
 	{
 		$data = $this->select_surveys_new($num);
 		$ids = $this->datas_to_surveyids($data);
-		$surveys = $this->get_surveys($ids, $num, $start, $id_user);
+		$surveys = $this->get_surveys($ids, $user, $num, $start);
 		return $surveys;
 	}
 
-	public function get_surveys_hot($num, $start, $id_user = NULL)
+	public function get_surveys_hot(Userobj $user, $num, $start)
 	{
 		$data = $this->select_votes_new(200);
 		$ids = $this->calc_surveyids_hot($data);
-		return $this->get_surveys($ids, $num, $start, $id_user);
+		return $this->get_surveys($ids, $user, $num, $start);
 	}
 
-	public function get_surveys_search_tag($word, $num = 10, $start = 0, $id_user = NULL)
+	public function get_surveys_search_tag(Userobj $user, $word, $num = 10, $start = 0)
 	{
 		$data = $this->select_search_tags($word, 200);
 		$ids = $this->calc_surveyids_tag($data);
-		return $this->get_surveys($ids, $num, $start, $id_user);
+		return $this->get_surveys($ids, $user, $num, $start);
 	}
 
 	public function calc_surveyids_tag($data)
@@ -546,13 +549,13 @@ class Survey_model extends CI_Model
 	/**
 	 * 
 	 * @param stdClass[] $id_objs
+	 * @param Userobj $user
 	 * @param int $num
 	 * @param int $start
-	 * @param int $id_user
 	 * @param int $state_limit
 	 * @return Surveyobj[]
 	 */
-	public function get_surveys($id_objs, $num = 100, $start = 0, $id_user = NULL, $state_limit = SURVEY_STATE_ALL)
+	public function get_surveys($id_objs, Userobj $user, $num = 100, $start = 0, $state_limit = SURVEY_STATE_ALL)
 	{
 		if (!is_array($id_objs) || count($id_objs) == 0)
 		{
@@ -561,7 +564,7 @@ class Survey_model extends CI_Model
 		$surveys = array();
 		for ($i = $start; ($ido = @$id_objs[$i]) && count($surveys) < $num; $i++)
 		{
-			$survey = $this->get_survey($ido->id, $id_user);
+			$survey = $this->get_survey($ido->id, $user->id, $user->is_guest);
 			if (empty($survey) || ($state_limit !== SURVEY_STATE_ALL && $survey->state != $state_limit))
 			{
 				continue;
