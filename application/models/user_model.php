@@ -87,7 +87,7 @@ class User_model extends CI_Model
 	function check_register($id, $type = 'id_user', $is_guest = FALSE)
 	{
 		$this->db->where($type, $id);
-		$query = $this->db->get($is_guest ? 'user_guest_tbl' : 'user_tbl');
+		$query = $this->db->get($is_guest ? DB_TBL_USER_GUEST : DB_TBL_USER);
 		$result = $query->result();
 		// if not exists return FALSE
 		return @$result[0] ? : FALSE;
@@ -101,7 +101,7 @@ class User_model extends CI_Model
 	function register($id_twitter, $is_guest = FALSE)
 	{
 		$this->db->set($is_guest ? 'ip_user' : 'id_twitter', $id_twitter);
-		$this->db->insert($is_guest ? 'user_guest_tbl' : 'user_tbl');
+		$this->db->insert($is_guest ? DB_TBL_USER_GUEST : DB_TBL_USER);
 
 		return $this->db->insert_id();
 	}
@@ -125,7 +125,7 @@ class User_model extends CI_Model
 	{
 		$this->db->where('id_user', $id_user);
 		$this->db->set('sn_last', $sn);
-		$this->db->update('user_tbl');
+		$this->db->update(DB_TBL_USER);
 	}
 
 	public function inclement_user_votecount($id_user, $num = NULL)
@@ -133,13 +133,13 @@ class User_model extends CI_Model
 		$where = array('id_user' => $id_user);
 		if (!isset($num))
 		{
-			$result = $this->db->get_where('user_tbl', $where)->result();
+			$result = $this->db->get_where(DB_TBL_USER, $where)->result();
 			$num = $result->num + 1;
 		}
 
 		$this->db->where($where);
 		$this->db->set('count_vote', $num);
-		$this->db->update('user_tbl');
+		$this->db->update(DB_TBL_USER);
 		$this->user->count_vote++;
 	}
 

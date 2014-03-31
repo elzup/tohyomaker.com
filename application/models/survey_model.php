@@ -33,7 +33,7 @@ class Survey_model extends CI_Model
 			$id_user = $id_user->id;
 		}
 		$this->db->where('id_survey', $id_survey);
-		$result = $this->db->get('survey_tbl')->result('object');
+		$result = $this->db->get(DB_TBL_SURVEY)->result();
 		if (empty($result))
 		{
 			return FALSE;
@@ -61,23 +61,23 @@ class Survey_model extends CI_Model
 	public function select_user_simple($id_user)
 	{
 		$this->db->where('id_user', $id_user);
-		$result = $this->db->get('user_tbl')->result();
+		$result = $this->db->get(DB_TBL_USER)->result();
 		return new Userobj($result[0]);
 	}
 
 	public function select_items($id_survey)
 	{
-		return $this->_select_survey_subject($id_survey, 'item_tbl');
+		return $this->_select_survey_subject($id_survey, DB_TBL_ITEM);
 	}
 
 	public function select_results($id_survey)
 	{
-		return $this->_select_survey_subject($id_survey, 'result_tbl', 'desc');
+		return $this->_select_survey_subject($id_survey, DB_TBL_RESULT, 'desc');
 	}
 
 	public function select_tags($id_survey)
 	{
-		return $this->_select_survey_subject($id_survey, 'tag_tbl');
+		return $this->_select_survey_subject($id_survey, DB_TBL_TAG);
 	}
 
 	private function _select_survey_subject($id_survey, $tblname, $sort = NULL)
@@ -95,7 +95,7 @@ class Survey_model extends CI_Model
 	{
 		$this->db->order_by("timestamp", "desc");
 		$this->db->where('id_user', $id_user);
-		$result = $this->db->get('vote_tbl')->result();
+		$result = $this->db->get(DB_TBL_VOTE)->result();
 		return $result;
 	}
 
@@ -103,7 +103,7 @@ class Survey_model extends CI_Model
 	{
 		$this->db->order_by("timestamp", "desc");
 		$this->db->where('id_user', $id_user);
-		$result = $this->db->get('survey_tbl')->result();
+		$result = $this->db->get(DB_TBL_SURVEY)->result();
 		return $result;
 	}
 
@@ -113,7 +113,7 @@ class Survey_model extends CI_Model
 		$this->db->limit($num);
 // limit progress for a totality db surveys are small
 //		$this->db->where('state', SURVEY_STATE_PROGRESS);
-		$result = $this->db->get('survey_tbl')->result();
+		$result = $this->db->get(DB_TBL_SURVEY)->result();
 		return $result;
 	}
 
@@ -130,7 +130,7 @@ class Survey_model extends CI_Model
 		{
 			$this->db->or_where('value', $tags[$i]);
 		}
-		$result = $this->db->get('tag_tbl')->result();
+		$result = $this->db->get(DB_TBL_TAG)->result();
 		return $result;
 	}
 
@@ -138,7 +138,7 @@ class Survey_model extends CI_Model
 	{
 		$this->db->order_by("timestamp", "asc");
 		$this->db->limit($num);
-		$result = $this->db->get('vote_tbl')->result();
+		$result = $this->db->get(DB_TBL_VOTE)->result();
 		return $result;
 	}
 
@@ -175,7 +175,7 @@ class Survey_model extends CI_Model
 		$this->db->set('id_user', $id_user);
 		$this->db->set('is_guest', $is_guest);
 		$this->db->set('value', $value);
-		$this->db->insert('vote_tbl');
+		$this->db->insert(DB_TBL_VOTE);
 	}
 
 	public function inclement_survey($id_survey, $total_num = NULL)
@@ -183,13 +183,13 @@ class Survey_model extends CI_Model
 		$where = array('id_survey' => $id_survey);
 		if (!isset($total_num))
 		{
-			$result = $this->db->get_where('survey_tbl', $where)->result();
+			$result = $this->db->get_where(DB_TBL_SURVEY, $where)->result();
 			$total_num = $result->total_num + 1;
 		}
 
 		$this->db->where($where);
 		$this->db->set('total_num', $total_num);
-		$this->db->update('survey_tbl');
+		$this->db->update(DB_TBL_SURVEY);
 	}
 
 	public function inclement_item($id_survey, $index, $num = NULL)
@@ -200,13 +200,13 @@ class Survey_model extends CI_Model
 		);
 		if (!isset($num))
 		{
-			$result = $this->db->get_where('item_tbl', $where)->result();
+			$result = $this->db->get_where(DB_TBL_ITEM, $where)->result();
 			$num = $result->num + 1;
 		}
 
 		$this->db->where($where);
 		$this->db->set('num', $num);
-		$this->db->update('item_tbl');
+		$this->db->update(DB_TBL_ITEM);
 	}
 
 	public function install_select(Surveyobj &$survey, $id_user, $is_guest = FALSE)
@@ -232,7 +232,7 @@ class Survey_model extends CI_Model
 		$this->db->where('id_survey', $id_survey);
 		$this->db->where('id_user', $id_user);
 		$this->db->where('is_guest', $is_guest);
-		$result = $this->db->get('vote_tbl')->result();
+		$result = $this->db->get(DB_TBL_VOTE)->result();
 		if (!isset($result[0]))
 		{
 			return NO_VOTED;
@@ -250,7 +250,7 @@ class Survey_model extends CI_Model
 		$this->db->set('id_user', count($user->id));
 		$this->db->set('is_anonymous', $data['is_anonymous']);
 
-		$this->db->insert('survey_tbl');
+		$this->db->insert(DB_TBL_SURVEY);
 		$id = $this->db->insert_id();
 
 		$this->_insert_items($id, $items);
@@ -313,7 +313,7 @@ class Survey_model extends CI_Model
 	{
 		$this->db->where('id_survey', $survey->id);
 		$this->db->set('state', $state);
-		$this->db->update('survey_tbl');
+		$this->db->update(DB_TBL_SURVEY);
 		$survey->state = $state;
 	}
 
@@ -328,14 +328,14 @@ class Survey_model extends CI_Model
 	private function _delete_votes(Surveyobj $survey)
 	{
 		$this->db->where('id_survey', $survey->id);
-		$this->db->delete('vote_tbl');
+		$this->db->delete(DB_TBL_VOTE);
 	}
 
 	public function delete_votes_day()
 	{
 		$this->db->where('is_guest', 1);
 		$this->db->where('`timestamp` < date(now())');
-		$this->db->delete('vote_tbl');
+		$this->db->delete(DB_TBL_VOTE);
 	}
 
 	/**
@@ -352,7 +352,7 @@ class Survey_model extends CI_Model
 					'value' => $item,
 					'index' => $i,
 			);
-			$this->db->insert('item_tbl', $record);
+			$this->db->insert(DB_TBL_ITEM, $record);
 		}
 	}
 
@@ -364,7 +364,7 @@ class Survey_model extends CI_Model
 					'id_survey' => $id_survey,
 					'value' => $tag,
 			);
-			$this->db->insert('tag_tbl', $record);
+			$this->db->insert(DB_TBL_TAG, $record);
 		}
 	}
 
@@ -418,11 +418,11 @@ class Survey_model extends CI_Model
 				'type' => $type + 100,
 		);
 		$this->db->where($where);
-		$this->db->delete('result_tbl');
+		$this->db->delete(DB_TBL_RESULT);
 		$this->_insert_result($survey, $type);
 		$where['type'] -= 100;
 		$this->db->where($where);
-		$data = $this->db->get('result_tbl')->result();
+		$data = $this->db->get(DB_TBL_RESULT)->result();
 		return $data[0];
 	}
 
@@ -441,7 +441,7 @@ class Survey_model extends CI_Model
 				'type' => $type,
 				'result' => $survey->get_result_text(),
 		);
-		$this->db->insert('result_tbl', $data);
+		$this->db->insert(DB_TBL_RESULT, $data);
 	}
 
 	private function _insert_result_book($id_survey, $type)
@@ -452,7 +452,7 @@ class Survey_model extends CI_Model
 				'type' => $type + 100,
 				'result' => strtotime($timestrlib[$type]),
 		);
-		$this->db->insert('result_tbl', $data);
+		$this->db->insert(DB_TBL_RESULT, $data);
 	}
 
 	/**
