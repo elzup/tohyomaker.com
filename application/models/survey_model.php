@@ -331,6 +331,13 @@ class Survey_model extends CI_Model
 		$this->db->delete('vote_tbl');
 	}
 
+	public function delete_votes_day()
+	{
+		$this->db->where('is_guest', 1);
+		$this->db->where('`timestamp` < date(now())');
+		$this->db->delete('vote_tbl');
+	}
+
 	/**
 	 * same survey items insert batch 
 	 * @param type $id_survey survey's id
