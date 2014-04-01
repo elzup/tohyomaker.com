@@ -16,7 +16,7 @@
     * ~~user情報~~
     * ~~alert box~~
 * seo
-    * meta
+    * ~~meta~~
 
 * ~~結果のツイート~~
 * ~~結果直下にパネル[経過時間、投票総数~~
@@ -29,6 +29,8 @@
 * surveyselectボタンview変更
 
 * スマホview
+
+* delete guest's vote cron設置
 
 ## level2
 * tags block

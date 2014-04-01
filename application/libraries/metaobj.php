@@ -73,6 +73,13 @@ class Metaobj
 		$this->description = 'オリジナルの投票を気軽に作成することが出来ます';
 	}
 
+	public function setup_login()
+	{
+		$this->set_title('ログイン');
+		$this->url = base_url(PATH_LOGIN);
+		$this->description = 'Twitter認証でログインを出来ます';
+	}
+
 	public function setup_catalog_hot()
 	{
 		$this->set_title('人気の投票');
@@ -84,7 +91,6 @@ class Metaobj
 	{
 		$this->set_title('新着投票');
 		$this->url = base_url(PATH_NEW);
-		$this->no_og;
 		$this->description = '最近作成された投票の新着順一覧';
 	}
 
