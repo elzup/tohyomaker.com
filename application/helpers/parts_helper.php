@@ -170,7 +170,7 @@ if (!function_exists('sharebtn_twitter'))
 			</div>
 
 			<div class="panel-footer">
-				<div class="row <?= $result->is_booked() ? 'result-type-time' : 'result-type-total' ?>">
+				<div class="row <?= $result->type == RESULT_TYPE_TIME ? 'result-type-time' : 'result-type-total' ?>">
 					<div class="col-sm-5">
 						<i class="<?= ICON_TIME ?>"></i>
 						経過時間 <?= $result->get_elapsed_time_str() ?>

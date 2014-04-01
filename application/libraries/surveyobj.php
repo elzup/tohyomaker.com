@@ -118,7 +118,7 @@ class Surveyobj
 	{
 		if (!isset($this->items))
 		{
-			return FALSE;
+			return NULL;
 		}
 		$results = array();
 		foreach ($data as $datum)

@@ -11,6 +11,7 @@
     * 投票履歴,状態別フィルター
     * ~~作成した投票履歴~~
     * +pager
+    * タブページ分割
 * ~~userpage~~
 * ~~sessionクラスによる管理~~
     * ~~user情報~~
@@ -24,7 +25,9 @@
 * ~~secure~~
 * ~~secure2 makeform UI~~
 
-* ログイン確認ページ
+* xxログイン確認ページxx
+* db
+    * column literal to constance
 
 * surveyselectボタンview変更
 

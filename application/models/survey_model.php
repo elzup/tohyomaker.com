@@ -382,14 +382,15 @@ class Survey_model extends CI_Model
 	{
 		foreach ($data as &$datum)
 		{
-			if ($datum->type < 100)
+			if ($datum->type < RESULT_TYPE_BOOK_SHIFT)
 			{
 				continue;
 			}
-			if ($datum->result < time())
+			if ($datum->type == RESULT_TYPE_TIME_BOOK && $datum->result < time())
 			{
-				$data[] = $this->_update_result($survey, $datum->type - 100);
+				$data[] = $this->_update_result($survey, RESULT_TYPE_TIME, $datum->result);
 			}
+			// omit book recodes
 			$datum = FALSE;
 		}
 // data prepare
@@ -411,16 +412,16 @@ class Survey_model extends CI_Model
 		usort($data, 'cmptimestamp');
 	}
 
-	private function _update_result(Surveyobj $survey, $type)
+	private function _update_result(Surveyobj $survey, $type, $time = NULL)
 	{
 		$where = array(
 				'id_survey' => $survey->id,
-				'type' => $type + 100,
+				'type' => $type + RESULT_TYPE_BOOK_SHIFT,
 		);
 		$this->db->where($where);
 		$this->db->delete(DB_TBL_RESULT);
-		$this->_insert_result($survey, $type);
-		$where['type'] -= 100;
+		$this->_insert_result($survey, $type, $time);
+		$where['type'] = $type;
 		$this->db->where($where);
 		$data = $this->db->get(DB_TBL_RESULT)->result();
 		return $data[0];
@@ -434,13 +435,17 @@ class Survey_model extends CI_Model
 		}
 	}
 
-	private function _insert_result(Surveyobj $survey, $type)
+	private function _insert_result(Surveyobj $survey, $type, $time = NULL)
 	{
 		$data = array(
 				'id_survey' => $survey->id,
 				'type' => $type,
 				'result' => $survey->get_result_text(),
 		);
+		if (isset($time))
+		{
+			$data['timestamp'] = $survey->timestamp + $time;
+		}
 		$this->db->insert(DB_TBL_RESULT, $data);
 	}
 
