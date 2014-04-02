@@ -161,13 +161,27 @@ class Survey_model extends CI_Model
 		$this->insert_vote($survey->id, $user->id, $value, $user->is_guest);
 		$this->inclement_item($survey->id, $value, $survey->items[$value]->num);
 		$this->inclement_survey($survey->id, $survey->total_num);
-		if (($type = $survey->check_just()) !== FALSE)
+		if (($num = $this->_check_result_just($survey)) !== FALSE)
 		{
-			$this->_insert_result($survey, $type);
+			$this->_update_result($survey, RESULT_TYPE_NUM, $value);
+			// NOTICE: this time surveyobj not update (results field other)
+			// should reutrn surveyobj updated
 		}
 		return TRUE;
 	}
 
+	private function _check_result_just(Surveyobj $survey)
+	{
+		$data = $this->select_results($survey->id);
+		foreach ($data as $datum)
+		{
+			if ($datum->type == RESULT_TYPE_NUM_BOOK && $survey->total_num == $datum->result)
+			{
+				return $datum->result;
+			}
+		}
+		return FALSE;
+	}
 
 	public function insert_vote($id_survey, $id_user, $value, $is_guest = FALSE)
 	{
@@ -237,6 +251,7 @@ class Survey_model extends CI_Model
 		{
 			return NO_VOTED;
 		}
+		// TODO: guest 
 		return $result[0]->value;
 	}
 
@@ -382,6 +397,7 @@ class Survey_model extends CI_Model
 	{
 		foreach ($data as &$datum)
 		{
+			// TODO: last result type is [time or num] ?
 			if ($datum->type < RESULT_TYPE_BOOK_SHIFT)
 			{
 				continue;
@@ -412,15 +428,16 @@ class Survey_model extends CI_Model
 		usort($data, 'cmptimestamp');
 	}
 
-	private function _update_result(Surveyobj $survey, $type, $time = NULL)
+	private function _update_result(Surveyobj $survey, $type, $value = NULL)
 	{
 		$where = array(
 				'id_survey' => $survey->id,
 				'type' => $type + RESULT_TYPE_BOOK_SHIFT,
+				'result' => $value,
 		);
 		$this->db->where($where);
 		$this->db->delete(DB_TBL_RESULT);
-		$this->_insert_result($survey, $type, $time);
+		$this->_insert_result($survey, $type, $value);
 		$where['type'] = $type;
 		$this->db->where($where);
 		$data = $this->db->get(DB_TBL_RESULT)->result();
@@ -442,8 +459,10 @@ class Survey_model extends CI_Model
 				'type' => $type,
 				'result' => $survey->get_result_text(),
 		);
-		if (isset($time))
+		if ($type == RESULT_TYPE_TIME)
 		{
+			// vote_num -> real time result update, needles timecalc
+			// time     -> It's hard to say when, need timecalc
 			$data['timestamp'] = $survey->timestamp + $time;
 		}
 		$this->db->insert(DB_TBL_RESULT, $data);

@@ -27,7 +27,7 @@
 
 * xxログイン確認ページxx
 * db
-    * column literal to constance
+    * use constance DB COLUMN NAME
 
 * surveyselectボタンview変更
 

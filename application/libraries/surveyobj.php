@@ -13,6 +13,9 @@ class Surveyobj
 	public $target;
 	public $total_num;
 
+	public $end_type;
+	public $end_value;
+
 	/** @var Userobj */
 	public $owner;
 
@@ -54,6 +57,10 @@ class Surveyobj
 		$this->state = $data->state;
 		$this->is_anonymous = !empty($data->is_anonymous);
 		$this->total_num = $data->total_num;
+
+		$this->end_type = RESULT_TYPE_NONE;
+		// don't call when end_type eq NONE
+		$this->end_value = NULL;
 
 		if (isset($items))
 		{
