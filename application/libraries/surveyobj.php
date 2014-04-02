@@ -113,7 +113,7 @@ class Surveyobj
 
 	public function set_results(array $data)
 	{
-		if (!isset($data))
+		if (empty($data))
 		{
 			return FALSE;
 		}
@@ -122,11 +122,11 @@ class Surveyobj
 
 	public function set_result_books(array $data_book)
 	{
-		if (!isset($data_book))
+		if (!isset($data_book[0]))
 		{
 			return FALSE;
 		}
-		$this->results = $this->create_result_books($data_book);
+		$this->results = $this->_create_result_book($data_book[0]);
 	}
 
 	public function create_results(array $data)

@@ -15,7 +15,7 @@ class Resultobj
 	private $_elapsed_time_str;
 	private $_progress_time_str;
 
-	private $book_value;
+	public $book_value;
 
 //	public $is_book;
 

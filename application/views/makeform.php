@@ -18,7 +18,7 @@
 							{
 								?>
 								<div class="row margin-bottom">
-									<div class="col-sm-6 col-sm-offset-2">
+									<div class="col-sm-10 col-sm-offset-2">
 										<a href="<?= base_url(PATH_MAKEDESTROY) ?>" class="btn btn-block btn-warning">内容をクリアする</a>
 									</div>
 								</div>
@@ -72,7 +72,7 @@
 										<div class="input-group">
 											<input type="text" name="item<?= $i ?>" id="sur-item<?= $i ?>" class="form-control" value="<?= isset_just(@$post['item' . $i]) ?>" maxlength="20">
 											<span class="input-group-btn">
-												<button class="btn btn-danger btn-diswitch-off" type="button"><i class="glyphicon glyphicon-remove"></i></button>
+												<button class="btn btn-warning btn-diswitch-off" type="button"><i class="glyphicon glyphicon-remove"></i></button>
 											</span>
 										</div>
 										<button class="btn btn-success btn-diswitch-on" type="button" style="display: none;"><i class="glyphicon glyphicon-plus"></i></button>

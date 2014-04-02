@@ -284,9 +284,25 @@ class Survey_model extends CI_Model
 		{
 			$this->_insert_tags($id, $tags);
 		}
+
+
 		// TODO: result_type_time booking
-//		$this->_create_book_result($id);
+		$this->_result_book_timing($id, $data['timing']);
+
 		return $id;
+	}
+
+	private function _result_book_timing($id_survey, $timing_text)
+	{
+		$times = explode(',', $timing_text);
+		$d = $times[0];
+		$h = $times[1];
+		if ($d == 0 && $h == 0)
+		{
+			return;
+		}
+		$time = strtotime("+{$d}days {$h}hours");
+		$this->_insert_result_book($id_survey, RESULT_TYPE_TIME_BOOK, $time, 0);
 	}
 
 	private function _format_items($data)
@@ -400,7 +416,7 @@ class Survey_model extends CI_Model
 		$data_book = $this->select_result_books($survey->id);
 		if (!empty($data_book))
 		{
-			$this->check_result_update($survey, $data, $data->book);
+			$this->check_result_update($survey, $data, $data_book);
 		}
 		$survey->set_results($data);
 		$survey->set_result_books($data_book);

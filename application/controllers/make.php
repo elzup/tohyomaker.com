@@ -100,6 +100,8 @@ class Make extends CI_Controller
 			// TODO: jump no found page
 		}
 
+		$this->session->unset_userdata('form_posts');
+
 		$meta = new Metaobj();
 		$meta->setup_top();
 		$this->load->view('head', array('meta' => $meta));
