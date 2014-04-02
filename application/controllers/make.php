@@ -29,39 +29,22 @@ class Make extends CI_Controller
 		$makeform_info = array(
 				'user' => $this->user->get_main_user(),
 				'post' => $post,
-				'token' => $this->_set_token(),
 		);
 		$this->load->view('makeform', $makeform_info);
 
 		$this->load->view('foot', array('jss' => array('makeform')));
 	}
 
-	private function _check_post(array $data)
+	public function destroy()
 	{
-		//
-		if (!($data = array_reflect_func($data, 'trim_bothend_space')))
-		{
-			return FALSE;
-		}
-		$n = 0;
-		for ($i = 1; $i <= 10; $i++)
-		{
-			if (!empty($data["item{$i}"]))
-			{
-				$n++;
-			}
-		}
-		if (empty($data['title']) || $n < 2)
-		{
-			return FALSE;
-		}
-		return $data;
+		$this->session->unset_userdata('form_posts');
+		jump(base_url(PATH_MAKE));
 	}
 
 	public function check()
 	{
 		// TODO: check referrer 
-		if ($this->input->server('REQUEST_METHOD') != 'POST' || !$this->_check_token())
+		if ($this->input->server('REQUEST_METHOD') != 'POST')
 		{
 			jump(base_url(PATH_MAKE));
 		}
@@ -141,4 +124,25 @@ class Make extends CI_Controller
 		return !empty($token_c) && $token_c == $token;
 	}
 
+	private function _check_post(array $data)
+	{
+		//
+		if (!($data = array_reflect_func($data, 'trim_bothend_space')))
+		{
+			return FALSE;
+		}
+		$n = 0;
+		for ($i = 1; $i <= 10; $i++)
+		{
+			if (!empty($data["item{$i}"]))
+			{
+				$n++;
+			}
+		}
+		if (empty($data['title']) || $n < 2)
+		{
+			return FALSE;
+		}
+		return $data;
+	}
 }
