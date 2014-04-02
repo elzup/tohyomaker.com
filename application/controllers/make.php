@@ -14,7 +14,6 @@ class Make extends CI_Controller
 	{
 
 		// TODO: make no login user action
-		// TODO: add 'target' param in survey_table
 
 		/*
 		 * view

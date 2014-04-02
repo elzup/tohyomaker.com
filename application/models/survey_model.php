@@ -270,7 +270,6 @@ class Survey_model extends CI_Model
 	{
 		$this->db->set('title', $data['title']);
 		$this->db->set('description', $data['description']);
-		$this->db->set('target', $data['target']);
 		$items = $this->_format_items($data);
 		$this->db->set('num_item', count($items));
 		$this->db->set('id_user', count($user->id));

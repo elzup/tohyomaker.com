@@ -50,9 +50,6 @@ if (!function_exists('surveypane'))
 						<div class="col-sm-8 col-sm-8-s">
 							<p><?= tag_icon(ICON_DESCRIPTION, !!$survey->description) . (($survey->description) ? : NO_PARAM_STR) ?></p>
 						</div>
-						<div class="col-sm-4 col-sm-4-s">
-							<p><?= tag_icon(ICON_TARGET, !!$survey->target) . (($survey->target) ? : NO_PARAM_STR) ?></p>
-						</div>
 						<!--div class="col-sm-12">
 							<p><?= $survey->get_text_items() ?></p>
 						</div-->

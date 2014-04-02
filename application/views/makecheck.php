@@ -33,15 +33,6 @@ foreach ($data as &$datum)
 								</div>
 
 								<div class="form-group">
-									<label for="target" class="col-lg-2 control-label">対象</label>
-									<div class="col-lg-10">
-										<div class="well well-check">
-											<?= (!isset($data['target']) ? '全員' : $data['target']) ?>
-										</div>
-									</div>
-								</div>
-
-								<div class="form-group">
 									<label for="description" class="col-lg-2 control-label">説明</label>
 									<div class="col-lg-10">
 										<div class="well well-check">
@@ -113,7 +104,6 @@ foreach ($data as &$datum)
 
 								<input type="hidden" autocomplete="off" name="is_anonymous" value="<?= isset($data['is_anonymous']) ? '1' : '0' ?>">
 								<input type="hidden" autocomplete="off" name="title"        value="<?= $data['title'] ?>">
-								<input type="hidden" autocomplete="off" name="target"       value="<?= $data['target'] ?>">
 								<input type="hidden" autocomplete="off" name="description"  value="<?= $data['description'] ?>">
 								<input type="hidden" autocomplete="off" name="timing"    	 value="<?= $data['timing-d'] . ',' . $data['timing-h'] ?>">
 								<input type="hidden" autocomplete="off" name="tag"          value="<?= $data['tag'] ?>">

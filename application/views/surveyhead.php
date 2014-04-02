@@ -26,16 +26,6 @@
 						</div>
 					</div>
 				<?php } ?>
-				<?php
-				if (isset($survey->target))
-				{
-					?>
-					<div class="row">
-						<div class="col-sm-12 survey-cont target">
-							<p><?= tag_icon(ICON_TARGET, isset($survey->target)) . (($survey->target) ? : NO_PARAM_STR) ?></p>
-						</div>
-					</div>
-				<?php } ?>
 			</div>
 			<div class="col-sm-5">
 				<div class="row">

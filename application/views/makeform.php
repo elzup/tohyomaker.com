@@ -51,14 +51,6 @@
 							</div>
 
 							<div class="form-group">
-								<label for="target" class="col-lg-2 control-label">対象</label>
-								<div class="col-lg-10">
-									<input type="text" class="form-control" name="target" id="sur-target" value="<?= isset_just(@$post['target']) ?>" maxlength="20">
-									<span class="help-block">ex.)お菓子好きな人</span>
-								</div>
-							</div>
-
-							<div class="form-group">
 								<label for="description" class="col-lg-2 control-label">説明</label>
 								<div class="col-lg-10">
 									<input type="text" class="form-control" name="description" id="sur-description" value="<?= isset_just(@$post['description']) ?>" maxlength="30">

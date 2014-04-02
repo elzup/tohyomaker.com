@@ -10,7 +10,6 @@ class Surveyobj
 	public $state;
 	public $num_item;
 	public $is_anonymous;
-	public $target;
 	public $total_num;
 	public $end_type;
 	public $end_value;
@@ -49,7 +48,6 @@ class Surveyobj
 	{
 		$this->id = h($data->id_survey);
 		$this->title = h($data->title);
-		$this->target = (empty($data->target) ? '' : h($data->target));
 		$this->description = (empty($data->description) ? '' : h($data->description));
 		$this->num_item = $data->num_item;
 		$this->timestamp = $data->timestamp;
