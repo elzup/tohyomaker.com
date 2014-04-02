@@ -48,10 +48,10 @@ if (!function_exists('surveypane'))
 					?>
 					<div class="row">
 						<div class="col-sm-8 col-sm-8-s">
-							<p><?= tag_icon(ICON_DESCRIPTION, isset($survey->description)) . (($survey->description) ? : NO_PARAM_STR) ?></p>
+							<p><?= tag_icon(ICON_DESCRIPTION, !!$survey->description) . (($survey->description) ? : NO_PARAM_STR) ?></p>
 						</div>
 						<div class="col-sm-4 col-sm-4-s">
-							<p><?= tag_icon(ICON_TARGET, isset($survey->target)) . (($survey->target) ? : NO_PARAM_STR) ?></p>
+							<p><?= tag_icon(ICON_TARGET, !!$survey->target) . (($survey->target) ? : NO_PARAM_STR) ?></p>
 						</div>
 						<!--div class="col-sm-12">
 							<p><?= $survey->get_text_items() ?></p>
@@ -95,7 +95,7 @@ if (!function_exists('surveypane'))
 					<?php } ?>
 				</p>
 
-				<div class="row">
+				<!--div class="row">
 					<div class="col-sm-3">
 						<?= tag_icon(ICON_TIME, TRUE) ?>
 						<?= $survey->get_time_remain_str() ?>
@@ -109,7 +109,7 @@ if (!function_exists('surveypane'))
 							<div class="progress-bar progress-bar-<?= $pbstyle ?>" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
 						</div>
 					</div>
-				</div>
+				</div-->
 			</div>
 		</div>
 		<?php
