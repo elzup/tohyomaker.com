@@ -91,6 +91,14 @@ class Survey_model extends CI_Model
 		return $result;
 	}
 
+	public function select_result_books($id_survey)
+	{
+		$this->db->order_by("num", 'asc');
+		$this->db->where('id_survey', $id_survey);
+		$result = $this->db->get(DB_TBL_RESULT_BOOK)->result();
+		return $result;
+	}
+
 	public function select_votes_user($id_user)
 	{
 		$this->db->order_by("timestamp", "desc");
@@ -151,8 +159,7 @@ class Survey_model extends CI_Model
 	 */
 	public function regist_vote(Surveyobj $survey, Userobj $user, $value)
 	{
-		if (($this->check_voted($survey->id, $user->id, $user->is_guest)) !== NO_VOTED || $survey->num_item
-				<= $value)
+		if (($this->check_voted($survey->id, $user->id, $user->is_guest)) !== NO_VOTED || $survey->num_item <= $value)
 		{
 			return FALSE;
 		}
@@ -172,7 +179,11 @@ class Survey_model extends CI_Model
 
 	private function _check_result_just(Surveyobj $survey)
 	{
-		$data = $this->select_results($survey->id);
+		$data = $this->select_result_books($survey->id);
+		if (empty($data))
+		{
+			return FALSE;
+		}
 		foreach ($data as $datum)
 		{
 			if ($datum->type == RESULT_TYPE_NUM_BOOK && $survey->total_num == $datum->result)
@@ -273,7 +284,8 @@ class Survey_model extends CI_Model
 		{
 			$this->_insert_tags($id, $tags);
 		}
-		$this->_create_book_result($id);
+		// TODO: result_type_time booking
+//		$this->_create_book_result($id);
 		return $id;
 	}
 
@@ -302,8 +314,7 @@ class Survey_model extends CI_Model
 	private function _check_state(Surveyobj &$survey)
 	{
 		$su = $survey->get_state_update();
-		if ($su === SURVEY_STATE_RESULT || ($su === SURVEY_STATE_END && $survey->state
-				== SURVEY_STATE_PROGRESS))
+		if ($su === SURVEY_STATE_RESULT || ($su === SURVEY_STATE_END && $survey->state == SURVEY_STATE_PROGRESS))
 		{
 			$this->_update_state_result($survey);
 		}
@@ -386,28 +397,25 @@ class Survey_model extends CI_Model
 	private function _install_result(Surveyobj $survey)
 	{
 		$data = $this->select_results($survey->id);
-		if (!empty($data))
+		$data_book = $this->select_result_books($survey->id);
+		if (!empty($data_book))
 		{
-			$this->check_result_update($survey, $data);
-			$survey->set_results($data);
+			$this->check_result_update($survey, $data, $data->book);
 		}
+		$survey->set_results($data);
+		$survey->set_result_books($data_book);
 	}
 
-	private function check_result_update(Surveyobj $survey, array &$data)
+	private function check_result_update(Surveyobj $survey, &$data, &$data_book)
 	{
-		foreach ($data as &$datum)
+		foreach ($data_book as &$datum)
 		{
-			// TODO: last result type is [time or num] ?
-			if ($datum->type < RESULT_TYPE_BOOK_SHIFT)
-			{
-				continue;
-			}
-			if ($datum->type == RESULT_TYPE_TIME_BOOK && $datum->result < time())
+			if ($datum->type == RESULT_TYPE_TIME_BOOK && $datum->value < time())
 			{
 				$data[] = $this->_update_result($survey, RESULT_TYPE_TIME, $datum->result);
+				// omit book recodes
+				$datum = FALSE;
 			}
-			// omit book recodes
-			$datum = FALSE;
 		}
 // data prepare
 		$data = array_filter($data);
@@ -436,20 +444,12 @@ class Survey_model extends CI_Model
 				'result' => $value,
 		);
 		$this->db->where($where);
-		$this->db->delete(DB_TBL_RESULT);
+		$this->db->delete(DB_TBL_RESULT_BOOK);
 		$this->_insert_result($survey, $type, $value);
 		$where['type'] = $type;
 		$this->db->where($where);
 		$data = $this->db->get(DB_TBL_RESULT)->result();
 		return $data[0];
-	}
-
-	private function _create_book_result($id_survey)
-	{
-		for ($i = 0; $i < 6; $i++)
-		{
-			$this->_insert_result_book($id_survey, $i);
-		}
 	}
 
 	private function _insert_result(Surveyobj $survey, $type, $time = NULL)
@@ -468,15 +468,15 @@ class Survey_model extends CI_Model
 		$this->db->insert(DB_TBL_RESULT, $data);
 	}
 
-	private function _insert_result_book($id_survey, $type)
+	private function _insert_result_book($id_survey, $type, $value, $num)
 	{
-		$timestrlib = explode(',', '+1hour,+6hour,+12hour,+1day,+2day,+3day');
 		$data = array(
 				'id_survey' => $id_survey,
-				'type' => $type + 100,
-				'result' => strtotime($timestrlib[$type]),
+				'type' => $type + RESULT_TYPE_BOOK_SHIFT,
+				'value' => $value,
+				'num' => $num,
 		);
-		$this->db->insert(DB_TBL_RESULT, $data);
+		$this->db->insert(DB_TBL_RESULT_BOOK, $data);
 	}
 
 	/**

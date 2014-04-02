@@ -12,7 +12,6 @@ class Surveyobj
 	public $is_anonymous;
 	public $target;
 	public $total_num;
-
 	public $end_type;
 	public $end_value;
 
@@ -59,7 +58,7 @@ class Surveyobj
 		$this->total_num = $data->total_num;
 
 		$this->end_type = RESULT_TYPE_NONE;
-		// don't call when end_type eq NONE
+// don't call when end_type eq NONE
 		$this->end_value = NULL;
 
 		if (isset($items))
@@ -74,7 +73,7 @@ class Surveyobj
 		{
 			$this->owner = $owner;
 		}
-		// after set items
+// after set items
 		if (isset($results))
 		{
 			$this->set_results($results);
@@ -121,12 +120,24 @@ class Surveyobj
 		$this->results = $this->create_results($data);
 	}
 
-	public function create_results($data)
+	public function set_result_books(array $data_book)
+	{
+		if (!isset($data_book))
+		{
+			return FALSE;
+		}
+		$this->results = $this->create_result_books($data_book);
+	}
+
+	public function create_results(array $data)
 	{
 		if (!isset($this->items))
 		{
 			return NULL;
 		}
+		$end_data = $data[0];
+		$this->end_type = $end_data->type;
+		$this->end_value = ($end_data->type == RESULT_TYPE_TIME) ? $end_data->timestamp : array_sum(explode(',', $end_data->result));
 		$results = array();
 		foreach ($data as $datum)
 		{
@@ -142,6 +153,14 @@ class Surveyobj
 		$items_sorted = $this->create_sorted_items($items);
 		$result = new Resultobj($data, $items_sorted);
 		$result->set_elapsed_time(strtotime($this->timestamp));
+		return $result;
+	}
+
+	private function _create_result_book($data)
+	{
+		$result = new Resultobj();
+		$result->type = $data->type;
+		$result->book_value = $data->value;
 		return $result;
 	}
 
@@ -241,8 +260,8 @@ class Surveyobj
 			return '終了';
 		}
 		$times = to_time_resolution($remain, TRUE);
-		// TODO: 
-		return 'あと'.($times->d ? $times->df : $times->h ? : $times->m ? : $remain . '秒');
+// TODO: 
+		return 'あと' . ($times->d ? $times->df : $times->h ? : $times->m ? : $remain . '秒');
 	}
 
 	public function get_time_remain()
@@ -251,7 +270,7 @@ class Surveyobj
 		{
 			return 0;
 		}
-		// TODO: create another type case 
+// TODO: create another type case 
 		$start_time = strtotime($this->timestamp);
 		$end_time = strtotime('+1 week', $start_time);
 		$now = time();
@@ -279,7 +298,7 @@ class Surveyobj
 	public function create_sorted_items($items)
 	{
 
-		//sort to base ItemObj's field num
+//sort to base ItemObj's field num
 		if (!function_exists('cmp_item'))
 		{
 
