@@ -332,4 +332,3 @@ if (!function_exists('calc_item_col'))
 
 }
 
-	

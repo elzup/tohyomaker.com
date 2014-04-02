@@ -226,3 +226,11 @@ if (!function_exists('fix_url'))
 		return $url;
 	}
 }
+
+if (!function_exists('isset_just'))
+{
+	function isset_just($value)
+	{
+		return isset($value) ? $value : FALSE;
+	}
+}

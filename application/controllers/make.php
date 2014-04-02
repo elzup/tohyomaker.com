@@ -21,12 +21,14 @@ class Make extends CI_Controller
 		 */
 		$meta = new Metaobj();
 		$meta->setup_top();
-		$this->load->view('head', array ('meta' => $meta));
+		$this->load->view('head', array('meta' => $meta));
 		$this->load->view('title', array('title' => $meta->get_title()));
 		$this->load->view('navbar', array('user' => $this->user->get_main_user()));
 
+		$post = $this->session->userdata('form_posts');
 		$makeform_info = array(
 				'user' => $this->user->get_main_user(),
+				'post' => $post,
 				'token' => $this->_set_token(),
 		);
 		$this->load->view('makeform', $makeform_info);
@@ -72,7 +74,7 @@ class Make extends CI_Controller
 
 		$meta = new Metaobj();
 		$meta->setup_top();
-		$this->load->view('head', array ('meta' => $meta));
+		$this->load->view('head', array('meta' => $meta));
 		$this->load->view('title', array('title' => $meta->get_title()));
 		$this->load->view('navbar', array('user' => $this->user->get_main_user()));
 
@@ -83,13 +85,14 @@ class Make extends CI_Controller
 		);
 		$this->load->view('makecheck', $makecheck_info);
 		$this->load->view('foot');
+
+		$this->session->set_userdata(array('form_posts' => $post));
 	}
 
 	public function regist()
 	{
 		$post = $this->input->post();
-		if ($this->input->server('REQUEST_METHOD') != 'POST' || !$this->_check_token()
-				|| !($post = $this->_check_post($this->input->post())))
+		if ($this->input->server('REQUEST_METHOD') != 'POST' || !$this->_check_token() || !($post = $this->_check_post($this->input->post())))
 		{
 			jump_back(2);
 		}
@@ -101,7 +104,7 @@ class Make extends CI_Controller
 
 	public function end($id_survey = NULL, $token = NULL)
 	{
-		if (!isset($id_survey) || !isset($token) || $this->_check_token($token) === FALSE)
+		if (!isset($id_survey) || !isset($token) || !$this->_check_token($token))
 		{
 			//TODL: jump to error action
 			die('error');
@@ -116,7 +119,7 @@ class Make extends CI_Controller
 
 		$meta = new Metaobj();
 		$meta->setup_top();
-		$this->load->view('head', array ('meta' => $meta));
+		$this->load->view('head', array('meta' => $meta));
 		$this->load->view('title', array('title' => $meta->get_title()));
 		$this->load->view('navbar', array('user' => $this->user->get_main_user()));
 
@@ -127,13 +130,13 @@ class Make extends CI_Controller
 	private function _set_token()
 	{
 		$token = sha1(uniqid(mt_rand(), TRUE));
-		$this->session->set_userdata(array ('token' => $token));
+		$this->session->set_userdata(array('token' => $token));
 		return $token;
 	}
 
 	private function _check_token($token = NULL)
 	{
-		$token = $token ?: filter_input(INPUT_POST, 'token');
+		$token = $token ? : filter_input(INPUT_POST, 'token');
 		$token_c = $this->session->userdata('token');
 		return !empty($token_c) && $token_c == $token;
 	}
