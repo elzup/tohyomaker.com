@@ -1,10 +1,14 @@
+<?php
+/* @var $user Userobj*/
+?>
+
 <div class="container">
 	<!-- TODO: include check js file-->
 	<div class="row">
 		<div class="col-lg-offset-2 col-sm-8" id="makeform-div">
 			<div class="well">
 				<?php
-				if (!empty($user))
+				if (!$user->is_guest)
 				{
 					//logined
 					?>
@@ -146,6 +150,7 @@
 					?>
 					<div class="align-center">
 						<span class="help-block">*投票の作成にはTwitterアカウントでログインが必要です</span>
+						<span class="help-block">*認証後勝手にツイートする、フォローするという事はありません</span>
 						<a <?= attr_href(HREF_TYPE_LOGIN) ?> class="btn btn-info">ログインする</a>
 					</div>
 					<?php

@@ -18,7 +18,8 @@ class Auth extends CI_Controller
 	{
 		$this->start();
 		// save referer to return previous page
-/*		$this->session->set_userdata(array('referer' => $this->input->server('HTTP_REFERER')));
+/*
+ 		$this->session->set_userdata(array('referer' => $this->input->server('HTTP_REFERER')));
 
 		$meta = new Metaobj();
 		$meta->setup_login();
@@ -40,6 +41,7 @@ class Auth extends CI_Controller
 	function start()
 	{
 
+ 		$this->session->set_userdata(array('referer' => $this->input->server('HTTP_REFERER')));
 		$twitter_config = $this->config->item('TWITTER_CONSUMER');
 		$this->session->set_userdata(array(
 				'consumer_key' => $twitter_config['key'],
