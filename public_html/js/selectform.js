@@ -6,6 +6,8 @@ if (typeof jQuery != "undefined"){
         $(".btn-item").click(function() {
             $("#vote-value").val($(this).attr('name'));
             $(".btn-item").removeClass('active');
+            $(".btn-item>i").removeClass('glyphicon glyphicon-ok');
+            $(this).children('i').addClass('glyphicon glyphicon-ok');
             $("#submit-main").removeClass('disabled');
         }); 
         $(".active.btn-item").click();

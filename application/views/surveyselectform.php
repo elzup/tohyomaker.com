@@ -1,5 +1,6 @@
 <?php
 /* @var $survey Surveyobj */
+/* @var $user Userobj */
 ?>
 
 <div class="container">
@@ -7,12 +8,22 @@
 		<div class="col-sm-offset-2 col-sm-8" id="items-div">
 			<div class="itembox-div" data-toggle="buttons-radio">
 				<?php
+				if ($user->is_guest)
+				{
+					?>
+					<div class="well">
+						<p>ゲストユーザーです</p>
+						<span class="help-block">*ゲストユーザだと最近の投票を確認することが出来ません <a <?= attr_href(HREF_TYPE_LOGIN)?> class="btn btn-info">ログインする</a></span>
+						
+					</div>
+					<?php
+				}
+				?>
+				<?php
 				if (!$survey->is_voted())
 				{
 					?>
 					<div class="row">
-						<div class="col-sm-8">
-						</div>
 						<div class="col-sm-3">
 							↓投票先にチェック
 						</div>
@@ -30,20 +41,20 @@
 						{
 							$add_class .= ' disabled';
 						}
-						$icon_type = ICON_CHECK_EMPTY;
+						$icon_tag = tag_icon('');
 						if ((isset($select) && $i === $select) || $survey->selected === $i)
 						{
 							$add_class .= ' active';
-							$icon_type = ICON_CHECK;
+							$icon_tag = tag_icon(ICON_OK);
 						}
 						?>
 						<li>
 							<div class="row">
+								<div class="col-sm-2">
+									<button type="button" id="item<?= $i ?>" name="<?= $i ?>" class="btn btn-item btn-lg btn-block btn-default<?= $add_class ?>"><?= $icon_tag ?></button>
+								</div>
 								<div class="col-sm-8">
 									<span><?= $item->value ?></span>
-								</div>
-								<div class="col-sm-2">
-									<button type="button" id="item<?= $i ?>" name="<?= $i ?>" class="btn btn-item btn-lg btn-block btn-default<?= $add_class ?>"><?= tag_icon($icon_type) ?></button>
 								</div>
 							</div>
 						</li>
@@ -84,6 +95,7 @@
 						<h3 class="panel-title"><?= totext_voted($selected_item->value) ?></h3>
 					</div>
 					<div class="panel-body">
+						<span class="help-block">*一日に一票投票することが出来ます</span>
 						<div class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-file"></i>コピペ用</span>
 							<input id="share-text" type="text" class="form-control" value="<?= $share_text . ' ' . $share_uri ?>">
@@ -102,6 +114,12 @@
 					<div class="panel-footer">
 					</div>
 				</div>
+			</div>
+			<div class="col-sm-offset-2 col-sm-8">
+					<a <?= attr_href(HREF_TYPE_VIEW, $survey->id) ?> class="btn btn-success btn-lg btn-block">
+						<i class="<?= ICON_RESULT ?>"></i>
+						この投票の結果を見る
+					</a>
 			</div>
 			<?php
 		}

@@ -4,13 +4,17 @@
 <div class="container">
 	<div class="row">
 		<div class="col-sm-offset-2 col-sm-8" id="itemresultbox-soted-div">
-			<?php if ($survey->state == SURVEY_STATE_PROGRESS)
+			<?php
+			if ($survey->state == SURVEY_STATE_PROGRESS)
 			{
-			?>
-			<h2>現在の投票結果</h2>
-			<?php } else { ?>
+				?>
+				<h2>現在の投票結果</h2>
+				<?php
+			} else
+			{
+				?>
 				<h2>最終投票結果</h2>
-				<?php } ?>
+			<?php } ?>
 			<div class="row">
 				<?php
 				// TODO: item sort after view 
@@ -18,8 +22,9 @@
 				foreach ($survey->get_sorted() as $i => $item)
 				{
 					$cn = calc_item_col($i, count($survey->items));
+					$text_tooltip = ($survey->is_selected_today) ? 'あなたが投票した項目' : '前回投票した項目';
 					$voted_icon = (
-							($item->index === $survey->selected) ? '<span class="voted" ' . attr_tooltip('あなたが投票した項目') . '>' . tag_icon(ICON_VOTED, TRUE) . '</span>' : '');
+							($item->index === $survey->selected) ? '<span class="voted" ' . attr_tooltip($text_tooltip) . '>' . tag_icon(ICON_VOTED, TRUE) . '</span>' : '');
 					if ($sum_cn % 12 == 0)
 					{
 						?>
@@ -77,5 +82,16 @@
 				</div>
 			</div>
 		</div>
+		<?php
+		if (!$survey->is_selected_today)
+		{
+			?>
+			<div class="col-sm-offset-2 col-sm-8">
+				<a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?> class="btn btn-success btn-lg btn-block">
+					<i class="<?= ICON_VOTE ?>"></i>
+					投票する
+				</a>
+			</div>
+		<?php } ?>
 	</div>
 </div>

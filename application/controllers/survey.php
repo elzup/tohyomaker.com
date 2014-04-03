@@ -66,6 +66,7 @@ class Survey extends CI_Controller
 				// is_login so emit token
 				'token' => $this->_set_token(),
 				'select' => $select,
+				'user' => $user,
 		);
 		$this->load->view('surveyselectform', $surveyselectform_info);
 		$this->load->view('foot', array('jss' => array('selectform')));

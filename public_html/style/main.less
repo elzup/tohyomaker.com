@@ -134,6 +134,19 @@ a {
 
     li {
         margin-top: 5px;
+        > .row {
+            .col-sm-8 {
+                position: relative;
+                > span {
+                    position: absolute;
+                    top: 50%;
+                    margin-top: -0.5em;
+                }
+            }
+            div {
+                height: 3em;
+            }
+        }
     }
 
     .btn-item {
@@ -288,7 +301,9 @@ i {
 }
 
 
-#pager-div {
+#survey-pager-div {
+    margin-bottom: 10px;
+
 }
 
 .panel-survey {

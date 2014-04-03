@@ -103,21 +103,20 @@
 
 	<div class="row" id="survey-pager-div">
 
-		<div class="col-sm-4 col-sm-offset-8">
+		<div class="col-sm-12 col-sm-offset-0">
 			<div class="btn-group btn-group-justified">
 				<a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?> class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VOTE) ? ' disabled' : '') ?>">
 					<i class="<?= ICON_VOTE ?>"></i>
-					投票
+					投票ページ
 				</a>
 				<a <?= attr_href(HREF_TYPE_VIEW, $survey->id) ?> class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VIEW) ? ' disabled' : '') ?>">
 					<i class="<?= ICON_RESULT ?>"></i>
-					結果
-					<?php
-					if (($c = count($survey->results)))
-					{
-						?>
-						<span class="badge"><?= $c ?></span>
-					<?php } ?>
+					結果ページ
+				</a>
+				<!--TODO: friend's vote page-->
+				<a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?> class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VOTE) ? ' disabled' : '') ?>">
+					<i class="<?= ICON_VOTE ?>"></i>
+					フォロワーの投票先
 				</a>
 			</div>
 		</div>

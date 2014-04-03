@@ -231,7 +231,7 @@ class Survey_model extends CI_Model
 		$this->db->update(DB_TBL_ITEM);
 	}
 
-	public function install_select(Surveyobj &$survey, $id_user, $is_guest = FALSE)
+	public function install_select(Surveyobj $survey, $id_user, $is_guest = FALSE)
 	{
 		if (empty($id_user))
 		{
@@ -255,10 +255,6 @@ class Survey_model extends CI_Model
 	 */
 	public function check_voted($id_survey, $id_user, $is_guest = FALSE)
 	{
-		if ($is_guest)
-		{
-			return NO_VOTED;
-		}
 		$this->db->where('id_survey', $id_survey);
 		$this->db->where('id_user', $id_user);
 		$this->db->where('is_guest', $is_guest);
