@@ -49,11 +49,7 @@ class Survey extends CI_Controller
 
 		$meta = new Metaobj();
 		$meta->setup_survey($survey);
-		$head_info = array(
-				'meta' => $meta,
-				'survey' => $survey,
-		);
-		$this->load->view('head', $head_info);
+		$this->load->view('head', array ('meta' => $meta, 'survey' => $survey));
 		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 0));
 		$this->load->view('navbar', array('user' => $user));
 		$surveyhead_info = array(
@@ -89,10 +85,40 @@ class Survey extends CI_Controller
 
 		$meta = new Metaobj();
 		$meta->setup_survey($survey, TRUE);
-		$head_info = array(
-				'meta' => $meta,
+		$this->load->view('head', array('meta' => $meta));
+		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 0));
+		$this->load->view('navbar', array('user' => $user));
+		$surveyhead_info = array(
 				'survey' => $survey,
+				'type' => SURVEY_PAGETYPE_VIEW,
 		);
+		$this->load->view('surveyhead', $surveyhead_info);
+		$this->load->view('surveyresult', array('survey' => $survey));
+		if (isset($survey->results))
+		{
+			$this->load->view('surveylog', array('survey', $survey));
+		}
+		// TODO: insert surveys parts
+		$this->load->view('foot');
+	}
+
+	function friendvote($id_survey = NULL)
+	{
+		if (!isset($id_survey))
+		{
+			die('no id_survey');
+			// TODO: same as vote method todo
+		}
+		$user = $this->user->get_main_user();
+		/* @var $survey Surveyobj */
+		if (($survey = $this->survey->get_survey($id_survey, $user)) === FALSE)
+		{
+			die("no found id : {$id_survey}");
+			// TODO: same as vote method todo
+		}
+
+		$meta = new Metaobj();
+		$meta->setup_survey($survey, TRUE);
 		$this->load->view('head', array('meta' => $meta));
 		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 0));
 		$this->load->view('navbar', array('user' => $user));
