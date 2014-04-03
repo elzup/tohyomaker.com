@@ -213,10 +213,12 @@ if (!function_exists('to_time_resolution_str'))
 		$str .= ($times->m && $df) ? $times->m : '';
 		return $str;
 	}
+
 }
 
 if (!function_exists('fix_url'))
 {
+
 	function fix_url($url)
 	{
 		if (!preg_match('#^http#u', $url))
@@ -225,12 +227,29 @@ if (!function_exists('fix_url'))
 		}
 		return $url;
 	}
+
 }
 
 if (!function_exists('isset_just'))
 {
+
 	function isset_just($value)
 	{
 		return isset($value) ? $value : FALSE;
 	}
+
+}
+
+if (!function_exists('is_today'))
+{
+
+	function is_today($timestamp)
+	{
+		if (!is_integer($timestamp))
+		{
+			$timestamp = strtotime($timestamp);
+		}
+		return date('Y-m-d', $timestamp) === date('Y-m-d');
+	}
+
 }

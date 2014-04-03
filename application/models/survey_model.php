@@ -51,10 +51,7 @@ class Survey_model extends CI_Model
 		$survey = new Surveyobj($data, $items, $tags, $owner);
 		$this->_install_result($survey);
 		$this->_check_state($survey);
-		if ($survey->state != SURVEY_STATE_END)
-		{
-			$this->install_select($survey, $id_user, $is_guest);
-		}
+		$this->install_select($survey, $id_user, $is_guest);
 		return $survey;
 	}
 
@@ -240,11 +237,15 @@ class Survey_model extends CI_Model
 		{
 			return;
 		}
-		$select = $this->check_voted($survey->id, $id_user, $is_guest);
-		$survey->selected = $select;
-		if (!isset($select))
+		if (($select = $this->check_voted($survey->id, $id_user, $is_guest)) !== NO_VOTED)
+		{
+			$survey->selected = $select->value;
+			$survey->is_selected_today = is_today($select->timestamp);
+		}
+		else
 		{
 			$survey->selected = NO_VOTED;
+			$survey->is_selected_today = FALSE;
 		}
 	}
 
@@ -254,16 +255,15 @@ class Survey_model extends CI_Model
 	 */
 	public function check_voted($id_survey, $id_user, $is_guest = FALSE)
 	{
+		if ($is_guest)
+		{
+			return NO_VOTED;
+		}
 		$this->db->where('id_survey', $id_survey);
 		$this->db->where('id_user', $id_user);
 		$this->db->where('is_guest', $is_guest);
 		$result = $this->db->get(DB_TBL_VOTE)->result();
-		if (!isset($result[0]))
-		{
-			return NO_VOTED;
-		}
-		// TODO: guest 
-		return $result[0]->value;
+		return @$result[0] ? : NO_VOTED;
 	}
 
 	public function regist(array $data, Userobj $user)

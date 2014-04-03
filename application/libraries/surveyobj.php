@@ -34,6 +34,7 @@ class Surveyobj
 
 	/* super optional */
 	public $selected;
+	public $is_selected_today;
 
 	function __construct($data = NULL, array $items = NULL, array $tags = NULL, Userobj $owner = NULL, $selected = NULL, $results = NULL)
 	{
@@ -384,7 +385,8 @@ class Surveyobj
 	 */
 	public function is_voted()
 	{
-		return $this->selected !== NO_VOTED;
+		return $this->is_selected_today;
+//		return $this->selected !== NO_VOTED;
 	}
 
 	/**
