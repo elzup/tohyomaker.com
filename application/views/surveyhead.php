@@ -73,25 +73,37 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-7 survey-cont">
-				<div class="col-sm-3 no-container">
-					<?= tag_icon(ICON_TIME, TRUE) ?>
-					<?= $survey->get_time_remain_str() ?>
-				</div>
 				<?php
-				$stylelib = explode(',', 'success,end,end');
-				$pbstyle = $stylelib[$survey->state];
-				?>
-				<div class="col-sm-9">
-					<div class="progress">
-						<div class="progress-bar progress-bar-<?= $pbstyle ?>" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
+				if ($survey->state != SURVEY_STATE_END)
+				{
+					?>
+					<div class="col-sm-3 no-container">
+						<?= tag_icon(ICON_TIME, TRUE) ?>
+					<?= $survey->get_time_remain_str() ?>
 					</div>
-				</div>
+					<?php
+					$stylelib = explode(',', 'success,end,end');
+					$pbstyle = $stylelib[$survey->state];
+					?>
+					<div class="col-sm-9">
+						<div class="progress">
+							<div class="progress-bar progress-bar-<?= $pbstyle ?>" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
+						</div>
+					</div>
+				<?php
+				} else
+				{
+					?>
+
+					<?php
+				}
+				?>
 			</div>
-			<div class="col-sm-3 survey-cont">
-				<?= tag_icon(ICON_VOTE, TRUE) ?>
+			<!--div class="col-sm-3 survey-cont">
+<?= tag_icon(ICON_VOTE, TRUE) ?>
 				<span class="total-num"><?= $survey->total_num ?></span>
-			</div>
-			<div class="col-sm-2 survey-cont">
+			</div-->
+			<div class="col-sm-2 col-sm-offset-3 survey-cont">
 				<?php
 				$share_uri = base_url(PATH_VOTE . $survey->id);
 				$share_text = totext_share_survey($survey);
@@ -116,7 +128,7 @@
 				<!--TODO: friend's vote page-->
 				<a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?> class="btn btn-success<?= ((TRUE) ? ' disabled' : '') ?>">
 					<i class="<?= ICON_FRIEND ?>"></i>
-					フォロワーの投票先
+					フレンドの投票先[準備中]
 				</a>
 			</div>
 		</div>

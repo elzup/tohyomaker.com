@@ -1,6 +1,9 @@
 <?php
 /* @var $survey Surveyobj */
 /* @var $user Userobj */
+//echo '<pre>';
+//var_dump($survey);
+//die('END');
 ?>
 
 <div class="container">

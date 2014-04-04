@@ -125,7 +125,12 @@ class Surveyobj
 		{
 			return FALSE;
 		}
-		$this->results = $this->_create_result_book($data_book[0]);
+		foreach ($data_book as $datum)
+		{
+			$this->results[] = $this->_create_result_book($datum);
+		}
+		$this->end_type = $this->results[0]->type;
+		$this->end_value = $this->results[0]->book_value;
 	}
 
 	public function create_results(array $data)
@@ -204,24 +209,6 @@ class Surveyobj
 		return implode($glue, $itemnames);
 	}
 
-	public function get_state_update()
-	{
-		if ($this->state == SURVEY_STATE_END)
-		{
-			return FALSE;
-		}
-		$remain = $this->get_time_remain();
-		if ($remain <= 0)
-		{
-			return SURVEY_STATE_END;
-		}
-		if ($remain <= 345600)
-		{
-			return SURVEY_STATE_RESULT;
-		}
-		return FALSE;
-	}
-
 	public function get_time_progress_par()
 	{
 		if ($this->state === SURVEY_STATE_END)
@@ -253,14 +240,18 @@ class Surveyobj
 
 	public function get_time_remain_str()
 	{
-		$remain = $this->get_time_remain() - strtotime('+4 day', 0);
-		if ($remain < 0)
+		if ($this->end_type == RESULT_TYPE_TIME)
 		{
-			return '終了';
-		}
-		$times = to_time_resolution($remain, TRUE);
+			$remain = $this->get_time_remain();
+			if ($remain <= 0)
+			{
+				return '終了';
+			}
+			$times = to_time_resolution($remain, TRUE);
 // TODO: 
-		return 'あと' . ($times->d ? $times->df : $times->h ? : $times->m ? : $remain . '秒');
+			return 'あと' . ($times->d ? $times->df : $times->h ? : $times->m ? : $remain . '秒');
+		}
+		// TODO: end_type eq num action
 	}
 
 	public function get_time_remain()
@@ -270,10 +261,7 @@ class Surveyobj
 			return 0;
 		}
 // TODO: create another type case 
-		$start_time = strtotime($this->timestamp);
-		$end_time = strtotime('+1 week', $start_time);
-		$now = time();
-		return $end_time - $now;
+		return $this->end_value - $this->timestamp;
 	}
 
 	public function get_time()

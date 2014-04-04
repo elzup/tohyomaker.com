@@ -50,7 +50,6 @@ class Survey_model extends CI_Model
 		$owner = $this->select_user_simple($data->id_user);
 		$survey = new Surveyobj($data, $items, $tags, $owner);
 		$this->_install_result($survey);
-		$this->_check_state($survey);
 		$this->install_select($survey, $id_user, $is_guest);
 		return $survey;
 	}
@@ -234,16 +233,11 @@ class Survey_model extends CI_Model
 
 	public function install_select(Surveyobj $survey, $id_user, $is_guest = FALSE)
 	{
-		if (empty($id_user))
-		{
-			return;
-		}
 		if (($select = $this->check_voted($survey->id, $id_user, $is_guest)) !== NO_VOTED)
 		{
 			$survey->selected = $select->value;
 			$survey->is_selected_today = is_today($select->timestamp);
-		}
-		else
+		} else
 		{
 			$survey->selected = NO_VOTED;
 			$survey->is_selected_today = FALSE;
@@ -256,6 +250,7 @@ class Survey_model extends CI_Model
 	 */
 	public function check_voted($id_survey, $id_user, $is_guest = FALSE)
 	{
+		$this->db->order_by("timestamp", "desc");
 		$this->db->where('id_survey', $id_survey);
 		$this->db->where('id_user', $id_user);
 		$this->db->where('is_guest', $is_guest);
@@ -321,24 +316,6 @@ class Survey_model extends CI_Model
 			return FALSE;
 		}
 		return array_filter_values(explode(',', $data['tag']));
-	}
-
-	private function _check_state(Surveyobj &$survey)
-	{
-		$su = $survey->get_state_update();
-		if ($su === SURVEY_STATE_RESULT || ($su === SURVEY_STATE_END && $survey->state == SURVEY_STATE_PROGRESS))
-		{
-			$this->_update_state_result($survey);
-		}
-		if ($su === SURVEY_STATE_END)
-		{
-			$this->_update_state_end($survey);
-		}
-	}
-
-	private function _update_state_result(Surveyobj &$survey)
-	{
-		$this->_update_state($survey, SURVEY_STATE_RESULT);
 	}
 
 	private function _update_state_end(Surveyobj &$survey)
@@ -413,25 +390,28 @@ class Survey_model extends CI_Model
 		if (!empty($data_book))
 		{
 			$this->check_result_update($survey, $data, $data_book);
+			// check reast result_book
+			$data_book2 = $this->select_result_books($survey->id);
+			if (empty($data_book2))
+			{
+				$this->_update_state_end($survey);
+			}
 		}
 		$survey->set_results($data);
 		$survey->set_result_books($data_book);
 	}
 
-	private function check_result_update(Surveyobj $survey, &$data, &$data_book)
+	private function check_result_update(Surveyobj $survey, &$data, $data_book)
 	{
 		foreach ($data_book as &$datum)
 		{
 			if ($datum->type == RESULT_TYPE_TIME_BOOK && $datum->value < time())
 			{
 				$data[] = $this->_update_result($survey, RESULT_TYPE_TIME, $datum->result);
-				// omit book recodes
-				$datum = FALSE;
 			}
 		}
-// data prepare
-		$data = array_filter($data);
 
+		// TODO: to module
 		if (!function_exists('cmptimestamp'))
 		{
 
@@ -482,9 +462,13 @@ class Survey_model extends CI_Model
 
 	private function _insert_result_book($id_survey, $type, $value, $num)
 	{
+		if ($type < RESULT_TYPE_BOOK_SHIFT)
+		{
+			$type += RESULT_TYPE_BOOK_SHIFT;
+		}
 		$data = array(
 				'id_survey' => $id_survey,
-				'type' => $type + RESULT_TYPE_BOOK_SHIFT,
+				'type' => $type,
 				'value' => $value,
 				'num' => $num,
 		);
