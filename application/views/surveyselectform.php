@@ -41,7 +41,7 @@
 						{
 							$add_class .= ' disabled';
 						}
-						$icon_tag = tag_icon('');
+						$icon_tag = tag_icon(' ');
 						if ((isset($select) && $i === $select) || $survey->selected === $i)
 						{
 							$add_class .= ' active';
@@ -51,7 +51,7 @@
 						<li>
 							<div class="row">
 								<div class="col-sm-2">
-									<button type="button" id="item<?= $i ?>" name="<?= $i ?>" class="btn btn-item btn-lg btn-block btn-default<?= $add_class ?>"><?= $icon_tag ?></button>
+									<button type="button" id="item<?= $i ?>" name="<?= $i ?>" class="btn btn-item btn-lg btn-block btn-default<?= $add_class ?>">　<?= $icon_tag ?>　</button>
 								</div>
 								<div class="col-sm-8">
 									<span><?= $item->value ?></span>

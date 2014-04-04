@@ -156,7 +156,8 @@ class Survey_model extends CI_Model
 	 */
 	public function regist_vote(Surveyobj $survey, Userobj $user, $value)
 	{
-		if (($this->check_voted($survey->id, $user->id, $user->is_guest)) !== NO_VOTED || $survey->num_item <= $value)
+		$vote = $this->check_voted($survey->id, $user->id, $user->is_guest);
+		if ($survey->num_item <= $value || ($vote !== NO_VOTED && is_today($vote->timestamp)))
 		{
 			return FALSE;
 		}
