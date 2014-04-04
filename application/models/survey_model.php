@@ -156,13 +156,23 @@ class Survey_model extends CI_Model
 	public function regist_vote(Surveyobj $survey, Userobj $user, $value)
 	{
 		$vote = $this->check_voted($survey->id, $user->id, $user->is_guest);
-		if ($survey->num_item <= $value || ($vote !== NO_VOTED && is_today($vote->timestamp)))
+		// not exists itemnubmer 
+		if ($survey->num_item <= $value)
 		{
 			return FALSE;
 		}
+		if ($vote === NO_VOTED)
+		{
+			if (is_today($vote->timestamp))
+			{
+				$this->insert_vote($survey->id, $user->id, $value, $user->is_guest);
+			}
+		} else
+		{
+			$this->update_vote($survey->id, $user->id, $value, $user->is_guest);
+		}
 
 		$survey->update_regist_vote($value);
-		$this->insert_vote($survey->id, $user->id, $value, $user->is_guest);
 		$this->inclement_item($survey->id, $value, $survey->items[$value]->num);
 		$this->inclement_survey($survey->id, $survey->total_num);
 		if (($num = $this->_check_result_just($survey)) !== FALSE)
@@ -198,6 +208,15 @@ class Survey_model extends CI_Model
 		$this->db->set('is_guest', $is_guest);
 		$this->db->set('value', $value);
 		$this->db->insert(DB_TBL_VOTE);
+	}
+
+	public function update_vote($id_survey, $id_user, $value, $is_guest = FALSE)
+	{
+		$this->db->where('id_survey', $id_survey);
+		$this->db->where('id_user', $id_user);
+		$this->db->where('is_guest', $is_guest);
+		$this->db->set('value', $value);
+		$this->db->update(DB_TBL_VOTE);
 	}
 
 	public function inclement_survey($id_survey, $total_num = NULL)
@@ -407,7 +426,7 @@ class Survey_model extends CI_Model
 		{
 			if ($datum->type == RESULT_TYPE_TIME_BOOK && $datum->value < time())
 			{
-				$data[] = $this->_update_result($survey, RESULT_TYPE_TIME, $datum->result);
+				$data[] = $this->_update_result($survey, RESULT_TYPE_TIME, $datum->value);
 			}
 		}
 
@@ -433,13 +452,12 @@ class Survey_model extends CI_Model
 		$where = array(
 				'id_survey' => $survey->id,
 				'type' => $type + RESULT_TYPE_BOOK_SHIFT,
-				'result' => $value,
+				'value' => $value,
 		);
 		$this->db->where($where);
 		$this->db->delete(DB_TBL_RESULT_BOOK);
 		$this->_insert_result($survey, $type, $value);
-		$where['type'] = $type;
-		$this->db->where($where);
+		$this->db->where('id_result', $this->db->insert_id());
 		$data = $this->db->get(DB_TBL_RESULT)->result();
 		return $data[0];
 	}
@@ -455,7 +473,8 @@ class Survey_model extends CI_Model
 		{
 			// vote_num -> real time result update, needles timecalc
 			// time     -> It's hard to say when, need timecalc
-			$data['timestamp'] = $survey->timestamp + $time;
+			$time_value = $survey->timestamp + $time;
+			$data['timestamp'] = date_mysql_timestamp($time_value);
 		}
 		$this->db->insert(DB_TBL_RESULT, $data);
 	}

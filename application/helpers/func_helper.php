@@ -251,5 +251,12 @@ if (!function_exists('is_today'))
 		}
 		return date('Y-m-d', $timestamp) === date('Y-m-d');
 	}
+}
 
+if (!function_exists('date_mysql_timestamp'))
+{
+	function date_mysql_timestamp ($time = NULL)
+	{
+		return $time  ? date(MYSQL_TIMESTAMP, $time) : date(MYSQL_TIMESTAMP);
+	}
 }

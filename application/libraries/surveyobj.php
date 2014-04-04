@@ -51,7 +51,7 @@ class Surveyobj
 		$this->title = h($data->title);
 		$this->description = (empty($data->description) ? '' : h($data->description));
 		$this->num_item = $data->num_item;
-		$this->timestamp = $data->timestamp;
+		$this->timestamp = strtotime($data->timestamp);
 		$this->state = $data->state;
 		$this->is_anonymous = !empty($data->is_anonymous);
 		$this->total_num = $data->total_num;
@@ -141,7 +141,7 @@ class Surveyobj
 		}
 		$end_data = $data[0];
 		$this->end_type = $end_data->type;
-		$this->end_value = ($end_data->type == RESULT_TYPE_TIME) ? $end_data->timestamp : array_sum(explode(',', $end_data->result));
+		$this->end_value = ($end_data->type == RESULT_TYPE_TIME) ? strtotime($end_data->timestamp) : array_sum(explode(',', $end_data->result));
 		$results = array();
 		foreach ($data as $datum)
 		{
@@ -156,7 +156,7 @@ class Surveyobj
 		$items = $this->_create_map_item($nums);
 		$items_sorted = $this->create_sorted_items($items);
 		$result = new Resultobj($data, $items_sorted);
-		$result->set_elapsed_time(strtotime($this->timestamp));
+		$result->set_elapsed_time($this->timestamp);
 		return $result;
 	}
 
@@ -181,7 +181,7 @@ class Surveyobj
 	{
 		$data = new stdClass();
 		$data->type = RESULT_TYPE_CURRENT;
-		$data->timestamp = date(MYSQL_TIMESTAMP);
+		$data->timestamp = date_mysql_timestamp();
 		return $this->current_result = new Resultobj($data, $this->items, $this->get_time_progress_str());
 	}
 
@@ -223,7 +223,7 @@ class Surveyobj
 
 	public function get_time_progress()
 	{
-		$start_time = strtotime($this->timestamp);
+		$start_time = $this->timestamp;
 		$now = time();
 		return $now - $start_time;
 	}
@@ -240,13 +240,15 @@ class Surveyobj
 
 	public function get_time_remain_str()
 	{
-		if ($this->end_type == RESULT_TYPE_TIME)
+		if ($this->end_type == RESULT_TYPE_TIME_BOOK)
 		{
 			$remain = $this->get_time_remain();
 			if ($remain <= 0)
 			{
 				return '終了';
 			}
+			echo $remain;
+			exit;
 			$times = to_time_resolution($remain, TRUE);
 // TODO: 
 			return 'あと' . ($times->d ? $times->df : $times->h ? : $times->m ? : $remain . '秒');
@@ -266,7 +268,7 @@ class Surveyobj
 
 	public function get_time()
 	{
-		return date(DATE_FORMAT, strtotime($this->timestamp));
+		return date(DATE_FORMAT, $this->timestamp);
 	}
 
 	/**
