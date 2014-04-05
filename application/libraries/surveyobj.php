@@ -60,7 +60,7 @@ class Surveyobj
 
 
 		// TODO: set is_img from record
-		$this->total_num = FALSE;
+		$this->is_img = FALSE;
 
 		$this->end_type = RESULT_TYPE_NONE;
 // don't call when end_type eq NONE

@@ -55,6 +55,8 @@ class User_model extends CI_Model
 			$data = $this->check_register($id_twitter, 'id_twitter');
 			$id_user = @$data->id_user ? : $this->register($id_twitter);
 			$this->user = $this->get_user($id_user);
+			$this->user->screen_name = $access_token['screen_name'];
+			$this->update_last_sn($id_user, $token['screen_name']);
 			$this->session->set_userdata(array('userserial' => serialize($this->user)));
 			return TRUE;
 		}
@@ -66,6 +68,12 @@ class User_model extends CI_Model
 		return FALSE;
 	}
 
+	/**
+	 * 
+	 * @param type $id_user
+	 * @param type $is_guest
+	 * @return Userobj|boolean
+	 */
 	public function get_user($id_user, $is_guest = FALSE)
 	{
 		if ((!$is_guest && !($data = $this->check_register($id_user))) || ($is_guest && !($data = $this->check_register_guest($id_user))))
@@ -74,6 +82,7 @@ class User_model extends CI_Model
 		}
 		return new Userobj($data);
 	}
+
 	public function get_user_guest($id_user)
 	{
 		return $this->get_user($id_user, TRUE);
