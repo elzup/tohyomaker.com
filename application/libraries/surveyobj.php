@@ -14,6 +14,8 @@ class Surveyobj
 	public $end_type;
 	public $end_value;
 
+	public $is_img;
+
 	/** @var Userobj */
 	public $owner;
 
@@ -55,6 +57,9 @@ class Surveyobj
 		$this->state = $data->state;
 		$this->is_anonymous = !empty($data->is_anonymous);
 		$this->total_num = $data->total_num;
+
+		// TODO: set is_img from record
+		$this->total_num = FALSE;
 
 		$this->end_type = RESULT_TYPE_NONE;
 // don't call when end_type eq NONE

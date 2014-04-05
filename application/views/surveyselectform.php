@@ -1,68 +1,162 @@
 <?php
 /* @var $survey Surveyobj */
 /* @var $user Userobj */
-//echo '<pre>';
-//var_dump($survey);
-//die('END');
+
+//debug 
+$survey->is_img = TRUE;
+
+
+// TODO: move func file
+if (!function_exists('attr_tooltip_selectform'))
+{
+
+	function attr_tooltip_selectform($i, Surveyobj $survey)
+	{
+		$btn_tooltip_text = '';
+		if ($survey->selected === $i)
+		{
+			$btn_tooltip_text = '前回の投票先';
+		}
+		if ($survey->is_voted())
+		{
+			$btn_tooltip_text = '本日は投票済み';
+		}
+		return empty($btn_tooltip_text) ? '' : attr_tooltip($btn_tooltip_text);
+	}
+
+	function attr_class_selectform($i, Surveyobj $survey, $select)
+	{
+		$add_class = '';
+		if ((isset($select) && $i === $select) || $survey->selected === $i)
+		{
+			$add_class .= ' active';
+		} else if ($survey->is_voted())
+		{
+			$add_class .= ' no-display';
+		}
+		return $add_class;
+	}
+
+	function tag_icon_selectform($i, $survey_select, $select)
+	{
+		return tag_icon(((isset($select) && $i === $select) || $survey_select === $i) ? ICON_OK : ' ');
+	}
+
+	// TODO: cut severally function_exits
+}
 ?>
 
 <div class="container">
 	<div class="row">
 		<div class="col-sm-offset-2 col-sm-8" id="items-div">
-			<div class="itembox-div" data-toggle="buttons-radio">
-				<?php
-				if ($user->is_guest)
-				{
-					?>
-					<div class="well">
-						<p>ゲストユーザーです</p>
-						<span class="help-block">*ゲストユーザだと最近の投票を確認することが出来ません <a <?= attr_href(HREF_TYPE_LOGIN)?> class="btn btn-info">ログインする</a></span>
-						
-					</div>
-					<?php
-				}
+			<?php
+			if ($user->is_guest)
+			{
 				?>
+				<div class="well">
+					<p>ゲストユーザーです</p>
+					<span class="help-block">*ゲストユーザだと最近の投票を確認することが出来ません <a <?= attr_href(HREF_TYPE_LOGIN) ?> class="btn btn-info">ログインする</a></span>
+
+				</div>
 				<?php
-				if (!$survey->is_voted())
+			}
+			?>
+			<div class="itembox-div<?= $survey->is_img ? ' itembox-img-div' : '' ?>" data-toggle="buttons-radio">
+				<?php
+				if (!$survey->is_img)
 				{
 					?>
-					<div class="row">
-						<div class="col-sm-3">
-							↓投票先にチェック
+					<?php
+					if (!$survey->is_voted())
+					{
+						?>
+						<div class="row">
+							<div class="col-sm-3">
+								↓投票先にチェック
+							</div>
 						</div>
-					</div>
-				<?php }
-				?>
-				<ul>
+					<?php }
+					?>
+					<ul>
+						<?php
+						foreach ($survey->items as $item)
+						{
+							$i = $item->index;
+							// btn state define page loaded start view
+							$add_class = '';
+							if ($survey->is_voted())
+							{
+								$add_class .= ' disabled';
+							}
+							$icon_tag = tag_icon(' ');
+							if ((isset($select) && $i === $select) || $survey->selected === $i)
+							{
+								$add_class .= ' active';
+								$icon_tag = tag_icon(ICON_OK);
+							}
+							?>
+							<li>
+								<div class="row">
+									<div class="col-sm-2">
+										<button type="button" id="item<?= $i ?>" name="<?= $i ?>" class="btn btn-item btn-lg btn-block btn-default<?= $add_class ?>">　<?= $icon_tag ?>　</button>
+									</div>
+									<div class="col-sm-8">
+										<span><?= $item->value ?></span>
+									</div>
+								</div>
+							</li>
+						<?php } ?>
+					</ul>
 					<?php
+				} else
+				// is img survey
+				{
+
+					$sum_cn = 0;
 					foreach ($survey->items as $item)
 					{
 						$i = $item->index;
+						$cn = 6; //calc_item_col($i, count($survey->items));
 						// btn state define page loaded start view
-						$add_class = '';
-						if ($survey->is_voted())
+						// 
+						// get attrs
+						if ($sum_cn % 12 == 0)
 						{
-							$add_class .= ' disabled';
-						}
-						$icon_tag = tag_icon(' ');
-						if ((isset($select) && $i === $select) || $survey->selected === $i)
-						{
-							$add_class .= ' active';
-							$icon_tag = tag_icon(ICON_OK);
-						}
-						?>
-						<li>
+							?>
 							<div class="row">
-								<div class="col-sm-2">
-									<button type="button" id="item<?= $i ?>" name="<?= $i ?>" class="btn btn-item btn-lg btn-block btn-default<?= $add_class ?>">　<?= $icon_tag ?>　</button>
-								</div>
-								<div class="col-sm-8">
-									<span><?= $item->value ?></span>
+								<?php
+							}
+							?>
+							<div class="col-sm-<?= $cn ?>">
+								<div class="panel">
+									<div class="panel-body">
+										<span><?= $item->value ?></span>
+										<?php
+										if (!$survey->is_voted() || $i == $survey->selected)
+										{
+											?> 
+											<button type="button" id="item<?= $i ?>" name="<?= $i ?>" 
+											<?= attr_tooltip_selectform($i, $survey) ?> 
+															class="btn btn-item btn-lg btn-default<?= attr_class_selectform($i, $survey, $select) ?>">　
+												<?= tag_icon_selectform($i, $survey->selected, $select) ?>　
+											</button>
+											<?php
+										}
+										?> 
+									</div>
 								</div>
 							</div>
-						</li>
-					<?php } ?>
-				</ul>
+							<?php
+							$sum_cn += $cn;
+							if ($sum_cn % 12 == 0)
+							{
+								?>
+							</div>
+							<?php
+						}
+					}
+				}
+				?>
 			</div>
 		</div>
 	</div>
@@ -119,10 +213,10 @@
 				</div>
 			</div>
 			<div class="col-sm-offset-2 col-sm-8">
-					<a <?= attr_href(HREF_TYPE_VIEW, $survey->id) ?> class="btn btn-success btn-lg btn-block">
-						<i class="<?= ICON_RESULT ?>"></i>
-						この投票の結果を見る
-					</a>
+				<a <?= attr_href(HREF_TYPE_VIEW, $survey->id) ?> class="btn btn-success btn-lg btn-block">
+					<i class="<?= ICON_RESULT ?>"></i>
+					この投票の結果を見る
+				</a>
 			</div>
 			<?php
 		}
