@@ -12,12 +12,14 @@ if (!function_exists('surveypane'))
 						<p>
 						<h4><a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?>><?= $survey->title ?></a>
 							<?php
+							/*
 							if (($result_num = $survey->get_result_num()) !== 0)
 							{
 								?>
 								<a <?= attr_href(HREF_TYPE_VIEW, $survey->id) ?>><span class="badge"><?= $result_num ?></span></a>
 								<?php
 							}
+							 */
 							?>
 						</h4></p>
 					</div>
@@ -64,11 +66,11 @@ if (!function_exists('surveypane'))
 							foreach ($survey->items as $i => $item)
 							{
 								$class = '';
-								if (($selected = $survey->selected) !== NO_VOTED || $survey->state != SURVEY_STATE_PROGRESS)
+								if ($survey->is_selected_today)
 								{
 									$class .= ' disabled';
 								}
-								$class .= (($selected === $item->index) ? ' btn-warning' : ' btn-success ');
+								$class .= ($survey->selected === $item->index ? ' btn-warning' : ' btn-success ');
 								?>
 								<div class="col-sm-<?= $cn ?>">
 									<a <?= attr_href(HREF_TYPE_VOTE, array($survey->id, $i)) ?> class="btn btn-block btn-item btn-sm<?= $class ?>"><?= $item->value ?></a>

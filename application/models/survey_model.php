@@ -157,16 +157,13 @@ class Survey_model extends CI_Model
 	{
 		$vote = $this->check_voted($survey->id, $user->id, $user->is_guest);
 		// not exists itemnubmer 
-		if ($survey->num_item <= $value)
+		if ($survey->num_item <= $value || ($vote !== NO_VOTED && is_today($vote->timestamp)))
 		{
 			return FALSE;
 		}
 		if ($vote === NO_VOTED)
 		{
-			if (is_today($vote->timestamp))
-			{
-				$this->insert_vote($survey->id, $user->id, $value, $user->is_guest);
-			}
+			$this->insert_vote($survey->id, $user->id, $value, $user->is_guest);
 		} else
 		{
 			$this->update_vote($survey->id, $user->id, $value, $user->is_guest);
@@ -252,7 +249,8 @@ class Survey_model extends CI_Model
 
 	public function install_select(Surveyobj $survey, $id_user, $is_guest = FALSE)
 	{
-		if (($select = $this->check_voted($survey->id, $id_user, $is_guest)) !== NO_VOTED)
+		$select = $this->check_voted($survey->id, $id_user, $is_guest);
+		if ($select !== NO_VOTED)
 		{
 			$survey->selected = $select->value;
 			$survey->is_selected_today = is_today($select->timestamp);

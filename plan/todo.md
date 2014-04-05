@@ -28,8 +28,9 @@
 * xxログイン確認ページxx
 * db
     * use constance DB COLUMN NAME
+    * ~~use constance DB TABLE NAME~~
 
-* surveyselectボタンview変更
+* ~~surveyselectボタンview変更~~
 
 * スマホview
 
