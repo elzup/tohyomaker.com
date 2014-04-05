@@ -19,23 +19,22 @@ class Resultobj
 
 //	public $is_book;
 
-	function __construct($data = NULL, $items = NULL, $progress_str = NULL)
+	function __construct($data = NULL, $items = NULL)
 	{
 		if (isset($data))
 		{
-			$this->set($data, $items, $progress_str);
+			$this->set($data, $items);
 		}
 	}
 
-	public function set(stdClass $data, $items = NULL, $progress_str = NULL)
+	public function set(stdClass $data, $items = NULL)
 	{
 		$this->type = $data->type;
-		$this->timestamp = $data->timestamp;
+		$this->timestamp = strtotime($data->timestamp);
 		if (isset($items))
 		{
 			$this->set_items($items);
 		}
-		$this->set_progress_time_str($progress_str);
 	}
 
 	public function set_items($items)
@@ -53,9 +52,14 @@ class Resultobj
 		return $sum;
 	}
 
+	public function set_start_time($time_start)
+	{
+		$this->set_elapsed_time($time_start);
+	}
+
 	public function set_elapsed_time($time_start)
 	{
-		$time_loged = strtotime($this->timestamp);
+		$time_loged = $this->timestamp;
 		$this->_elapsed_time_str = to_time_resolution_str($time_loged - $time_start);
 	}
 
@@ -64,10 +68,20 @@ class Resultobj
 		return $this->_elapsed_time_str;
 	}
 
-	public function set_progress_time_str($str)
+	/*
+	public function set_progress_time_str($time_start)
 	{
-		$this->_progress_time_str = $str;
+		$time_loged = $this->timestamp;
+		$this->_progress_time_str = to_time_resolution($time_loged - $time_start);
 	}
+
+	public function get_time_progress_str($str)
+	{
+		return $this->_progress_time_str;
+	}
+	 * 
+	 */
+
 
 	public function get_type_text()
 	{

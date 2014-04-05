@@ -3,9 +3,7 @@
 /* @var $user Userobj */
 
 //debug 
-$survey->is_img = TRUE;
-
-
+//$survey->is_img = TRUE;
 // TODO: move func file
 if (!function_exists('attr_tooltip_selectform'))
 {
@@ -42,7 +40,7 @@ if (!function_exists('attr_tooltip_selectform'))
 		return tag_icon(((isset($select) && $i === $select) || $survey_select === $i) ? ICON_OK : ' ');
 	}
 
-	// TODO: cut severally function_exits
+// TODO: cut severally function_exits
 }
 ?>
 
@@ -66,42 +64,35 @@ if (!function_exists('attr_tooltip_selectform'))
 				if (!$survey->is_img)
 				{
 					?>
-					<?php
-					if (!$survey->is_voted())
-					{
-						?>
-						<div class="row">
-							<div class="col-sm-3">
-								↓投票先にチェック
-							</div>
-						</div>
-					<?php }
-					?>
 					<ul>
 						<?php
 						foreach ($survey->items as $item)
 						{
 							$i = $item->index;
 							// btn state define page loaded start view
-							$add_class = '';
-							if ($survey->is_voted())
-							{
-								$add_class .= ' disabled';
-							}
-							$icon_tag = tag_icon(' ');
-							if ((isset($select) && $i === $select) || $survey->selected === $i)
-							{
-								$add_class .= ' active';
-								$icon_tag = tag_icon(ICON_OK);
-							}
 							?>
 							<li>
-								<div class="row">
-									<div class="col-sm-2">
-										<button type="button" id="item<?= $i ?>" name="<?= $i ?>" class="btn btn-item btn-lg btn-block btn-default<?= $add_class ?>">　<?= $icon_tag ?>　</button>
-									</div>
-									<div class="col-sm-8">
-										<span><?= $item->value ?></span>
+								<div class="panel panel-itemselect">
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-sm-2">
+												<?php
+												if (!$survey->is_voted() || $i == $survey->selected)
+												{
+													?> 
+													<button type="button" id="item<?= $i ?>" name="<?= $i ?>" 
+													<?= attr_tooltip_selectform($i, $survey) ?> 
+																	class="btn btn-item btn-lg btn-default<?= attr_class_selectform($i, $survey, $select) ?>">　
+														<?= tag_icon_selectform($i, $survey->selected, $select) ?>　
+													</button>
+													<?php
+												}
+												?>
+											</div>
+											<div class="col-sm-8">
+												<span><?= $item->value ?></span>
+											</div>
+										</div>
 									</div>
 								</div>
 							</li>
@@ -128,7 +119,7 @@ if (!function_exists('attr_tooltip_selectform'))
 							}
 							?>
 							<div class="col-sm-<?= $cn ?>">
-								<div class="panel">
+								<div class="panel panel-itmeselect">
 									<div class="panel-body">
 										<span><?= $item->value ?></span>
 										<?php

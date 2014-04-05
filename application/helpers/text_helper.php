@@ -47,7 +47,7 @@ if (!function_exists('totext_share_result'))
 		{
 			$result = $survey->get_current_result();
 		}
-		$text = "投票結果:{$survey->title} [{$result->get_type_text()}時点]\n";
+		$text = "投票結果:{$survey->title} \n";
 		$i = 1;
 		foreach ($result->items as $item)
 		{

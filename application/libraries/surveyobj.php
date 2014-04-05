@@ -58,6 +58,7 @@ class Surveyobj
 		$this->is_anonymous = !empty($data->is_anonymous);
 		$this->total_num = $data->total_num;
 
+
 		// TODO: set is_img from record
 		$this->total_num = FALSE;
 
@@ -161,7 +162,7 @@ class Surveyobj
 		$items = $this->_create_map_item($nums);
 		$items_sorted = $this->create_sorted_items($items);
 		$result = new Resultobj($data, $items_sorted);
-		$result->set_elapsed_time($this->timestamp);
+		$result->set_start_time($this->timestamp);
 		return $result;
 	}
 
@@ -175,11 +176,8 @@ class Surveyobj
 
 	public function get_current_result()
 	{
-		if ($this->state != SURVEY_STATE_PROGRESS)
-		{
-			return $this->results[0];
-		}
-		return $this->current_result ? : $this->install_current_result();
+		$r = $this->current_result ? : $this->install_current_result();
+		return $r;
 	}
 
 	public function install_current_result()
@@ -187,7 +185,7 @@ class Surveyobj
 		$data = new stdClass();
 		$data->type = RESULT_TYPE_CURRENT;
 		$data->timestamp = date_mysql_timestamp();
-		return $this->current_result = new Resultobj($data, $this->items, $this->get_time_progress_str());
+		return $this->current_result = new Resultobj($data, $this->items);
 	}
 
 	private function _create_map_item($nums)
@@ -233,14 +231,9 @@ class Surveyobj
 		return $now - $start_time;
 	}
 
-	public function get_time_progress_str($is_full = FALSE)
+	public function get_time_progress_str()
 	{
-		if ($this->state != SURVEY_STATE_PROGRESS)
-		{
-			return '終了[3日]';
-		}
-		$time = $this->get_time_progress();
-		return to_time_resolution_str($time, $is_full);
+		$a = to_time_resolution_str($this->get_time_progress());
 	}
 
 	public function get_time_remain_str()
