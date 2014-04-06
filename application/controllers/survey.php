@@ -20,7 +20,7 @@ class Survey extends CI_Controller
 	public function Index()
 	{
 		// TODO: jump vote page
-		echo 'index on survey';
+			show_404();
 	}
 
 	private function _check_post(array $data)
@@ -32,13 +32,13 @@ class Survey extends CI_Controller
 	{
 		if (!isset($id_survey))
 		{
-			die('no id_survey');
 			// TODO: error action
+			show_404();
 		}
 		$user = $this->user->get_main_user();
 		if (($survey = $this->survey->get_survey($id_survey, $user)) === FALSE)
 		{
-			die("no found id : {$id_survey}");
+			show_404();
 			// TODO: jump no found page
 		}
 		// 
@@ -102,20 +102,22 @@ class Survey extends CI_Controller
 		$this->load->view('foot');
 	}
 
-	function friendvote($id_survey = NULL)
+	function friend($id_survey = NULL)
 	{
 		if (!isset($id_survey))
 		{
-			die('no id_survey');
-			// TODO: same as vote method todo
+			show_404();
 		}
 		$user = $this->user->get_main_user();
 		/* @var $survey Surveyobj */
 		if (($survey = $this->survey->get_survey($id_survey, $user)) === FALSE)
 		{
-			die("no found id : {$id_survey}");
-			// TODO: same as vote method todo
+			show_404();
 		}
+
+		$users = $this->user->get_friend_users();
+		$users_voted = $this->survey->install_users_select($users, $survey);
+		// TODO:
 
 		$meta = new Metaobj();
 		$meta->setup_survey($survey, TRUE);
@@ -124,15 +126,10 @@ class Survey extends CI_Controller
 		$this->load->view('navbar', array('user' => $user));
 		$surveyhead_info = array(
 				'survey' => $survey,
-				'type' => SURVEY_PAGETYPE_VIEW,
+				'type' => SURVEY_PAGETYPE_FRIEND,
 		);
 		$this->load->view('surveyhead', $surveyhead_info);
-		$this->load->view('surveyresult', array('survey' => $survey));
-		if (isset($survey->results))
-		{
-			$this->load->view('surveylog', array('survey', $survey));
-		}
-		// TODO: insert surveys parts
+		$this->load->view('surveyfriend', array('survey' => $survey, 'friends' => $users_voted));
 		$this->load->view('foot');
 	}
 
@@ -169,7 +166,8 @@ class Survey extends CI_Controller
 			// TODO: if just vote, plus1 message 
 			$this->session->set_userdata(set_alert(ALERT_TYPE_VOTED));
 		}
-		jump(base_url(PATH_VOTE . '/' . $id_survey));
+		jump_back();
+//		jump(base_url(PATH_VOTE . '/' . $id_survey));
 	}
 
 	private function _set_token()

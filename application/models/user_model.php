@@ -5,9 +5,7 @@ class User_model extends CI_Model
 
 	private $twitter_connection;
 
-	/**
-	 * @var $user UesrObj
-	 */
+	/** @var Userobj */
 	private $user;
 	private $is_guest;
 
@@ -51,12 +49,17 @@ class User_model extends CI_Model
 		if (!empty($access_token['oauth_token']))
 		{
 			$this->twitter_connection = new TwitterOAuth($twitter_config['key'], $twitter_config['secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
+			$this->set_connection();
 			$id_twitter = $access_token['user_id'];
 			$data = $this->check_register($id_twitter, 'id_twitter');
 			$id_user = @$data->id_user ? : $this->register($id_twitter);
 			$this->user = $this->get_user($id_user);
 			$this->user->screen_name = $access_token['screen_name'];
 			$this->update_last_sn($id_user, $access_token['screen_name']);
+			$result = $this->twitter_connection->get('account/verify_credentials');
+			$this->user->img_url = $result->profile_image_url;
+			$this->update_last_img($id_user, $result->profile_image_url);
+
 			$this->session->set_userdata(array('userserial' => serialize($this->user)));
 			return TRUE;
 		}
@@ -137,6 +140,13 @@ class User_model extends CI_Model
 		$this->db->update(DB_TBL_USER);
 	}
 
+	function update_last_img($id_user, $img_url)
+	{
+		$this->db->where('id_user', $id_user);
+		$this->db->set('img_last', $img_url);
+		$this->db->update(DB_TBL_USER);
+	}
+
 	public function inclement_user_votecount($id_user, $num = NULL)
 	{
 		$where = array('id_user' => $id_user);
@@ -155,6 +165,53 @@ class User_model extends CI_Model
 	public function guest_login()
 	{
 		
+	}
+
+	public function get_friend_users()
+	{
+		if (($ids_twitter = $this->get_friend_twitter_ids()) === NULL)
+		{
+			return NULL;
+		}
+		$data = $this->select_users($ids_twitter);
+		$friends = array();
+		foreach ($data as $datum)
+		{
+			$friends[] = $this->get_user($datum->id_user);
+		}
+		return $friends;
+	}
+
+	public function select_users($ids_twitter)
+	{
+		foreach ($ids_twitter as $id)
+		{
+			$this->db->or_where('id_twitter', $id);
+		}
+		$result = $this->db->get(DB_TBL_USER)->result();
+		return $result;
+	}
+
+	public function get_friend_twitter_ids()
+	{
+		$this->set_connection();
+		$result = $this->twitter_connection->get('friends/ids');
+		if (isset($result->ids))
+		{
+			return $result->ids;
+		}
+		return NULL;
+	}
+
+	public function set_connection()
+	{
+		if (!empty($this->twitter_connection))
+		{
+			return;
+		}
+		$access_token = @$this->session->userdata('access_token');
+		$twitter_config = $this->config->item('TWITTER_CONSUMER');
+		$this->twitter_connection = new TwitterOAuth($twitter_config['key'], $twitter_config['secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
 	}
 
 }

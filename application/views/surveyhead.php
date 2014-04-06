@@ -127,9 +127,9 @@
 					結果ページ
 				</a>
 				<!--TODO: friend's vote page-->
-				<a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?> class="btn btn-success<?= ((TRUE) ? ' disabled' : '') ?>">
+				<a <?= attr_href(HREF_TYPE_FRIEND, $survey->id) ?> class="btn btn-success<?= (($type === SURVEY_PAGETYPE_FRIEND) ? ' disabled' : '') ?>">
 					<i class="<?= ICON_FRIEND ?>"></i>
-					フレンドの投票先[準備中]
+					フレンドの投票先
 				</a>
 			</div>
 		</div>

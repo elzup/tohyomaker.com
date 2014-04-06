@@ -13,6 +13,8 @@ class Userobj
 
 	public $is_guest;
 
+	public $select;
+
 	public function __construct(stdClass $data = NULL)
 	{
 		$this->is_guest = TRUE;
@@ -34,7 +36,7 @@ class Userobj
 		// logined user
 		$this->screen_name = h($data->sn_last);
 		$this->id_twitter = $data->id_twitter;
-//		$this->img_url     = $data->img_url;
+		$this->img_url     = $data->img_last;
 		$this->state = $data->state;
 		$this->count_vote = $data->count_vote;
 		$this->is_guest = FALSE;

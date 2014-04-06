@@ -51,6 +51,7 @@ class Survey_model extends CI_Model
 		$survey = new Surveyobj($data, $items, $tags, $owner);
 		$this->_install_result($survey);
 		$this->install_select($survey, $id_user, $is_guest);
+		$this->check_delete_votes($survey);
 		return $survey;
 	}
 
@@ -335,13 +336,12 @@ class Survey_model extends CI_Model
 		return array_filter_values(explode(',', $data['tag']));
 	}
 
-	private function _update_state_end(Surveyobj &$survey)
+	private function _update_state_end(Surveyobj $survey)
 	{
 		$this->_update_state($survey, SURVEY_STATE_END);
-		$this->_delete_votes($survey);
 	}
 
-	private function _update_state(Surveyobj &$survey, $state)
+	private function _update_state(Surveyobj $survey, $state)
 	{
 		$this->db->where('id_survey', $survey->id);
 		$this->db->set('state', $state);
@@ -357,9 +357,19 @@ class Survey_model extends CI_Model
 	 * 
 	 */
 
-	private function _delete_votes(Surveyobj $survey)
+	private function check_delete_votes(Surveyobj $survey)
+	{
+		if ($survey->state == SURVEY_STATE_END
+				&& $survey->end_value + strtotime('+7 day', 0) < time())
+		{
+			$this->delete_votes_overdue($survey);
+		}
+	}
+
+	private function delete_votes_overdue(Surveyobj $survey)
 	{
 		$this->db->where('id_survey', $survey->id);
+		$this->db->where('`timestamp` < date(now() - interval 7 day)');
 		$this->db->delete(DB_TBL_VOTE);
 	}
 
@@ -621,4 +631,23 @@ class Survey_model extends CI_Model
 		return $surveys;
 	}
 
+	/**
+	 * 
+	 * @param Userobj[] $users
+	 * @param Surveyobj $survey
+	 */
+	public function install_users_select($users, Surveyobj $survey)
+	{
+		$users_voted = array();
+		foreach ($users as $user)
+		{
+			echo $user->id;
+			$select = $select = $this->check_voted($survey->id, $user->id);
+			if ($select !== NO_VOTED) {
+				$user->select = $select->value;
+				$users_voted[] = $user;
+			}
+		}
+		return $users_voted;
+	}
 }
