@@ -135,7 +135,7 @@ class Surveyobj
 		{
 			$this->results[] = $this->_create_result_book($datum);
 		}
-		$this->end_type = $this->results[0]->type;
+		$this->set_end_type($this->results[0]->type);
 		$this->end_value = $this->results[0]->book_value;
 	}
 
@@ -146,7 +146,7 @@ class Surveyobj
 			return NULL;
 		}
 		$end_data = $data[0];
-		$this->end_type = $end_data->type;
+		$this->set_end_type($end_data->type);
 		$this->end_value = ($end_data->type == RESULT_TYPE_TIME) ? strtotime($end_data->timestamp) : array_sum(explode(',', $end_data->result));
 		$results = array();
 		foreach ($data as $datum)
@@ -154,6 +154,11 @@ class Surveyobj
 			$results[] = $this->_create_result($datum);
 		}
 		return $results;
+	}
+
+	public function set_end_type($type)
+	{
+		$this->end_type = ($type >= 10) ? $type - 10: $type;
 	}
 
 	private function _create_result($data)
@@ -219,26 +224,23 @@ class Surveyobj
 			return 100;
 		}
 		$progress_time = $this->get_time_progress();
-		$day3_time = strtotime('+3 day', 0);
-		$v = $progress_time * 100 / $day3_time;
+		$v = $progress_time * 100 / ($this->end_value - $this->timestamp);
 		return round($v);
 	}
 
 	public function get_time_progress()
 	{
-		$start_time = $this->timestamp;
-		$now = time();
-		return $now - $start_time;
+		return time() - $this->timestamp;
 	}
 
 	public function get_time_progress_str()
 	{
-		$a = to_time_resolution_str($this->get_time_progress());
+		return to_time_resolution_str($this->get_time_progress());
 	}
 
 	public function get_time_remain_str()
 	{
-		if ($this->end_type == RESULT_TYPE_TIME_BOOK)
+		if ($this->end_type == RESULT_TYPE_TIME)
 		{
 			$remain = $this->get_time_remain();
 			if ($remain <= 0)
@@ -259,7 +261,7 @@ class Surveyobj
 			return 0;
 		}
 // TODO: create another type case 
-		return $this->end_value - $this->timestamp;
+		return $this->end_value - time();
 	}
 
 	public function get_time()

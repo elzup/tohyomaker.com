@@ -174,7 +174,7 @@ if (!function_exists('attr_tooltip_selectform'))
 
 
 			$selected_item = $survey->get_selected_item();
-			$share_uri = base_url(PATH_VOTE . $survey->id);
+			$share_uri = fix_url(base_url(PATH_VOTE . $survey->id));
 			$share_text = totext_share_voted($selected_item->value, $survey->title);
 			?>
 			<div class="col-sm-offset-2 col-sm-8" id="selectend-div">

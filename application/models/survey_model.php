@@ -50,9 +50,7 @@ class Survey_model extends CI_Model
 		$owner = $this->select_user_simple($data->id_user);
 		$survey = new Surveyobj($data, $items, $tags, $owner);
 		$this->_install_result($survey);
-//		echo '<pre>';
-//		var_dump($survey);
-//		exit;
+		$this->install_select($survey, $id_user, $is_guest);
 		return $survey;
 	}
 

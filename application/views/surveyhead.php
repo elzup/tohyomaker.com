@@ -72,13 +72,13 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-7 survey-cont">
+			<div class="col-sm-7 survey-cont" >
 				<?php
 				if ($survey->state != SURVEY_STATE_END)
 				{
 					?>
-					<div class="col-sm-3 no-container">
-						<?= tag_icon(ICON_TIME, TRUE) ?>
+					<div class="col-sm-3 no-container" <?= attr_tooltip('集計まで残り時間')?>>
+						<?= tag_icon(ICON_FLAG, TRUE) ?>
 						<?= $survey->get_time_remain_str() ?>
 					</div>
 					<?php
