@@ -79,7 +79,7 @@
 					?>
 					<div class="col-sm-3 no-container">
 						<?= tag_icon(ICON_TIME, TRUE) ?>
-					<?= $survey->get_time_remain_str() ?>
+						<?= $survey->get_time_remain_str() ?>
 					</div>
 					<?php
 					$stylelib = explode(',', 'success,end,end');
@@ -90,9 +90,10 @@
 							<div class="progress-bar progress-bar-<?= $pbstyle ?>" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
 						</div>
 					</div>
-				<?php
+					<?php
 				} else
 				{
+				// TODO: result type 
 					?>
 
 					<?php
@@ -100,7 +101,7 @@
 				?>
 			</div>
 			<!--div class="col-sm-3 survey-cont">
-<?= tag_icon(ICON_VOTE, TRUE) ?>
+			<?= tag_icon(ICON_VOTE, TRUE) ?>
 				<span class="total-num"><?= $survey->total_num ?></span>
 			</div-->
 			<div class="col-sm-2 col-sm-offset-3 survey-cont">

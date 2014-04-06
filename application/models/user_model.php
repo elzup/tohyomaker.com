@@ -56,7 +56,7 @@ class User_model extends CI_Model
 			$id_user = @$data->id_user ? : $this->register($id_twitter);
 			$this->user = $this->get_user($id_user);
 			$this->user->screen_name = $access_token['screen_name'];
-			$this->update_last_sn($id_user, $token['screen_name']);
+			$this->update_last_sn($id_user, $access_token['screen_name']);
 			$this->session->set_userdata(array('userserial' => serialize($this->user)));
 			return TRUE;
 		}

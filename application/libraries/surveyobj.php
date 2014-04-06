@@ -245,8 +245,6 @@ class Surveyobj
 			{
 				return '終了';
 			}
-			echo $remain;
-			exit;
 			$times = to_time_resolution($remain, TRUE);
 // TODO: 
 			return 'あと' . ($times->d ? $times->df : $times->h ? : $times->m ? : $remain . '秒');
