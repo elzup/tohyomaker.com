@@ -8,15 +8,16 @@
 			if ($survey->state == SURVEY_STATE_PROGRESS)
 			{
 				?>
-				<h2>現在の投票結果</h2>
+				<h2>投票結果</h2>
 				<?php
 			} else
 			{
 				?>
-				<h2>最終投票結果</h2>
+				<h2>投票結果</h2>
 			<?php } ?>
 			<div class="row">
 				<?php
+				if ($survey->state == SURVEY_STATE_END || $survey->selected != NO_VOTED) {
 				// TODO: item sort after view 
 				$sum_cn = 0;
 				foreach ($survey->get_sorted() as $i => $item)
@@ -56,6 +57,14 @@
 						<?php
 					}
 				}
+} else {
+	?>
+				<p>まだ投票していません</p>
+				<span class="help-block">投票するかこの投票の集計記録がされると見ることが出来ます</span>
+
+		<?php
+	
+}
 				?>
 			</div>
 		</div>

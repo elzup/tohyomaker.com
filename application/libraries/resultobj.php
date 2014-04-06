@@ -59,8 +59,7 @@ class Resultobj
 
 	public function set_elapsed_time($time_start)
 	{
-		$time_loged = $this->timestamp;
-		$this->_elapsed_time_str = to_time_resolution_str($time_loged - $time_start);
+		$this->_elapsed_time_str = to_time_resolution_str($this->timestamp - $time_start);
 	}
 
 	public function get_elapsed_time_str()

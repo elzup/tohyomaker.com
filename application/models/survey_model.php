@@ -473,6 +473,7 @@ class Survey_model extends CI_Model
 			// time     -> It's hard to say when, need timecalc
 			$time_value = $survey->timestamp + $time;
 			$data['timestamp'] = date_mysql_timestamp($time_value);
+			// TODO:
 		}
 		$this->db->insert(DB_TBL_RESULT, $data);
 	}

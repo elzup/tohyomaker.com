@@ -17,7 +17,7 @@
 				{
 					if ($result->type < RESULT_TYPE_BOOK_SHIFT)
 					{
-						$no_result = TRUE;
+						$no_result = FALSE;
 						logpane($result, $survey);
 					}
 				}

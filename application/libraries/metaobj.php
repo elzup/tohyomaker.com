@@ -96,7 +96,7 @@ class Metaobj
 
 	public function setup_my()
 	{
-		$this->set_title('新着投票');
+		$this->set_title('マイページ');
 		$this->url = base_url(PATH_MYPAGE);
 		$this->no_meta = TRUE;
 	}

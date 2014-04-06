@@ -16,7 +16,7 @@
 			<div id="myTabContent" class="tab-content">
 				<div class="tab-pane fade active in" id="vote-history-tab">
 					<h2>最近の投票履歴</h2>
-					<span class="help-block">1週間経つと個人の投票データは消去されます</span>
+					<span class="help-block">一定時間たつと個人の投票データは消去されます</span>
 					<?php
 					if (!empty($surveys_voted))
 					{
