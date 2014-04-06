@@ -213,8 +213,12 @@ class Survey_model extends CI_Model
 		$this->db->where('id_survey', $id_survey);
 		$this->db->where('id_user', $id_user);
 		$this->db->where('is_guest', $is_guest);
+		$this->db->delete(DB_TBL_VOTE);
+		$this->db->set('id_survey', $id_survey);
+		$this->db->set('id_user', $id_user);
+		$this->db->set('is_guest', $is_guest);
 		$this->db->set('value', $value);
-		$this->db->update(DB_TBL_VOTE);
+		$this->db->insert(DB_TBL_VOTE);
 	}
 
 	public function inclement_survey($id_survey, $total_num = NULL)

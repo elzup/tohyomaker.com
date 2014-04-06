@@ -166,8 +166,8 @@ class Survey extends CI_Controller
 			// TODO: if just vote, plus1 message 
 			$this->session->set_userdata(set_alert(ALERT_TYPE_VOTED));
 		}
-		jump_back();
-//		jump(base_url(PATH_VOTE . '/' . $id_survey));
+//		jump_back();
+		jump(base_url(PATH_VOTE . '/' . $id_survey));
 	}
 
 	private function _set_token()

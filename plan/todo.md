@@ -31,12 +31,19 @@
     * ~~use constance DB TABLE NAME~~
 
 * ~~surveyselectボタンview変更~~
+* surveyselectボタンview変更2
+
+* surveyfriend view 作成
+
+* ブラウザバック重複禁止
+* BUG insert result timestamp
 
 * スマホview
 
 * delete guest's vote cron設置
 
 * 画像Item
+
 
 ## level2
 * tags block
@@ -49,6 +56,8 @@
 * surveysblock
     * 多い順
     * 結果新着
+
+* 順位のフォントによるレイアウト崩れ surveyresult
 
 * サイトアイコン
 
