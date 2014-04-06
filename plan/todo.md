@@ -36,6 +36,8 @@
 
 * delete guest's vote cron設置
 
+* 画像Item
+
 ## level2
 * tags block
 * makecheck surveypaneのサンプル表示
@@ -49,6 +51,8 @@
     * 結果新着
 
 * サイトアイコン
+
+* function's wrap exist
 
 
 ## level3
