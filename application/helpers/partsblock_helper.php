@@ -68,7 +68,7 @@ if (!function_exists('surveysblock'))
 						<li class="row">
 							<span class="title col-sm-8"><a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?>><?= $survey->title ?></a></span>
 							<span class="total-num col-sm-2"><?= $voted_tag ?><?= $survey->total_num ?></span>
-							<span class="remain col-sm-2"><?= tag_icon(ICON_TIME, TRUE) . $survey->get_time_remain_str() ?></span>
+							<span class="remain col-sm-2"><?= ($survey->state == SURVEY_STATE_END) ? '': tag_icon(ICON_TIME, TRUE) . $survey->get_time_remain_str() ?></span>
 						</li>
 						<?php
 					}
