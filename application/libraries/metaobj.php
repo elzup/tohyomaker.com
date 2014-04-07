@@ -44,8 +44,9 @@ class Metaobj
 
 	public function set_title($str)
 	{
-		$this->title = $str;
-		$this->title_meta = $str . ' - '.SITE_NAME;
+		$this->title_meta = $str;
+//		$this->title = $str;
+//		$this->title_meta = $str . ' - '.SITE_NAME;
 	}
 
 	public function set_keyword($str)
