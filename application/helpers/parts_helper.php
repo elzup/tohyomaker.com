@@ -6,19 +6,19 @@ if (!function_exists('surveypane'))
 	{
 		?>
 		<div class="panel panel-success panel-survey">
-			<div class="panel-heading">
+			<div class="panel-body">
 				<div class="row">
 					<div class="col-sm-10 title">
 						<p>
 						<h4><a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?>><?= $survey->title ?></a>
 							<?php
 							/*
-							if (($result_num = $survey->get_result_num()) !== 0)
-							{
-								?>
-								<a <?= attr_href(HREF_TYPE_VIEW, $survey->id) ?>><span class="badge"><?= $result_num ?></span></a>
-								<?php
-							}
+							  if (($result_num = $survey->get_result_num()) !== 0)
+							  {
+							  ?>
+							  <a <?= attr_href(HREF_TYPE_VIEW, $survey->id) ?>><span class="badge"><?= $result_num ?></span></a>
+							  <?php
+							  }
 							 */
 							?>
 						</h4></p>
@@ -28,8 +28,6 @@ if (!function_exists('surveypane'))
 						<span class="total-num"><?= $survey->total_num ?></span>
 					</div>
 				</div>
-			</div>
-			<div class="panel-body">
 				<?php
 				if ($is_log && ($selected = $survey->selected) !== NO_VOTED)
 				{
@@ -96,13 +94,13 @@ if (!function_exists('surveypane'))
 
 				<!--div class="row">
 					<div class="col-sm-3">
-						<?= tag_icon(ICON_TIME, TRUE) ?>
-						<?= $survey->get_time_remain_str() ?>
+				<?= tag_icon(ICON_TIME, TRUE) ?>
+				<?= $survey->get_time_remain_str() ?>
 					</div>
-					<?php
-					$stylelib = explode(',', 'success,end,end');
-					$pbstyle = $stylelib[$survey->state];
-					?>
+				<?php
+				$stylelib = explode(',', 'success,end,end');
+				$pbstyle = $stylelib[$survey->state];
+				?>
 					<div class="col-sm-9">
 						<div class="progress">
 							<div class="progress-bar progress-bar-<?= $pbstyle ?>" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>

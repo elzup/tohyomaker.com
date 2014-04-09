@@ -2,23 +2,32 @@
 //@import "../lib/bootstrap/less/variables.less";
 //@import "../lib/bootstrap/less/mixins.less";
 
-@col_font_a : #01C500;
+@import "./vote.less";
+@import "./vote_success.less";
+
 
 @footer_height : 150px;
 
+@col_main : #307EA9;
+@col_sub1 : #76B4DB;
+@col_sub2 : #C2DEF6;
+@col_back : #FFFFFF;
+@col_acce : #F6A2B7;
+
+
 html,body {
 	height: 100%;
-    background: #FAFFFC;
+    background: @col_sub2;
 //    font-family:"Times New Roman",Georgia,Serif;
     font-family:'Avenir', 'Arial', 'Helvetica', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
 
 }
 
 a {
-    color: @col_font_a;
+    color: @col_sub1;
     font-weight: bold;
     &:hover {
-        color: @col_font_a;
+        color: @col_sub1;
     }
 }
 
@@ -35,8 +44,10 @@ a {
 }
 
 #navbar {
+    border-right: 0;
+    border-left: 0;
     .icon-bar {
-        background-color: white;
+        background-color: @col_back;
     }
     .navbar-header {
         .navbar-brand {
@@ -49,21 +60,18 @@ a {
             }
         }
     }
-    background-color: rgb(0, 190, 0);
-    border-color: #008105;
+    background-color: @col_main;
+    border-color: @col_acce;
     color: white;
     .navbar-right {
         margin-right: 10px;
         > li {
             a {
-                color: white;
+                color: @col_back;
             }
             li {
-                i {
-                    color: green;
-                }
-                a {
-                    color: black;
+                i,a {
+                    color: @col_main;
                 }
             }
             @media (max-width: 767px) {
@@ -73,7 +81,7 @@ a {
                     padding: 2px;
                 }
                 i,a,li a,li i {
-                    color: white;
+                    color: @col_back;
                 }
             }
         }
@@ -339,7 +347,7 @@ i {
 }
 
 .panel-survey {
-    .panel-heading {
+    .panel-body {
         padding-top: 1px;
         padding-bottom: 0px;
         @h : 40px;
@@ -347,7 +355,7 @@ i {
             height: @h;
         }
         a {
-            color: white;
+            color: @col_main;
             font-weight: bold;
             &:hover, &:active {
                 color: white;
@@ -358,7 +366,7 @@ i {
             .badge
             {
                 background: rgb(157, 255, 139);
-                color: green;
+                color: @col_main;
                 padding-left: 10px;
                 padding-right: 10px;
             }
@@ -558,3 +566,4 @@ i {
 .no-display {
     display: none;
 }
+
