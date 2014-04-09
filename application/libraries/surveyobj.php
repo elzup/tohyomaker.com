@@ -256,7 +256,7 @@ class Surveyobj
 
 	public function get_time_remain()
 	{
-		if ($this->state === SURVEY_STATE_END)
+		if ($this->state == SURVEY_STATE_END)
 		{
 			return 0;
 		}

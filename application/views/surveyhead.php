@@ -106,7 +106,7 @@
 			</div-->
 			<div class="col-sm-2 col-sm-offset-3 survey-cont">
 				<?php
-				$share_uri = base_url(PATH_VOTE . $survey->id);
+				$share_uri = fix_url(base_url(PATH_VOTE . $survey->id));
 				$share_text = totext_share_survey($survey);
 				echo sharebtn_twitter($share_text, $share_uri);
 				?>

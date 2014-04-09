@@ -25,7 +25,7 @@ if (!function_exists('totext_share_survey'))
 
 	function totext_share_survey(Surveyobj $survey)
 	{
-		return "{$survey->title} [{$survey->get_time_remain_str()}]";
+		return $survey->title . ($survey->get_time_remain() ? "[{$survey->get_time_remain_str()}]" : '') . ' - 投票メーカー';
 	}
 
 }
@@ -47,7 +47,7 @@ if (!function_exists('totext_share_result'))
 		{
 			$result = $survey->get_current_result();
 		}
-		$text = "投票結果:{$survey->title} \n";
+		$text = "{$survey->title} : 投票結果\n";
 		$i = 1;
 		foreach ($result->items as $item)
 		{

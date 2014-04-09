@@ -123,8 +123,8 @@ if (!function_exists('sharebtn_twitter'))
 	{
 		?>
 		<a href="http://twitter.com/share" class="twitter-share-button"
-			 data-url="<?= $uri ?>"
-			 data-text="<?= $text ?>"
+			 data-url="<?= fix_url($uri) ?>"
+			 data-text="<?= $text . ' ' . fix_url($uri) ?>"
 			 data-count="horizontal"
 			 data-lang="ja">ツイートする</a>
 			 <?php
