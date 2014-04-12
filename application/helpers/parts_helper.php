@@ -88,7 +88,7 @@ if (!function_exists('surveypane'))
 					foreach ($survey->tags as $tag)
 					{
 						?>
-						<a <?= attr_href(HREF_TYPE_TAG, $tag) ?> class="btn btn-success btn-tag btn-xs"><?= $tag ?></a>
+						<a <?= attr_href(HREF_TYPE_TAG, $tag) ?> class=""><?= $tag ?></a>
 					<?php } ?>
 				</p>
 

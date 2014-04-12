@@ -2,7 +2,7 @@
 //@import "../lib/bootstrap/less/variables.less";
 //@import "../lib/bootstrap/less/mixins.less";
 
-@import "./vote.less";
+//@import "./vote.less";
 @import "./vote_success.less";
 
 
@@ -10,9 +10,12 @@
 
 @col_main : #307EA9;
 @col_sub1 : #76B4DB;
-@col_sub2 : #C2DEF6;
+//@col_sub2 : #C2DEF6;
+@col_sub2 : #F0F0FF;
 @col_back : #FFFFFF;
+//@col_acce : yellow;
 @col_acce : #F6A2B7;
+//@col_acce : green;
 
 
 html,body {
@@ -61,7 +64,7 @@ a {
         }
     }
     background-color: @col_main;
-    border-color: @col_acce;
+    border-color: @col_sub1;
     color: white;
     .navbar-right {
         margin-right: 10px;
@@ -304,8 +307,8 @@ i {
     margin-left  : 5px;
     margin-right : 5px;
     &.icon-orange {
-        color: orange;
-        text-shadow: 2px 2px 0px #F6FF93;
+        color: @col_acce;
+        text-shadow: 2px 2px 0px @col_acce + #111;
     }
     &.fa-twitter
     {
@@ -500,7 +503,7 @@ i {
 }
 
 .page-header {
-    border-bottom: 1px solid green;
+    border-bottom: 1px solid @col_main;
     margin-bottom: 3px;
 }
 
@@ -528,7 +531,7 @@ i {
         color: gray;
         &.fa-twitter
         {
-            color: limegreen;
+            color: @col_sub1;
         }
     }
 }

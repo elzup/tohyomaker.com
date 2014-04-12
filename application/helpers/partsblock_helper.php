@@ -57,26 +57,25 @@ if (!function_exists('surveysblock'))
 					<?php
 					if (!empty($surveys))
 					{
-					foreach ($surveys as $survey)
-					{
-						$voted_tag = '';
-						if ($survey->is_voted())
+						foreach ($surveys as $survey)
 						{
-							$voted_tag = '<span class="voted"' . attr_tooltip('投票済み') . '>' . tag_icon(ICON_VOTED, TRUE) . '</span>';
+							$voted_tag = '';
+							if ($survey->is_voted())
+							{
+								$voted_tag = '<span class="voted"' . attr_tooltip('投票済み') . '>' . tag_icon(ICON_VOTED, TRUE) . '</span>';
+							}
+							?>
+							<li class="row">
+								<span class="title col-sm-8"><a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?>><?= $survey->title ?></a></span>
+								<span class="total-num col-sm-2"><?= $voted_tag ?><?= $survey->total_num ?></span>
+								<span class="remain col-sm-2"><?= ($survey->state == SURVEY_STATE_END) ? '' : tag_icon(ICON_TIME, TRUE) . $survey->get_time_remain_str() ?></span>
+							</li>
+							<?php
 						}
-						?>
-						<li class="row">
-							<span class="title col-sm-8"><a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?>><?= $survey->title ?></a></span>
-							<span class="total-num col-sm-2"><?= $voted_tag ?><?= $survey->total_num ?></span>
-							<span class="remain col-sm-2"><?= ($survey->state == SURVEY_STATE_END) ? '': tag_icon(ICON_TIME, TRUE) . $survey->get_time_remain_str() ?></span>
-						</li>
-						<?php
-					}
-					}
-					else 
+					} else
 					{
 						?>
-						<p><?=$title?>の投票はありません</p>
+						<p><?= $title ?>の投票はありません</p>
 						<?php
 					}
 					?>

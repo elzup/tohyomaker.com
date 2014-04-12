@@ -117,6 +117,8 @@ class Survey extends CI_Controller
 
 		$users = $this->user->get_friend_users();
 		$users_voted = $this->survey->install_users_select($users, $survey);
+		$this->user->install_users_img($users_voted);
+
 		// TODO:
 
 		$meta = new Metaobj();

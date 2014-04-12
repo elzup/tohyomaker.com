@@ -214,4 +214,25 @@ class User_model extends CI_Model
 		$this->twitter_connection = new TwitterOAuth($twitter_config['key'], $twitter_config['secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
 	}
 
+
+	/**
+	 * 
+	 * @param Userobj[] $users
+	 */
+	public function install_users_img($users)
+	{
+		if (empty($users))
+		{
+			return;
+		}
+		$this->set_connection();
+		$ids = array();
+		foreach ($users as $user)
+		{
+			$ids[] = $user->id_twitter;
+		}
+		$result = $this->twitter_connection->get('friends/ids', array ('user_id' => implode(',', $ids)));
+		var_dump($result);
+		exit;
+	}
 }
