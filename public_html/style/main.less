@@ -14,7 +14,7 @@
 @col_sub2 : #F0F0FF;
 @col_back : #FFFFFF;
 //@col_acce : yellow;
-@col_acce : #F6A2B7;
+@col_acce : orange;
 //@col_acce : green;
 
 
@@ -39,7 +39,7 @@ a {
     h1.top-logo {
         background: url(http://localhost/tohyomaker/public_html/style/../images/logo.png);
         background-size: cover;
-        width: 427px;
+        width: 522px;
         line-height: 108px;
         .clear-font();
         margin: 0 auto;
@@ -190,9 +190,9 @@ a {
             .btn {
                 .btn-push-margin();
                 &.active {
-                    color: #ffffff;
-                    background-color: #219524;
-                    border-color: #186f1b;
+                    color: @col_back;
+                    background-color: @col_main;
+                    border-color: @col_sub1;
                 }
             }
         }
@@ -316,6 +316,9 @@ a {
 i {
     margin-left  : 5px;
     margin-right : 5px;
+    &.icon-none {
+        color: rgba(0,0,0,0);
+    }
     &.icon-orange {
         color: @col_acce;
         text-shadow: 2px 2px 0px @col_acce + #111;
@@ -330,9 +333,15 @@ i {
     .panel-heading {
         p {
             margin: 0;
-        }
-        .title {
-            font-weight: bold;
+            a {
+                color: @col_back;
+                .title {
+                    font-weight: bold;
+                }
+                .help {
+                    font-weight: normal;
+                }
+            }
         }
     }
     .panel-body {
@@ -371,7 +380,7 @@ i {
             color: @col_main;
             font-weight: bold;
             &:hover, &:active {
-                color: white;
+                color: @col_sub2;
             }
         }
         .title {
@@ -433,7 +442,7 @@ i {
     }
     .panel-footer {
         padding-top: 2px;
-        padding-bottom: 1px;
+        padding-bottom: 5px;
         > p {
             margin: 0px;
         }

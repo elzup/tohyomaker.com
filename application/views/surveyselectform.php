@@ -21,7 +21,9 @@ if (!function_exists('attr_tooltip_selectform'))
 		}
 		return empty($btn_tooltip_text) ? '' : attr_tooltip($btn_tooltip_text);
 	}
-
+}
+if (!function_exists('attr_class_selectform'))
+{
 	function attr_class_selectform($i, Surveyobj $survey, $select)
 	{
 		$add_class = '';
@@ -34,7 +36,9 @@ if (!function_exists('attr_tooltip_selectform'))
 		}
 		return $add_class;
 	}
-
+}
+if (!function_exists('tag_icon_selectform'))
+{
 	function tag_icon_selectform($i, $survey_select, $select)
 	{
 		return tag_icon(((isset($select) && $i === $select) || $survey_select === $i) ? ICON_OK : ' ');
@@ -82,7 +86,7 @@ if (!function_exists('attr_tooltip_selectform'))
 													?> 
 													<button type="button" id="item<?= $i ?>" name="<?= $i ?>" 
 													<?= attr_tooltip_selectform($i, $survey) ?> 
-																	class="btn btn-item btn-lg btn-default<?= attr_class_selectform($i, $survey, $select) ?>">　
+																	class="btn btn-block btn-item btn-lg btn-default<?= attr_class_selectform($i, $survey, $select) ?>">　
 														<?= tag_icon_selectform($i, $survey->selected, $select) ?>　
 													</button>
 													<?php

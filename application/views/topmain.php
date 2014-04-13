@@ -8,7 +8,7 @@
 		<div class="col-lg-offset-2 col-sm-8">
 			<div class="row">
 
-				<div id="title-div" class="col-sm-12 col-wide">
+				<div id="title-div" class="col-sm-12">
 					<h1 id="title-str" class="top-logo">診断メーカー</h1>
 				</div>
 				<div class="col-sm-12 well">
@@ -21,11 +21,11 @@
 					</div>
 				</div>
 
-				<div class="col-sm-12 col-wide">
+				<div class="col-sm-12">
 					<?php surveysblock_type($surveys_hot, SURVEY_BLOCKTYPE_HOT); ?>
 				</div>
 
-				<div class="col-sm-12 col-wide">
+				<div class="col-sm-12">
 					<?php surveysblock_type($surveys_new, SURVEY_BLOCKTYPE_NEW); ?>
 				</div>
 			</div>

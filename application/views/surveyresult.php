@@ -17,54 +17,57 @@
 			<?php } ?>
 			<div class="row">
 				<?php
-				if ($survey->state == SURVEY_STATE_END || $survey->selected != NO_VOTED) {
-				// TODO: item sort after view 
-				$sum_cn = 0;
-				foreach ($survey->get_sorted() as $i => $item)
+				if ($survey->state == SURVEY_STATE_END || $survey->selected != NO_VOTED)
 				{
-					$cn = calc_item_col($i, count($survey->items));
-					$text_tooltip = ($survey->is_selected_today) ? 'あなたが投票した項目' : '前回投票した項目';
-					$voted_icon = (
-							($item->index === $survey->selected) ? '<span class="voted" ' . attr_tooltip($text_tooltip) . '>' . tag_icon(ICON_VOTED, TRUE) . '</span>' : '');
-					if ($sum_cn % 12 == 0)
+					// TODO: item sort after view 
+					$sum_cn = 0;
+					foreach ($survey->get_sorted() as $i => $item)
 					{
-						?>
-						<div class="row">
-						<?php }
-						?>
-						<div class="col-sm-<?= $cn ?>">
-							<div class="panel panel-success rank-<?= $item->rank ?>">
-								<div class="panel-heading">
-									<span class="rank"><?= $item->rank ?></span>
-									<?= $voted_icon ?>
-								</div>
-								<div class="panel-body">
-									<h4>
-										<?= $item->value ?>
-									</h4>
-									<h4 class="num">
-										<?= $item->num ?>
-									</h4>
-								</div>
-							</div>
-						</div>
-						<?php
-						$sum_cn += $cn;
+						$cn = calc_item_col($i, count($survey->items));
+						$text_tooltip = ($survey->is_selected_today) ? 'あなたが投票した項目' : '前回投票した項目';
+						$voted_icon = (
+								($item->index === $survey->selected) ? '<span class="voted" ' . attr_tooltip($text_tooltip) . '>' . tag_icon(ICON_VOTED, TRUE) . '</span>' : '');
 						if ($sum_cn % 12 == 0)
 						{
 							?>
-						</div>
-						<?php
+							<div class="row">
+							<?php }
+							?>
+							<div class="col-sm-<?= $cn ?>">
+								<div class="panel panel-success rank-<?= $item->rank ?>">
+									<div class="panel-heading">
+										<span class="rank"><?= $item->rank ?></span>
+		<?= $voted_icon ?>
+									</div>
+									<div class="panel-body">
+										<h4>
+		<?= $item->value ?>
+										</h4>
+										<h4 class="num">
+		<?= $item->num ?>
+										</h4>
+									</div>
+								</div>
+							</div>
+							<?php
+							$sum_cn += $cn;
+							if ($sum_cn % 12 == 0)
+							{
+								?>
+							</div>
+							<?php
+						}
 					}
-				}
-} else {
-	?>
-				<p>まだ投票していません</p>
-				<span class="help-block">投票するかこの投票の集計記録がされると見ることが出来ます</span>
+				} else
+				{
+					?>
+					<div class="well">
+						<p>まだ投票していません</p>
+						<span class="help-block">投票するかこの投票の集計記録がされると見ることが出来ます</span>
+					</div>
 
-		<?php
-	
-}
+					<?php
+				}
 				?>
 			</div>
 		</div>
@@ -78,7 +81,7 @@
 						</div>
 						<div class="col-sm-5">
 							<i class="<?= ICON_OK ?>"></i>
-							<?= $survey->total_num ?> 票
+<?= $survey->total_num ?> 票
 						</div>
 						<div class="col-sm-2">
 							<?php
@@ -101,6 +104,6 @@
 					投票ページヘ
 				</a>
 			</div>
-		<?php } ?>
+<?php } ?>
 	</div>
 </div>

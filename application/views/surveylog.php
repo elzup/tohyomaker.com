@@ -2,7 +2,8 @@
 /* @var $survey Surveyobj */
 /* @var $user Userobj */
 ?>
-<?php if (!empty($survey->results))
+<?php
+if (!empty($survey->results))
 {
 	?>
 
@@ -24,7 +25,9 @@
 				if ($no_result)
 				{
 					?>
-					<p>記録された集計結果はまだありません</p>
+					<div class="well">
+						<p>記録された集計結果はまだありません</p>
+					</div>
 					<?php
 				}
 				?>

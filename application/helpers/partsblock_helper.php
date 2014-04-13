@@ -13,6 +13,7 @@ if (!function_exists('surveysblock_type'))
 		$block_help = '開始されたばかりの投票';
 		$class_str = 'new';
 		$class_str_icon = ICON_NEW;
+		$path = PATH_NEW;
 		switch ($type)
 		{
 			case SURVEY_BLOCKTYPE_HOT:
@@ -20,12 +21,13 @@ if (!function_exists('surveysblock_type'))
 				$block_help = '今勢いのある投票';
 				$class_str = 'hot';
 				$class_str_icon = ICON_HOT;
+				$path = PATH_HOT;
 				break;
 			default:
 // type-new defined so skip
 				break;
 		}
-		surveysblock($surveys, $block_title, $block_help, $class_str, $class_str_icon);
+		surveysblock($surveys, $block_title, $block_help, $class_str, $class_str_icon, $path);
 	}
 
 }
@@ -41,7 +43,7 @@ if (!function_exists('surveysblock'))
 	 * @param string $help
 	 * @param string $class_str
 	 */
-	function surveysblock($surveys, $title, $help, $class_str, $class_str_icon)
+	function surveysblock($surveys, $title, $help, $class_str, $class_str_icon, $path)
 	{
 		?>
 
@@ -49,7 +51,7 @@ if (!function_exists('surveysblock'))
 			<div class="panel-heading">
 				<p>
 					<?= tag_icon($class_str_icon) ?>
-					<span class="title"><?= $title ?></span> - <span class="help"><?= $help ?></span>
+					<a href="<?=  attr_href($path)?>"><span class="title"><?= $title ?></span> - <span class="help"><?= $help ?></span></a>
 				</p>
 			</div>
 			<div class="panel-body">
@@ -72,6 +74,11 @@ if (!function_exists('surveysblock'))
 							</li>
 							<?php
 						}
+						?>
+							<li>
+								<a <?= attr_href($path)?> style="float:right;" class="btn btn-success">もっと見る</a>
+							</li>
+							<?php
 					} else
 					{
 						?>
