@@ -14,7 +14,7 @@ if ($user == null)
 			<span class="icon-bar"></span>
 		</button>
 
-		<div class="navbar-brand"><a <?= attr_href('') ?>>brand</a></div>
+		<div class="navbar-brand"><a <?= attr_href('') ?>>投票メーカー</a></div>
 		<!--<a href="" class="navbar-brand">投票メーカー</a>-->
 	</div>
 	<div class="navbar-collapse collapse navbar-categlyes">

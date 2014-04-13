@@ -22,7 +22,7 @@
 $home = '../';
 
 $environment_path = $home . 'application/config/environment.php';
-define('ENVIRONMENT', 'testing');
+define('ENVIRONMENT', 'production');
 
 /*
  *---------------------------------------------------------------
