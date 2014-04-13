@@ -56,10 +56,7 @@ class User_model extends CI_Model
 			$this->user = $this->get_user($id_user);
 			$this->user->screen_name = $access_token['screen_name'];
 			$this->update_last_sn($id_user, $access_token['screen_name']);
-			$result = $this->twitter_connection->get('account/verify_credentials');
-			$this->user->img_url = $result->profile_image_url;
-			$this->update_last_img($id_user, $result->profile_image_url);
-
+			$this->install_main_user_img();
 			$this->session->set_userdata(array('userserial' => serialize($this->user)));
 			return TRUE;
 		}
@@ -140,13 +137,6 @@ class User_model extends CI_Model
 		$this->db->update(DB_TBL_USER);
 	}
 
-	function update_last_img($id_user, $img_url)
-	{
-		$this->db->where('id_user', $id_user);
-		$this->db->set('img_last', $img_url);
-		$this->db->update(DB_TBL_USER);
-	}
-
 	public function inclement_user_votecount($id_user, $num = NULL)
 	{
 		$where = array('id_user' => $id_user);
@@ -215,6 +205,12 @@ class User_model extends CI_Model
 	}
 
 
+	public function install_main_user_img()
+	{
+		$result = $this->twitter_connection->get('account/verify_credentials');
+		$this->user->img_url = $result->profile_image_url;
+	}
+
 	/**
 	 * 
 	 * @param Userobj[] $users
@@ -231,8 +227,18 @@ class User_model extends CI_Model
 		{
 			$ids[] = $user->id_twitter;
 		}
-		$result = $this->twitter_connection->get('friends/ids', array ('user_id' => implode(',', $ids)));
-		var_dump($result);
-		exit;
+		$result = $this->twitter_connection->get('users/lookup', array ('user_id' => implode(',', $ids)));
+		if (empty($result)) {
+			return;
+		}
+		$data_img = array();
+		foreach ($result as $twitter_user)
+		{
+			$data_img[$twitter_user->id_str] = $twitter_user->profile_image_url;
+		}
+		foreach ($users as $user)
+		{
+			$user->img_url = $data_img[$user->id_twitter];
+		}
 	}
 }

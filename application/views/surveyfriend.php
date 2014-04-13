@@ -1,15 +1,22 @@
 <?php
 /* @var $survey Surveyobj */
 /* @var $friends Userobj[] */
+
 ?>
 
 <div class="container">
 	<div class="row">
-		<div class="col-sm-offset-2 col-sm-8" id="itemresultbox-soted-div">
+		<div class="col-sm-offset-2 col-sm-8" id="itemfriendbox-div">
 			<h2>Twitterフレンドの投票先</h2>
 			<?php
 			if (!empty($friends))
 			{
+				/* order friends select */
+				$item_voted_user;
+				foreach ($friends as $user)
+				{
+					$users_in_item[$user->select][] = $user;
+				}
 				?>
 			<ul>
 				<?php
@@ -19,24 +26,19 @@
 					// btn state define page loaded start view
 					?>
 					<li>
-						<div class="panel panel-itemselect">
-							<div class="panel-headding">
-								<span><?= $item->value ?></span>
-							</div>
+						<div class="panel panel-success panel-friendselect">
 							<div class="panel-body">
+								<span class="item-name"><?= $item->value ?></span>
 								<?php
-								foreach ($friends as $user)
+								if (isset($users_in_item[$i])) {
+								foreach ($users_in_item[$i] as $user)
 								{
-									if ($i == $user->select)
-									{
-										?>
-								<div>
-									<span>@<?= $user->screen_name ?></span>
-									<img src="<?= $user->img_url ?>" alt="<?= $user->screen_name ?>プロフィール画像" />
-								</div>
-
+									echo div_twitter_user($user);
+								}
+								} else {
+									?>
+								<p>この項目に投票した人はいません</p>
 								<?php
-									}
 								}
 								?>
 							</div>

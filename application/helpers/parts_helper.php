@@ -114,6 +114,23 @@ if (!function_exists('surveypane'))
 
 }
 
+if (!function_exists('div_twitter_user'))
+{
+
+	function div_twitter_user(Userobj $user)
+	{
+		?>
+<div class="twitter-user-div">
+			<a href="<?= "https://twitter.com/{$user->screen_name}" ?>">
+				<img src="<?= $user->img_url ?>" <?= attr_tooltip('@'.$user->screen_name)?> />
+			</a>
+		</div>
+
+		<?php
+	}
+
+}
+
 if (!function_exists('sharebtn_twitter'))
 {
 
@@ -160,7 +177,7 @@ if (!function_exists('sharebtn_twitter'))
 								<td class="itemanme"><?= $item->value ?></td>
 								<td class="num"><?= $item->num ?></td>
 							</tr>
-						<?php } ?>
+		<?php } ?>
 
 					</tbody>
 				</table> 
@@ -174,7 +191,7 @@ if (!function_exists('sharebtn_twitter'))
 					</div>
 					<div class="col-sm-5">
 						<i class="<?= ICON_OK ?>"></i>
-						<?= $result->get_total() ?> 票
+		<?= $result->get_total() ?> 票
 					</div>
 					<div class="col-sm-2">
 						<?php

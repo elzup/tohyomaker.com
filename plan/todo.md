@@ -37,7 +37,6 @@
 
 * surveyfriend view 作成
 
-* ブラウザバック重複禁止
 * BUG insert result timestamp
 
 * スマホview
@@ -45,6 +44,12 @@
 * delete guest's vote cron設置
 
 * 画像Item
+
+* vote on 1 click
+
+* design 
+    * alertbox color design
+    * vote checkbox color design
 
 
 ## level2
@@ -58,6 +63,7 @@
 * surveysblock
     * 多い順
     * 結果新着
+* ブラウザバック重複禁止
 
 * 順位のフォントによるレイアウト崩れ surveyresult
 
