@@ -41,7 +41,8 @@ if (typeof jQuery != "undefined"){
 
         function canSubmit() {
             var err = new Array();
-            if (!$('#sur-title').val()) err[0] = 'タイトルが設定されていません';
+            if (!$('#sur-title').val()) err[0] = 'タイトルがありません';
+            if (!$('#sur-description').val()) err[1] = '説明がありません';
             var ava_item_num = 0;
             for (var i = 0; i < 10; i++) {
                 if ($('#sur-item' + i).val()) ava_item_num++;

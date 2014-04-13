@@ -53,8 +53,8 @@
 							<div class="form-group">
 								<label for="description" class="col-lg-2 control-label">説明</label>
 								<div class="col-lg-10">
-									<input type="text" class="form-control" name="description" id="sur-description" value="<?= isset_just(@$post['description']) ?>" maxlength="30">
-									<span class="help-block">ex.)きのこの山とたけのこの里好きな方に投票してください。</span>
+									<input type="text" class="form-control" name="description" id="sur-description" value="<?= isset_just(@$post['description']) ?>" placeholder="必須" maxlength="30">に投票！
+									<span class="help-block">ex.)「好きな方」に投票！</span>
 								</div>
 							</div>
 

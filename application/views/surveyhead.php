@@ -14,19 +14,6 @@
 		</div-->
 
 		<div class="row">
-			<div class="col-sm-7">
-				<?php
-				if (isset($survey->description))
-				{
-					?>
-					<div class="row">
-						<div class="col-sm-12 survey-cont description">
-
-							<p><?= tag_icon(ICON_DESCRIPTION, isset($survey->description)) . (($survey->description) ? : NO_PARAM_STR) ?></p>
-						</div>
-					</div>
-				<?php } ?>
-			</div>
 			<div class="col-sm-5">
 				<div class="row">
 					<div class="col-sm-6 survey-cont timestamp">
@@ -77,7 +64,7 @@
 				if ($survey->state != SURVEY_STATE_END)
 				{
 					?>
-					<div class="col-sm-3 no-container" <?= attr_tooltip('集計まで残り時間')?>>
+					<div class="col-sm-3 no-container" <?= attr_tooltip('集計まで残り時間') ?>>
 						<?= tag_icon(ICON_FLAG, TRUE) ?>
 						<?= $survey->get_time_remain_str() ?>
 					</div>
@@ -93,7 +80,7 @@
 					<?php
 				} else
 				{
-				// TODO: result type 
+					// TODO: result type 
 					?>
 
 					<?php
@@ -132,6 +119,18 @@
 					フレンドの投票先
 				</a>
 			</div>
+		</div>
+	</div>
+	<div class="row description">
+		<div class="col-sm-8 col-sm-offset-2">
+			<div class="well">
+			<?php
+			if (isset($survey->description))
+			{
+				?>
+						<p><span><?= $survey->description?></span></p>
+					</div>
+			<?php } ?>
 		</div>
 	</div>
 </div>

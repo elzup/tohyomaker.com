@@ -1,7 +1,6 @@
 <?php
 /* @var $survey Surveyobj */
 /* @var $friends Userobj[] */
-
 ?>
 
 <div class="container">
@@ -18,40 +17,45 @@
 					$users_in_item[$user->select][] = $user;
 				}
 				?>
-			<ul>
-				<?php
-				foreach ($survey->items as $item)
-				{
-					$i = $item->index;
-					// btn state define page loaded start view
-					?>
-					<li>
-						<div class="panel panel-success panel-friendselect">
-							<div class="panel-body">
-								<span class="item-name"><?= $item->value ?></span>
-								<?php
-								if (isset($users_in_item[$i])) {
-								foreach ($users_in_item[$i] as $user)
-								{
-									echo div_twitter_user($user);
-								}
-								} else {
+				<ul>
+					<?php
+					foreach ($survey->items as $item)
+					{
+						$i = $item->index;
+						// btn state define page loaded start view
+						?>
+						<li>
+							<div class="panel panel-success panel-friendselect">
+								<div class="panel-body">
+									<span class="item-name"><?= $item->value ?></span>
+									<?php
+									if (isset($users_in_item[$i]))
+									{
+										echo '<div class="friends-div">';
+										foreach ($users_in_item[$i] as $user)
+										{
+											echo div_twitter_user($user);
+										}
+										echo '</div>';
+									} else
+									{
+										?>
+										<p>この項目に投票した人はいません</p>
+										<?php
+									}
 									?>
-								<p>この項目に投票した人はいません</p>
-								<?php
-								}
-								?>
+								</div>
 							</div>
-						</div>
-					</li>
+						</li>
 				<?php } ?>
-			</ul>
-			<?php
-			} else {
-			?>
-			<p>あなたのTwtterフレンド(フォローユーザー)はまだこの投票に投票していません</p>
-			<?php }
-			?>
+				</ul>
+				<?php
+			} else
+			{
+				?>
+				<p>あなたのTwtterフレンド(フォローユーザー)はまだこの投票に投票していません</p>
+<?php }
+?>
 		</div>
 	</div>
 </div>

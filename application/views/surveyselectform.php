@@ -79,6 +79,9 @@ if (!function_exists('tag_icon_selectform'))
 								<div class="panel panel-itemselect">
 									<div class="panel-body">
 										<div class="row">
+											<div class="col-sm-8 hidden-sm hidden-lg hidden-md">
+												<span><?= $item->value ?></span>
+											</div>
 											<div class="col-sm-2">
 												<?php
 												if (!$survey->is_voted() || $i == $survey->selected)
@@ -93,7 +96,7 @@ if (!function_exists('tag_icon_selectform'))
 												}
 												?>
 											</div>
-											<div class="col-sm-8">
+											<div class="col-sm-8 hidden-xs">
 												<span><?= $item->value ?></span>
 											</div>
 										</div>

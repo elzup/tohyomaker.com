@@ -79,7 +79,7 @@ a {
             }
             @media (max-width: 767px) {
                 float:left;
-                width: 15%;
+                width: 25%;
                 a {
                     padding: 2px;
                 }
@@ -177,6 +177,11 @@ a {
             height: 4em;
             padding-top: 5px;
             padding-bottom: 5px;
+
+            @media (max-width: 767px) {
+                height: auto;
+                padding-bottom: 10px;
+            }
             .col-sm-8 {
                 height: 3em;
                 >span {
@@ -310,6 +315,15 @@ a {
 //        font-size: 10px;
 //        display: none;
     }
+    .description {
+        span {
+            font-size: 30px;
+            &:after {
+                content: 'に投票！';
+                color: @col_main;
+            }
+        }
+    }
 }
 
 
@@ -374,7 +388,7 @@ i {
         padding-bottom: 0px;
         @h : 40px;
         >div>div {
-            height: @h;
+//            height: @h;
         }
         a {
             color: @col_main;
@@ -420,6 +434,10 @@ i {
             padding-left: 5px;
             padding-right: 2px;
             .ellipsis();
+        }
+        .well {
+            padding: 3px;
+            margin-bottom: 7px;
         }
     }
     .btn-group-itmes {
@@ -503,6 +521,13 @@ i {
     }
 }
 
+#makeform-div {
+    input#sur-description {
+        width: 80%;
+        margin-right: 5px;
+        display: inline;
+    }
+}
 
 #makecheck-div {
     .submit-btns {
