@@ -157,7 +157,7 @@ a {
         margin-top: 5px;
         > .row {
             div {
-                &.col-sm-8 {
+                &.select-value-div {
                     position: relative;
                     > span {
                         position: absolute;
@@ -171,6 +171,7 @@ a {
     }
 
     .panel-itemselect {
+        margin-bottom: 5px;
         box-shadow: none;
         >.panel-body {
             position: relative;
@@ -182,7 +183,9 @@ a {
                 height: auto;
                 padding-bottom: 10px;
             }
-            .col-sm-8 {
+            .select-value-div {
+                
+                padding-left: 0px;
                 height: 3em;
                 >span {
                     top: 50%;
@@ -190,6 +193,10 @@ a {
                     position: absolute;
                     font-weight: bold;
                     font-size: 18px;
+
+                    @media (max-width: 767px) {
+                        font-size: 13px;
+                    }
                 }
             }
             .btn {
@@ -298,10 +305,11 @@ a {
         margin-top: 5px;
         margin-left: 5px;
     }
-    > .well {
+    .well {
         padding: 5px;
+        margin-bottom: 5px;
     }
-    > div > div {
+    > div > div > div {
 //        margin-top: 10px;
     }
     .survey-cont {
@@ -318,7 +326,10 @@ a {
 //        font-size: 10px;
 //        display: none;
     }
-    .description {
+    .description .well {
+        p {
+            margin-bottom: 0;
+        }
         span {
             font-size: 30px;
             &:after {
