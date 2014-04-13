@@ -113,7 +113,7 @@ a {
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
-    margin-top: 100px;
+    margin-top: 25px;
     padding-bottom: @footer_height + 20px;
 //    text-align: center;
 }
@@ -298,6 +298,9 @@ a {
         margin-top: 5px;
         margin-left: 5px;
     }
+    > .well {
+        padding: 5px;
+    }
     > div > div {
 //        margin-top: 10px;
     }
@@ -321,6 +324,9 @@ a {
             &:after {
                 content: 'に投票！';
                 color: @col_main;
+            }
+            @media (max-width: 767px) {
+                font-size: 20px;
             }
         }
     }
