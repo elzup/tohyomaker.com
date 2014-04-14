@@ -251,12 +251,34 @@ if (!function_exists('is_today'))
 		}
 		return date('Y-m-d', $timestamp) === date('Y-m-d');
 	}
+
 }
 
 if (!function_exists('date_mysql_timestamp'))
 {
-	function date_mysql_timestamp ($time = NULL)
+
+	function date_mysql_timestamp($time = NULL)
 	{
-		return $time  ? date(MYSQL_TIMESTAMP, $time) : date(MYSQL_TIMESTAMP);
+		return $time ? date(MYSQL_TIMESTAMP, $time) : date(MYSQL_TIMESTAMP);
 	}
+
+}
+
+if (!function_exists('is_pc_viewport'))
+{
+
+	function is_pc_viewport($user_agent)
+	{
+//		$user_agent = $_SERVER['HTTP_USER_AGENT'];
+		$lib = explode(',', ' iPhone, iPod, Android');
+		foreach ($lib as $str) 
+		{
+			if (strpos($user_agent, $str) !== FALSE) 
+			{
+				return FALSE;
+			}
+		}
+		return TRUE;
+	}
+
 }

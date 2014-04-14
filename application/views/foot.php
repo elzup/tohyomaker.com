@@ -36,8 +36,9 @@
 <script src="http://platform.twitter.com/widgets.js" type="text/javascript" charset="utf-8"></script>
 
 <!-- js of act on all page-->
-<script src="<?= base_url("js/helper.js") ?>" type="text/javascript"></script>
-<script src="<?= base_url("js/alert.js") ?>" type="text/javascript"></script>
+<script src="<?= base_url(PATH_JS.'/helper.js') ?>" type="text/javascript"></script>
+<script src="<?= base_url(PATH_JS.'/alert.js' ) ?>" type="text/javascript"></script>
+<script src="<?= base_url(PATH_JS.'/navbar.js') ?>" type="text/javascript"></script>
 <?php
 if (!empty($jss))
 {

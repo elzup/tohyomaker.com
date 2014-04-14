@@ -113,8 +113,11 @@ a {
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
-    margin-top: 25px;
     padding-bottom: @footer_height + 20px;
+    margin-top: 54px;
+    @media (max-width: 767px) {
+        margin-top: 0;
+    }
 //    text-align: center;
 }
 
@@ -572,6 +575,12 @@ i {
 
 }
 
+// alert
+
+.alert {
+    margin-top: 10px;
+}
+
 .col-gold() {
     color: gold;
 }
@@ -590,8 +599,7 @@ i {
 .dropdown-menu {
     li i {
         color: gray;
-        &.fa-twitter
-        {
+        &.fa-twitter {
             color: @col_sub1;
         }
     }
@@ -631,6 +639,7 @@ i {
     display: none;
 }
 
+
 /* --------------------------------------------------------- *
  *     reset bootstrap template (Lumen)
  * --------------------------------------------------------- */
@@ -641,5 +650,7 @@ i {
 .panel {
     box-shadow: none;
 }
+
+
 
 

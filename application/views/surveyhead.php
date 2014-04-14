@@ -92,7 +92,6 @@
 			</div>
 
 			<div class="row" id="survey-pager-div">
-
 				<div class="col-xs-12 col-xs-offset-0">
 					<div class="btn-group btn-group-justified">
 						<a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?> class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VOTE) ? ' disabled hidden-xs' : '') ?>">

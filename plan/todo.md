@@ -39,7 +39,7 @@
 
 * BUG insert result timestamp
 
-* スマホview
+* ~~スマホview~~
 
 * delete guest's vote cron設置
 
@@ -48,8 +48,8 @@
 * vote on 1 click
 
 * design 
-    * alertbox color design
-    * vote checkbox color design
+    * ~~alertbox color design~~
+    * ~~vote checkbox color design~~
 
 
 ## level2
@@ -70,6 +70,8 @@
 * サイトアイコン
 
 * function's wrap exist
+
+* less file リファクタリング mobile and pc
 
 
 ## level3
