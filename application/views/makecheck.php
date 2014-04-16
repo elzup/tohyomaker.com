@@ -36,7 +36,7 @@ foreach ($data as &$datum)
 									<label for="description" class="col-lg-2 control-label">説明</label>
 									<div class="col-lg-10">
 										<div class="well well-check">
-											<?= $data['description'] ?>
+											<?= $data['description'] ?>に投票！
 										</div>
 									</div>
 								</div>
