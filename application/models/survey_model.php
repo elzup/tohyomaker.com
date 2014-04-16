@@ -642,6 +642,10 @@ class Survey_model extends CI_Model
 	 */
 	public function install_users_select($users, Surveyobj $survey)
 	{
+		if (empty ($users))
+		{
+			return NULL;
+		}
 		$users_voted = array();
 		foreach ($users as $user)
 		{
