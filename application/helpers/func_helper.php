@@ -56,8 +56,6 @@ if (!function_exists('urlencode_array'))
 
 }
 
-
-
 if (!function_exists('array_filter_values'))
 {
 
