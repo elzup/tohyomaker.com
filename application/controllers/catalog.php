@@ -31,8 +31,8 @@ class Catalog extends CI_Controller
 		$meta = new Metaobj();
 		$meta->setup_catalog_new();
 		$this->load->view('head', array('meta' => $meta));
-		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 2));
 		$this->load->view('navbar', array('user' => $user));
+		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 2));
 
 		$this->load->view('catalognew', array ('surveys' => $surveys));
 
@@ -47,8 +47,8 @@ class Catalog extends CI_Controller
 		$meta = new Metaobj();
 		$meta->setup_catalog_hot();
 		$this->load->view('head', array('meta' => $meta));
-		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 2));
 		$this->load->view('navbar', array('user' => $user));
+		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 2));
 
 		$this->load->view('cataloghot', array ('surveys' => $surveys));
 

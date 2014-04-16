@@ -86,8 +86,8 @@ class Survey extends CI_Controller
 		$meta = new Metaobj();
 		$meta->setup_survey($survey, TRUE);
 		$this->load->view('head', array('meta' => $meta));
-		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 0));
 		$this->load->view('navbar', array('user' => $user));
+		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 0));
 		$surveyhead_info = array(
 				'survey' => $survey,
 				'type' => SURVEY_PAGETYPE_VIEW,
@@ -123,8 +123,8 @@ class Survey extends CI_Controller
 		$meta = new Metaobj();
 		$meta->setup_survey($survey, TRUE);
 		$this->load->view('head', array('meta' => $meta));
-		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 0));
 		$this->load->view('navbar', array('user' => $user));
+		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 0));
 		$surveyhead_info = array(
 				'survey' => $survey,
 				'type' => SURVEY_PAGETYPE_FRIEND,

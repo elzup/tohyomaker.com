@@ -39,8 +39,8 @@ class User extends CI_Controller
 		$meta = new Metaobj();
 		$meta->setup_user($user_target->screen_name);
 		$this->load->view('head', array('meta' => $meta));
-		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 2));
 		$this->load->view('navbar', array('user' => $user));
+		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 2));
 
 		$userpage_info = array(
 				'surveys_maked' => $surveys_maked,

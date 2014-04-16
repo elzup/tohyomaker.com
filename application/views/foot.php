@@ -38,7 +38,6 @@
 <!-- js of act on all page-->
 <script src="<?= base_url(PATH_JS.'/helper.js') ?>" type="text/javascript"></script>
 <script src="<?= base_url(PATH_JS.'/alert.js' ) ?>" type="text/javascript"></script>
-<script src="<?= base_url(PATH_JS.'/navbar.js') ?>" type="text/javascript"></script>
 <?php
 if (!empty($jss))
 {

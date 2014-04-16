@@ -30,8 +30,8 @@ class My extends CI_Controller
 		$meta = new Metaobj();
 		$meta->setup_my();
 		$this->load->view('head', array('meta' => $meta));
-		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 2));
 		$this->load->view('navbar', array('user' => $user));
+		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 2));
 
 		$mypage_info = array(
 				'user' => $user,

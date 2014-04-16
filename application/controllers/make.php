@@ -21,8 +21,8 @@ class Make extends CI_Controller
 		$meta = new Metaobj();
 		$meta->setup_top();
 		$this->load->view('head', array('meta' => $meta));
-		$this->load->view('title', array('title' => $meta->get_title()));
 		$this->load->view('navbar', array('user' => $this->user->get_main_user()));
+		$this->load->view('title', array('title' => $meta->get_title()));
 
 		$post = $this->session->userdata('form_posts');
 		$makeform_info = array(

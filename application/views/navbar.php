@@ -6,10 +6,10 @@ if ($user == null)
 	$user = false;
 }
 
-$is_pc = is_pc_viewport($this->input->server('HTTP_USER_AGENT'));
+//$is_pc = is_pc_viewport($this->input->server('HTTP_USER_AGENT'));
 
 ?>
-<nav class="navbar navbar-default<?=($is_pc ? ' navbar-fixed-top' : '')?>" id="navbar">
+<nav class="navbar navbar-default" id="navbar">
 	<div class="navbar-header">
 		<button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-categlyes">
 			<span class="icon-bar"></span>

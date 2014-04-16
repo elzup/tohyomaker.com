@@ -42,8 +42,8 @@ class Search extends CI_Controller
 		$meta = new Metaobj();
 		$meta->setup_search_tag($word);
 		$this->load->view('head', array('meta' => $meta));
-		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 2));
 		$this->load->view('navbar', array('user' => $user));
+		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 2));
 
 		$this->load->view('searchtag', array('word' => $word, 'surveys' => $surveys));
 
