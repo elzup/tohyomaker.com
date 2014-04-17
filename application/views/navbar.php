@@ -7,24 +7,34 @@ if ($user == null)
 }
 
 //$is_pc = is_pc_viewport($this->input->server('HTTP_USER_AGENT'));
-
 ?>
 <nav class="navbar navbar-default" id="navbar">
 	<div class="navbar-header">
 		<button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-categlyes">
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
+
+			<?php
+			if ($user->is_guest)
+			{
+				?>
+				<?= tag_icon(ICON_TWITTER); ?>
+				<?php
+			} else
+			{
+				?>
+				<img src="<?= $user->img_url ?>" alt="" />
+				<?php
+			}
+			?>
 		</button>
 
-		<div class="navbar-brand"><a <?= attr_href('') ?>>投票メーカー</a></div>
-		<!--<a href="" class="navbar-brand">投票メーカー</a>-->
+		<div class="navbar-brand"><a <?= attr_href() ?>>投票メーカー</a></div>
 	</div>
 	<div class="navbar-collapse collapse navbar-categlyes">
 		<ul class="nav navbar-nav navbar-right">
 			<li> <a <?= attr_href(HREF_TYPE_MAKE) ?>><?= tag_icon(ICON_MAKE) ?>作成</a> </li>
 			<li> <a <?= attr_href(HREF_TYPE_NEW) ?>><?= tag_icon(ICON_NEW) ?>新着</a> </li>
 			<li> <a <?= attr_href(HREF_TYPE_HOT) ?>><?= tag_icon(ICON_HOT) ?>人気</a> </li>
+
 			<?php
 			if (!$user->is_guest)
 			{
@@ -56,3 +66,7 @@ if ($user == null)
 		</ul>
 	</div>
 </nav>
+<?php
+get_alert($this->session->userdata('alert'));
+$this->session->unset_userdata('alert');
+?>

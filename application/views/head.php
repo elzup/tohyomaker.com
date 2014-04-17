@@ -33,7 +33,3 @@
 		}
 		?>
     <div id="wrapper">
-			<?php 
-			get_alert($this->session->userdata('alert'));  
-			$this->session->unset_userdata('alert');
-			?>
