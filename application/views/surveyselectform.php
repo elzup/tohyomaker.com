@@ -57,7 +57,7 @@ if (!function_exists('tag_icon_selectform'))
 				?>
 				<div class="well">
 					<p>ゲストユーザーです</p>
-					<span class="help-block">*ゲストユーザだと最近の投票を確認することが出来ません <a <?= attr_href(HREF_TYPE_LOGIN) ?> class="btn btn-info">ログインする</a></span>
+					<span class="help-block">*ゲストユーザだと最近の投票を確認することが出来ません <a <?= attr_href(PATH_LOGIN) ?> class="btn btn-info">ログインする</a></span>
 
 				</div>
 				<?php
@@ -208,7 +208,7 @@ if (!function_exists('tag_icon_selectform'))
 				</div>
 			</div>
 			<div class="col-sm-offset-2 col-sm-8">
-				<a <?= attr_href(HREF_TYPE_VIEW, $survey->id) ?> class="btn btn-success btn-lg btn-block">
+				<a <?= attr_href(PATH_VIEW, $survey->id) ?> class="btn btn-success btn-lg btn-block">
 					<i class="<?= ICON_RESULT ?>"></i>
 					この投票の結果を見る
 				</a>

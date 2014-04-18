@@ -80,7 +80,7 @@ class Make extends CI_Controller
 		}
 		$id_survey = $this->survey->regist($post, $this->user->get_main_user());
 		$token = $this->_set_token();
-		jump(base_url(HREF_TYPE_MAKEEND . "/{$id_survey}/{$token}"));
+		jump(base_url(PATH_MAKEEND . "/{$id_survey}/{$token}"));
 		// TODO: jump to survey page (use id
 	}
 

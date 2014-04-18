@@ -14,7 +14,7 @@
 				<div class="col-sm-12 well">
 					<?= SITE_DESCRIPTION?><br />
 					<div class="align-center">
-						<a <?= attr_href(HREF_TYPE_MAKE) ?> class="btn btn-success align-center">
+						<a <?= attr_href(PATH_MAKE) ?> class="btn btn-success align-center">
 							<i class="glyphicon glyphicon-edit"></i>
 							投票を作成する
 						</a>

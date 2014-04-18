@@ -10,7 +10,7 @@ foreach ($data as &$datum)
 		<div class="col-lg-offset-2 col-sm-8" id="makecheck-div">
 			<div class="panel panel-default">
 				<div class="panel-body">
-					<form class="form-horizontal" action="<?= base_url(HREF_TYPE_MAKEREGIST) ?>" method="POST">
+					<form class="form-horizontal" action="<?= base_url(PATH_MAKEREGIST) ?>" method="POST">
 						<fieldset>
 							<legend>投票作成確認</legend>
 							<div class="form-group">

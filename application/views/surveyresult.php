@@ -99,7 +99,7 @@
 		{
 			?>
 			<div class="col-sm-offset-2 col-sm-8">
-				<a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?> class="btn btn-success btn-lg btn-block">
+				<a <?= attr_href(PATH_VOTE, $survey->id) ?> class="btn btn-success btn-lg btn-block">
 					<i class="<?= ICON_VOTE ?>"></i>
 					投票ページヘ
 				</a>

@@ -19,7 +19,7 @@
 						{
 							?>
 							<?= tag_icon(ICON_USER, TRUE) ?>
-							<a <?= attr_href(HREF_TYPE_USER, $survey->owner->id) ?><?= attr_tooltip("作者: {$survey->owner->screen_name}") ?> >
+							<a <?= attr_href(PATH_USER, $survey->owner->id) ?><?= attr_tooltip("作者: {$survey->owner->screen_name}") ?> >
 								@<?= $survey->owner->screen_name ?>
 							</a>
 							<?php
@@ -43,7 +43,7 @@
 							foreach ($survey->tags as $tag)
 							{
 								?>
-								<a <?= attr_href(HREF_TYPE_TAG, $tag) ?> class=""><?= $tag ?></a>
+								<a <?= attr_href(PATH_TAG, $tag) ?> class=""><?= $tag ?></a>
 							<?php } ?>
 						</div>
 					</div>
@@ -94,16 +94,16 @@
 			<div class="row" id="survey-pager-div">
 				<div class="col-xs-12 col-xs-offset-0">
 					<div class="btn-group btn-group-justified">
-						<a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?> class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VOTE) ? ' disabled hidden-xs' : '') ?>">
+						<a <?= attr_href(PATH_VOTE, $survey->id) ?> class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VOTE) ? ' disabled hidden-xs' : '') ?>">
 							<i class="<?= ICON_VOTE ?>"></i>
 							投票ページへ
 						</a>
-						<a <?= attr_href(HREF_TYPE_VIEW, $survey->id) ?> class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VIEW) ? ' disabled hidden-xs' : '') ?>">
+						<a <?= attr_href(PATH_VIEW, $survey->id) ?> class="btn btn-success<?= (($type === SURVEY_PAGETYPE_VIEW) ? ' disabled hidden-xs' : '') ?>">
 							<i class="<?= ICON_RESULT ?>"></i>
 							結果ページへ
 						</a>
 						<!--TODO: friend's vote page-->
-						<a <?= attr_href(HREF_TYPE_FRIEND, $survey->id) ?> class="btn btn-success<?= (($type === SURVEY_PAGETYPE_FRIEND) ? ' disabled hidden-xs' : '') ?>">
+						<a <?= attr_href(PATH_FRIEND, $survey->id) ?> class="btn btn-success<?= (($type === SURVEY_PAGETYPE_FRIEND) ? ' disabled hidden-xs' : '') ?>">
 							<i class="<?= ICON_FRIEND ?>"></i>
 							フレンドの投票先へ
 						</a>

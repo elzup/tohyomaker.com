@@ -11,7 +11,7 @@ if (!function_exists('surveypane'))
 					<div class="col-xs-10 title">
 						<h4>
 							<p>
-								<a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?>><?= $survey->title ?></a>
+								<a <?= attr_href(PATH_VOTE, $survey->id) ?>><?= $survey->title ?></a>
 							</p>
 						</h4>
 					</div>
@@ -26,7 +26,7 @@ if (!function_exists('surveypane'))
 					// not voted yet
 					?>
 					<div>
-						<a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?> class="btn btn-success btn-item btn-sm"><?= $item->value ?></a>
+						<a <?= attr_href(PATH_VOTE, $survey->id) ?> class="btn btn-success btn-item btn-sm"><?= $item->value ?></a>
 						に投票しました。
 					</div>
 					<?php
@@ -54,7 +54,7 @@ if (!function_exists('surveypane'))
 								$class .= ($survey->selected === $item->index ? ' btn-warning' : ' btn-success ');
 								?>
 								<div class="col-sm-<?= $cn ?>">
-									<a <?= attr_href(HREF_TYPE_VOTE, array($survey->id, $i)) ?> class="btn btn-block btn-item btn-sm<?= $class ?>"><?= $item->value ?></a>
+									<a <?= attr_href(PATH_VOTE, array($survey->id, $i)) ?> class="btn btn-block btn-item btn-sm<?= $class ?>"><?= $item->value ?></a>
 								</div>
 								<?php
 								$sum_cn += $cn;
@@ -76,7 +76,7 @@ if (!function_exists('surveypane'))
 					foreach ($survey->tags as $tag)
 					{
 						?>
-						<a <?= attr_href(HREF_TYPE_TAG, $tag) ?> class=""><?= $tag ?></a>
+						<a <?= attr_href(PATH_TAG, $tag) ?> class=""><?= $tag ?></a>
 					<?php } ?>
 				</p>
 
@@ -334,7 +334,7 @@ if (!function_exists('surveysblock'))
 							}
 							?>
 							<li class="row">
-								<span class="title col-xs-8"><a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?>><?= $survey->title ?></a></span>
+								<span class="title col-xs-8"><a <?= attr_href(PATH_VOTE, $survey->id) ?>><?= $survey->title ?></a></span>
 								<span class="total-num col-xs-2"><?= $voted_tag ?><?= $survey->total_num ?></span>
 								<span class="remain col-xs-2 hidden-xs"><?= ($survey->state == SURVEY_STATE_END) ? '' : tag_icon(ICON_TIME, TRUE) . $survey->get_time_remain_str() ?></span>
 							</li>

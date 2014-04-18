@@ -13,7 +13,7 @@
 					//logined
 					?>
 
-					<form class="form-horizontal" action="<?= base_url(HREF_TYPE_MAKECHECK) ?>" method="POST">
+					<form class="form-horizontal" action="<?= base_url(PATH_MAKECHECK) ?>" method="POST">
 						<fieldset>
 							<legend>作成フォーム</legend>
 
@@ -143,7 +143,7 @@
 					<div class="align-center">
 						<span class="help-block">*投票の作成にはTwitterアカウントでログインが必要です</span>
 						<span class="help-block">*認証後勝手にツイートする、フォローするという事はありません</span>
-						<a <?= attr_href(HREF_TYPE_LOGIN) ?> class="btn btn-info">ログインする</a>
+						<a <?= attr_href(PATH_LOGIN) ?> class="btn btn-info">ログインする</a>
 					</div>
 					<?php
 				}

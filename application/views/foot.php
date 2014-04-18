@@ -13,8 +13,8 @@
 			<div class="col-sm-4">
 				<strong>カタログ</strong>
 				<ul>
-					<li><a <?= attr_href(HREF_TYPE_NEW) ?>>新着投票</a></li>
-					<li><a <?= attr_href(HREF_TYPE_HOT) ?>>人気投票</a></li>
+					<li><a <?= attr_href(PATH_NEW) ?>>新着投票</a></li>
+					<li><a <?= attr_href(PATH_HOT) ?>>人気投票</a></li>
 				</ul>
 			</div>
 		</div>
