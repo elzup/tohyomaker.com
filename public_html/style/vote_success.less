@@ -31,3 +31,33 @@
     background-color: @col_main;
     border-color: @col_sub2;
 }
+
+
+
+#navbar {
+    background-color: @col_main;
+    border-color: @col_sub1;
+    color: white;
+
+    .icon-bar {
+        background-color: @col_back;
+    }
+
+    .navbar-right {
+        > li {
+            a {
+                color: @col_back;
+            }
+            li {
+                i,a {
+                    color: @col_main;
+                }
+            }
+            @media (max-width: 767px) {
+                i,a,li a,li i {
+                    color: @col_back;
+                }
+            }
+        }
+    }
+}

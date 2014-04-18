@@ -41,6 +41,11 @@ a {
         background-size: cover;
         width: 522px;
         line-height: 108px;
+        @media (max-width: 767px) {
+            width: 324px;
+            line-height: 64px;
+        }
+
         .clear-font();
         margin: 0 auto;
     }
@@ -50,15 +55,16 @@ a {
     border-right: 0;
     border-left: 0;
     margin-bottom: 5px;
-    .icon-bar {
-        background-color: @col_back;
+    @is : 25px;
+    .user-icon {
+        width: @is;
     }
+    
     .navbar-toggle {
         padding: 3px;
-        @is : 25px;
         i {
             color: white;
-            font-size: @is;
+            font-size: @is - 6px;
         }
         img {
             width: @is;
@@ -75,28 +81,14 @@ a {
             }
         }
     }
-    background-color: @col_main;
-    border-color: @col_sub1;
-    color: white;
     .navbar-right {
         margin-right: 10px;
         > li {
-            a {
-                color: @col_back;
-            }
-            li {
-                i,a {
-                    color: @col_main;
-                }
-            }
             @media (max-width: 767px) {
                 float:left;
-                width: 25%;
+                width: 30%;
                 a {
                     padding: 2px;
-                }
-                i,a,li a,li i {
-                    color: @col_back;
                 }
             }
         }
@@ -368,7 +360,7 @@ i {
     }
     &.fa-twitter
     {
-        color: blue;
+        color: @col_back;
     }
 }
 
