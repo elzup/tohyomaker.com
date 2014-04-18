@@ -383,11 +383,7 @@ class Surveyobj
 	 */
 	public function get_selected_item()
 	{
-		if (!$this->is_voted())
-		{
-			return NULL;
-		}
-		return $this->items[$this->selected];
+		return @$this->items[$this->selected] ?: NULL;
 	}
 
 }

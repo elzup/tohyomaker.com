@@ -22,17 +22,11 @@ if (!function_exists('surveypane'))
 				<?php
 				if ($is_log && ($selected = $survey->selected) !== NO_VOTED)
 				{
-//					$share_uri = base_url($survey->id);
-//					$share_text = totext_share($survey->items[$selected]->value, $survey->title, $share_uri);
-
 					$item = $survey->get_selected_item();
 					// not voted yet
-//					echo '<pre>';
-//					var_dump($survey->get_selected_item());
-//					exit
 					?>
 					<div>
-						<a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?> class="btn btn-success btn-item btn-xs"><?= $item->value ?></a>
+						<a <?= attr_href(HREF_TYPE_VOTE, $survey->id) ?> class="btn btn-success btn-item btn-sm"><?= $item->value ?></a>
 						に投票しました。
 					</div>
 					<?php

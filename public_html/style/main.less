@@ -17,6 +17,10 @@
 @col_acce : orange;
 //@col_acce : green;
 
+@col_rank_gold: gold;
+@col_rank_silver: silver;
+@col_rank_bronds: bronds;
+
 
 html,body {
 	height: 100%;
@@ -406,7 +410,7 @@ i {
 .panel-survey {
     .panel-body {
         padding-top: 1px;
-        padding-bottom: 0px;
+        padding-bottom: 5px;
         @h : 40px;
         >div>div {
 //            height: @h;
@@ -582,14 +586,15 @@ i {
     margin-top: 10px;
 }
 
+// TODO
 .col-gold() {
-    color: gold;
+    color: @col_rank_gold;
 }
 .col-silver() {
-    color: silver;
+    color: @col_rank_silver;
 }
 .col-bronds() {
-    color: #c47222;
+    color: @col_rank_bronds;
 }
 
 /* --------------------------------------------------------- *
