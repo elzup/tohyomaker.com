@@ -36,6 +36,9 @@ if (!function_exists('attr_href'))
 	function attr_href($type = PATH_TOP, $values = NULL, $is_wrap_base = TRUE)
 	{
 		$link = $type;
+		if ($link == '#') {
+			return 'href="#"';
+		}
 		// TODO: support array $option_value args
 		if (!empty($values))
 		{

@@ -51,6 +51,8 @@
     * ~~alertbox color design~~
     * ~~vote checkbox color design~~
 
+* deleteable survey I maked
+
 
 ## level2
 * tags block
@@ -72,6 +74,7 @@
 * function's wrap exist
 
 * less file リファクタリング mobile and pc
+* 404page to controllers
 
 
 ## level3

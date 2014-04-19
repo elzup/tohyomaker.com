@@ -19,13 +19,18 @@ class My extends CI_Controller
 
 	function index()
 	{
+		$this->voted();
+	}
+
+
+	function voted()
+	{
 		$user = $this->user->get_main_user();
 		if ($user->is_guest)
 		{
 			jump(base_url());
 		}
 		$surveys_voted = $this->survey->get_surveys_user_voted($user);
-		$surveys_maked = $this->survey->get_surveys_user_maked($user);
 
 		$meta = new Metaobj();
 		$meta->setup_my();
@@ -35,8 +40,8 @@ class My extends CI_Controller
 
 		$mypage_info = array(
 				'user' => $user,
-				'surveys_voted' => $surveys_voted,
-				'surveys_maked' => $surveys_maked,
+				'surveys' => $surveys_voted,
+				'type' => PAGETYPE_VOTED,
 		);
 		$this->load->view('mypage', $mypage_info);
 
@@ -59,7 +64,8 @@ class My extends CI_Controller
 
 		$mypage_info = array(
 				'user' => $user,
-				'surveys_maked' => $surveys_maked,
+				'surveys' => $surveys_maked,
+				'type' => PAGETYPE_MAKED,
 		);
 		$this->load->view('mypage', $mypage_info);
 

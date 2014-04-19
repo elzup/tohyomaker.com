@@ -54,7 +54,7 @@ class Survey extends CI_Controller
 		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 0));
 		$surveyhead_info = array(
 				'survey' => $survey,
-				'type' => SURVEY_PAGETYPE_VOTE,
+				'type' => PAGETYPE_VOTE,
 		);
 		$this->load->view('surveyhead', $surveyhead_info);
 		$surveyselectform_info = array(
@@ -90,7 +90,7 @@ class Survey extends CI_Controller
 		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 0));
 		$surveyhead_info = array(
 				'survey' => $survey,
-				'type' => SURVEY_PAGETYPE_VIEW,
+				'type' => PAGETYPE_VIEW,
 		);
 		$this->load->view('surveyhead', $surveyhead_info);
 		$this->load->view('surveyresult', array('survey' => $survey));
@@ -127,7 +127,7 @@ class Survey extends CI_Controller
 		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 0));
 		$surveyhead_info = array(
 				'survey' => $survey,
-				'type' => SURVEY_PAGETYPE_FRIEND,
+				'type' => PAGETYPE_FRIEND,
 		);
 		$this->load->view('surveyhead', $surveyhead_info);
 		$this->load->view('surveyfriend', array('survey' => $survey, 'friends' => $users_voted));

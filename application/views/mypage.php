@@ -1,7 +1,8 @@
 <?php
-/* @var $surveys_voted Surveyobj[] */
-/* @var $surveys_maked Surveyobj[] */
+/* @var $surveys Surveyobj[] */
 /* @var $user Userobj */
+/* @var $type int */
+$is_type_voted  = $type == PAGETYPE_VOTED;
 ?>
 
 <div class="container">
@@ -9,18 +10,25 @@
 		<div class="col-sm-offset-2 col-sm-8" id="mypage-div">
 
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="#vote-history-tab" data-toggle="tab">投票履歴</a></li>
-				<li><a href="#created-survey-tab" data-toggle="tab">作成した投票</a></li>
+				<li class="<?= ($type == PAGETYPE_VOTED ? 'active' : '') ?>">
+					<a <?= attr_href($type == PAGETYPE_VOTED ? '#' : (PATH_MYPAGE)) ?>>投票履歴</a>
+				</li>
+				<li class="<?= ($type == PAGETYPE_MAKED ? 'active' : '') ?>">
+					<a <?= attr_href($type == PAGETYPE_MAKED ? '#' : (PATH_MYPAGEMAKED)) ?>>作成した投票</a>
+				</li>
 			</ul>
 
-			<div id="myTabContent" class="tab-content">
-				<div class="tab-pane fade active in" id="vote-history-tab">
+			<?php
+			if ($type == PAGETYPE_VOTED)
+			{
+				?>
+				<div class="" id="vote-history-tab">
 					<h2>最近の投票履歴</h2>
 					<span class="help-block">一定時間たつと個人の投票データは消去されます</span>
 					<?php
-					if (!empty($surveys_voted))
+					if (!empty($surveys))
 					{
-						foreach ($surveys_voted as $survey)
+						foreach ($surveys as $survey)
 						{
 							surveypane($survey, TRUE);
 						}
@@ -32,12 +40,16 @@
 					}
 					?>
 				</div>
-				<div class="tab-pane fade" id="created-survey-tab">
+				<?php
+			} else
+			{
+				?>
+				<div class="" id="created-survey-tab">
 					<h2>作成した投票</h2>
 					<?php
-					if (!empty($surveys_maked))
+					if (!empty($surveys))
 					{
-						foreach ($surveys_maked as $survey)
+						foreach ($surveys as $survey)
 						{
 							surveypane($survey);
 						}
@@ -49,7 +61,9 @@
 					}
 					?>
 				</div>
-			</div>
+				<?php
+			}
+			?>
 		</div>
 	</div>
 </div>
