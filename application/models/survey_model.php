@@ -649,7 +649,6 @@ class Survey_model extends CI_Model
 		$users_voted = array();
 		foreach ($users as $user)
 		{
-			echo $user->id;
 			$select = $select = $this->check_voted($survey->id, $user->id);
 			if ($select !== NO_VOTED) {
 				$user->select = $select->value;

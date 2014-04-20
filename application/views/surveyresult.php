@@ -37,14 +37,14 @@
 								<div class="panel panel-success rank-<?= $item->rank ?>">
 									<div class="panel-heading">
 										<span class="rank"><?= $item->rank ?></span>
-		<?= $voted_icon ?>
+										<?= $voted_icon ?>
 									</div>
 									<div class="panel-body">
 										<h4>
-		<?= $item->value ?>
+											<?= $item->value ?>
 										</h4>
 										<h4 class="num">
-		<?= $item->num ?>
+											<?= $item->num ?>
 										</h4>
 									</div>
 								</div>
@@ -81,7 +81,7 @@
 						</div>
 						<div class="col-sm-5">
 							<i class="<?= ICON_OK ?>"></i>
-<?= $survey->total_num ?> 票
+							<?= $survey->total_num ?> 票
 						</div>
 						<div class="col-sm-2">
 							<?php
@@ -104,6 +104,6 @@
 					投票ページヘ
 				</a>
 			</div>
-<?php } ?>
+		<?php } ?>
 	</div>
 </div>

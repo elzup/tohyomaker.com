@@ -8,6 +8,7 @@
 				<strong>メイン</strong>
 				<ul>
 					<li><a <?= attr_href() ?>>トップ</a></li>
+					<li><a <?= attr_href(PATH_MAKE) ?>>投票作成</a></li>
 				</ul>
 			</div>
 			<div class="col-sm-4">

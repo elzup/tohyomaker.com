@@ -200,12 +200,14 @@ a {
             }
             .select-value-div {
                 
+                margin-top: 3px;
                 padding-left: 0px;
                 height: 3em;
+                display: table;
                 >span {
-                    top: 50%;
-                    margin-top: -0.5em;
-                    position: absolute;
+                    display: table-cell;
+                    vertical-align: middle;
+                    height: 100%;
                     font-weight: bold;
                     font-size: 18px;
 
@@ -350,6 +352,7 @@ a {
 //        display: none;
     }
     .description .well {
+        text-align: center;
         p {
             margin-bottom: 0;
         }
@@ -414,7 +417,10 @@ i {
 
 #survey-pager-div {
     margin-bottom: 10px;
-
+    a > * {
+        left: -5px;
+        position: relative;
+    }
 }
 
 .panel-survey {

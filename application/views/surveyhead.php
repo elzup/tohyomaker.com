@@ -7,6 +7,27 @@
 <div class="container">
 	<div class="row">
 		<div class="col-sm-offset-2 col-sm-8" id="survey-head-div">
+
+			<div class="row" id="survey-pager-div">
+				<div class="col-xs-12 col-xs-offset-0">
+					<div class="btn-group btn-group-justified">
+						<a <?= attr_href(PATH_VOTE, $survey->id) ?> class="btn btn-success<?= (($type === PAGETYPE_VOTE) ? ' disabled hidden-xs' : '') ?>">
+							<i class="<?= ICON_VOTE ?>"></i>
+							<span>投票ページ</span>
+						</a>
+						<a <?= attr_href(PATH_VIEW, $survey->id) ?> class="btn btn-success<?= (($type === PAGETYPE_VIEW) ? ' disabled hidden-xs' : '') ?>">
+							<i class="<?= ICON_RESULT ?>"></i>
+							<span>結果ページ</span>
+						</a>
+						<!--TODO: friend's vote page-->
+						<a <?= attr_href(PATH_FRIEND, $survey->id) ?> class="btn btn-success<?= (($type === PAGETYPE_FRIEND) ? ' disabled hidden-xs' : '') ?>">
+							<i class="<?= ICON_FRIEND ?>"></i>
+							<span>フレンド</span>
+						</a>
+					</div>
+				</div>
+			</div>
+
 			<div class="well">
 				<div class="row">
 					<div class="col-xs-8 survey-cont timestamp">
@@ -94,25 +115,6 @@
 				</div>
 			</div>
 
-			<div class="row" id="survey-pager-div">
-				<div class="col-xs-12 col-xs-offset-0">
-					<div class="btn-group btn-group-justified">
-						<a <?= attr_href(PATH_VOTE, $survey->id) ?> class="btn btn-success<?= (($type === PAGETYPE_VOTE) ? ' disabled hidden-xs' : '') ?>">
-							<i class="<?= ICON_VOTE ?>"></i>
-							投票ページへ
-						</a>
-						<a <?= attr_href(PATH_VIEW, $survey->id) ?> class="btn btn-success<?= (($type === PAGETYPE_VIEW) ? ' disabled hidden-xs' : '') ?>">
-							<i class="<?= ICON_RESULT ?>"></i>
-							結果ページへ
-						</a>
-						<!--TODO: friend's vote page-->
-						<a <?= attr_href(PATH_FRIEND, $survey->id) ?> class="btn btn-success<?= (($type === PAGETYPE_FRIEND) ? ' disabled hidden-xs' : '') ?>">
-							<i class="<?= ICON_FRIEND ?>"></i>
-							フレンドの投票先へ
-						</a>
-					</div>
-				</div>
-			</div>
 			<div class="row description">
 				<div class="col-sm-12">
 					<div class="well">
