@@ -8,14 +8,15 @@ if (!function_exists('surveypane'))
 		<div class="panel panel-success panel-survey">
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-xs-10 title">
+					<div class="col-sm-10 col-xs-12 title">
 						<h4>
 							<p>
 								<a <?= attr_href(PATH_VOTE, $survey->id) ?>><?= $survey->title ?></a>
+								<span class="visible-inline-xs">(<?= $survey->total_num ?>)</span>
 							</p>
 						</h4>
 					</div>
-					<div class="col-xs-2 total-num">
+					<div class="col-sm-2 hidden-xs total-num">
 						<span class="total-num"><?= $survey->total_num ?></span>
 					</div>
 				</div>
@@ -35,7 +36,7 @@ if (!function_exists('surveypane'))
 				{
 					?>
 					<div class="row">
-						<div class="col-sm-8 col-sm-8-s">
+						<div class="col-xs-12">
 							<p><?= tag_icon(ICON_DESCRIPTION, !!$survey->description) . (($survey->description) ? : NO_PARAM_STR) ?></p>
 						</div>
 					</div>
@@ -51,10 +52,12 @@ if (!function_exists('surveypane'))
 								{
 									$class .= ' disabled';
 								}
-								$class .= ($survey->selected === $item->index ? ' btn-warning' : ' btn-success ');
+								$is_selected = $survey->selected === $item->index;
+								$class .= ( $is_selected ? ' btn-warning' : ' btn-success ');
 								?>
 								<div class="col-sm-<?= $cn ?>">
-									<a <?= attr_href(PATH_VOTE, array($survey->id, $i)) ?> class="btn btn-block btn-item btn-sm<?= $class ?>"><?= $item->value ?></a>
+									
+									<a <?= attr_href(PATH_VOTE, array($survey->id, $i)) ?> class="btn btn-block btn-item btn-sm<?= $class ?>"><?= $is_selected ? tag_icon(ICON_OK, TRUE, 'white'):''?><?= $item->value ?></a>
 								</div>
 								<?php
 								$sum_cn += $cn;
