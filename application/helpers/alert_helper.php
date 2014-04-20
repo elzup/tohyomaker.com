@@ -46,12 +46,11 @@ if (!function_exists('alert_box'))
 	function alert_box($type, $text = '')
 	{
 		$lib = array(
-				'',
-				'ログインしました。',
-				'ログアウトしました。',
-				'投票が完了しました。',
-				'',
-				'なにかのエラーです。',
+				ALERT_TYPE_LOGIN => 'ログインしました。',
+				ALERT_TYPE_LOGOUT => 'ログアウトしました。',
+				ALERT_TYPE_VOTED => '投票が完了しました。',
+				ALERT_TYPE_ERROR => 'なにかのエラーです。',
+				ALERT_TYPE_SURVEYDELETED => '投票を消去しました。',
 		);
 		if (empty($lib[$type]))
 		{

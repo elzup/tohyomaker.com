@@ -34,6 +34,6 @@ class Index extends CI_Controller
 		);
 		$this->load->view('topmain', $topmain_info);
 
-		$this->load->view('foot');
+		$this->load->view('foot', array('user' => $user));
 	}
 }

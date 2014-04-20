@@ -380,7 +380,7 @@ class Survey_model extends CI_Model
 		$this->db->delete(DB_TBL_VOTE);
 	}
 
-	public function delete(Surveyobj $survey)
+	public function delete_survey(Surveyobj $survey)
 	{
 		$this->db->where('id_survey', $survey->id);
 		$this->db->set('state', SURVEY_STATE_DELETED);

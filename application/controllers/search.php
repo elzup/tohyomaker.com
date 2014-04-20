@@ -49,7 +49,7 @@ class Search extends CI_Controller
 
 //		$this->load->view('catalognew', array ('surveys' => $surveys));
 
-		$this->load->view('foot');
+		$this->load->view('foot', array('user' => $user));
 	}
 
 }

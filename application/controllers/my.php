@@ -45,7 +45,7 @@ class My extends CI_Controller
 		);
 		$this->load->view('mypage', $mypage_info);
 
-		$this->load->view('foot');
+		$this->load->view('foot', array('user' => $user));
 	}
 
 	function maked() {
@@ -69,7 +69,7 @@ class My extends CI_Controller
 		);
 		$this->load->view('mypage', $mypage_info);
 
-		$this->load->view('foot');
+		$this->load->view('foot', array('user' => $user));
 	}
 
 }

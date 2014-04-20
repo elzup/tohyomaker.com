@@ -17,22 +17,6 @@ class Auth extends CI_Controller
 	function login()
 	{
 		$this->start();
-		// save referer to return previous page
-/*
- 		$this->session->set_userdata(array('referer' => $this->input->server('HTTP_REFERER')));
-		$meta = new Metaobj();
-		$meta->setup_login();
-		$this->load->view('head', array ('meta' => $meta));
-		$this->load->view('title', array('title' => $meta->get_title()));
-		$this->load->view('navbar', array('user' => $this->user->get_main_user()));
-		$makeform_info = array(
-				'user' => $this->user->get_main_user(),
-				'token' => $this->_set_token(),
-		);
-		$this->load->view('makeform', $makeform_info);
-		$this->load->view('foot', array('jss' => array('makeform')));
- * 
- */
 	}
 
 	function start()

@@ -36,7 +36,7 @@ class Catalog extends CI_Controller
 
 		$this->load->view('catalognew', array ('surveys' => $surveys));
 
-		$this->load->view('foot');
+		$this->load->view('foot', array('user' => $user));
 	}
 
 	function hot(/* TODO $pagenum*/)
@@ -52,7 +52,7 @@ class Catalog extends CI_Controller
 
 		$this->load->view('cataloghot', array ('surveys' => $surveys));
 
-		$this->load->view('foot');
+		$this->load->view('foot', array('user' => $user));
 	}
 
 }

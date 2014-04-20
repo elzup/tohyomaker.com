@@ -35,7 +35,6 @@ class User extends CI_Controller
 
 		$surveys_maked = $this->survey->get_surveys_user_maked($user_target);
 		
-		$title = $user_target->screen_name . 'の作成した投票';
 		$meta = new Metaobj();
 		$meta->setup_user($user_target->screen_name);
 		$this->load->view('head', array('meta' => $meta));
@@ -47,7 +46,7 @@ class User extends CI_Controller
 		);
 		$this->load->view('userpage', $userpage_info);
 
-		$this->load->view('foot');
+		$this->load->view('foot', array('user' => $user));
 
 	}
 }

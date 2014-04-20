@@ -18,20 +18,21 @@ class Make extends CI_Controller
 		/*
 		 * view
 		 */
+		$user = $this->user->get_main_user();
 		$meta = new Metaobj();
 		$meta->setup_top();
 		$this->load->view('head', array('meta' => $meta));
-		$this->load->view('navbar', array('user' => $this->user->get_main_user()));
+		$this->load->view('navbar', array('user' => $user));
 		$this->load->view('title', array('title' => $meta->get_title()));
 
 		$post = $this->session->userdata('form_posts');
 		$makeform_info = array(
-				'user' => $this->user->get_main_user(),
+				'user' => $user,
 				'post' => $post,
 		);
 		$this->load->view('makeform', $makeform_info);
 
-		$this->load->view('foot', array('jss' => array('makeform')));
+		$this->load->view('foot', array('jss' => array('makeform'), 'user' => $user));
 	}
 
 	public function destroy()
@@ -54,19 +55,20 @@ class Make extends CI_Controller
 			jump_back();
 		}
 
+		$user = $this->user->get_main_user();
 		$meta = new Metaobj();
 		$meta->setup_top();
 		$this->load->view('head', array('meta' => $meta));
 		$this->load->view('title', array('title' => $meta->get_title()));
-		$this->load->view('navbar', array('user' => $this->user->get_main_user()));
+		$this->load->view('navbar', array('user' => $user));
 
 		$makecheck_info = array(
-				'user' => $this->user->get_main_user(),
+				'user' => $user,
 				'data' => $post,
 				'token' => $this->_set_token(),
 		);
 		$this->load->view('makecheck', $makecheck_info);
-		$this->load->view('foot');
+		$this->load->view('foot', array('user' => $user));
 
 		$this->session->set_userdata(array('form_posts' => $post));
 	}
@@ -74,11 +76,12 @@ class Make extends CI_Controller
 	public function regist()
 	{
 		$post = $this->input->post();
+		$user = $this->user->get_main_user();
 		if ($this->input->server('REQUEST_METHOD') != 'POST' || !$this->_check_token() || !($post = $this->_check_post($this->input->post())))
 		{
 			jump_back(2);
 		}
-		$id_survey = $this->survey->regist($post, $this->user->get_main_user());
+		$id_survey = $this->survey->regist($post, $user);
 		$token = $this->_set_token();
 		jump(base_url(PATH_MAKEEND . "/{$id_survey}/{$token}"));
 		// TODO: jump to survey page (use id
@@ -101,14 +104,15 @@ class Make extends CI_Controller
 
 		$this->session->unset_userdata('form_posts');
 
+		$user = $this->user->get_main_user();
 		$meta = new Metaobj();
 		$meta->setup_top();
 		$this->load->view('head', array('meta' => $meta));
 		$this->load->view('title', array('title' => $meta->get_title()));
-		$this->load->view('navbar', array('user' => $this->user->get_main_user()));
+		$this->load->view('navbar', array('user' => $user));
 
 		$this->load->view('makeend', array('survey' => $survey));
-		$this->load->view('foot');
+		$this->load->view('foot', array('user' => $user));
 	}
 
 	private function _set_token()
