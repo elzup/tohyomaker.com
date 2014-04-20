@@ -17,7 +17,7 @@ if (typeof jQuery != "undefined"){
                 $("#submit-main").removeClass('disabled');
             }
         }); 
-        $(".active.btn-item").click();
+        $(".active.btn-item.btn-static:not").click();
 
         $('#copy-btn').click = function() {
 

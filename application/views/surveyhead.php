@@ -93,18 +93,14 @@
 						}
 						?>
 					</div>
-					<!--div class="col-sm-3 survey-cont">
-					<?= tag_icon(ICON_VOTE, TRUE) ?>
-						<span class="total-num"><?= $survey->total_num ?></span>
-					</div-->
-					<div class="col-xs-4 survey-cont hidden-xs">
+					<div class="col-xs-4 hidden-xs">
 						<?php
 						$share_uri = fix_url(base_url(PATH_VOTE . $survey->id));
 						$share_text = totext_share_survey($survey);
 						echo sharebtn_twitter($share_text, $share_uri);
 						?>
 					</div>
-					<div class="col-xs-4 survey-cont visible-xs">
+					<div class="col-xs-4 visible-xs">
 						<?= sharebtn_twitter($share_text, $share_uri, 'ツイート', FALSE); ?>
 					</div>
 				</div>

@@ -387,7 +387,7 @@ if (!function_exists('attr_class_selectform'))
 		{
 			$add_class .= ' active';
 			if ($survey->is_voted()) {
-				$add_class .= ' disabled';
+				$add_class .= ' disabled btn-static';
 			}
 		} else if ($survey->is_voted())
 		{
