@@ -68,10 +68,10 @@
 										<div class="input-group">
 											<input type="text" name="item<?= $i ?>" id="sur-item<?= $i ?>" class="form-control" value="<?= isset_just(@$post['item' . $i]) ?>" maxlength="20">
 											<span class="input-group-btn">
-												<button class="btn btn-warning btn-diswitch-off" type="button"><i class="glyphicon glyphicon-remove"></i></button>
+												<button class="btn btn-warning btn-diswitch-off" type="button"><?= tag_icon(ICON_REMOVE)?></button>
 											</span>
 										</div>
-										<button class="btn btn-success btn-diswitch-on" type="button" style="display: none;"><i class="glyphicon glyphicon-plus"></i></button>
+									<button class="btn btn-success btn-diswitch-on" type="button" style="display: none;"><?= tag_icon(ICON_PLUS)?></button>
 									<?php } ?>
 									<span class="help-block">ex.)きのこの山</span>
 									<span class="help-block">ex.)たけのこの里</span>

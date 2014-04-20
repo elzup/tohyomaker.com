@@ -49,6 +49,10 @@ class Survey_model extends CI_Model
 		$tags = $this->select_tags($id_survey);
 		$owner = $this->select_user_simple($data->id_user);
 		$survey = new Surveyobj($data, $items, $tags, $owner);
+		if ($survey->state == SURVEY_STATE_DELETED)
+		{
+			return $survey;
+		}
 		$this->_install_result($survey);
 		$this->install_select($survey, $id_user, $is_guest);
 		$this->check_delete_votes($survey);
@@ -363,8 +367,7 @@ class Survey_model extends CI_Model
 
 	private function check_delete_votes(Surveyobj $survey)
 	{
-		if ($survey->state == SURVEY_STATE_END
-				&& $survey->end_value + strtotime('+7 day', 0) < time())
+		if ($survey->state == SURVEY_STATE_END && $survey->end_value + strtotime('+7 day', 0) < time())
 		{
 			$this->delete_votes_overdue($survey);
 		}
@@ -375,6 +378,13 @@ class Survey_model extends CI_Model
 		$this->db->where('id_survey', $survey->id);
 		$this->db->where('`timestamp` < date(now() - interval 7 day)');
 		$this->db->delete(DB_TBL_VOTE);
+	}
+
+	public function delete(Surveyobj $survey)
+	{
+		$this->db->where('id_survey', $survey->id);
+		$this->db->set('state', SURVEY_STATE_DELETED);
+		$this->db->update(DB_TBL_SURVEY);
 	}
 
 	public function delete_votes_day()
@@ -642,7 +652,7 @@ class Survey_model extends CI_Model
 	 */
 	public function install_users_select($users, Surveyobj $survey)
 	{
-		if (empty ($users))
+		if (empty($users))
 		{
 			return NULL;
 		}
@@ -650,11 +660,13 @@ class Survey_model extends CI_Model
 		foreach ($users as $user)
 		{
 			$select = $select = $this->check_voted($survey->id, $user->id);
-			if ($select !== NO_VOTED) {
+			if ($select !== NO_VOTED)
+			{
 				$user->select = $select->value;
 				$users_voted[] = $user;
 			}
 		}
 		return $users_voted;
 	}
+
 }

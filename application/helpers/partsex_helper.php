@@ -2,7 +2,7 @@
 if (!function_exists('surveypane'))
 {
 
-	function surveypane(Surveyobj $survey, $is_log = FALSE)
+	function surveypane(Surveyobj $survey, $is_log = FALSE, $is_owner = FALSE)
 	{
 		?>
 		<div class="panel panel-success panel-survey">
@@ -56,8 +56,8 @@ if (!function_exists('surveypane'))
 								$class .= ( $is_selected ? ' btn-warning' : ' btn-success ');
 								?>
 								<div class="col-sm-<?= $cn ?>">
-									
-									<a <?= attr_href(PATH_VOTE, array($survey->id, $i)) ?> class="btn btn-block btn-item btn-sm<?= $class ?>"><?= $is_selected ? tag_icon(ICON_OK, TRUE, 'white'):''?><?= $item->value ?></a>
+
+									<a <?= attr_href(PATH_VOTE, array($survey->id, $i)) ?> class="btn btn-block btn-item btn-sm<?= $class ?>"><?= $is_selected ? tag_icon(ICON_OK, TRUE, 'white') : '' ?><?= $item->value ?></a>
 								</div>
 								<?php
 								$sum_cn += $cn;
@@ -82,22 +82,12 @@ if (!function_exists('surveypane'))
 						<a <?= attr_href(PATH_TAG, $tag) ?> class=""><?= $tag ?></a>
 					<?php } ?>
 				</p>
-
-				<!--div class="row">
-					<div class="col-sm-3">
-				<?= tag_icon(ICON_TIME, TRUE) ?>
-				<?= $survey->get_time_remain_str() ?>
-					</div>
 				<?php
-				$stylelib = explode(',', 'success,end,end');
-				$pbstyle = $stylelib[$survey->state];
-				?>
-					<div class="col-sm-9">
-						<div class="progress">
-							<div class="progress-bar progress-bar-<?= $pbstyle ?>" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
-						</div>
-					</div>
-				</div-->
+				if ($is_owner)
+				{
+					?>
+				<a class="btn btn-xs btn-warning" <?=  attr_href(PATH_DELETE . '/' . $survey->id)?>><?= tag_icon(ICON_REMOVE) ?>消去する</a>
+				<?php } ?>
 			</div>
 		</div>
 		<?php
@@ -337,7 +327,7 @@ if (!function_exists('surveysblock'))
 							}
 							?>
 							<li class="row">
-								<span class="title col-sm-8 col-xs-12"><a <?= attr_href(PATH_VOTE, $survey->id) ?>><?= $survey->title ?></a><span class="visible-inline-xs">(<?= $survey->total_num?>)</span></span>
+								<span class="title col-sm-8 col-xs-12"><a <?= attr_href(PATH_VOTE, $survey->id) ?>><?= $survey->title ?></a><span class="visible-inline-xs">(<?= $survey->total_num ?>)</span></span>
 								<span class="total-num col-sm-2 hidden-xs"><?= $voted_tag ?><?= $survey->total_num ?></span>
 								<span class="remain col-sm-2 hidden-xs"><?= ($survey->state == SURVEY_STATE_END) ? '' : tag_icon(ICON_TIME, TRUE) . $survey->get_time_remain_str() ?></span>
 							</li>
@@ -362,7 +352,7 @@ if (!function_exists('surveysblock'))
 	}
 
 }
-	
+
 
 if (!function_exists('attr_tooltip_selectform'))
 {
@@ -380,16 +370,19 @@ if (!function_exists('attr_tooltip_selectform'))
 		}
 		return empty($btn_tooltip_text) ? '' : attr_tooltip($btn_tooltip_text);
 	}
+
 }
 if (!function_exists('attr_class_selectform'))
 {
+
 	function attr_class_selectform($i, Surveyobj $survey, $select)
 	{
 		$add_class = '';
 		if ((isset($select) && $i == $select) || $survey->selected == $i)
 		{
 			$add_class .= ' active';
-			if ($survey->is_voted()) {
+			if ($survey->is_voted())
+			{
 				$add_class .= ' disabled btn-static';
 			}
 		} else if ($survey->is_voted())
@@ -398,9 +391,11 @@ if (!function_exists('attr_class_selectform'))
 		}
 		return $add_class;
 	}
+
 }
 if (!function_exists('tag_icon_selectform'))
 {
+
 	function tag_icon_selectform($i, $survey_select, $select)
 	{
 		return tag_icon(((isset($select) && $i === $select) || $survey_select === $i) ? ICON_OK : ' ');

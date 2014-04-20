@@ -171,6 +171,45 @@ class Survey extends CI_Controller
 		jump(base_url(PATH_VOTE . '/' . $id_survey));
 	}
 
+	function deleting($id_survey = NULL)
+	{
+		if (isset($id_survey))
+		{
+			show_404();
+		}
+
+		$user = $this->user->get_main_user();
+		if (empty($user))
+		{
+			$this->session->set_userdata(set_alert(ALERT_TYPE_ERROR, CODE_ERROR_ACCESS_NOLOGIN + CODE_PAGE_SURVEY));
+			jump(base_url());
+		}
+		/* @var $survey Surveyobj */
+		if (($survey = $this->survey->get_survey($id_survey, $user)) === FALSE)
+		{
+			show_404();
+		}
+
+		// check $user is $survey'S owner
+		if ($survey->owner->id !== $user->id) {
+			jump(base_url(PATH_VOTE . '/' . $id_survey));
+		}
+
+		if ($this->survey->delete_vote($survey) === FALSE)
+		{
+			// TODO: set alert. failed
+			$this->session->set_userdata(set_alert(ALERT_TYPE_ERROR, CODE_ERROR_DB + CODE_PAGE_SURVEY));
+			$user->count_vote++;
+			$this->user->inclement_user_votecount($user->id, $user->count_vote);
+		} else
+		{
+			// TODO: if just vote, plus1 message 
+			$this->session->set_userdata(set_alert(ALERT_TYPE_VOTED));
+		}
+//		jump_back();
+		jump(base_url(PATH_VOTE . '/' . $id_survey));
+	}
+
 	private function _set_token()
 	{
 		$token = sha1(uniqid(mt_rand(), TRUE));

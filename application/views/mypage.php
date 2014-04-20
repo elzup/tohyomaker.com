@@ -51,7 +51,7 @@ $is_type_voted  = $type == PAGETYPE_VOTED;
 					{
 						foreach ($surveys as $survey)
 						{
-							surveypane($survey);
+							surveypane($survey, FALSE, TRUE);
 						}
 					} else
 					{
