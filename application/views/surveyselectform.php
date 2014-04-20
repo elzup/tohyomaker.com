@@ -5,64 +5,11 @@
 //debug 
 //$survey->is_img = TRUE;
 // TODO: move func file
-if (!function_exists('attr_tooltip_selectform'))
-{
-
-	function attr_tooltip_selectform($i, Surveyobj $survey)
-	{
-		$btn_tooltip_text = '';
-		if ($survey->selected === $i)
-		{
-			$btn_tooltip_text = '前回の投票先';
-		}
-		if ($survey->is_voted())
-		{
-			$btn_tooltip_text = '本日は投票済み';
-		}
-		return empty($btn_tooltip_text) ? '' : attr_tooltip($btn_tooltip_text);
-	}
-}
-if (!function_exists('attr_class_selectform'))
-{
-	function attr_class_selectform($i, Surveyobj $survey, $select)
-	{
-		$add_class = '';
-		if ((isset($select) && $i === $select) || $survey->selected === $i)
-		{
-			$add_class .= ' active';
-		} else if ($survey->is_voted())
-		{
-			$add_class .= ' no-display';
-		}
-		return $add_class;
-	}
-}
-if (!function_exists('tag_icon_selectform'))
-{
-	function tag_icon_selectform($i, $survey_select, $select)
-	{
-		return tag_icon(((isset($select) && $i === $select) || $survey_select === $i) ? ICON_OK : ' ');
-	}
-
-// TODO: cut severally function_exits
-}
 ?>
 
 <div class="container">
 	<div class="row">
 		<div class="col-sm-offset-2 col-sm-8" id="items-div">
-			<?php
-			if ($user->is_guest)
-			{
-				?>
-				<div class="well">
-					<p>ゲストユーザーです</p>
-					<span class="help-block">*ゲストユーザだと最近の投票を確認することが出来ません <a <?= attr_href(PATH_LOGIN) ?> class="btn btn-info">ログインする</a></span>
-
-				</div>
-				<?php
-			}
-			?>
 			<div class="itembox-div<?= $survey->is_img ? ' itembox-img-div' : '' ?>" data-toggle="buttons-radio">
 				<?php
 				if (!$survey->is_img)
@@ -153,6 +100,19 @@ if (!function_exists('tag_icon_selectform'))
 				}
 				?>
 			</div>
+
+			<?php
+			if ($user->is_guest)
+			{
+				?>
+				<div class="well">
+					<p>ゲストユーザーです</p>
+					<span class="help-block">*ゲストユーザだと最近の投票を確認することが出来ません <a <?= attr_href(PATH_LOGIN) ?> class="btn btn-info">ログインする</a></span>
+
+				</div>
+				<?php
+			}
+			?>
 		</div>
 	</div>
 

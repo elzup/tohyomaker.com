@@ -1,19 +1,4 @@
 <?php
-if (!function_exists('sharebtn_twitter'))
-{
-
-	function sharebtn_twitter($text, $uri)
-	{
-		?>
-		<a href="http://twitter.com/share" class="twitter-share-button"
-			 data-url="<?= fix_url($uri) ?>"
-			 data-text="<?= $text ?>"
-			 data-count="horizontal"
-			 data-lang="ja">ツイートする</a>
-		<?php
-	}
-
-}
 
 if (!function_exists('tag_icon'))
 {

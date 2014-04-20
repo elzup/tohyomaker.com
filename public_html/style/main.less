@@ -46,8 +46,9 @@ a {
         width: 522px;
         line-height: 108px;
         @media (max-width: 767px) {
-            width: 324px;
-            line-height: 64px;
+            width: 260px;
+            line-height: 50px;
+            margin-bottom: 5px;
         }
 
         .clear-font();
@@ -85,12 +86,18 @@ a {
             }
         }
     }
+    @media (max-width: 767px) {
+        padding: 0;
+        padding-left: 5px;
+    }
     .navbar-right {
         margin-right: 10px;
-        > li {
-            @media (max-width: 767px) {
+        @media (max-width: 767px) {
+            margin: 3px 5px;
+            > li {
                 float:left;
-                width: 30%;
+                width: 40%;
+                margin: 0 5%;
                 a {
                     padding: 2px;
                 }
@@ -214,6 +221,13 @@ a {
                     background-color: @col_main;
                     border-color: @col_sub1;
                 }
+
+                @media (max-width: 767px) {
+                    i {
+                        margin: 0px;
+                        left: -2px;
+                    }
+                }
             }
         }
     }
@@ -226,6 +240,7 @@ a {
                     position: absolute;
                     bottom: 5px;
                     right: 5px;
+
                 }
             }
         }
@@ -340,10 +355,6 @@ a {
         }
         span {
             font-size: 30px;
-            &:after {
-                content: 'に投票！';
-                color: @col_main;
-            }
             @media (max-width: 767px) {
                 font-size: 20px;
             }
@@ -572,6 +583,7 @@ i {
 
 .page-header {
     border-bottom: 1px solid @col_main;
+    margin-top: 10px;
     margin-bottom: 3px;
 }
 
