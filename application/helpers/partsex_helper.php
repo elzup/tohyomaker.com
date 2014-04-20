@@ -337,9 +337,9 @@ if (!function_exists('surveysblock'))
 							}
 							?>
 							<li class="row">
-								<span class="title col-xs-8"><a <?= attr_href(PATH_VOTE, $survey->id) ?>><?= $survey->title ?></a></span>
-								<span class="total-num col-sm-2 col-xs-4"><?= $voted_tag ?><?= $survey->total_num ?></span>
-								<span class="remain col-xs-2 hidden-xs"><?= ($survey->state == SURVEY_STATE_END) ? '' : tag_icon(ICON_TIME, TRUE) . $survey->get_time_remain_str() ?></span>
+								<span class="title col-sm-8 col-xs-12"><a <?= attr_href(PATH_VOTE, $survey->id) ?>><?= $survey->title ?></a><span class="visible-inline-xs">(<?= $survey->total_num?>)</span></span>
+								<span class="total-num col-sm-2 hidden-xs"><?= $voted_tag ?><?= $survey->total_num ?></span>
+								<span class="remain col-sm-2 hidden-xs"><?= ($survey->state == SURVEY_STATE_END) ? '' : tag_icon(ICON_TIME, TRUE) . $survey->get_time_remain_str() ?></span>
 							</li>
 							<?php
 						}

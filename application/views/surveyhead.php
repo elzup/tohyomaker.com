@@ -87,7 +87,7 @@
 							?>
 							<div class="col-xs-12 col-sm-3 no-container" <?= attr_tooltip('集計まで残り時間') ?>>
 								<?= tag_icon(ICON_FLAG, TRUE) ?>
-								<a <?= attr_href(PATH_VIEW . '/' . $survey->id) ?>>投票結果あり</a>
+								<a <?= attr_href(PATH_VIEW . '/' . $survey->id) ?>>集計結果あり</a>
 							</div>
 							<?php
 						}

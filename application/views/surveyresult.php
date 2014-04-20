@@ -15,7 +15,7 @@
 				?>
 				<h2>投票結果</h2>
 			<?php } ?>
-			<div class="row">
+			<div>
 				<?php
 				if ($survey->state == SURVEY_STATE_END || $survey->selected != NO_VOTED)
 				{
@@ -79,11 +79,11 @@
 							<i class="<?= ICON_TIME ?>"></i>
 							経過時間 <?= $survey->get_time_progress_str() ?>
 						</div>
-						<div class="col-sm-5">
+						<div class="col-xs-5">
 							<i class="<?= ICON_OK ?>"></i>
 							<?= $survey->total_num ?> 票
 						</div>
-						<div class="col-sm-2">
+						<div class="col-xs-2">
 							<?php
 							$share_uri = base_url(PATH_VIEW . '/' . $survey->id);
 							$share_text = totext_share_result($survey);
