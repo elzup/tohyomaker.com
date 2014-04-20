@@ -34,7 +34,7 @@
 						<?= tag_icon(ICON_TIME, TRUE) ?>
 						<?= $survey->get_time() ?>
 					</div>
-					<div class="col-xs-4 owner-name">
+					<div class="col-xs-4 survey-cont owner-name">
 						<?php
 						if (!$survey->is_anonymous)
 						{
@@ -47,9 +47,11 @@
 						} else
 						{
 							?>
-							<a href="#" class="btn btn-default btn-owner-name " <?= attr_tooltip("作者非公開") ?>>
+							<div class="hidden-xs">
 								<?= tag_icon(ICON_USER) ?><?= NO_PARAM_STR ?>
-							</a>
+								<a href="#" <?= attr_tooltip("作者非公開") ?>>
+								</a>
+							</div>
 							<?php
 						}
 						?>
@@ -57,25 +59,12 @@
 				</div>
 
 				<div class="row">
-					<div class="col-xs-8 survey-cont tagbox">
-						<div class="btn-group-tags">
-							<?= tag_icon(ICON_TAG, TRUE) ?>
-							<?php
-							foreach ($survey->tags as $tag)
-							{
-								?>
-								<a <?= attr_href(PATH_TAG, $tag) ?> class=""><?= $tag ?></a>
-							<?php } ?>
-						</div>
-					</div>
-				</div>
-				<div class="row">
 					<div class="col-xs-8 survey-cont" >
 						<?php
 						if ($survey->state != SURVEY_STATE_END)
 						{
 							?>
-							<div class="col-xs-6 col-sm-3 no-container" <?= attr_tooltip('集計まで残り時間') ?>>
+							<div class="col-xs-12 col-sm-3 no-container" <?= attr_tooltip('集計まで残り時間') ?>>
 								<?= tag_icon(ICON_FLAG, TRUE) ?>
 								<?= $survey->get_time_remain_str() ?>
 							</div>
@@ -83,7 +72,7 @@
 							$stylelib = explode(',', 'success,end,end');
 							$pbstyle = $stylelib[$survey->state];
 							?>
-							<div class="col-xs-6 col-sm-9">
+							<div class="hidden-xs col-sm-9">
 								<div class="progress">
 									<div class="progress-bar progress-bar-<?= $pbstyle ?>" style="width: <?= $survey->get_time_progress_par() ?>%;"></div>
 								</div>
@@ -110,7 +99,21 @@
 						?>
 					</div>
 					<div class="col-xs-4 survey-cont visible-xs">
-						<?= sharebtn_twitter($share_text, $share_uri, 'ツイート', FALSE);?>
+						<?= sharebtn_twitter($share_text, $share_uri, 'ツイート', FALSE); ?>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12 survey-cont tagbox">
+						<div class="btn-group-tags">
+							<?= tag_icon(ICON_TAG, TRUE) ?>
+							<?php
+							foreach ($survey->tags as $tag)
+							{
+								?>
+								<a <?= attr_href(PATH_TAG, $tag) ?> class=""><?= $tag ?></a>
+							<?php } ?>
+						</div>
 					</div>
 				</div>
 			</div>
