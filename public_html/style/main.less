@@ -591,6 +591,15 @@ i {
     }
 }
 
+.abutton {
+    display: table;
+    width: 100%;
+    >a {
+        display: table-cell;
+        width: 100%;
+    }
+}
+
 
 .text-shadow() {
     text-shadow: 1px 1px 2px;
@@ -625,11 +634,17 @@ i {
     display: none;
 }
 
+.visible-inline-xs {
+    display: none;
+}
 
 /* --------------------------------------------------------- *
  *     reset bootstrap template (Lumen)
  * --------------------------------------------------------- */
 
+.btn-lg {
+    height: 50px;
+}
 .well {
     box-shadow: none;
 }

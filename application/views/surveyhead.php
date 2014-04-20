@@ -40,8 +40,11 @@
 						{
 							?>
 							<?= tag_icon(ICON_USER, TRUE) ?>
-							<a <?= attr_href(PATH_USER, $survey->owner->id) ?><?= attr_tooltip("作者: {$survey->owner->screen_name}") ?> >
+							<a class="hidden-xs" <?= attr_href(PATH_USER, $survey->owner->id) ?><?= attr_tooltip("作者: {$survey->owner->screen_name}") ?> >
 								@<?= $survey->owner->screen_name ?>
+							</a>
+							<a class="visible-xs" style="display: inline !important" <?= attr_href(PATH_USER, $survey->owner->id) ?><?= attr_tooltip("作者: {$survey->owner->screen_name}") ?> >
+								作者
 							</a>
 							<?php
 						} else
@@ -66,7 +69,7 @@
 							?>
 							<div class="col-xs-12 col-sm-3 no-container" <?= attr_tooltip('集計まで残り時間') ?>>
 								<?= tag_icon(ICON_FLAG, TRUE) ?>
-								<?= $survey->get_time_remain_str() ?>
+								<span class="visible-inline-xs">集計まで</span><?= $survey->get_time_remain_str() ?>
 							</div>
 							<?php
 							$stylelib = explode(',', 'success,end,end');
@@ -82,7 +85,10 @@
 						{
 							// TODO: result type 
 							?>
-
+							<div class="col-xs-12 col-sm-3 no-container" <?= attr_tooltip('集計まで残り時間') ?>>
+								<?= tag_icon(ICON_FLAG, TRUE) ?>
+								<a <?= attr_href(PATH_VIEW . '/' . $survey->id) ?>>投票結果あり</a>
+							</div>
 							<?php
 						}
 						?>

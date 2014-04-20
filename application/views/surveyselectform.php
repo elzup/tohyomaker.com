@@ -167,7 +167,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-offset-2 col-sm-8">
+			<div class="col-sm-offset-2 col-sm-8 abutton">
 				<a <?= attr_href(PATH_VIEW, $survey->id) ?> class="btn btn-success btn-lg btn-block">
 					<i class="<?= ICON_RESULT ?>"></i>
 					この投票の結果を見る

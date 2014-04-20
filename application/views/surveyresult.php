@@ -98,7 +98,7 @@
 		if (!$survey->is_selected_today)
 		{
 			?>
-			<div class="col-sm-offset-2 col-sm-8">
+			<div class="col-sm-offset-2 col-sm-8 abutton">
 				<a <?= attr_href(PATH_VOTE, $survey->id) ?> class="btn btn-success btn-lg btn-block">
 					<i class="<?= ICON_VOTE ?>"></i>
 					投票ページヘ

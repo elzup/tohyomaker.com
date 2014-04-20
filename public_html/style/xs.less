@@ -30,20 +30,33 @@
     }
 
     .itembox-div {
-        .panel-itemselect {
-            >.panel-body {
-                height: auto;
-                padding-bottom: 10px;
-                .select-value-div {
-//                    margin-top: 0px;
-                    >span {
-                        font-size: 13px;
+        li {
+            margin-top: 2px;
+            .panel-itemselect {
+                margin-bottom: 0;
+                >.panel-body {
+                    height: auto;
+                    padding: 5px;
+                    @dh : 39px;
+                    .select-btn-div {
+                        height: @dh;
+                        button {
+                            margin: 0px;
+                            height: 100%;
+                        }
                     }
-                }
-                .btn {
-                    i {
-                        margin: 0px;
-                        left: -2px;
+                    .select-value-div {
+                        height: @dh;
+                        margin-top: 0px;
+                        >span {
+                            font-size: 13px;
+                        }
+                    }
+                    .btn {
+                        i {
+                            margin: 0px;
+                            left: -2px;
+                        }
                     }
                 }
             }
@@ -57,5 +70,7 @@
             }
         }
     }
-
+    .visible-inline-xs {
+        display: inline !important;
+    }
 }
