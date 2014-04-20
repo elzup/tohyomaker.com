@@ -124,8 +124,20 @@ class Metaobj
 		$this->description = $tag_name . 'タグのついた投票の検索結果';
 	}
 
+	public function setup_surveydeleted()
+	{
+		$this->set_title('消去済みの投票');
+		$this->no_meta = TRUE;
+	}
+
 	public function setup_survey(Surveyobj $survey, $is_view = FALSE)
 	{
+		$this->url = base_url(($is_view ? 'view/' : '') . $survey->id);
+		if ($survey->state == SURVEY_STATE_DELETED)
+		{
+			$this->setup_surveydeleted();
+			return;
+		}
 		$this->set_title($survey->title . ($is_view ? ':結果' : ''));
 		$this->set_keyword($survey->title . ($is_view ? 'の投票結果' : ''));
 		if (isset($survey->tags[0]))

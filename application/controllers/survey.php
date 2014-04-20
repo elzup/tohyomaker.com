@@ -52,19 +52,25 @@ class Survey extends CI_Controller
 		$this->load->view('head', array('meta' => $meta, 'survey' => $survey));
 		$this->load->view('navbar', array('user' => $user));
 		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 0));
-		$surveyhead_info = array(
-				'survey' => $survey,
-				'type' => PAGETYPE_VOTE,
-		);
-		$this->load->view('surveyhead', $surveyhead_info);
-		$surveyselectform_info = array(
-				'survey' => $survey,
-				// is_login so emit token
-				'token' => $this->_set_token(),
-				'select' => $select,
-				'user' => $user,
-		);
-		$this->load->view('surveyselectform', $surveyselectform_info);
+		if ($survey->state != SURVEY_STATE_DELETED)
+		{
+			$surveyhead_info = array(
+					'survey' => $survey,
+					'type' => PAGETYPE_VOTE,
+			);
+			$this->load->view('surveyhead', $surveyhead_info);
+			$surveyselectform_info = array(
+					'survey' => $survey,
+					// is_login so emit token
+					'token' => $this->_set_token(),
+					'select' => $select,
+					'user' => $user,
+			);
+			$this->load->view('surveyselectform', $surveyselectform_info);
+		} else
+		{
+			$this->load->view('surveydeleted');
+		}
 		$this->load->view('foot', array('jss' => array('selectform'), 'user' => $user));
 	}
 
@@ -88,15 +94,21 @@ class Survey extends CI_Controller
 		$this->load->view('head', array('meta' => $meta));
 		$this->load->view('navbar', array('user' => $user));
 		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 0));
-		$surveyhead_info = array(
-				'survey' => $survey,
-				'type' => PAGETYPE_VIEW,
-		);
-		$this->load->view('surveyhead', $surveyhead_info);
-		$this->load->view('surveyresult', array('survey' => $survey));
-		if (isset($survey->results))
+		if ($survey->state != SURVEY_STATE_DELETED)
 		{
-			$this->load->view('surveylog', array('survey', $survey));
+			$surveyhead_info = array(
+					'survey' => $survey,
+					'type' => PAGETYPE_VIEW,
+			);
+			$this->load->view('surveyhead', $surveyhead_info);
+			$this->load->view('surveyresult', array('survey' => $survey));
+			if (isset($survey->results))
+			{
+				$this->load->view('surveylog', array('survey', $survey));
+			}
+		} else
+		{
+			$this->load->view('surveydeleted');
 		}
 		// TODO: insert surveys parts
 		$this->load->view('foot', array('user' => $user));
@@ -125,12 +137,19 @@ class Survey extends CI_Controller
 		$this->load->view('head', array('meta' => $meta));
 		$this->load->view('navbar', array('user' => $user));
 		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 0));
-		$surveyhead_info = array(
-				'survey' => $survey,
-				'type' => PAGETYPE_FRIEND,
-		);
-		$this->load->view('surveyhead', $surveyhead_info);
-		$this->load->view('surveyfriend', array('survey' => $survey, 'friends' => $users_voted));
+
+		if ($survey->state != SURVEY_STATE_DELETED)
+		{
+			$surveyhead_info = array(
+					'survey' => $survey,
+					'type' => PAGETYPE_FRIEND,
+			);
+			$this->load->view('surveyhead', $surveyhead_info);
+			$this->load->view('surveyfriend', array('survey' => $survey, 'friends' => $users_voted));
+		} else
+		{
+			$this->load->view('surveydeleted');
+		}
 		$this->load->view('foot', array('user' => $user));
 	}
 

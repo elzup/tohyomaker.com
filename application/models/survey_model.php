@@ -116,17 +116,21 @@ class Survey_model extends CI_Model
 		return $result;
 	}
 
-	public function select_surveys_new($num = 10)
+	public function select_surveys_new($num = 10, $is_not_deleted = TRUE)
 	{
 		$this->db->order_by("timestamp", "desc");
 		$this->db->limit($num);
 // limit progress for a totality db surveys are small
 //		$this->db->where('state', SURVEY_STATE_PROGRESS);
+		if ($is_not_deleted)
+		{
+			$this->db->where('state !=', SURVEY_STATE_DELETED);
+		}
 		$result = $this->db->get(DB_TBL_SURVEY)->result();
 		return $result;
 	}
 
-	public function select_search_tags($tags, $num = 100)
+	public function select_search_tags($tags, $num = 100, $is_not_deleted = TRUE)
 	{
 		if (!is_array($tags))
 		{
@@ -135,6 +139,10 @@ class Survey_model extends CI_Model
 		$this->db->order_by("id_survey", "desc");
 		$this->db->limit($num);
 		$this->db->where('value', $tags[0]);
+		if ($is_not_deleted)
+		{
+			$this->db->where('state !=', SURVEY_STATE_DELETED);
+		}
 		for ($i = 1; $i < count($tags); $i++)
 		{
 			$this->db->or_where('value', $tags[$i]);
@@ -385,6 +393,10 @@ class Survey_model extends CI_Model
 		$this->db->where('id_survey', $survey->id);
 		$this->db->set('state', SURVEY_STATE_DELETED);
 		$this->db->update(DB_TBL_SURVEY);
+
+		$this->db->where('id_survey', $survey->id);
+		$this->db->delete(DB_TBL_VOTE);
+		return TRUE;
 	}
 
 	public function delete_votes_day()
