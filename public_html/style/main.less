@@ -202,11 +202,8 @@ a {
                 margin-top: 3px;
                 padding-left: 0px;
                 height: 3em;
-                display: table;
+                .btn-middle();
                 >span {
-                    display: table-cell;
-                    vertical-align: middle;
-                    height: 100%;
                     font-weight: bold;
                     font-size: 18px;
 
@@ -240,13 +237,15 @@ a {
 }
 
 .btn-push-margin (@h :4px){
-    margin-top: @h;
-    &:active{
-        margin-top: @h + 2px !important;
-        margin-bottom: 1px !important;
-    }
+    margin-top: 0;
+    margin-bottom: @h;
     &:hover{
-        margin-top: @h + 1px;
+        margin-top: 1px;
+        margin-bottom: @h - 1px;
+    }
+    &:active{
+        margin-top: 1px !important;
+        margin-bottom: @h - 1px !important;
     }
 }
 
@@ -665,14 +664,19 @@ i {
 .center {
     text-align: center;
 }
+.btn-middle() {
+    display: table;
+    > *:first-child {
+        display: table-cell;
+        vertical-align: middle;
+        height: 100%;
+    }
+}
 
 /* --------------------------------------------------------- *
  *     reset bootstrap template (Lumen)
  * --------------------------------------------------------- */
 
-.btn-lg {
-    height: 50px;
-}
 .well {
     box-shadow: none;
 }

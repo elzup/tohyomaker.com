@@ -15,10 +15,10 @@
 						</a>
 					</h1>
 				</div>
-				<div class="col-sm-12 well">
+				<div class="col-sm-12 well align-center">
 					<?= SITE_DESCRIPTION?><br />
-					<div class="align-center">
-						<a <?= attr_href(PATH_MAKE) ?> class="btn btn-success align-center">
+					<div class="">
+						<a <?= attr_href(PATH_MAKE) ?> class="btn btn-success btn-lg">
 							<i class="glyphicon glyphicon-edit"></i>
 							投票を作成する
 						</a>
