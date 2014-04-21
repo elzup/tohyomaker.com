@@ -27,7 +27,12 @@ if ($user == null)
 			?>
 		</button>
 
-		<div class="navbar-brand"><a <?= attr_href() ?>>投票メーカー</a></div>
+		<div class="navbar-brand">
+			<a href="/">
+				<img class="hidden-xs" <?=  attr_src(PATH_IMG_LOGO_NAV)?>/>
+				<img class="visible-xs" <?=  attr_src(PATH_IMG_LOGO_NAV_M)?>/>
+			</a>
+		</div>
 	</div>
 	<div class="navbar-collapse collapse navbar-categlyes">
 		<ul class="nav navbar-nav navbar-right">

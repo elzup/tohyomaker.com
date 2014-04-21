@@ -40,9 +40,6 @@ a {
 #title-div {
     text-align: center;
     h1.top-logo {
-        background: url(http://localhost/tohyomaker/public_html/style/../images/logo.png);
-        background-size: cover;
-        width: 522px;
         line-height: 108px;
 
         .clear-font();
@@ -54,6 +51,7 @@ a {
     border-right: 0;
     border-left: 0;
     margin-bottom: 5px;
+    height: 50px;
     @is : 25px;
     .user-icon {
         width: @is;
@@ -71,17 +69,23 @@ a {
     }
     .navbar-header {
         .navbar-brand {
-            background: url(http://localhost/tohyomaker/public_html/style/../images/logo-white.png);
-            background-size: cover;
-            width: 190px;
+//width: 190px;
+            padding: 0px;
             >a {
                 .clear-font();
                 display: block;
+                img {
+                    width: 216px;
+                    height: 45px;
+                }
             }
         }
     }
     .navbar-right {
         margin-right: 10px;
+        a#login-info {
+            padding-top: 12px;
+        }
     }
 }
 

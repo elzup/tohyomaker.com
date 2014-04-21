@@ -17,6 +17,7 @@ test.php
 public_html/lib/
 public_html/google/
 *.apd
+*.docx
 !.gitignore
 
 ~*
