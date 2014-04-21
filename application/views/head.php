@@ -14,8 +14,8 @@
     <link href='http://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.0.0/build/cssreset/reset-min.css">
 
-		<!--<link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico">-->
-
+		<link rel="icon" type="image/vnd.microsoft.icon" <?=  attr_href(PATH_IMG.'/favicon.ico')?>>
+		<link rel="apple-touch-icon-precomposed" <?=  attr_href(PATH_IMG.'/appicon.png')?>>
     <!-- Bootstrap -->
     <link rel="stylesheet" charset="UTF-8" href="<?= base_url('lib/bootstrap/css/bootstrap.min.css') ?>" media="screen" />
     <link rel="stylesheet" charset="UTF-8" href="<?= base_url('lib/bootstrap/css/font-awesome.min.css') ?>" media="screen" />
