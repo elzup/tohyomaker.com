@@ -122,12 +122,12 @@
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-2 submit-btns">
 									<div class="row">
-										<div class="col-sm-6">
-											<a href="<?= base_url(PATH_MAKEDESTROY) ?>" class="btn btn-block btn-warning">クリア</a>
+										<div class="col-sm-6 abutton">
+											<a href="<?= base_url(PATH_MAKEDESTROY) ?>" class="btn btn-lg btn-block btn-warning">クリア</a>
 											<!--a href="javascript:window.history.back();" class="btn btn-block btn-default">変更</a-->
 										</div>
 										<div class="col-sm-6">
-											<button type="submit" id="submit-main" class="btn btn-block btn-success disabled">作成</button>
+											<button type="submit" id="submit-main" class="btn btn-lg btn-block btn-success disabled">作成</button>
 										</div>
 									</div>
 								</div>
@@ -143,7 +143,7 @@
 					<div class="align-center">
 						<span class="help-block">*投票の作成にはTwitterアカウントでログインが必要です</span>
 						<span class="help-block">*認証後勝手にツイートする、フォローするという事はありません</span>
-						<a <?= attr_href(PATH_LOGIN) ?> class="btn btn-info">ログインする</a>
+						<div class="btn-middle"><a <?= attr_href(PATH_LOGIN) ?> class="btn btn-info btn-lg">ログインする</a></div>
 					</div>
 					<?php
 				}

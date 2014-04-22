@@ -210,7 +210,6 @@ a {
                 }
             }
             .btn {
-                .btn-push-margin();
                 &.active {
                     color: @col_back;
                     background-color: @col_main;
@@ -236,16 +235,18 @@ a {
     }
 }
 
-.btn-push-margin (@h :4px){
+.btn-push-margin (@h: 50px, @w :4px){
     margin-top: 0;
-    margin-bottom: @h;
+    border-bottom-width: @w;
     &:hover{
-        margin-top: 1px;
-        margin-bottom: @h - 1px;
+        margin-top: 1px !important;
+        height: @h - 1px;
+        border-bottom-width: @w - 1px;
     }
     &:active{
-        margin-top: 1px !important;
-        margin-bottom: @h - 1px !important;
+        margin-top: 2px !important;
+        height: @h - 2px;
+        border-bottom-width: @w - 2px;
     }
 }
 
@@ -559,14 +560,14 @@ i {
     }
 }
 
-#makecheck-div {
-    .submit-btns {
-        .btn {
-            .btn-push-margin();
-        }
-    }
-    
-}
+//#makecheck-div {
+//    .submit-btns {
+//        .btn {
+//            .btn-push-margin();
+//        }
+//    }
+//    
+//}
 
 .progress {
     margin-bottom: 0;
@@ -664,6 +665,7 @@ i {
 .center {
     text-align: center;
 }
+
 .btn-middle() {
     display: table;
     > *:first-child {
@@ -676,6 +678,11 @@ i {
 /* --------------------------------------------------------- *
  *     reset bootstrap template (Lumen)
  * --------------------------------------------------------- */
+
+.btn-lg {
+    height: 50px;
+    .btn-push-margin();
+}
 
 .well {
     box-shadow: none;
