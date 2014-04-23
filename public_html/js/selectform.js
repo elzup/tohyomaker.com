@@ -17,11 +17,14 @@ if (typeof jQuery != "undefined"){
                 $("#submit-main").removeClass('disabled');
             }
         }); 
+
+        $('.btn-item').parent().next().children('span').click(function() {
+//            console.log('clicked span');
+            $(this).parent().prev().children('.btn-item').click();
+        });
+
         $(".active.btn-item.btn-static:not").click();
 
-        $('#copy-btn').click = function() {
-
-        }
         $('#share-text')
         .focus(function(){
             $(this).select();

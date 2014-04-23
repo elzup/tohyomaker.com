@@ -167,8 +167,11 @@ a {
             @dh : 39px;
             .select-btn-div {
                 height: @dh;
+                @media (min-width: 767px) {
+                    margin-top: 3px;
+                    padding-left: 9px;
+                }
                 button {
-                    margin: 0px;
                     height: 100%;
                 }
             }
@@ -235,16 +238,16 @@ a {
     }
 }
 
-.btn-push-margin (@h: 50px, @w :4px){
-    margin-top: 0;
+.btn-push-margin (@h: 50px, @w :4px, @mt : 0px){
+    margin-top: @mt;
     border-bottom-width: @w;
     &:hover{
-        margin-top: 1px !important;
+        margin-top: @mt + 1px !important;
         height: @h - 1px;
         border-bottom-width: @w - 1px;
     }
     &:active{
-        margin-top: 2px !important;
+        margin-top: @mt + 2px !important;
         height: @h - 2px;
         border-bottom-width: @w - 2px;
     }
@@ -664,6 +667,10 @@ i {
 }
 .center {
     text-align: center;
+}
+
+.btn-middle {
+    .btn-middle();
 }
 
 .btn-middle() {
