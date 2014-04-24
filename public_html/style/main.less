@@ -241,9 +241,15 @@ a {
 .btn-push-margin (@h: 50px, @w :4px, @mt : 0px){
     margin-top: @mt;
     border-bottom-width: @w;
+    height: @h;
     &:hover{
-        margin-top: @mt + 1px !important;
-        height: @h - 1px;
+        &a {
+            height: @h;
+        }
+        &button {
+            margin-top: @mt + 1px !important;
+            height: @h - 1px;
+        }
         border-bottom-width: @w - 1px;
     }
     &:active{
@@ -678,7 +684,6 @@ i {
     > *:first-child {
         display: table-cell;
         vertical-align: middle;
-        height: 100%;
     }
 }
 
