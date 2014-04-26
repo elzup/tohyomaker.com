@@ -9,13 +9,14 @@
     <meta charset="UTF-8" />
     <title><?= $meta->get_title(TRUE) ?></title>
 
+		<meta name="google-site-verification" content="4wT_D-YDKZjitZZaTH5_yOd4SR0o3ZiqiCBC1_ma1jk" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='http://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.0.0/build/cssreset/reset-min.css">
 
-		<link rel="icon" type="image/vnd.microsoft.icon" <?=  attr_href(PATH_IMG.'/favicon.ico')?>>
-		<link rel="apple-touch-icon-precomposed" <?=  attr_href(PATH_IMG.'/appicon.png')?>>
+		<link rel="icon" type="image/vnd.microsoft.icon" <?= attr_href(PATH_IMG . '/favicon.ico') ?>>
+		<link rel="apple-touch-icon-precomposed" <?= attr_href(PATH_IMG . '/appicon.png') ?>>
     <!-- Bootstrap -->
     <link rel="stylesheet" charset="UTF-8" href="<?= base_url('lib/bootstrap/css/bootstrap.min.css') ?>" media="screen" />
     <link rel="stylesheet" charset="UTF-8" href="<?= base_url('lib/bootstrap/css/font-awesome.min.css') ?>" media="screen" />
@@ -25,8 +26,7 @@
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]> <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script> <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script> <![endif]-->
 
-	<?php $this->load->view('meta', array('meta' => $meta))?>
-
+		<?php $this->load->view('meta', array('meta' => $meta)) ?>
   </head>
 	<body>
 		<?php
