@@ -32,7 +32,6 @@ if (typeof jQuery != "undefined"){
             return err;
         }
 
-        $('button[v=0_0]').click();
 
         var list = document.getElementsByTagName("input");
         for(var i=0; i<list.length; i++){
@@ -42,6 +41,23 @@ if (typeof jQuery != "undefined"){
                 };
             }
         }
+
+        if (!$('#sur-description-image').val()) {
+            $('#sur-description-image').attr('disabled', '');
+ //           $('input#is-image-checkbox').attr('checked', true);
+        }
+        else {
+            $('input#is-image-checkbox').attr('checked', true);
+        }
+        
+        $('input#is-image-checkbox').click(function() {
+            if ($(this).prop('checked')) {
+                $('#sur-description-image').removeAttr('disabled');
+            }
+            else {
+                $('#sur-description-image').attr('disabled', '');
+            }
+        });
 
         // timign buttons
         $(".timing .btn").click(function() {

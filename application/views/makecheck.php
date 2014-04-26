@@ -7,6 +7,10 @@ foreach ($data as &$datum)
 $t = explode('_', $data['timing']);
 $data['timing-d'] = $t[0];
 $data['timing-h'] = $t[1];
+
+if (($is_image = isset($data['is-image-checkbox']))) {
+	$image_url = $data['description-image'];
+}
 ?>
 <div class="container">
 	<!-- TODO: include check js file-->
@@ -109,7 +113,8 @@ $data['timing-h'] = $t[1];
 								<input type="hidden" autocomplete="off" name="is_anonymous" value="<?= isset($data['is_anonymous']) ? '1' : '0' ?>">
 								<input type="hidden" autocomplete="off" name="title"        value="<?= $data['title'] ?>">
 								<input type="hidden" autocomplete="off" name="description"  value="<?= $data['description'] ?>">
-								<input type="hidden" autocomplete="off" name="timing"    	 value="<?= $data['timing-d'] . ',' . $data['timing-h'] ?>">
+								<input type="hidden" autocomplete="off" name="is_image"     value="<?= $is_image ?>">
+								<input type="hidden" autocomplete="off" name="timing"    	  value="<?= $data['timing-d'] . ',' . $data['timing-h'] ?>">
 								<input type="hidden" autocomplete="off" name="tag"          value="<?= $data['tag'] ?>">
 
 								<input type="hidden" autocomplete="off" name="id_user" value="<?= $user->id ?>">

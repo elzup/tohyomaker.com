@@ -86,7 +86,7 @@ if (!function_exists('surveypane'))
 				if ($is_owner)
 				{
 					?>
-				<a class="btn btn-xs btn-warning" <?=  attr_href(PATH_DELETE . '/' . $survey->id)?>><?= tag_icon(ICON_REMOVE) ?>消去する</a>
+					<a class="btn btn-xs btn-warning" <?= attr_href(PATH_DELETE . '/' . $survey->id) ?>><?= tag_icon(ICON_REMOVE) ?>消去する</a>
 				<?php } ?>
 			</div>
 		</div>
@@ -402,4 +402,32 @@ if (!function_exists('tag_icon_selectform'))
 	}
 
 // TODO: cut severally function_exits
+}
+
+function imgurl_zip($url)
+{
+	$regex_head = '#^(?:(?:https?:)?//)?(?:www\.)?';
+	$regex_tail = '/(.*)$#';
+	$urlib = unserialize(URL_LIB);
+	foreach ($urlib as $key => $u)
+	{
+		$regex = $regex_head . $u . $regex_tail;
+		if (preg_match($regex, $url, $matches))
+		{
+			return $key . ':' . $matches[1];
+		}
+	}
+	return FALSE;
+}
+
+function imgurl_unzip($eurl)
+{
+	if (!preg_match('#(.)\:(.*)#', $eurl, $matches))
+	{
+		return FALSE;
+	}
+	$urlib = unserialize(URL_LIB);
+	$key = $matches[1];
+	$id = $matches[2];
+	return 'http://' . $urlib[$key] . '/' . $id;
 }
