@@ -132,7 +132,7 @@
 						if ($survey->is_img)
 						{
 							?>
-							<img src="<?= $survey->get_full_imgurl() ?>" alt="" />
+							<a href="<?= $survey->get_full_imgurl(TRUE)?>" target="_blank"><img src="<?= $survey->get_full_imgurl() ?>" alt="" /></a>
 <?php } ?>
 					</div>
 				</div>

@@ -116,6 +116,11 @@ class Surveyobj
 		{
 			$this->tags[] = h($datum->value);
 		}
+		// can be optimize
+		if ($this->is_img && !in_array('画像', $this->tags))
+		{
+			$this->tags[] = '画像';
+		}
 	}
 
 	public function set_results(array $data)
@@ -388,12 +393,12 @@ class Surveyobj
 		return @$this->items[$this->selected] ?: NULL;
 	}
 
-	public function get_full_imgurl() {
+	public function get_full_imgurl($is_link = FALSE) {
 		if (!$this->is_img)
 		{
 			return FALSE;
 		}
-		return imgurl_unzip($this->eurl_img);
+		return imgurl_unzip($this->eurl_img, $is_link);
 	}
 
 }

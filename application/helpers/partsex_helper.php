@@ -411,7 +411,7 @@ function imgurl_zip($url)
 	$urlib = unserialize(PIC_URL_LIB);
 	foreach ($urlib as $key => $u)
 	{
-		$regex = $regex_head . $u[PIC_LINK] . $regex_tail;
+		$regex = $regex_head . $u[PIC_URL_LINK] . $regex_tail;
 		if (preg_match($regex, $url, $matches))
 		{
 			return $key . ':' . $matches[1];
@@ -420,14 +420,22 @@ function imgurl_zip($url)
 	return FALSE;
 }
 
-function imgurl_unzip($eurl)
+function imgurl_unzip($eurl, $is_link = FALSE)
 {
 	if (!preg_match('#(.)\:(.*)#', $eurl, $matches))
 	{
 		return FALSE;
 	}
-	$urlib = unserialize(PIC_URL_LIB);
 	$key = $matches[1];
 	$id = $matches[2];
-	return 'http://' . $urlib[$key][PIC_SHOW] . $id;
+	return imgurl($id, $key, $is_link ? PIC_URL_LINK : PIC_URL_VIEW);
+}
+
+function imgurl($id, $key, $type = PIC_URL_LINK) {
+	$urlib = unserialize(PIC_URL_LIB);
+	if ($type == PIC_URL_LINK)
+	{
+		return 'http://' . $urlib[$key][PIC_LIB_SITE] . '/' . $id;
+	}
+	return 'http://' . $urlib[$key][PIC_LIB_SITE] . '/' . $urlib[$key][PIC_LIB_VIEW_HEAD] . $id . @$urlib[$key][PIC_LIB_VIEW_TAIL];
 }

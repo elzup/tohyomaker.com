@@ -100,8 +100,12 @@ if (($is_image = isset($data['is-image-checkbox'])))
 												if (isset($data['tag']))
 												{
 													$tags = explode(',', $data['tag']);
-													foreach ($tags as $tag)
+													foreach ($tags as &$tag)
 													{
+														if ($tag == '画像')
+														{
+															$tag = NULL;
+														}
 														if (empty($tag))
 														{
 															continue;
@@ -110,9 +114,11 @@ if (($is_image = isset($data['is-image-checkbox'])))
 														<a type="button" class="disabled"><?= $tag ?></a>
 														<?php
 													}
+													$tags = array_filter($tags);
 												}
-												if ($is_image) {
-														?><a type="button" class="disabled">画像</a><?php
+												if ($is_image)
+												{
+													?><a type="button" class="disabled">画像</a><?php
 												}
 												?>
 											</p>
@@ -124,9 +130,9 @@ if (($is_image = isset($data['is-image-checkbox'])))
 								<input type="hidden" autocomplete="off" name="title"        value="<?= $data['title'] ?>">
 								<input type="hidden" autocomplete="off" name="description"  value="<?= $data['description'] ?>">
 								<input type="hidden" autocomplete="off" name="is_image"     value="<?= $is_image ?>">
-								<input type="hidden" autocomplete="off" name="eurl_img"      value="<?= $img_eurl ?>">
+								<input type="hidden" autocomplete="off" name="eurl_img"     value="<?= $img_eurl ?>">
 								<input type="hidden" autocomplete="off" name="timing"    	  value="<?= $data['timing-d'] . ',' . $data['timing-h'] ?>">
-								<input type="hidden" autocomplete="off" name="tag"          value="<?= $data['tag'] ?>">
+								<input type="hidden" autocomplete="off" name="tag"          value="<?= implode(',', $tags) ?>">
 
 								<input type="hidden" autocomplete="off" name="id_user" value="<?= $user->id ?>">
 								<input type="hidden" autocomplete="off" name="token"   value="<?= $token ?>">
