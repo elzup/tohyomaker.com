@@ -8,11 +8,55 @@
 ?>
 
 <div class="container">
+	<div class="row" id="voted-div">
+		<?php
+		if ($survey->is_voted())
+		{
+			$selected_item = $survey->get_selected_item();
+			$share_uri = fix_url(base_url(PATH_VOTE . $survey->id));
+			$share_text = totext_share_voted($selected_item->value, $survey->title);
+			?>
+
+			<div class="col-sm-offset-2 col-sm-8 well" class="selected-view-div">
+				<h3><?= totext_voted($selected_item->value) ?></h3>
+				<span class="help-block">*一日に一票投票することが出来ます</span>
+			</div>
+			<div class="col-sm-offset-2 col-sm-8" class="share-div">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						投票先をシェアしよう！
+					</div>
+					<div class="panel-body">
+						<span class="help-block">*一日に一票投票することが出来ます</span>
+						<div class="sharebtns-div">
+							<p>
+								<?php sharebtn_twitter($share_text, $share_uri, TRUE, TRUE) ?>
+							</p>
+						</div>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-file"></i>コピペ用</span>
+							<input id="share-text" type="text" class="form-control" value="<?= $share_text . ' ' . $share_uri ?>">
+							<span class="input-group-btn">
+								<!--button id="copy-btn" class="btn btn-default disabled" data-toggle="tooltip" data-placement="top" title="クリップボードにコピー">
+									<i class="glyphicon glyphicon-file"></i>
+								</button-->
+							</span>
+						</div>
+					</div>
+					<div class="panel-footer">
+					</div>
+				</div>
+			</div>
+			<?php
+		}
+		?>
+	</div>
+
 	<div class="row">
 		<div class="col-sm-offset-2 col-sm-8" id="items-div">
-			<div class="itembox-div<?= $survey->is_img ? ' itembox-img-div' : '' ?>" data-toggle="buttons-radio">
+			<div class="itembox-div" data-toggle="buttons-radio">
 				<?php
-				if (!$survey->is_img)
+				if (TRUE)
 				{
 					?>
 					<ul>
@@ -135,38 +179,8 @@
 			<?php
 		} else
 		{
-
-
-			$selected_item = $survey->get_selected_item();
-			$share_uri = fix_url(base_url(PATH_VOTE . $survey->id));
-			$share_text = totext_share_voted($selected_item->value, $survey->title);
 			?>
-			<div class="col-sm-offset-2 col-sm-8" id="selectend-div">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title"><?= totext_voted($selected_item->value) ?></h3>
-					</div>
-					<div class="panel-body">
-						<span class="help-block">*一日に一票投票することが出来ます</span>
-						<div class="input-group">
-							<span class="input-group-addon"><i class="glyphicon glyphicon-file"></i>コピペ用</span>
-							<input id="share-text" type="text" class="form-control" value="<?= $share_text . ' ' . $share_uri ?>">
-							<span class="input-group-btn">
-								<!--button id="copy-btn" class="btn btn-default disabled" data-toggle="tooltip" data-placement="top" title="クリップボードにコピー">
-									<i class="glyphicon glyphicon-file"></i>
-								</button-->
-							</span>
-						</div>
-						<div class="sharebtns-div">
-							<p>
-								<?php sharebtn_twitter($share_text, $share_uri) ?>
-							</p>
-						</div>
-					</div>
-					<div class="panel-footer">
-					</div>
-				</div>
-			</div>
+
 			<div class="col-sm-offset-2 col-sm-8 abutton">
 				<a <?= attr_href(PATH_VIEW, $survey->id) ?> class="btn btn-success btn-lg btn-block">
 					<i class="<?= ICON_RESULT ?>"></i>

@@ -128,10 +128,13 @@
 						{
 							?>
 							<p><span><?= $survey->description ?></span></p>
-					<?php } 
-					if ($survey->is_img) {?>
-					<img src="<?= $survey->get_full_imgurl()?>" alt="" />
-					<?php }?>
+						<?php }
+						if ($survey->is_img)
+						{
+							?>
+							<img src="<?= $survey->get_full_imgurl() ?>" alt="" />
+<?php } ?>
+					</div>
 				</div>
 			</div>
 		</div>

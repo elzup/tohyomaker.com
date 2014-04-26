@@ -5,7 +5,7 @@ if (!function_exists('totext_voted'))
 
 	function totext_voted($itemname)
 	{
-		return "{$itemname} に投票しました。";
+		return "「<strong>{$itemname}</strong>」 に投票しました。";
 	}
 
 }
