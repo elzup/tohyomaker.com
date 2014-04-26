@@ -8,8 +8,10 @@ $t = explode('_', $data['timing']);
 $data['timing-d'] = $t[0];
 $data['timing-h'] = $t[1];
 
-if (($is_image = isset($data['is-image-checkbox']))) {
-	$image_url = $data['description-image'];
+if (($is_image = isset($data['is-image-checkbox'])))
+{
+	$img_eurl = imgurl_zip($data['description-image']);
+	$img_url = imgurl_unzip($img_eurl);
 }
 ?>
 <div class="container">
@@ -44,8 +46,16 @@ if (($is_image = isset($data['is-image-checkbox']))) {
 									<label for="description" class="col-lg-2 control-label">説明</label>
 									<div class="col-lg-10">
 										<div class="well well-check">
-											<?= $data['description']?: '----'?>
+											<?= $data['description']? : '----' ?>
 										</div>
+										<?php
+										if (!empty($img_url))
+										{
+											?>
+											<div class="well well-check">
+												<img src="<?= $img_url ?>" alt="" />
+											</div>
+										<?php } ?>
 									</div>
 								</div>
 
@@ -63,7 +73,7 @@ if (($is_image = isset($data['is-image-checkbox']))) {
 											<div class="well well-check">
 												<?= $data["item{$i}"] ?>
 											</div>
-										<input type="hidden" autocomplete="off" name="item<?= $i ?>" class="form-control" value="<?= $data["item{$i}"] ?>">
+											<input type="hidden" autocomplete="off" name="item<?= $i ?>" class="form-control" value="<?= $data["item{$i}"] ?>">
 										<?php } ?>
 									</div>
 								</div>
@@ -100,9 +110,9 @@ if (($is_image = isset($data['is-image-checkbox']))) {
 														<a type="button" class="disabled"><?= $tag ?></a>
 														<?php
 													}
-												} else
-												{
-													echo 'no tag';
+												}
+												if ($is_image) {
+														?><a type="button" class="disabled">画像</a><?php
 												}
 												?>
 											</p>
@@ -114,6 +124,7 @@ if (($is_image = isset($data['is-image-checkbox']))) {
 								<input type="hidden" autocomplete="off" name="title"        value="<?= $data['title'] ?>">
 								<input type="hidden" autocomplete="off" name="description"  value="<?= $data['description'] ?>">
 								<input type="hidden" autocomplete="off" name="is_image"     value="<?= $is_image ?>">
+								<input type="hidden" autocomplete="off" name="eurl_img"      value="<?= $img_eurl ?>">
 								<input type="hidden" autocomplete="off" name="timing"    	  value="<?= $data['timing-d'] . ',' . $data['timing-h'] ?>">
 								<input type="hidden" autocomplete="off" name="tag"          value="<?= $data['tag'] ?>">
 
@@ -124,7 +135,7 @@ if (($is_image = isset($data['is-image-checkbox']))) {
 									<div class="col-lg-10 col-lg-offset-2 submit-btns">
 										<div class="row">
 											<div class="col-sm-6 btn-middle">
-												<a href="<?=  base_url('make')?>" class="btn btn-lg btn-block btn-default">変更</a>
+												<a href="<?= base_url('make') ?>" class="btn btn-lg btn-block btn-default">変更</a>
 												<!--a href="javascript:window.history.back();" class="btn btn-block btn-default">変更</a-->
 											</div>
 											<div class="col-sm-6">

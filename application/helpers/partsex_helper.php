@@ -407,11 +407,11 @@ if (!function_exists('tag_icon_selectform'))
 function imgurl_zip($url)
 {
 	$regex_head = '#^(?:(?:https?:)?//)?(?:www\.)?';
-	$regex_tail = '/(.*)$#';
-	$urlib = unserialize(URL_LIB);
+	$regex_tail = '.*/([^/]+)/?$#';
+	$urlib = unserialize(PIC_URL_LIB);
 	foreach ($urlib as $key => $u)
 	{
-		$regex = $regex_head . $u . $regex_tail;
+		$regex = $regex_head . $u[PIC_LINK] . $regex_tail;
 		if (preg_match($regex, $url, $matches))
 		{
 			return $key . ':' . $matches[1];
@@ -426,8 +426,8 @@ function imgurl_unzip($eurl)
 	{
 		return FALSE;
 	}
-	$urlib = unserialize(URL_LIB);
+	$urlib = unserialize(PIC_URL_LIB);
 	$key = $matches[1];
 	$id = $matches[2];
-	return 'http://' . $urlib[$key] . '/' . $id;
+	return 'http://' . $urlib[$key][PIC_SHOW] . $id;
 }

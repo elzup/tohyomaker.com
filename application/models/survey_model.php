@@ -300,6 +300,11 @@ class Survey_model extends CI_Model
 		$this->db->set('num_item', count($items));
 		$this->db->set('id_user', count($user->id));
 		$this->db->set('is_anonymous', $data['is_anonymous']);
+		if (isset($data['is_img']) || imgurl_unzip($data['eurl_img'])) {
+			$this->db->set('is_img', 1);
+			$this->db->set('eurl_img', $data['eurl_img']);
+		}
+		$this->db->set('is_anonymous', $data['is_anonymous']);
 
 		$this->db->insert(DB_TBL_SURVEY);
 		$id = $this->db->insert_id();

@@ -63,8 +63,12 @@
 									<span class="help-block">特定の画像URLを指定すると説明文の下に画像を表示することが出来ます</span>
 									<span class="help-block">対応している画像サービス
 										<ul>
-											<li>Twitter ex.)pic.twitter.com/xxxxxx</li>
+											<!--<li>Twitter ex.)pic.twitter.com/xxxxxx</li>-->
 											<li>Twitpic ex.)twitpic.com/xxxxxx</li>
+											<!--<li>yfrog ex.)yfrog.com/xxxxxx</li>-->
+											<li>Twitgoo ex.)twitgoo.com/xxxxxx</li>
+											<li>img.ly ex.)img.ly/xxxxxx</li>
+											<li>ついっぷる ex.)p.twipple.jp/xxxxxx</li>
 										</ul>
 									</span>
 

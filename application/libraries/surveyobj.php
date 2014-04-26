@@ -15,6 +15,7 @@ class Surveyobj
 	public $end_value;
 
 	public $is_img;
+	public $eurl_img;
 
 	/** @var Userobj */
 	public $owner;
@@ -60,7 +61,8 @@ class Surveyobj
 
 
 		// TODO: set is_img from record
-		$this->is_img = FALSE;
+		$this->is_img = $data->is_img;
+		$this->eurl_img = $data->eurl_img;
 
 		$this->end_type = RESULT_TYPE_NONE;
 // don't call when end_type eq NONE
@@ -384,6 +386,14 @@ class Surveyobj
 	public function get_selected_item()
 	{
 		return @$this->items[$this->selected] ?: NULL;
+	}
+
+	public function get_full_imgurl() {
+		if (!$this->is_img)
+		{
+			return FALSE;
+		}
+		return imgurl_unzip($this->eurl_img);
 	}
 
 }
