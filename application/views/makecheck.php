@@ -3,6 +3,10 @@ foreach ($data as &$datum)
 {
 	$datum = h($datum);
 }
+
+$t = explode('_', $data['timing']);
+$data['timing-d'] = $t[0];
+$data['timing-h'] = $t[1];
 ?>
 <div class="container">
 	<!-- TODO: include check js file-->
@@ -36,7 +40,7 @@ foreach ($data as &$datum)
 									<label for="description" class="col-lg-2 control-label">説明</label>
 									<div class="col-lg-10">
 										<div class="well well-check">
-											<?= $data['description'] ?>
+											<?= $data['description']?: '----'?>
 										</div>
 									</div>
 								</div>
@@ -89,7 +93,7 @@ foreach ($data as &$datum)
 															continue;
 														}
 														?>
-														<button type="button" class="btn btn-success btn-xs disabled"><?= $tag ?></button>
+														<a type="button" class="disabled"><?= $tag ?></a>
 														<?php
 													}
 												} else
@@ -114,12 +118,12 @@ foreach ($data as &$datum)
 								<div class="form-group">
 									<div class="col-lg-10 col-lg-offset-2 submit-btns">
 										<div class="row">
-											<div class="col-sm-6">
-												<a href="<?=  base_url('make')?>" class="btn btn-block btn-default">変更</a>
+											<div class="col-sm-6 btn-middle">
+												<a href="<?=  base_url('make')?>" class="btn btn-lg btn-block btn-default">変更</a>
 												<!--a href="javascript:window.history.back();" class="btn btn-block btn-default">変更</a-->
 											</div>
 											<div class="col-sm-6">
-												<button type="submit-main" class="btn btn-block btn-success">作成</button>
+												<button type="submit-main" class="btn btn-lg btn-block btn-success">作成</button>
 											</div>
 										</div>
 

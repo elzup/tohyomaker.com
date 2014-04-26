@@ -239,21 +239,21 @@ a {
 }
 
 .btn-push-margin (@h: 50px, @w :4px, @mt : 0px){
-    margin-top: @mt;
+    margin-top: 0px;
     border-bottom-width: @w;
     height: @h;
     &:hover{
         &a {
-            height: @h;
+            height: @h - 1px;
         }
         &button {
-            margin-top: @mt + 1px !important;
-            height: @h - 1px;
+            margin-top: @mt !important;
+            height: @h - 1px !important;
         }
         border-bottom-width: @w - 1px;
     }
     &:active{
-        margin-top: @mt + 2px !important;
+        margin-top: @mt !important;
         height: @h - 2px;
         border-bottom-width: @w - 2px;
     }
@@ -563,20 +563,26 @@ i {
 
 #makeform-div {
     input#sur-description {
-        width: 80%;
         margin-right: 5px;
         display: inline;
     }
 }
 
-//#makecheck-div {
-//    .submit-btns {
-//        .btn {
+#makecheck-div {
+    .well {
+        padding: 5px 10px;
+        margin-bottom: 10px;
+    }
+    p {
+        margin: 0px;
+    }
+    .submit-btns {
+        .btn {
 //            .btn-push-margin();
-//        }
-//    }
-//    
-//}
+        }
+    }
+    
+}
 
 .progress {
     margin-bottom: 0;
@@ -692,8 +698,7 @@ i {
  * --------------------------------------------------------- */
 
 .btn-lg {
-    height: 50px;
-    .btn-push-margin();
+    .btn-push-margin(50px);
 }
 
 .well {

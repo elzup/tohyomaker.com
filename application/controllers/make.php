@@ -59,8 +59,8 @@ class Make extends CI_Controller
 		$meta = new Metaobj();
 		$meta->setup_top();
 		$this->load->view('head', array('meta' => $meta));
-		$this->load->view('title', array('title' => $meta->get_title()));
 		$this->load->view('navbar', array('user' => $user));
+		$this->load->view('title', array('title' => $meta->get_title()));
 
 		$makecheck_info = array(
 				'user' => $user,
@@ -108,8 +108,8 @@ class Make extends CI_Controller
 		$meta = new Metaobj();
 		$meta->setup_top();
 		$this->load->view('head', array('meta' => $meta));
-		$this->load->view('title', array('title' => $meta->get_title()));
 		$this->load->view('navbar', array('user' => $user));
+		$this->load->view('title', array('title' => $meta->get_title()));
 
 		$this->load->view('makeend', array('survey' => $survey));
 		$this->load->view('foot', array('user' => $user));

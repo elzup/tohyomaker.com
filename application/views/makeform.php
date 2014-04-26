@@ -1,5 +1,5 @@
 <?php
-/* @var $user Userobj*/
+/* @var $user Userobj */
 ?>
 
 <div class="container">
@@ -53,7 +53,7 @@
 							<div class="form-group">
 								<label for="description" class="col-lg-2 control-label">説明</label>
 								<div class="col-lg-10">
-									<input type="text" class="form-control" name="description" id="sur-description" value="<?= isset_just(@$post['description']) ?>" placeholder="必須" maxlength="30">
+									<input type="text" class="form-control" name="description" id="sur-description" value="<?= isset_just(@$post['description']) ?>" maxlength="30">
 									<span class="help-block">ex.)「好きな方」に投票！</span>
 								</div>
 							</div>
@@ -65,13 +65,7 @@
 									for ($i = 1; $i <= 10; $i++)
 									{
 										?>
-										<div class="input-group">
-											<input type="text" name="item<?= $i ?>" id="sur-item<?= $i ?>" class="form-control" value="<?= isset_just(@$post['item' . $i]) ?>" maxlength="20">
-											<span class="input-group-btn">
-												<button class="btn btn-warning btn-diswitch-off" type="button"><?= tag_icon(ICON_REMOVE)?></button>
-											</span>
-										</div>
-									<button class="btn btn-success btn-diswitch-on" type="button" style="display: none;"><?= tag_icon(ICON_PLUS)?></button>
+										<input type="text" name="item<?= $i ?>" id="sur-item<?= $i ?>" class="form-control" value="<?= isset_just(@$post['item' . $i]) ?>" maxlength="20">
 									<?php } ?>
 									<span class="help-block">ex.)きのこの山</span>
 									<span class="help-block">ex.)たけのこの里</span>
@@ -80,30 +74,17 @@
 
 							<div class="form-group">
 								<label for="timing" class="col-lg-2 control-label">集計時間</label>
-								<div class="col-lg-5">
-									<select class="form-control" name="timing-d" id="sur-timing-d">
-										<?php
-										for ($d = 0; $d < 14; $d++)
-										{
-											?>
-											<option value="<?= $d ?>" <?= ($d == @$post['timing-d']) ? 'selected' : '' ?>><?= $d ?>日</option>
-											<?php
-										}
+								<input type="hidden" name="timing" id="timing" value="" />
+								<div class="btn-group timing col-lg-10" data-toggle="buttons-radio">
+
+									<?php
+									$timing_lib = ['0_0' => '無し', '0_1' => '1時間', '0_3' => '3時間', '1_0' => '1日', '3_0' => '3日', '7_0' => '1週間'];
+									foreach ($timing_lib as $key => $value)
+									{
 										?>
-									</select>
+										<button type="button" v="<?=$key?>" class="btn btn-default"><?= $value?></button>
+	<?php } ?>
 								</div>
-								<div class="col-lg-5">
-									<select class="form-control" name="timing-h" id="sur-timing-h">
-										<?php
-										for ($h = 0; $h < 23; $h++)
-										{
-											?>
-											<option value="<?= $h ?>" <?= ($h == @$post['timing-h']) ? 'selected' : '' ?>><?= $h ?>時間</option>
-											<?php
-										}
-										?>
-									</select>
-								</div>	
 								<div class="col-lg-offset-2">
 									<span class="help-block">一度その時間での集計結果を記録するタイミングを設定できます。投票は締め切りません</span>
 								</div>

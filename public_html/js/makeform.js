@@ -3,31 +3,12 @@
 if (typeof jQuery != "undefined"){
     $(function() {
 
-        $('.btn-diswitch-on').click(function(e) {
-            $(this).prev().show();
-            $(this).hide();
-        });
-        
         var bdo = $('.btn-diswitch-off');
         bdo.click(function(e) {
             $(this).parent().parent().hide();
             $(this).parent().prev().val('');
             $(this).parent().parent().next().show();
         });
-        if (!$('#sur-title').val()) {
-            for (var i = bdo.length - 1; i > 3; i--) {
-                $('.btn-diswitch-off:eq(' + i + ')').click();
-            }
-        }
-        else
-        {
-            for (var i = 0; i < bdo.length; i++) {
-                var item = $('.btn-diswitch-off:eq(' + i + ')');
-                if (!item.parent().prev().val()) {
-                    item.click();
-                }
-            }
-        }
 
         $("form").change( function () {
             var err = canSubmit();
@@ -42,7 +23,7 @@ if (typeof jQuery != "undefined"){
         function canSubmit() {
             var err = new Array();
             if (!$('#sur-title').val()) err[0] = 'タイトルがありません';
-            if (!$('#sur-description').val()) err[1] = '説明がありません';
+//            if (!$('#sur-description').val()) err[1] = '説明がありません';
             var ava_item_num = 0;
             for (var i = 0; i < 10; i++) {
                 if ($('#sur-item' + i).val()) ava_item_num++;
@@ -50,6 +31,8 @@ if (typeof jQuery != "undefined"){
             if (ava_item_num < 2) err[err.length] = '項目が少ないです';
             return err;
         }
+
+        $('button[v=0_0]').click();
 
         var list = document.getElementsByTagName("input");
         for(var i=0; i<list.length; i++){
@@ -59,6 +42,13 @@ if (typeof jQuery != "undefined"){
                 };
             }
         }
+
+        // timign buttons
+        $(".timing .btn").click(function() {
+            // whenever a button is clicked, set the hidden helper
+            $("#timing").val($(this).attr('v'));
+            $(".timing .active").removeClass('active');
+        }); 
     });
 }
 
