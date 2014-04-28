@@ -93,7 +93,7 @@
 								<label for="timing" class="col-lg-2 control-label">集計時間</label>
 								<?php
 								$timing = @$post['timing'];
-								$timing_lib = ['0_0' => '無し', '0_1' => '1時間', '0_3' => '3時間', '1_0' => '1日', '3_0' => '3日', '7_0' => '1週間'];
+								$timing_lib = array('0_0' => '無し', '0_1' => '1時間', '0_3' => '3時間', '1_0' => '1日', '3_0' => '3日', '7_0' => '1週間');
 								?>
 								<input type="hidden" name="timing" id="timing" value="<?= $timing ? : '0_0' ?>" />
 								<div class="btn-group timing col-lg-8" data-toggle="buttons-radio">

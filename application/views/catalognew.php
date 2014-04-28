@@ -1,6 +1,7 @@
 <?php
 /* @var $surveys Surveyobj[] */
 /* @var $user Userobj */
+/* @var $pager Pagerobj */
 ?>
 
 <div class="container">

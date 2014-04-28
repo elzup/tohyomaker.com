@@ -46,6 +46,10 @@
 
 * 404page to controllers
 
+* イメージ改善
+    * カラフル
+    * まるみ
+
 
 ## level3
 * 検索条件の保存
