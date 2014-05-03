@@ -3,6 +3,12 @@
 class Make extends CI_Controller
 {
 
+	/** @var Survey_model */
+	public $survey;
+
+	/** @var User_model */
+	public $user;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -150,4 +156,5 @@ class Make extends CI_Controller
 		}
 		return $data;
 	}
+
 }

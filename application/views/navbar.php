@@ -28,7 +28,7 @@ if ($user == null)
 		</button>
 
 		<div class="navbar-brand">
-			<a href="/">
+			<a <?= attr_href()?>>
 				<img class="hidden-xs" <?=  attr_src(PATH_IMG_LOGO_NAV)?>/>
 				<img class="visible-xs" <?=  attr_src(PATH_IMG_LOGO_NAV_M)?>/>
 			</a>

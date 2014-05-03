@@ -19,7 +19,6 @@ class Pagerobj {
 		$this->current_num;
 	}
 
-
 	public function is_last() 
 	{
 		
