@@ -266,7 +266,7 @@ if (!function_exists('surveysblock_type'))
 	 * @param Surveyobj[] $surveys
 	 * @param int $type
 	 */
-	function surveysblock_type($surveys, $type)
+	function surveysblock_type($surveys, $type, $is_more_btn = TRUE)
 	{
 		$block_title = '新着';
 		$block_help = '開始されたばかりの投票';
@@ -286,7 +286,7 @@ if (!function_exists('surveysblock_type'))
 // type-new defined so skip
 				break;
 		}
-		surveysblock($surveys, $block_title, $block_help, $class_str, $class_str_icon, $path);
+		surveysblock($surveys, $block_title, $block_help, $class_str, $class_str_icon, $path, $is_more_btn);
 	}
 
 }
@@ -302,7 +302,7 @@ if (!function_exists('surveysblock'))
 	 * @param string $help
 	 * @param string $class_str
 	 */
-	function surveysblock($surveys, $title, $help, $class_str, $class_str_icon, $path)
+	function surveysblock($surveys, $title, $help, $class_str, $class_str_icon, $path, $is_more_btn)
 	{
 		?>
 
@@ -334,10 +334,13 @@ if (!function_exists('surveysblock'))
 							<?php
 						}
 						?>
-						<li>
-							<a <?= attr_href($path) ?> style="float:right;" class="btn btn-success">もっと見る</a>
-						</li>
-						<?php
+						<?php if ($is_more_btn)
+						{ ?>
+							<li>
+								<a <?= attr_href($path) ?> style="float:right;" class="btn btn-success">もっと見る</a>
+							</li>
+							<?php
+						}
 					} else
 					{
 						?>
@@ -431,7 +434,8 @@ function imgurl_unzip($eurl, $is_link = FALSE)
 	return imgurl($id, $key, $is_link ? PIC_URL_LINK : PIC_URL_VIEW);
 }
 
-function imgurl($id, $key, $type = PIC_URL_LINK) {
+function imgurl($id, $key, $type = PIC_URL_LINK)
+{
 	$urlib = unserialize(PIC_URL_LIB);
 	if ($type == PIC_URL_LINK)
 	{

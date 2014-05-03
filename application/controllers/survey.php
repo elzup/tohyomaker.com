@@ -36,6 +36,9 @@ class Survey extends CI_Controller
 			show_404();
 		}
 		$user = $this->user->get_main_user();
+		$surveys_hot = $this->survey->get_surveys_hot($user, 5, 0);
+		$surveys_new = $this->survey->get_surveys_new($user, 5, 0);
+
 		if (($survey = $this->survey->get_survey($id_survey, $user)) === FALSE)
 		{
 			show_404();
@@ -71,6 +74,9 @@ class Survey extends CI_Controller
 		{
 			$this->load->view('surveydeleted');
 		}
+
+		$this->load->view('surveysblock', array('surveys' => $surveys_hot, 'type' => SURVEY_BLOCKTYPE_HOT, 'is_more_btn' => FALSE));
+		$this->load->view('surveysblock', array('surveys' => $surveys_new, 'type' => SURVEY_BLOCKTYPE_NEW, 'is_more_btn' => FALSE));
 		$this->load->view('foot', array('jss' => array('selectform'), 'user' => $user));
 	}
 
@@ -82,6 +88,8 @@ class Survey extends CI_Controller
 			// TODO: same as vote method todo
 		}
 		$user = $this->user->get_main_user();
+		$surveys_hot = $this->survey->get_surveys_hot($user, 5, 0);
+		$surveys_new = $this->survey->get_surveys_new($user, 5, 0);
 		/* @var $survey Surveyobj */
 		if (($survey = $this->survey->get_survey($id_survey, $user)) === FALSE)
 		{
@@ -111,6 +119,8 @@ class Survey extends CI_Controller
 			$this->load->view('surveydeleted');
 		}
 		// TODO: insert surveys parts
+		$this->load->view('surveysblock', array('surveys' => $surveys_hot, 'type' => SURVEY_BLOCKTYPE_HOT, 'is_more_btn' => FALSE));
+		$this->load->view('surveysblock', array('surveys' => $surveys_new, 'type' => SURVEY_BLOCKTYPE_NEW, 'is_more_btn' => FALSE));
 		$this->load->view('foot', array('user' => $user));
 	}
 
@@ -121,6 +131,8 @@ class Survey extends CI_Controller
 			show_404();
 		}
 		$user = $this->user->get_main_user();
+		$surveys_hot = $this->survey->get_surveys_hot($user, 5, 0);
+		$surveys_new = $this->survey->get_surveys_new($user, 5, 0);
 		/* @var $survey Surveyobj */
 		if (($survey = $this->survey->get_survey($id_survey, $user)) === FALSE)
 		{
@@ -150,6 +162,8 @@ class Survey extends CI_Controller
 		{
 			$this->load->view('surveydeleted');
 		}
+		$this->load->view('surveysblock', array('surveys' => $surveys_hot, 'type' => SURVEY_BLOCKTYPE_HOT, 'is_more_btn' => FALSE));
+		$this->load->view('surveysblock', array('surveys' => $surveys_new, 'type' => SURVEY_BLOCKTYPE_NEW, 'is_more_btn' => FALSE));
 		$this->load->view('foot', array('user' => $user));
 	}
 

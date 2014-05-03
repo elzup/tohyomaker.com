@@ -10,27 +10,19 @@
 				<div id="title-div" class="col-sm-12">
 					<h1 id="title-str" class="top-logo">
 						<a href="/">
-							<img class="hidden-xs" <?= attr_src(PATH_IMG_LOGO)?> alt="投票メーカー" />
-							<img class="visible-xs" <?= attr_src(PATH_IMG_LOGO_M)?> alt="投票メーカー" />
+							<img class="hidden-xs" <?= attr_src(PATH_IMG_LOGO) ?> alt="投票メーカー" />
+							<img class="visible-xs" <?= attr_src(PATH_IMG_LOGO_M) ?> alt="投票メーカー" />
 						</a>
 					</h1>
 				</div>
 				<div class="col-sm-12 well align-center">
-					<?= SITE_DESCRIPTION?><br />
+					<?= SITE_DESCRIPTION ?><br />
 					<div class="">
 						<a <?= attr_href(PATH_MAKE) ?> class="btn btn-success btn-lg">
 							<i class="glyphicon glyphicon-edit"></i>
 							投票を作成する
 						</a>
 					</div>
-				</div>
-
-				<div class="col-sm-12">
-					<?php surveysblock_type($surveys_hot, SURVEY_BLOCKTYPE_HOT); ?>
-				</div>
-
-				<div class="col-sm-12">
-					<?php surveysblock_type($surveys_new, SURVEY_BLOCKTYPE_NEW); ?>
 				</div>
 			</div>
 		</div>

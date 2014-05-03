@@ -25,7 +25,7 @@ class Index extends CI_Controller
 
 		$meta = new Metaobj();
 		$meta->setup_top();
-		$this->load->view('head', array ('meta' => $meta));
+		$this->load->view('head', array('meta' => $meta));
 		$this->load->view('navbar', array('user' => $user));
 
 		$topmain_info = array(
@@ -33,7 +33,10 @@ class Index extends CI_Controller
 				'surveys_new' => $surveys_new,
 		);
 		$this->load->view('topmain', $topmain_info);
+		$this->load->view('surveysblock', array('surveys' => $surveys_hot, 'type' => SURVEY_BLOCKTYPE_HOT));
+		$this->load->view('surveysblock', array('surveys' => $surveys_new, 'type' => SURVEY_BLOCKTYPE_NEW));
 
 		$this->load->view('foot', array('user' => $user));
 	}
+
 }
