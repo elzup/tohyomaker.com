@@ -540,36 +540,38 @@ class Survey_model extends CI_Model
 	 * @param Userobj $user
 	 * @return Surveyobj[]
 	 */
-	public function get_surveys_user_voted(Userobj $user, $num = 20, $start = 0)
+	public function get_surveys_user_voted(Userobj $user, $num = ONEPAGE_NUM, $start = 0, &$count = NULL)
 	{
 		$data = $this->select_votes_user($user->id);
 		$ids = $this->datas_to_surveyids($data, SURVEY_STATE_ALL);
 		return $this->get_surveys($ids, $user, $num, $start);
 	}
 
-	public function get_surveys_user_maked(Userobj $user, $num = 20, $start = 0)
+	public function get_surveys_user_maked(Userobj $user, $num = ONEPAGE_NUM, $start = 0, &$count = NULL)
 	{
 		$data = $this->select_surveys_owner($user->id);
 		$ids = $this->datas_to_surveyids($data);
+		$count = count($ids);
 		return $this->get_surveys($ids, $user, $num, $start);
 	}
 
-	public function get_surveys_new(Userobj $user, $num = 10, $start = 0)
+	public function get_surveys_new(Userobj $user, $num = ONEPAGE_NUM, $start = 0, &$count = NULL)
 	{
 		$data = $this->select_surveys_new($start + $num);
 		$ids = $this->datas_to_surveyids($data);
-		$surveys = $this->get_surveys($ids, $user, $num, $start);
-		return $surveys;
-	}
-
-	public function get_surveys_hot(Userobj $user, $num, $start)
-	{
-		$data = $this->select_votes_new(200);
-		$ids = $this->calc_surveyids_hot($data);
+		$count = count($ids);
 		return $this->get_surveys($ids, $user, $num, $start);
 	}
 
-	public function get_surveys_search_tag(Userobj $user, $word, $num = 10, $start = 0)
+	public function get_surveys_hot(Userobj $user, $num = ONEPAGE_NUM, $start = 0, &$count = NULL)
+	{
+		$data = $this->select_votes_new(200);
+		$ids = $this->calc_surveyids_hot($data);
+		$count = count($ids);
+		return $this->get_surveys($ids, $user, $num, $start);
+	}
+
+	public function get_surveys_search_tag(Userobj $user, $word, $num = ONEPAGE_NUM, $start = 0)
 	{
 		$data = $this->select_search_tags($word, 200);
 		$ids = $this->calc_surveyids_tag($data);
@@ -642,26 +644,23 @@ class Survey_model extends CI_Model
 	 * @param int $state_limit
 	 * @return Surveyobj[]
 	 */
-	public function get_surveys($id_objs, Userobj $user, $num = 100, $start = 0, $state_limit = SURVEY_STATE_ALL)
+	public function get_surveys($id_objs, Userobj $user, $num = 100, $start = 0)
 	{
 		if (!is_array($id_objs) || count($id_objs) == 0)
 		{
 			return NULL;
 		}
 		$surveys = array();
-		for ($i = 0; ($ido = @$id_objs[$i]) && count($surveys) < $num; $i++)
+		for ($i = $start; ($ido = @$id_objs[$i]) && count($surveys) < $num; $i++)
 		{
 			$survey = $this->get_survey($ido->id, $user->id, $user->is_guest);
-			if (empty($survey) || ($state_limit !== SURVEY_STATE_ALL && $survey->state != $state_limit))
+			if (empty($survey))
 			{
 				continue;
 			}
-			if ($i >= $start)
-			{
-				$survey->point_hot = @$ido->point_hot;
-				$survey->point_relevant = @$ido->point_relevant;
-				$surveys[] = $survey;
-			}
+			$survey->point_hot = @$ido->point_hot;
+			$survey->point_relevant = @$ido->point_relevant;
+			$surveys[] = $survey;
 		}
 		return $surveys;
 	}

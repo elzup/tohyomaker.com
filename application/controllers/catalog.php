@@ -26,7 +26,7 @@ class Catalog extends CI_Controller
 
 		// TODO: prepare surveys in survey_model 
 		$user = $this->user->get_main_user();
-		$surveys = $this->survey->get_surveys_new($user, 10, $page * 10);
+		$surveys = $this->survey->get_surveys_new($user, ONEPAGE_NUM, $page * ONEPAGE_NUM);
 
 		$meta = new Metaobj();
 		$meta->setup_catalog_new();
@@ -39,11 +39,11 @@ class Catalog extends CI_Controller
 		$this->load->view('foot', array('user' => $user));
 	}
 
-	function hot(/* TODO $pagenum*/)
+	function hot($page = 0)
 	{
 		// TODO: get startnum and make multipages 
 		$user = $this->user->get_main_user();
-		$surveys = $this->survey->get_surveys_hot($user, 10, $start = 0);
+		$surveys = $this->survey->get_surveys_hot($user, ONEPAGE_NUM, $page * ONEPAGE_NUM);
 		$meta = new Metaobj();
 		$meta->setup_catalog_hot();
 		$this->load->view('head', array('meta' => $meta));
