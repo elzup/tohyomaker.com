@@ -30,12 +30,14 @@
 @logo_mn_h: 45px;
 @logo_mn_w: 216px;
 
+@bp_body: url(../images/bp.png);
+@bp_cont: url(../images/bpc.png);
+
 html,body {
 	height: 100%;
-    background: @col_sub2;
+    background: @col_sub2 @bp_body;
 //    font-family:"Times New Roman",Georgia,Serif;
     font-family:'Avenir', 'Arial', 'Helvetica', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
-
 }
 
 a {
@@ -45,6 +47,7 @@ a {
         color: @col_sub1;
     }
 }
+
 
 #title-div {
     text-align: center;
@@ -122,6 +125,9 @@ a {
 	height: auto !important;
 	height: 100%;
     padding-bottom: @footer_height + 20px;
+    .container {
+//        background-image: @bp_cont;
+    }
 //    margin-top: 54px;
 //    text-align: center;
 }
