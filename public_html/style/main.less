@@ -739,6 +739,15 @@ a.btn-lg {
     box-shadow: none;
 }
 
+.pagination > .active > a {
+    background: @col_sub1;
+    border-color: @col_sub1 - #111;
+    &:hover,&:active {
+        background: @col_sub1;
+        border-color: @col_sub1 - #111;
+    }
+}
+
 // radius round
 @radius: 20px;
 .well {

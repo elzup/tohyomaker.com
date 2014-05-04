@@ -26,15 +26,18 @@ class Catalog extends CI_Controller
 
 		// TODO: prepare surveys in survey_model 
 		$user = $this->user->get_main_user();
-		$surveys = $this->survey->get_surveys_new($user, ONEPAGE_NUM, $page * ONEPAGE_NUM);
+		$surveys = $this->survey->get_surveys_new($user, ONEPAGE_NUM, $page * ONEPAGE_NUM, $total);
+
 
 		$meta = new Metaobj();
 		$meta->setup_catalog_new();
+		$pager = new Pagerobj(array ('parOnePage' => ONEPAGE_NUM, 'url' => PATH_NEW));
+		$pager->doIt($total, $page);
 		$this->load->view('head', array('meta' => $meta));
 		$this->load->view('navbar', array('user' => $user));
 		$this->load->view('title', array('title' => $meta->get_title(), 'offset' => 2));
 
-		$this->load->view('catalognew', array ('surveys' => $surveys));
+		$this->load->view('catalognew', array ('surveys' => $surveys, 'pager' => $pager));
 
 		$this->load->view('foot', array('user' => $user));
 	}

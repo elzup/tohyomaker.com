@@ -557,7 +557,7 @@ class Survey_model extends CI_Model
 
 	public function get_surveys_new(Userobj $user, $num = ONEPAGE_NUM, $start = 0, &$count = NULL)
 	{
-		$data = $this->select_surveys_new($start + $num);
+		$data = $this->select_surveys_new(MAX_GET_NUM);
 		$ids = $this->datas_to_surveyids($data);
 		$count = count($ids);
 		return $this->get_surveys($ids, $user, $num, $start);
@@ -565,7 +565,7 @@ class Survey_model extends CI_Model
 
 	public function get_surveys_hot(Userobj $user, $num = ONEPAGE_NUM, $start = 0, &$count = NULL)
 	{
-		$data = $this->select_votes_new(200);
+		$data = $this->select_votes_new(MAX_GET_NUM * 2);
 		$ids = $this->calc_surveyids_hot($data);
 		$count = count($ids);
 		return $this->get_surveys($ids, $user, $num, $start);
@@ -573,7 +573,7 @@ class Survey_model extends CI_Model
 
 	public function get_surveys_search_tag(Userobj $user, $word, $num = ONEPAGE_NUM, $start = 0)
 	{
-		$data = $this->select_search_tags($word, 200);
+		$data = $this->select_search_tags($word, MAX_GET_NUM * 2);
 		$ids = $this->calc_surveyids_tag($data);
 		return $this->get_surveys($ids, $user, $num, $start);
 	}
