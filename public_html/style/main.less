@@ -704,7 +704,7 @@ i {
 }
 
 .btn-middle {
-    .btn-middle();
+//    .btn-middle();
 }
 
 .btn-middle() {
@@ -733,7 +733,8 @@ a.btn-lg {
     box-shadow: none;
 }
 
-@radius: 10px;
+// radius round
+@radius: 20px;
 .well {
     border-radius: @radius;
 }
@@ -743,6 +744,13 @@ a.btn-lg {
         border-top-right-radius: @radius;
         border-top-left-radius: @radius;
     }
+    >.panel-footer {
+        border-bottom-right-radius: @radius;
+        border-bottom-left-radius: @radius;
+    }
+}
+button,a.btn {
+    border-radius: @radius !important;
 }
 
 // after import
