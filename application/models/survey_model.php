@@ -300,7 +300,8 @@ class Survey_model extends CI_Model
 		$this->db->set('num_item', count($items));
 		$this->db->set('id_user', $user->id);
 		$this->db->set('is_anonymous', $data['is_anonymous']);
-		if (isset($data['is_img']) || imgurl_unzip($data['eurl_img'])) {
+		if (isset($data['is_img']) || imgurl_unzip($data['eurl_img']))
+		{
 			$this->db->set('is_img', 1);
 			$this->db->set('eurl_img', $data['eurl_img']);
 		}
@@ -555,7 +556,7 @@ class Survey_model extends CI_Model
 
 	public function get_surveys_new(Userobj $user, $num = 10, $start = 0)
 	{
-		$data = $this->select_surveys_new($num);
+		$data = $this->select_surveys_new($start + $num);
 		$ids = $this->datas_to_surveyids($data);
 		$surveys = $this->get_surveys($ids, $user, $num, $start);
 		return $surveys;
@@ -648,16 +649,19 @@ class Survey_model extends CI_Model
 			return NULL;
 		}
 		$surveys = array();
-		for ($i = $start; ($ido = @$id_objs[$i]) && count($surveys) < $num; $i++)
+		for ($i = 0; ($ido = @$id_objs[$i]) && count($surveys) < $num; $i++)
 		{
 			$survey = $this->get_survey($ido->id, $user->id, $user->is_guest);
 			if (empty($survey) || ($state_limit !== SURVEY_STATE_ALL && $survey->state != $state_limit))
 			{
 				continue;
 			}
-			$survey->point_hot = @$ido->point_hot;
-			$survey->point_relevant = @$ido->point_relevant;
-			$surveys[] = $survey;
+			if ($i >= $start)
+			{
+				$survey->point_hot = @$ido->point_hot;
+				$survey->point_relevant = @$ido->point_relevant;
+				$surveys[] = $survey;
+			}
 		}
 		return $surveys;
 	}

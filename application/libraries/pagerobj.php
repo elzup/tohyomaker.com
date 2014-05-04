@@ -3,15 +3,13 @@
 class Pagerobj {
 
 	// TODO: page_num, index, naming
-	public $index_current;
-	public $index_end;
+	public $page_current;
+	public $page_end;
 	public $width;
-
-	public $current_num;
 
 	public $page_num;
 
-	public function __construct($start_num, $all_num, $width = 20)
+	public function __construct($current_page, $all_num, $width = 20)
 	{
 		$this->width = $width;
 		$this->index_end = floor ($all_num / $width) + 1;
