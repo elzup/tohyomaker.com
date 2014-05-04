@@ -41,8 +41,8 @@ class Pagerobj
 		$current += 1;
 //    $current = $this->current;
 		$pages = ceil($total / $this->parOnePage);
-		$prev = $current > 1 ? $current - 1 : false;
-		$next = $current < $pages ? $current + 1 : false;
+		$prev = $current > 1 ? $current - 1 : -1;
+		$next = $current < $pages ? $current + 1 : -1;
 		$left = $current - ceil($this->linksNum / 2);
 		$right = $current + ceil($this->linksNum / 2);
 		if ($left < 1)
@@ -89,10 +89,7 @@ class Pagerobj
 		}
 		$bottom = isset($bottom) ? array_reverse($bottom) : array();
 		$temp = array_merge($top, $temp, $bottom);
-		if ($prev)
-		{
-			$pager[] = '<li><a ' . attr_href($this->url . '/' . ($prev - 1)) . '>' . $this->prevString . '</a></li>';
-		}
+		$pager[] = '<li' . (($prev === -1) ? ' class="disabled" ' : '') . '><a ' . attr_href($this->url . '/' . ($prev - 1)) . '>' . $this->prevString . '</a></li>';
 		for ($i = 0; $i < count($temp); $i++)
 		{
 			if ($temp[$i] == $this->between)
@@ -103,15 +100,12 @@ class Pagerobj
 				$li = '<li class="active"><a href="#">' . $temp[$i] . '</a></li>';
 			} else
 			{
-				$li = '<li><a '. attr_href($this->url . '/'. ($temp[$i] - 1)).'>'.$temp[$i].'</a></li>';
+				$li = '<li><a ' . attr_href($this->url . '/' . ($temp[$i] - 1)) . '>' . $temp[$i] . '</a></li>';
 			}
 			$pager[] = $li;
 		}
-		if ($next)
-		{
-			$pager[] = '<li><a ' . attr_href($this->url . '/' . ($next - 1)) . '>' . $this->nextString . '</a></li>';
+		$pager[] = '<li' . (($next === - 1) ? ' class="disabled"' : '') . '><a ' . attr_href($this->url . '/' . ($next - 1)) . '>' . $this->nextString . '</a></li>';
 //      $pager[] = '<li><a href="'.$_SERVER['SCRIPT_NAME'].$this->pagerQuery($next, $query).'">'.$this->nextString.'</a></li>';
-		}
 		$this->html = '<ul class="' . $this->class . '">' . implode($pager) . '</ul>';
 	}
 
