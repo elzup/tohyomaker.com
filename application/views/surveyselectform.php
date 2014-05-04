@@ -1,6 +1,7 @@
 <?php
 /* @var $survey Surveyobj */
 /* @var $user Userobj */
+/* @var $select int */
 
 //debug 
 //$survey->is_img = TRUE;

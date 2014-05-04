@@ -3,18 +3,19 @@
 if (typeof jQuery != "undefined"){
     $(function() {
         //        $("#submit-main").removeClass('disabled');
+        $submit = $("#submit-main");
         $(".btn-item").click(function() {
             if ($(this).hasClass('active')) {
                 $("#vote-value").val('');
                 $(".btn-item>i").removeClass('glyphicon glyphicon-ok');
-                $("#submit-main").addClass('disabled');
+                $submit.addClass('disabled');
             }
             else {
                 $("#vote-value").val($(this).attr('name'));
                 $(".btn-item").removeClass('active');
                 $(".btn-item>i").removeClass('glyphicon glyphicon-ok');
                 $(this).children('i').addClass('glyphicon glyphicon-ok');
-                $("#submit-main").removeClass('disabled');
+                $submit.removeClass('disabled');
             }
         }); 
 
@@ -23,10 +24,11 @@ if (typeof jQuery != "undefined"){
             $(this).parent().prev().children('.btn-item').click();
         });
 
-        //        $(".active.btn-item.btn-static:not").click();
-
         if ($('.btn.active') != null) {
-            $("#submit-main").removeClass('disabled');
+            $submit.removeClass('disabled');
+            $an = $('.btn.active').attr('name');
+            console.log($an);
+            $("#vote-value").val($an);
         }
         $('#share-text')
             .focus(function(){

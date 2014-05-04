@@ -381,7 +381,7 @@ if (!function_exists('attr_class_selectform'))
 	function attr_class_selectform($i, Surveyobj $survey, $select)
 	{
 		$add_class = '';
-		if ((isset($select) && $i == $select) || $survey->selected == $i)
+		if ((isset($select) && $i == $select) || ($survey->is_voted() && $survey->selected == $i))
 		{
 			$add_class .= ' active';
 			if ($survey->is_voted())
