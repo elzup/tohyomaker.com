@@ -1,12 +1,13 @@
 <?php
 /* @var $survey Surveyobj */
 /* @var $friends Userobj[] */
+/* @var $f_num int */
 ?>
 
 <div class="container">
 	<div class="row">
 		<div class="col-sm-offset-2 col-sm-8" id="itemfriendbox-div">
-			<h2>Twitterフレンドの投票先</h2>
+			<h2>Twitterフレンドの投票先(<?=$f_num?>)</h2>
 			<?php
 			if (!empty($friends))
 			{

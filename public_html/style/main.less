@@ -357,9 +357,8 @@ a {
     }
     .badge {
         // TODO: fix
-//        padding: 2px;
-//        font-size: 10px;
-//        display: none;
+        margin-left: 5px;
+        position: absolute;
     }
     .description .well {
         text-align: center;
@@ -393,6 +392,8 @@ i {
 }
 
 .panel-surveys {
+    margin-top: 5px;
+    margin-bottom: 5px;
     .panel-heading {
         p {
             margin: 0;
@@ -730,6 +731,18 @@ a.btn-lg {
 }
 .panel {
     box-shadow: none;
+}
+
+@radius: 10px;
+.well {
+    border-radius: @radius;
+}
+.panel {
+    border-radius: @radius;
+    >.panel-heading {
+        border-top-right-radius: @radius;
+        border-top-left-radius: @radius;
+    }
 }
 
 // after import

@@ -169,6 +169,8 @@ class User_model extends CI_Model
 		{
 			$friends[] = $this->get_user($datum->id_user);
 		}
+		// get main user own
+		$friends[] = $this->user;
 		return $friends;
 	}
 

@@ -36,9 +36,6 @@ class Survey extends CI_Controller
 			show_404();
 		}
 		$user = $this->user->get_main_user();
-		$surveys_hot = $this->survey->get_surveys_hot($user, 5, 0);
-		$surveys_new = $this->survey->get_surveys_new($user, 5, 0);
-
 		if (($survey = $this->survey->get_survey($id_survey, $user)) === FALSE)
 		{
 			show_404();
@@ -49,6 +46,12 @@ class Survey extends CI_Controller
 		{
 			$select = NULL;
 		}
+		$surveys_hot = $this->survey->get_surveys_hot($user, 5, 0);
+		$surveys_new = $this->survey->get_surveys_new($user, 5, 0);
+
+		$users = $this->user->get_friend_users();
+		$users_voted = $this->survey->install_users_select($users, $survey);
+		$f_num = count($users_voted);
 
 		$meta = new Metaobj();
 		$meta->setup_survey($survey);
@@ -60,6 +63,7 @@ class Survey extends CI_Controller
 			$surveyhead_info = array(
 					'survey' => $survey,
 					'type' => PAGETYPE_VOTE,
+					'f_num' => $f_num,
 			);
 			$this->load->view('surveyhead', $surveyhead_info);
 			$surveyselectform_info = array(
@@ -88,14 +92,18 @@ class Survey extends CI_Controller
 			// TODO: same as vote method todo
 		}
 		$user = $this->user->get_main_user();
-		$surveys_hot = $this->survey->get_surveys_hot($user, 5, 0);
-		$surveys_new = $this->survey->get_surveys_new($user, 5, 0);
 		/* @var $survey Surveyobj */
 		if (($survey = $this->survey->get_survey($id_survey, $user)) === FALSE)
 		{
 			die("no found id : {$id_survey}");
 			// TODO: same as vote method todo
 		}
+		$surveys_hot = $this->survey->get_surveys_hot($user, 5, 0);
+		$surveys_new = $this->survey->get_surveys_new($user, 5, 0);
+
+		$users = $this->user->get_friend_users();
+		$users_voted = $this->survey->install_users_select($users, $survey);
+		$f_num = count($users_voted);
 
 		$meta = new Metaobj();
 		$meta->setup_survey($survey, TRUE);
@@ -107,6 +115,7 @@ class Survey extends CI_Controller
 			$surveyhead_info = array(
 					'survey' => $survey,
 					'type' => PAGETYPE_VIEW,
+					'f_num' => $f_num,
 			);
 			$this->load->view('surveyhead', $surveyhead_info);
 			$this->load->view('surveyresult', array('survey' => $survey));
@@ -131,16 +140,18 @@ class Survey extends CI_Controller
 			show_404();
 		}
 		$user = $this->user->get_main_user();
-		$surveys_hot = $this->survey->get_surveys_hot($user, 5, 0);
-		$surveys_new = $this->survey->get_surveys_new($user, 5, 0);
 		/* @var $survey Surveyobj */
 		if (($survey = $this->survey->get_survey($id_survey, $user)) === FALSE)
 		{
 			show_404();
 		}
 
+		$surveys_hot = $this->survey->get_surveys_hot($user, 5, 0);
+		$surveys_new = $this->survey->get_surveys_new($user, 5, 0);
+
 		$users = $this->user->get_friend_users();
 		$users_voted = $this->survey->install_users_select($users, $survey);
+		$f_num = count($users_voted);
 		$this->user->install_users_img($users_voted);
 		// TODO:
 
@@ -155,9 +166,10 @@ class Survey extends CI_Controller
 			$surveyhead_info = array(
 					'survey' => $survey,
 					'type' => PAGETYPE_FRIEND,
+					'f_num' => $f_num,
 			);
 			$this->load->view('surveyhead', $surveyhead_info);
-			$this->load->view('surveyfriend', array('survey' => $survey, 'friends' => $users_voted));
+			$this->load->view('surveyfriend', array('survey' => $survey, 'friends' => $users_voted, 'f_num' => $f_num));
 		} else
 		{
 			$this->load->view('surveydeleted');

@@ -2,6 +2,7 @@
 /* @var $survey Surveyobj */
 /* @var $owner Userobj */
 /* @var $type int */
+/* @var $f_num int */
 ?>
 
 <div class="container">
@@ -22,7 +23,7 @@
 						<!--TODO: friend's vote page-->
 						<a <?= attr_href(PATH_FRIEND, $survey->id) ?> class="btn btn-success<?= (($type === PAGETYPE_FRIEND) ? ' disabled hidden-xs' : '') ?>">
 							<i class="<?= ICON_FRIEND ?>"></i>
-							<span>フレンド</span>
+							<span>フレンド<span class="badge"><?= $f_num ?: '' ?></span></span>
 						</a>
 					</div>
 				</div>
