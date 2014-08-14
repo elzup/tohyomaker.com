@@ -9,7 +9,7 @@
     <meta charset="UTF-8" />
     <title><?= $meta->get_title(TRUE) ?></title>
 
-		<meta name="google-site-verification" content="4wT_D-YDKZjitZZaTH5_yOd4SR0o3ZiqiCBC1_ma1jk" />
+    <meta name="google-site-verification" content="4wT_D-YDKZjitZZaTH5_yOd4SR0o3ZiqiCBC1_ma1jk" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href='http://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet' type='text/css'>
@@ -20,7 +20,8 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" charset="UTF-8" href="<?= base_url('lib/bootstrap/css/bootstrap.min.css') ?>" media="screen" />
     <link rel="stylesheet" charset="UTF-8" href="<?= base_url('lib/bootstrap/css/font-awesome.min.css') ?>" media="screen" />
-    <link rel="stylesheet/less" charset="UTF-8" type="text/css" href="<?= base_url('style/main.less') ?>" media="screen">
+    <link rel="stylesheet" charset="UTF-8" href="<?= base_url('style/main.css') ?>" media="screen" />
+    <!--<link rel="stylesheet/less" charset="UTF-8" type="text/css" href="<?= base_url('style/main.less') ?>" media="screen">-->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

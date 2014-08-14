@@ -1,0 +1,2 @@
+User-Agent : *
+Sitemap : http://tohyomaker.com/sitemap.xml
