@@ -1,9 +1,9 @@
 #投票メーカー
 ----
-[http://tohyomaker.com](http://tohyomaker.com)
+閉鎖(2017-02-04) ~~[http://tohyomaker.com](http://tohyomaker.com)~~
 
 手軽な投票作成サイト  
-2~10択の投票やアンケートを作成できる  
+2~10択の投票やアンケートを作成できます
 
 ###カタログ一覧
 *新着投票
