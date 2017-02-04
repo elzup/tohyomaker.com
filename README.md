@@ -7,14 +7,25 @@
 2~10択の投票やアンケートを作成できます
 
 # 作成画面
-![create.png]aaaaaaaaaa(https://raw.githubusercontent.com/elzup/tohyomaker.com/master/screen_shot/create.png)
+![top.png](https://raw.githubusercontent.com/elzup/tohyomaker.com/master/screen_shot/top.png)
+
+# 投票画面
+![thread.png](https://raw.githubusercontent.com/elzup/tohyomaker.com/master/screen_shot/thread.png)
+
+# 投票完了画面
+![voted.png](https://raw.githubusercontent.com/elzup/tohyomaker.com/master/screen_shot/voted.png)
+
+# リスト
+![list.png](https://raw.githubusercontent.com/elzup/tohyomaker.com/master/screen_shot/list.png)
+
+# 投票結果画面
+![result.png](https://raw.githubusercontent.com/elzup/tohyomaker.com/master/screen_shot/result.png)
+
+# Twitter フレンド投票先画面
+![friend.png](https://raw.githubusercontent.com/elzup/tohyomaker.com/master/screen_shot/friend.png)
 
 
-### カタログ一覧
-* 新着投票
-* 人気投票
-
-### 機能
+# 機能
 
 * 画像投票
   * 説明文にTwitpicなどであげた画像を使用できる
